@@ -1,0 +1,1 @@
+{"version":3,"file":"save-adapter-wiring.d.ts","sourceRoot":"","sources":["../../src/shell/save-adapter-wiring.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AAEH,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,yBAAyB,CAAC;AAChE,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,aAAa,CAAC;AAEhD,wBAAsB,aAAa,CACjC,OAAO,EAAE,gBAAgB,EACzB,YAAY,EAAE,YAAY,EAC1B,QAAQ,EAAE,OAAO,GAChB,OAAO,CAAC,IAAI,CAAC,CA6Bf"}

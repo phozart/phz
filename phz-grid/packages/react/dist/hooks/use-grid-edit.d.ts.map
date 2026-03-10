@@ -1,0 +1,1 @@
+{"version":3,"file":"use-grid-edit.d.ts","sourceRoot":"","sources":["../../src/hooks/use-grid-edit.ts"],"names":[],"mappings":"AAAA,OAAO,EAAoC,KAAK,SAAS,EAAE,MAAM,OAAO,CAAC;AACzE,OAAO,KAAK,EAAE,OAAO,EAAE,SAAS,EAAE,YAAY,EAAE,KAAK,EAAE,MAAM,mBAAmB,CAAC;AAEjF,wBAAgB,WAAW,CAAC,OAAO,EAAE,SAAS,CAAC,OAAO,GAAG,IAAI,CAAC;;0BAmB/C,YAAY;2BAKZ,YAAY,SAAS,OAAO;2BAM5B,YAAY;;;EAK1B"}

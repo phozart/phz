@@ -1,0 +1,1 @@
+{"version":3,"file":"chart-suggest.d.ts","sourceRoot":"","sources":["../../src/explore/chart-suggest.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAEH,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,qBAAqB,CAAC;AAKxD,MAAM,WAAW,mBAAmB;IAClC,0EAA0E;IAC1E,UAAU,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;CACrC;AAOD,wBAAgB,gBAAgB,CAC9B,OAAO,EAAE,YAAY,EACrB,OAAO,CAAC,EAAE,mBAAmB,GAC5B,MAAM,CA6BR"}

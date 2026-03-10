@@ -1,27 +1,15 @@
-# ── Stage 1: Build phz-grid packages ──
-FROM node:20-alpine AS grid-builder
-
-WORKDIR /app/phz-grid
-COPY phz-grid/package.json phz-grid/package-lock.json phz-grid/tsconfig.json ./
-COPY phz-grid/packages/ ./packages/
-RUN npm install --ignore-scripts --force
-RUN npm run build:ordered
-
-# ── Stage 2: Build Next.js app ──
+# ── Stage 1: Build Next.js app ──
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy built phz-grid packages (needed for file: deps + webpack aliases)
-COPY --from=grid-builder /app/phz-grid /app/phz-grid
+# Copy pre-built phz-grid packages (dist/ checked into git)
+COPY phz-grid/ /app/phz-grid/
 
 # Install report_app dependencies
 WORKDIR /app/report_app
 COPY report_app/package.json report_app/package-lock.json ./
-# Rewrite file: deps to absolute paths inside the container
 RUN npm ci
-
-# Copy app source
 COPY report_app/ ./
 
 # Build Next.js (standalone output)
@@ -29,7 +17,7 @@ ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-# ── Stage 3: Production runtime ──
+# ── Stage 2: Production runtime ──
 FROM node:20-alpine AS runner
 
 WORKDIR /app

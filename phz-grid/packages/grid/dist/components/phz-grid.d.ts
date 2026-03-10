@@ -1,0 +1,256 @@
+/**
+ * @phozart/phz-grid — <phz-grid> Custom Element
+ *
+ * God Object refactored into Lit Reactive Controllers.
+ * Rendering and public API live here; behaviour delegates to controllers.
+ */
+import { LitElement, type TemplateResult, type PropertyValues } from 'lit';
+import { type GridApi, type ColumnDefinition, type RowData, type RowId, type SortDirection, type DataSet, type DataSetMeta, type QueryBackend, type ProgressiveLoadConfig, type ProgressivePhase } from '@phozart/phz-core';
+import type { AriaManager } from '../a11y/aria-manager.js';
+import type { ColumnProfile, ComputedColumnDef } from './phz-column-chooser.js';
+import type { ConditionalFormattingRule, RowGroup } from '@phozart/phz-core';
+import type { DrillThroughConfig, GenerateDashboardConfig } from '@phozart/phz-engine';
+import type { Density, FilterInfo, RowAction, ScrollMode } from '../types.js';
+import type { AsyncDataSource } from '@phozart/phz-core';
+import { ToastController, ColumnResizeController, EditController, SortController, SelectionController, FilterController, VirtualScrollController, ExportController, ContextMenuController, ClipboardController, ConditionalFormattingController, AggregationController, GroupController, ColumnChooserController, ComputedColumnsController, GridCoreController } from '../controllers/index.js';
+import type { ContextMenuCommands, StateSyncPayload } from '../controllers/index.js';
+import './phz-toolbar.js';
+type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
+export declare class PhzGrid extends LitElement {
+    data: unknown[];
+    columns: ColumnDefinition[];
+    theme: string;
+    locale: string;
+    responsive: boolean;
+    virtualization: boolean;
+    selectionMode: 'none' | 'single' | 'multi' | 'range';
+    editMode: 'none' | 'click' | 'dblclick' | 'manual';
+    ariaLabels: import('@phozart/phz-core').AriaLabels;
+    loading: boolean;
+    gridHeight: string;
+    gridWidth: string;
+    density: Density;
+    fontFamily: string;
+    fontSize: number;
+    containerShadow: 'none' | 'sm' | 'md' | 'lg';
+    containerRadius: number;
+    aggregation: boolean;
+    aggregationFn: AggregationFn;
+    showRowActions: boolean;
+    showCheckboxes: boolean;
+    enableAnomalyDetection: boolean;
+    conditionalFormattingRules: ConditionalFormattingRule[];
+    columnProfiles: ColumnProfile[];
+    showToolbar: boolean;
+    showDensityToggle: boolean;
+    showColumnEditor: boolean;
+    showSearch: boolean;
+    showCsvExport: boolean;
+    showExcelExport: boolean;
+    showAdminSettings: boolean;
+    showPagination: boolean;
+    paginationAlign: 'left' | 'center' | 'right';
+    pageSizeOptions: number[];
+    pageSize: number;
+    gridTitle: string;
+    gridSubtitle: string;
+    titleFontFamily: string;
+    titleFontSize: number;
+    subtitleFontSize: number;
+    titleBarBg: string;
+    titleBarText: string;
+    titleIcon: string;
+    showTitleBar: boolean;
+    showSelectionActions: boolean;
+    loadingMode: 'paginate' | 'lazy';
+    scrollMode: ScrollMode;
+    remoteDataSource?: AsyncDataSource;
+    fetchPageSize: number;
+    prefetchPages: number;
+    virtualRowHeight?: number;
+    virtualScrollThreshold: number;
+    allowFiltering: boolean;
+    allowSorting: boolean;
+    defaultSortField: string;
+    defaultSortDirection: 'asc' | 'desc';
+    headerWrapping: boolean;
+    autoSizeColumns: boolean;
+    columnGroups: Array<{
+        header: string;
+        children: string[];
+    }>;
+    rowBanding: boolean;
+    statusColors: Record<string, {
+        bg: string;
+        color: string;
+        dot: string;
+    }>;
+    barThresholds: Array<{
+        min: number;
+        color: string;
+    }>;
+    dateFormats: Record<string, string>;
+    columnStyles: Record<string, string>;
+    numberFormats: Record<string, {
+        decimals?: number;
+        display?: 'number' | 'percent' | 'currency';
+        prefix?: string;
+        suffix?: string;
+    }>;
+    columnFormatting: Record<string, any>;
+    userRole: 'viewer' | 'user' | 'editor' | 'admin';
+    computedColumns: ComputedColumnDef[];
+    copyHeaders: boolean;
+    copyFormatted: boolean;
+    showEditActions: boolean;
+    showCopyActions: boolean;
+    maxCopyRows: number;
+    excludeFieldsFromCopy: string[];
+    groupBy: string[];
+    groupByLevels: string[][];
+    groupTotals: boolean;
+    groupTotalsFn: AggregationFn;
+    groupTotalsOverrides: Record<string, AggregationFn>;
+    gridLines: 'none' | 'horizontal' | 'vertical' | 'both';
+    gridLineColor: string;
+    gridLineWidth: 'thin' | 'medium';
+    bandingColor: string;
+    hoverHighlight: boolean;
+    cellTextOverflow: 'ellipsis' | 'clip' | 'wrap';
+    compactNumbers: boolean;
+    headerBg: string;
+    headerText: string;
+    bodyBg: string;
+    bodyText: string;
+    footerBg: string;
+    footerText: string;
+    drillThroughConfig?: DrillThroughConfig;
+    aggregationPosition: 'top' | 'bottom' | 'both';
+    rowActions: RowAction[];
+    generateDashboardConfig?: GenerateDashboardConfig;
+    reportId?: string;
+    reportName?: string;
+    dataSet?: DataSet;
+    queryBackend?: QueryBackend;
+    progressiveLoad?: ProgressiveLoadConfig;
+    visibleRows: RowData[];
+    columnDefs: ColumnDefinition[];
+    selectedRowIds: Set<RowId>;
+    sortColumns: Array<{
+        field: string;
+        direction: SortDirection;
+    }>;
+    totalRowCount: number;
+    private isInitialized;
+    activeFilters: Map<string, FilterInfo>;
+    private currentPage;
+    private internalPageSize;
+    private focusedRowId;
+    private chartOpen;
+    private chartField;
+    private chartHeader;
+    private chartValues;
+    private chartLabels;
+    private _progressivePhase?;
+    private _progressMessage;
+    groups: RowGroup[];
+    isGrouped: boolean;
+    get _dataSetMeta(): DataSetMeta | undefined;
+    get cellRangeAnchor(): {
+        rowIndex: number;
+        colIndex: number;
+    } | null;
+    get cellRangeEnd(): {
+        rowIndex: number;
+        colIndex: number;
+    } | null;
+    get gridApi(): GridApi | null;
+    /** Public method for framework wrappers to access the GridApi. */
+    getGridApi(): GridApi | null;
+    get ariaManager(): AriaManager | null;
+    private keyboardNav;
+    private forcedColorsCleanup;
+    private resizeObserver;
+    private bodyEl;
+    readonly toast: ToastController;
+    readonly columnResize: ColumnResizeController;
+    readonly edit: EditController;
+    readonly sort: SortController;
+    readonly selection: SelectionController;
+    readonly filter: FilterController;
+    readonly virtualScroll: VirtualScrollController;
+    readonly exportCtrl: ExportController;
+    readonly contextMenu: ContextMenuController;
+    readonly clipboard: ClipboardController;
+    readonly cfCtrl: ConditionalFormattingController;
+    readonly aggCtrl: AggregationController;
+    readonly groupCtrl: GroupController;
+    readonly columnChooser: ColumnChooserController;
+    readonly computedColumnsCtrl: ComputedColumnsController;
+    readonly gridCore: GridCoreController;
+    static readonly slots: {
+        readonly header: "Custom header bar content";
+        readonly footer: "Custom footer content";
+        readonly 'empty-state': "Content shown when no data";
+        readonly loading: "Custom loading indicator";
+        readonly toolbar: "Custom toolbar (overrides built-in)";
+    };
+    static styles: import("lit").CSSResult;
+    get effectiveRowActions(): RowAction[];
+    get filteredRowCount(): number;
+    setColumnDefs(defs: ColumnDefinition[]): void;
+    get filteredRows(): RowData[];
+    onStateSync(payload: StateSyncPayload): void;
+    onProgressUpdate(phase: ProgressivePhase | undefined, message: string): void;
+    onInitialized(): void;
+    /** Command bus for ContextMenuController */
+    get commands(): ContextMenuCommands;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    firstUpdated(changed: PropertyValues): void;
+    /** Sync derived @state before render — avoids "update scheduled after update" warning */
+    willUpdate(changed: PropertyValues): void;
+    updated(changed: PropertyValues): void;
+    private _keyboardCallbacks;
+    private _sortBy;
+    private _ensureContextMenu;
+    private _ensureFilterPopover;
+    private _ensureColumnChooser;
+    private _ensureChartPopover;
+    private _openFilterForField;
+    private _removeFilter;
+    private _clearAllFilters;
+    private _handleFilterApply;
+    private _handleSearchInput;
+    private _syncGrouping;
+    private _openChart;
+    private _handleRowAction;
+    private _selectAll;
+    private get _displayRows();
+    private get _totalPages();
+    render(): TemplateResult;
+    private _renderTitleBar;
+    private _renderToolbar;
+    private _renderSelectionBar;
+    private _renderColumnGroupHeader;
+    private _renderHeader;
+    private _renderHeaderCell;
+    private _renderBodyRows;
+    private _renderRow;
+    private _renderCell;
+    private _renderRowActionsCell;
+    private _renderGroupedRows;
+    private _renderAggregationRow;
+    private _renderPagination;
+    private _formatCellValue;
+    private _handleCellDrillThrough;
+    private _handleBodyKeyDown;
+    getVisibleRows(): RowData[];
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'phz-grid': PhzGrid;
+    }
+}
+export {};
+//# sourceMappingURL=phz-grid.d.ts.map

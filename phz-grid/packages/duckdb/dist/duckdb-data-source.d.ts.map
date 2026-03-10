@@ -1,0 +1,1 @@
+{"version":3,"file":"duckdb-data-source.d.ts","sourceRoot":"","sources":["../src/duckdb-data-source.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAIH,OAAO,KAAK,EACV,YAAY,EACZ,gBAAgB,EAWjB,MAAM,YAAY,CAAC;AAyhBpB,wBAAgB,sBAAsB,CAAC,MAAM,EAAE,YAAY,GAAG,gBAAgB,CAE7E;AAoBD,wBAAsB,YAAY,CAAC,UAAU,EAAE,gBAAgB,EAAE,GAAG,EAAE,MAAM,GAAG,OAAO,CAAC,OAAO,YAAY,EAAE,SAAS,CAAC,CAkBrH"}

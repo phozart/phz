@@ -1,0 +1,1 @@
+{"version":3,"file":"safe-custom-element.js","sourceRoot":"","sources":["../src/safe-custom-element.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,MAAM,UAAU,iBAAiB,CAAC,OAAe;IAC/C,OAAO,CAAC,MAAgC,EAAE,EAAE;QAC1C,IAAI,OAAO,cAAc,KAAK,WAAW,IAAI,CAAC,cAAc,CAAC,GAAG,CAAC,OAAO,CAAC,EAAE,CAAC;YAC1E,cAAc,CAAC,MAAM,CAAC,OAAO,EAAE,MAAM,CAAC,CAAC;QACzC,CAAC;IACH,CAAC,CAAC;AACJ,CAAC"}

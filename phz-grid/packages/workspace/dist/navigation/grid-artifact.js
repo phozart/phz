@@ -1,0 +1,8 @@
+/**
+ * @phozart/phz-workspace — Grid Definitions as First-Class Artifacts (V.6)
+ *
+ * @deprecated Import from '@phozart/phz-shared/artifacts' instead.
+ * These re-exports will be removed in v16.
+ */
+export { createGridArtifact, isGridArtifact, gridArtifactToMeta, } from '@phozart/phz-shared/artifacts';
+//# sourceMappingURL=grid-artifact.js.map

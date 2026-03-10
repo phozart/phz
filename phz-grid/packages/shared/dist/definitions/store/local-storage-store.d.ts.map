@@ -1,0 +1,1 @@
+{"version":3,"file":"local-storage-store.d.ts","sourceRoot":"","sources":["../../../src/definitions/store/local-storage-store.ts"],"names":[],"mappings":"AAAA;;GAEG;AAKH,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,uBAAuB,CAAC;AAE7D,MAAM,WAAW,wBAAwB;IACvC,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB;AAED,wBAAgB,uBAAuB,CAAC,OAAO,CAAC,EAAE,wBAAwB,GAAG,eAAe,CA2E3F"}

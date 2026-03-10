@@ -1,0 +1,1 @@
+{"version":3,"file":"placement-utils.d.ts","sourceRoot":"","sources":["../../src/placements/placement-utils.ts"],"names":[],"mappings":"AAAA;;GAEG;AAEH,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,iBAAiB,CAAC;AAEvD;;GAEG;AACH,wBAAgB,0BAA0B,CACxC,UAAU,EAAE,eAAe,EAAE,EAC7B,UAAU,EAAE,MAAM,GAAG,SAAS,GAC7B,eAAe,EAAE,CAGnB;AAED;;GAEG;AACH,wBAAgB,oBAAoB,CAAC,UAAU,EAAE,eAAe,EAAE,GAAG,eAAe,EAAE,CAErF"}

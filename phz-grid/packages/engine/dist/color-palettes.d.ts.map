@@ -1,0 +1,1 @@
+{"version":3,"file":"color-palettes.d.ts","sourceRoot":"","sources":["../src/color-palettes.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAEH,MAAM,WAAW,aAAa;IAC5B,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,MAAM,CAAC;IACb,MAAM,EAAE,MAAM,EAAE,CAAC;CAClB;AAED,eAAO,MAAM,eAAe,EAAE,aAAa,EA+B1C,CAAC;AAEF;;GAEG;AACH,wBAAgB,gBAAgB,CAAC,QAAQ,EAAE,MAAM,GAAG,MAAM,EAAE,CAG3D"}
