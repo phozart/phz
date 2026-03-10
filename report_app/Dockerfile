@@ -4,7 +4,7 @@ FROM node:20-alpine AS grid-builder
 WORKDIR /app/phz-grid
 COPY phz-grid/package.json phz-grid/package-lock.json ./
 COPY phz-grid/packages/ ./packages/
-RUN npm ci --ignore-scripts --omit=optional
+RUN npm install --ignore-scripts
 RUN npm run build:ordered
 
 # ── Stage 2: Build Next.js app ──
