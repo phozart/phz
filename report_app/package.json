@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.33.1-dev20.0",
+    "@lit/react": "^1.0.8",
     "@phozart/phz-ai": "file:../phz-grid/packages/ai",
     "@phozart/phz-collab": "file:../phz-grid/packages/collab",
     "@phozart/phz-core": "file:../phz-grid/packages/core",
