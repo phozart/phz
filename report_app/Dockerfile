@@ -2,7 +2,7 @@
 FROM node:20-alpine AS grid-builder
 
 WORKDIR /app/phz-grid
-COPY phz-grid/package.json phz-grid/package-lock.json ./
+COPY phz-grid/package.json phz-grid/package-lock.json phz-grid/tsconfig.json ./
 COPY phz-grid/packages/ ./packages/
 RUN npm install --ignore-scripts --force
 RUN npm run build:ordered
