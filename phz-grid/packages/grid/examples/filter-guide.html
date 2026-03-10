@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phz — Filter &amp; Criteria Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50: #FAFAF9;
+      --stone-100: #F5F5F4;
+      --stone-200: #E7E5E4;
+      --stone-300: #D6D3D1;
+      --stone-400: #A8A29E;
+      --stone-500: #78716C;
+      --stone-600: #57534E;
+      --stone-700: #44403C;
+      --stone-800: #292524;
+      --stone-900: #1C1917;
+      --blue-50: #EFF6FF;
+      --blue-100: #DBEAFE;
+      --blue-600: #2563EB;
+      --blue-700: #1D4ED8;
+      --red-500: #EF4444;
+      --red-600: #DC2626;
+      --green-50: #DCFCE7;
+      --green-700: #166534;
+      --amber-50: #FEF3C7;
+      --amber-700: #92400E;
+      --purple-50: #F3E8FF;
+      --purple-700: #7C3AED;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--stone-100);
+      color: var(--stone-900);
+      line-height: 1.6;
+    }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      background: var(--stone-900);
+      color: #FEFDFB;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 52px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .topbar .sep { width: 1px; height: 20px; background: var(--stone-700); }
+    .topbar .subtitle { font-size: 13px; color: var(--stone-400); font-weight: 500; }
+
+    /* ─── Nav pills ─── */
+    .nav { display: flex; gap: 4px; margin-left: auto; }
+    .nav a {
+      font-size: 12px; font-weight: 500;
+      padding: 6px 14px; border-radius: 6px;
+      color: var(--stone-400); text-decoration: none;
+      transition: all 0.15s;
+    }
+    .nav a:hover { color: #FEFDFB; background: var(--stone-800); }
+
+    /* ─── Container ─── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+    }
+    .hero h2 {
+      font-size: 32px; font-weight: 800;
+      background: linear-gradient(135deg, var(--stone-900), var(--stone-600));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero p { font-size: 16px; color: var(--stone-500); max-width: 640px; margin: 0 auto; }
+
+    /* ─── Sections ─── */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--stone-200);
+    }
+    .section-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .section-header .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge--field { background: var(--blue-50); color: var(--blue-700); }
+    .badge--config { background: var(--purple-50); color: var(--purple-700); }
+    .badge--admin { background: var(--amber-50); color: var(--amber-700); }
+    .badge--engine { background: var(--green-50); color: var(--green-700); }
+
+    /* ─── Cards grid ─── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .cards--full {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--stone-200);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 12px rgba(28,25,23,0.06); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      background: var(--stone-50);
+      border-bottom: 1px solid var(--stone-200);
+    }
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .card-icon--select { background: #DBEAFE; }
+    .card-icon--chip { background: #F3E8FF; }
+    .card-icon--tree { background: #DCFCE7; }
+    .card-icon--date { background: #FEF3C7; }
+    .card-icon--numeric { background: #FFE4E6; }
+    .card-icon--text { background: #E0E7FF; }
+    .card-icon--search { background: #CCFBF1; }
+    .card-icon--presence { background: #FFF7ED; }
+    .card-icon--admin { background: var(--stone-200); }
+    .card-title { font-size: 15px; font-weight: 700; }
+    .card-type {
+      font-size: 11px; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--stone-500);
+    }
+
+    .card-body { padding: 16px 20px; }
+    .card-body p { font-size: 13px; color: var(--stone-600); margin-bottom: 12px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    /* ─── Preview boxes ─── */
+    .preview {
+      background: var(--stone-50);
+      border: 1px solid var(--stone-200);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .preview-label {
+      font-size: 10px; font-weight: 700;
+      color: var(--stone-400);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    /* ─── Simulated UI elements ─── */
+    .sim-select {
+      display: block;
+      width: 100%;
+      padding: 7px 30px 7px 10px;
+      border: 1px solid var(--stone-300);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--stone-900);
+      background: #FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2378716C'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;
+      appearance: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .sim-chips {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .sim-chip {
+      display: inline-flex; align-items: center;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 12px; font-weight: 500;
+      border: 1px solid var(--stone-300);
+      background: #FFFFFF; color: var(--stone-700);
+      cursor: pointer; user-select: none; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .sim-chip:hover { background: var(--stone-100); border-color: var(--stone-400); }
+    .sim-chip--on { background: var(--stone-900); color: #FFFFFF; border-color: var(--stone-900); }
+    .sim-chip--on:hover { background: var(--stone-800); }
+
+    .sim-input {
+      display: block; width: 100%;
+      padding: 7px 10px;
+      border: 1px solid var(--stone-300);
+      border-radius: 8px;
+      font-size: 13px; color: var(--stone-900);
+      background: #FFFFFF; font-family: inherit;
+      outline: none;
+    }
+    .sim-input:focus { border-color: var(--blue-600); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .sim-input::placeholder { color: var(--stone-400); }
+
+    .sim-range-row { display: flex; align-items: center; gap: 8px; }
+    .sim-range-input {
+      width: 80px; padding: 6px 8px;
+      border: 1px solid var(--stone-300);
+      border-radius: 8px; font-size: 12px; text-align: center;
+      font-family: inherit;
+    }
+    .sim-range-sep { color: var(--stone-400); font-size: 12px; }
+    .sim-range-unit { color: var(--stone-500); font-size: 11px; }
+    .sim-slider { width: 100%; accent-color: var(--stone-900); margin-top: 6px; }
+
+    .sim-tree { list-style: none; padding: 0; }
+    .sim-tree-item {
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 0; font-size: 13px; cursor: pointer;
+    }
+    .sim-tree-item:hover { color: var(--blue-600); }
+    .sim-tree-children { list-style: none; padding-left: 22px; }
+    .sim-tree-toggle { width: 16px; font-size: 10px; color: var(--stone-500); cursor: pointer; flex-shrink: 0; text-align: center; }
+    .sim-tree-cb { accent-color: var(--stone-900); }
+
+    .sim-dp-panel {
+      display: flex; border: 1px solid var(--stone-200); border-radius: 10px; overflow: hidden; background: #FFF;
+    }
+    .sim-dp-zone1 {
+      width: 150px; border-right: 1px solid var(--stone-200);
+      padding: 6px 0; font-size: 12px;
+    }
+    .sim-dp-preset {
+      padding: 5px 10px; cursor: pointer; transition: background 0.1s;
+      color: var(--stone-700);
+    }
+    .sim-dp-preset:hover { background: var(--stone-100); }
+    .sim-dp-preset--active { background: var(--stone-900); color: #FFF; }
+    .sim-dp-zone2 { flex: 1; padding: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--stone-400); }
+    .sim-dp-group-label {
+      font-size: 9px; font-weight: 700; color: var(--stone-400);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 6px 10px 2px;
+    }
+
+    .sim-presence {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .sim-presence-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 12px; border-radius: 9999px; font-size: 12px;
+      font-weight: 500; cursor: pointer; font-family: inherit; user-select: none;
+      transition: all 0.15s;
+    }
+    .sim-presence-pill--any { border: 1px solid var(--stone-300); color: var(--stone-500); background: #FFF; }
+    .sim-presence-pill--has { border: 1px solid #86EFAC; color: #166534; background: #DCFCE7; }
+    .sim-presence-pill--empty { border: 1px solid #FDE68A; color: #92400E; background: #FEF3C7; }
+
+    /* ─── Bar simulation ─── */
+    .sim-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: #FFFFFF; border: 1px solid var(--stone-200);
+      border-radius: 10px; min-height: 42px; flex-wrap: wrap;
+    }
+    .sim-bar-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 600;
+      background: var(--stone-900); color: #FFF;
+      border: none; cursor: pointer; font-family: inherit;
+    }
+    .sim-bar-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 18px; height: 18px; padding: 0 5px;
+      border-radius: 9px; font-size: 10px; font-weight: 700;
+      background: var(--red-500); color: #FFF;
+    }
+    .sim-bar-sep { width: 1px; height: 20px; background: var(--stone-200); flex-shrink: 0; }
+    .sim-bar-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px 3px 10px; border-radius: 6px;
+      font-size: 12px; background: var(--stone-100);
+      color: var(--stone-700); border: 1px solid var(--stone-200);
+    }
+    .sim-bar-tag-label { font-weight: 600; color: var(--stone-500); margin-right: 2px; }
+    .sim-bar-tag-x {
+      width: 14px; height: 14px; border-radius: 3px; border: none;
+      background: none; cursor: pointer; color: var(--stone-400); font-size: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .sim-bar-clear {
+      font-size: 11px; font-weight: 500; color: var(--red-600);
+      background: none; border: none; cursor: pointer; margin-left: auto;
+      padding: 4px 8px; border-radius: 4px; font-family: inherit;
+    }
+    .sim-bar-clear:hover { background: #FEF2F2; }
+
+    /* ─── Summary bar ─── */
+    .sim-summary-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 10px;
+      cursor: pointer; transition: all 0.15s;
+      font-size: 13px;
+    }
+    .sim-summary-bar--inactive {
+      background: var(--stone-50); border: 1px solid var(--stone-200); color: var(--stone-500);
+    }
+    .sim-summary-bar--active {
+      background: var(--blue-50); border: 1px solid var(--blue-600); color: var(--blue-700);
+    }
+    .sim-summary-icon { flex-shrink: 0; }
+
+    /* ─── Code blocks ─── */
+    .code-block {
+      background: var(--stone-900);
+      color: #E7E5E4;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 12px 0;
+      white-space: pre;
+    }
+    .code-block .kw { color: #C084FC; }
+    .code-block .str { color: #86EFAC; }
+    .code-block .num { color: #FDE68A; }
+    .code-block .cmt { color: #78716C; }
+    .code-block .prop { color: #93C5FD; }
+    .code-block .fn { color: #F9A8D4; }
+
+    /* ─── Config property list ─── */
+    .prop-list { margin: 0; padding: 0; list-style: none; }
+    .prop-list li {
+      display: flex; align-items: baseline; gap: 8px;
+      padding: 6px 0; border-bottom: 1px solid var(--stone-100);
+      font-size: 13px;
+    }
+    .prop-list li:last-child { border-bottom: none; }
+    .prop-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; font-weight: 500;
+      color: var(--blue-700); white-space: nowrap;
+    }
+    .prop-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--stone-400);
+      white-space: nowrap;
+    }
+    .prop-desc { color: var(--stone-600); }
+
+    /* ─── Architecture flow ─── */
+    .arch-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; flex-wrap: wrap; padding: 20px 0;
+    }
+    .arch-box {
+      padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      text-align: center; min-width: 110px;
+    }
+    .arch-box--registry { background: var(--blue-50); color: var(--blue-700); border: 1px solid var(--blue-600); }
+    .arch-box--bindings { background: var(--purple-50); color: var(--purple-700); border: 1px solid var(--purple-700); }
+    .arch-box--state { background: var(--green-50); color: var(--green-700); border: 1px solid #16A34A; }
+    .arch-box--rules { background: var(--amber-50); color: var(--amber-700); border: 1px solid #D97706; }
+    .arch-box--output { background: #FFE4E6; color: #BE123C; border: 1px solid #F43F5E; }
+    .arch-box--admin { background: var(--stone-100); color: var(--stone-700); border: 1px solid var(--stone-300); }
+    .arch-arrow { font-size: 18px; color: var(--stone-400); }
+
+    /* ─── Drawer simulation ─── */
+    .sim-drawer {
+      display: flex; border: 1px solid var(--stone-200); border-radius: 14px;
+      overflow: hidden; background: #FFF; min-height: 320px;
+    }
+    .sim-drawer-main { flex: 1; background: var(--stone-100); display: flex; align-items: center; justify-content: center; color: var(--stone-400); font-size: 13px; padding: 20px; }
+    .sim-drawer-panel {
+      width: 280px; background: var(--stone-50);
+      border-left: 1px solid var(--stone-200);
+      display: flex; flex-direction: column;
+    }
+    .sim-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; border-bottom: 1px solid var(--stone-200); background: #FFF;
+    }
+    .sim-drawer-title { font-size: 14px; font-weight: 700; }
+    .sim-drawer-x {
+      width: 24px; height: 24px; border-radius: 6px;
+      border: none; background: none; cursor: pointer;
+      color: var(--stone-500); font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sim-drawer-body { flex: 1; overflow-y: auto; padding: 8px 0; }
+    .sim-section { border-bottom: 1px solid var(--stone-200); }
+    .sim-section:last-child { border-bottom: none; }
+    .sim-section-header {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 600;
+      color: var(--stone-900);
+    }
+    .sim-section-header:hover { background: var(--stone-100); }
+    .sim-section-chevron { color: var(--stone-500); font-size: 10px; transition: transform 0.2s; }
+    .sim-section-count {
+      min-width: 18px; height: 18px; padding: 0 5px;
+      border-radius: 9px; font-size: 10px; font-weight: 700;
+      background: var(--blue-600); color: #FFF;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: auto;
+    }
+    .sim-section-body { padding: 0 16px 10px; }
+    .sim-drawer-footer {
+      display: flex; gap: 8px; padding: 10px 16px;
+      border-top: 1px solid var(--stone-200); background: #FFF;
+    }
+    .sim-drawer-footer button {
+      flex: 1; padding: 7px; border-radius: 8px; font-size: 12px;
+      font-weight: 500; cursor: pointer; font-family: inherit;
+      border: 1px solid var(--stone-300); background: #FFF; color: var(--stone-700);
+    }
+    .sim-drawer-footer button.primary {
+      background: var(--stone-900); color: #FFF; border-color: var(--stone-900);
+    }
+
+    /* ─── Admin panel simulation ─── */
+    .sim-admin {
+      border: 1px solid var(--stone-200); border-radius: 14px;
+      overflow: hidden; background: #FFF;
+    }
+    .sim-admin-tabs {
+      display: flex; border-bottom: 1px solid var(--stone-200); background: #FFF;
+    }
+    .sim-admin-tab {
+      padding: 10px 16px; font-size: 12px; font-weight: 500;
+      color: var(--stone-500); cursor: pointer; border: none; background: none;
+      border-bottom: 2px solid transparent; font-family: inherit;
+    }
+    .sim-admin-tab--active { color: var(--stone-900); border-bottom-color: var(--stone-900); }
+    .sim-admin-body { padding: 16px 20px; min-height: 180px; }
+
+    /* ─── Info callout ─── */
+    .callout {
+      display: flex; gap: 12px;
+      padding: 14px 18px; border-radius: 10px;
+      margin: 12px 0; font-size: 13px;
+    }
+    .callout--info { background: var(--blue-50); border: 1px solid #93C5FD; color: var(--blue-700); }
+    .callout--warn { background: var(--amber-50); border: 1px solid #FCD34D; color: var(--amber-700); }
+    .callout--tip { background: var(--green-50); border: 1px solid #86EFAC; color: var(--green-700); }
+    .callout-icon { flex-shrink: 0; font-size: 16px; }
+
+    /* ─── Table ─── */
+    .ref-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px; margin: 12px 0;
+    }
+    .ref-table th {
+      text-align: left; padding: 8px 12px;
+      background: var(--stone-50); font-weight: 600;
+      border-bottom: 2px solid var(--stone-200);
+      font-size: 12px; color: var(--stone-600);
+    }
+    .ref-table td {
+      padding: 8px 12px; border-bottom: 1px solid var(--stone-100);
+      vertical-align: top;
+    }
+    .ref-table code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; padding: 2px 6px;
+      background: var(--stone-100); border-radius: 4px;
+    }
+
+    /* ─── Two col layout ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <h1>Phz</h1>
+  <div class="sep"></div>
+  <span class="subtitle">Filter &amp; Criteria Visual Guide</span>
+  <div class="nav">
+    <a href="#field-types">Field Types</a>
+    <a href="#bar-modes">Bar &amp; Drawer</a>
+    <a href="#config">Config</a>
+    <a href="#admin">Admin Panels</a>
+    <a href="#engine">Engine</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h2>Criteria &amp; Filtering System</h2>
+    <p>A comprehensive guide to every filter type, configuration option, bar mode, drawer behaviour, and administration panel in the Phz criteria system.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 1: Field Types                             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="field-types">
+    <div class="section-header">
+      <h3>Filter Field Types</h3>
+      <span class="badge badge--field">10 Types</span>
+    </div>
+    <p style="font-size:14px; color:var(--stone-600); margin-bottom:20px;">
+      Each field type renders a different UI control in the filter drawer. Set the <code>type</code> property on <code>SelectionFieldDef</code> to choose which control to use.
+    </p>
+
+    <div class="cards">
+
+      <!-- 1. Single Select -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--select">&#9662;</div>
+          <div>
+            <div class="card-title">Single Select</div>
+            <div class="card-type">type: 'single_select'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>A native dropdown for picking one value. Best for short lists (5-20 items) where only one value is valid.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <select class="sim-select">
+              <option value="">Choose department...</option>
+              <option>Engineering</option>
+              <option selected>Marketing</option>
+              <option>Sales</option>
+              <option>Finance</option>
+            </select>
+          </div>
+          <p><strong>Operator:</strong> <code>equals</code> / <code>is_null</code></p>
+        </div>
+      </div>
+
+      <!-- 2. Multi Select -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--select">&#9744;</div>
+          <div>
+            <div class="card-title">Multi Select</div>
+            <div class="card-type">type: 'multi_select'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Checkbox list for selecting multiple values. Uses chip-select pills inside the filter drawer.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <div class="sim-chips">
+              <span class="sim-chip sim-chip--on">US</span>
+              <span class="sim-chip">UK</span>
+              <span class="sim-chip sim-chip--on">DE</span>
+              <span class="sim-chip">FR</span>
+              <span class="sim-chip">JP</span>
+            </div>
+          </div>
+          <p><strong>Operator:</strong> <code>in</code> / <code>not_in</code> / <code>is_null</code> (clear = all)</p>
+        </div>
+      </div>
+
+      <!-- 3. Chip Group -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--chip">&#10003;</div>
+          <div>
+            <div class="card-title">Chip Group</div>
+            <div class="card-type">type: 'chip_group'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Toggle pills &mdash; same as multi_select visually but semantically represents discrete tags/categories.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <div class="sim-chips">
+              <span class="sim-chip sim-chip--on">Active</span>
+              <span class="sim-chip">Inactive</span>
+              <span class="sim-chip sim-chip--on">Pending</span>
+              <span class="sim-chip">Archived</span>
+            </div>
+          </div>
+          <p><strong>Operator:</strong> <code>in</code></p>
+        </div>
+      </div>
+
+      <!-- 4. Text -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--text">T</div>
+          <div>
+            <div class="card-title">Text Input</div>
+            <div class="card-type">type: 'text'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Free-form text input for exact or partial matching. Good for name or ID filters.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <input class="sim-input" type="text" placeholder="Enter employee name..." value="John Smith">
+          </div>
+          <p><strong>Operator:</strong> <code>like</code> / <code>equals</code></p>
+        </div>
+      </div>
+
+      <!-- 5. Search -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--search">&#128269;</div>
+          <div>
+            <div class="card-title">Searchable Dropdown</div>
+            <div class="card-type">type: 'search'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Type-ahead search with debounce. Use for large option lists (100+ items) where users need to find values by typing.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <input class="sim-input" type="text" placeholder="Search customers..." value="Acme C">
+            <div style="margin-top:4px; font-size:11px; color:var(--stone-400);">
+              Dropdown shows: Acme Corp, Acme Co Ltd, Acme Capital...
+            </div>
+          </div>
+          <ul class="prop-list" style="margin-top:8px;">
+            <li><span class="prop-name">minChars</span> <span class="prop-desc">Min characters before search fires (default: 1)</span></li>
+            <li><span class="prop-name">debounceMs</span> <span class="prop-desc">Delay in ms (default: 300)</span></li>
+            <li><span class="prop-name">maxSuggestions</span> <span class="prop-desc">Max results shown</span></li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Operator:</strong> <code>like</code></p>
+        </div>
+      </div>
+
+      <!-- 6. Date Range -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--date">&#128197;</div>
+          <div>
+            <div class="card-title">Date Range</div>
+            <div class="card-type">type: 'date_range'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Two-zone date picker: presets on the left, calendar/period selector on the right. 16 built-in presets, fiscal quarter support, comparison periods.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <div class="sim-dp-panel">
+              <div class="sim-dp-zone1">
+                <div class="sim-dp-group-label">Relative</div>
+                <div class="sim-dp-preset">Today</div>
+                <div class="sim-dp-preset">Yesterday</div>
+                <div class="sim-dp-preset sim-dp-preset--active">Last 30 Days</div>
+                <div class="sim-dp-preset">Last 90 Days</div>
+                <div class="sim-dp-group-label">To Date</div>
+                <div class="sim-dp-preset">Month to Date</div>
+                <div class="sim-dp-preset">Year to Date</div>
+              </div>
+              <div class="sim-dp-zone2">
+                Calendar / Period Grid
+              </div>
+            </div>
+          </div>
+          <p><strong>Operator:</strong> <code>between</code></p>
+        </div>
+      </div>
+
+      <!-- 7. Numeric Range -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--numeric">#</div>
+          <div>
+            <div class="card-title">Numeric Range</div>
+            <div class="card-type">type: 'numeric_range'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Min/Max inputs with optional slider. Use for salary, age, price, or any numeric range.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <div class="sim-range-row">
+              <input class="sim-range-input" type="text" value="50,000">
+              <span class="sim-range-sep">to</span>
+              <input class="sim-range-input" type="text" value="120,000">
+              <span class="sim-range-unit">USD</span>
+            </div>
+            <input class="sim-slider" type="range" min="0" max="200000" value="120000">
+          </div>
+          <ul class="prop-list" style="margin-top:8px;">
+            <li><span class="prop-name">min / max</span> <span class="prop-desc">Bounds</span></li>
+            <li><span class="prop-name">step</span> <span class="prop-desc">Increment</span></li>
+            <li><span class="prop-name">showSlider</span> <span class="prop-desc">Show range slider</span></li>
+            <li><span class="prop-name">unit</span> <span class="prop-desc">Display unit label</span></li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Operator:</strong> <code>between</code></p>
+        </div>
+      </div>
+
+      <!-- 8. Tree Select -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--tree">&#127795;</div>
+          <div>
+            <div class="card-title">Tree Select</div>
+            <div class="card-type">type: 'tree_select'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Hierarchical tree with checkboxes, expand/collapse, and "Select All". Best for org structures, geographies, or category hierarchies.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <ul class="sim-tree">
+              <li class="sim-tree-item"><span class="sim-tree-toggle">&#9660;</span> <input type="checkbox" class="sim-tree-cb" checked> <strong>Americas</strong></li>
+              <ul class="sim-tree-children">
+                <li class="sim-tree-item"><span class="sim-tree-toggle">&nbsp;</span> <input type="checkbox" class="sim-tree-cb" checked> United States</li>
+                <li class="sim-tree-item"><span class="sim-tree-toggle">&nbsp;</span> <input type="checkbox" class="sim-tree-cb"> Canada</li>
+              </ul>
+              <li class="sim-tree-item"><span class="sim-tree-toggle">&#9654;</span> <input type="checkbox" class="sim-tree-cb"> <strong>Europe</strong></li>
+              <li class="sim-tree-item"><span class="sim-tree-toggle">&#9654;</span> <input type="checkbox" class="sim-tree-cb"> <strong>Asia Pacific</strong></li>
+            </ul>
+          </div>
+          <p><strong>Operator:</strong> <code>in</code> (leaf_only / selected_level / full_path modes)</p>
+        </div>
+      </div>
+
+      <!-- 9. Field Presence -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--presence">&#8800;</div>
+          <div>
+            <div class="card-title">Field Presence</div>
+            <div class="card-type">type: 'field_presence'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Check whether specific data columns have values or are empty. Tri-state per column: Any / Has Value / Empty.</p>
+          <div class="preview">
+            <div class="preview-label">Preview</div>
+            <div class="sim-presence">
+              <span class="sim-presence-pill sim-presence-pill--has">salary: has value</span>
+              <span class="sim-presence-pill sim-presence-pill--empty">manager: empty</span>
+              <span class="sim-presence-pill sim-presence-pill--any">email: any</span>
+            </div>
+          </div>
+          <ul class="prop-list" style="margin-top:8px;">
+            <li><span class="prop-name">fields</span> <span class="prop-desc">Column names to monitor</span></li>
+            <li><span class="prop-name">compact</span> <span class="prop-desc">Compact layout mode</span></li>
+          </ul>
+          <p style="margin-top:8px;"><strong>Operator:</strong> <code>is_null</code> / <code>is_not_null</code></p>
+        </div>
+      </div>
+
+      <!-- 10. Period Picker -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon card-icon--date">&#9201;</div>
+          <div>
+            <div class="card-title">Period Picker</div>
+            <div class="card-type">type: 'period_picker'</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Alias / placeholder for future period-based selection (fiscal periods, reporting cycles). Currently renders as a date range.</p>
+          <p><strong>Operator:</strong> <code>between</code></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 2: Bar & Drawer                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="bar-modes">
+    <div class="section-header">
+      <h3>Criteria Bar &amp; Filter Drawer</h3>
+      <span class="badge badge--config">UI Patterns</span>
+    </div>
+    <p style="font-size:14px; color:var(--stone-600); margin-bottom:20px;">
+      The criteria system has two main UI pieces: the <strong>Criteria Bar</strong> (compact strip that sits above your content) and the <strong>Filter Drawer</strong> (right-side slide-out panel where users configure filters).
+    </p>
+
+    <div class="two-col">
+      <!-- Button mode -->
+      <div>
+        <h4 style="font-size:14px; margin-bottom:10px;">Bar Mode: Button (default)</h4>
+        <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">Shows a "Filters" button with count badge, plus pinned filter tags.</p>
+        <div class="sim-bar">
+          <button class="sim-bar-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Filters
+            <span class="sim-bar-badge">3</span>
+          </button>
+          <div class="sim-bar-sep"></div>
+          <span class="sim-bar-tag"><span class="sim-bar-tag-label">Region:</span> US, DE <button class="sim-bar-tag-x">&times;</button></span>
+          <span class="sim-bar-tag"><span class="sim-bar-tag-label">Status:</span> Active <button class="sim-bar-tag-x">&times;</button></span>
+          <button class="sim-bar-clear">Clear all</button>
+        </div>
+        <div class="callout callout--info" style="margin-top:12px;">
+          <span class="callout-icon">&#9432;</span>
+          <span>Set <code>barMode: 'button'</code> in <code>FilterBarLayout</code>. This is the default.</span>
+        </div>
+      </div>
+
+      <!-- Summary mode -->
+      <div>
+        <h4 style="font-size:14px; margin-bottom:10px;">Bar Mode: Summary</h4>
+        <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">A clickable summary strip showing active filter values inline.</p>
+        <div style="margin-bottom:8px;">
+          <div class="sim-summary-bar sim-summary-bar--inactive">
+            <span class="sim-summary-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </span>
+            No filters applied
+          </div>
+        </div>
+        <div>
+          <div class="sim-summary-bar sim-summary-bar--active">
+            <span class="sim-summary-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </span>
+            <span>Region: US, DE &nbsp;&middot;&nbsp; Status: Active &nbsp;&middot;&nbsp; Dept: Engineering</span>
+            <button class="sim-bar-clear" style="margin-left:auto;">Clear all</button>
+          </div>
+        </div>
+        <div class="callout callout--info" style="margin-top:12px;">
+          <span class="callout-icon">&#9432;</span>
+          <span>Set <code>barMode: 'summary'</code> and <code>showOnSummary: true</code> on each field's <code>barConfig</code>.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer -->
+    <h4 style="font-size:14px; margin:24px 0 12px;">Filter Drawer (Right-Side Slide-Out)</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      Clicking the Filters button or the summary bar opens a drawer from the right. Each filter becomes a collapsible section. The footer has Reset + Apply buttons.
+    </p>
+    <div class="sim-drawer">
+      <div class="sim-drawer-main">
+        <div style="text-align:center;">
+          <div style="font-size:14px; font-weight:600; color:var(--stone-700); margin-bottom:8px;">Your Application Content</div>
+          <div style="font-size:12px;">Grid, dashboard, report, etc.</div>
+          <div style="font-size:11px; margin-top:12px; color:var(--stone-400);">
+            The drawer opens as an overlay (default) or can be pinned as an inline sidebar.
+          </div>
+        </div>
+      </div>
+      <div class="sim-drawer-panel">
+        <div class="sim-drawer-header">
+          <span class="sim-drawer-title">Filters</span>
+          <button class="sim-drawer-x">&times;</button>
+        </div>
+        <div class="sim-drawer-body">
+          <div class="sim-section">
+            <div class="sim-section-header">
+              <span class="sim-section-chevron">&#9654;</span>
+              Region
+              <span class="sim-section-count">2</span>
+            </div>
+          </div>
+          <div class="sim-section">
+            <div class="sim-section-header">
+              <span class="sim-section-chevron" style="transform:rotate(90deg);">&#9654;</span>
+              Status
+              <span class="sim-section-count">1</span>
+            </div>
+            <div class="sim-section-body">
+              <div class="sim-chips">
+                <span class="sim-chip sim-chip--on" style="font-size:11px;">Active</span>
+                <span class="sim-chip" style="font-size:11px;">Inactive</span>
+                <span class="sim-chip" style="font-size:11px;">Pending</span>
+              </div>
+            </div>
+          </div>
+          <div class="sim-section">
+            <div class="sim-section-header">
+              <span class="sim-section-chevron">&#9654;</span>
+              Date Range
+            </div>
+          </div>
+          <div class="sim-section">
+            <div class="sim-section-header">
+              <span class="sim-section-chevron">&#9654;</span>
+              Salary Range
+            </div>
+          </div>
+        </div>
+        <div class="sim-drawer-footer">
+          <button>Reset</button>
+          <button class="primary">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout--tip" style="margin-top:16px;">
+      <span class="callout-icon">&#9889;</span>
+      <span>Set <code>pinnable: true</code> in <code>FilterBarBehavior</code> to let users pin the drawer open as a permanent sidebar. Use <code>defaultPinned: true</code> to start pinned.</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 3: Configuration                           -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="config">
+    <div class="section-header">
+      <h3>Defining Filters (Configuration)</h3>
+      <span class="badge badge--config">Config</span>
+    </div>
+
+    <p style="font-size:14px; color:var(--stone-600); margin-bottom:16px;">
+      There are <strong>two ways</strong> to define filters: Legacy Mode (simple config object) and Registry Mode (enterprise engine with reusable definitions).
+    </p>
+
+    <div class="two-col" style="margin-bottom:24px;">
+      <div>
+        <h4 style="font-size:14px; margin-bottom:8px;">Legacy Mode (Simple)</h4>
+        <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+          Pass a <code>CriteriaConfig</code> object with an array of <code>fields</code>. Each field is a self-contained definition.
+        </p>
+        <div class="code-block"><span class="kw">const</span> config: <span class="fn">CriteriaConfig</span> = {
+  <span class="prop">fields</span>: [
+    {
+      <span class="prop">id</span>: <span class="str">'region'</span>,
+      <span class="prop">label</span>: <span class="str">'Region'</span>,
+      <span class="prop">type</span>: <span class="str">'multi_select'</span>,
+      <span class="prop">dataField</span>: <span class="str">'region_code'</span>,
+      <span class="prop">required</span>: <span class="num">true</span>,
+      <span class="prop">options</span>: [
+        { <span class="prop">value</span>: <span class="str">'US'</span>, <span class="prop">label</span>: <span class="str">'United States'</span> },
+        { <span class="prop">value</span>: <span class="str">'UK'</span>, <span class="prop">label</span>: <span class="str">'United Kingdom'</span> },
+      ],
+      <span class="prop">barConfig</span>: {
+        <span class="prop">pinnedToBar</span>: <span class="num">true</span>,
+        <span class="prop">defaultOpen</span>: <span class="num">true</span>,
+      },
+    },
+    {
+      <span class="prop">id</span>: <span class="str">'salary'</span>,
+      <span class="prop">label</span>: <span class="str">'Salary Range'</span>,
+      <span class="prop">type</span>: <span class="str">'numeric_range'</span>,
+      <span class="prop">numericRangeConfig</span>: {
+        <span class="prop">min</span>: <span class="num">0</span>, <span class="prop">max</span>: <span class="num">300000</span>,
+        <span class="prop">step</span>: <span class="num">5000</span>, <span class="prop">unit</span>: <span class="str">'USD'</span>,
+        <span class="prop">showSlider</span>: <span class="num">true</span>,
+      },
+    },
+  ],
+};</div>
+      </div>
+
+      <div>
+        <h4 style="font-size:14px; margin-bottom:8px;">Registry Mode (Enterprise)</h4>
+        <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+          Define filters once in a <code>FilterRegistry</code>, then bind them to reports/dashboards via <code>FilterBindings</code>.
+        </p>
+        <div class="code-block"><span class="kw">import</span> { <span class="fn">createCriteriaEngine</span> } <span class="kw">from</span> <span class="str">'@phozart/phz-engine'</span>;
+
+<span class="kw">const</span> engine = <span class="fn">createCriteriaEngine</span>();
+
+<span class="cmt">// Define once, reuse across artefacts</span>
+engine.registry.<span class="fn">register</span>({
+  <span class="prop">id</span>: <span class="fn">filterDefinitionId</span>(<span class="str">'region'</span>),
+  <span class="prop">label</span>: <span class="str">'Region'</span>,
+  <span class="prop">type</span>: <span class="str">'multi_select'</span>,
+  <span class="prop">sessionBehavior</span>: <span class="str">'persist'</span>,
+  <span class="prop">dataField</span>: <span class="str">'region_code'</span>,
+  <span class="prop">options</span>: [...],
+  <span class="prop">createdAt</span>: Date.<span class="fn">now</span>(),
+  <span class="prop">updatedAt</span>: Date.<span class="fn">now</span>(),
+});
+
+<span class="cmt">// Bind to a specific report</span>
+engine.bindings.<span class="fn">bind</span>({
+  <span class="prop">filterDefinitionId</span>: <span class="fn">filterDefinitionId</span>(<span class="str">'region'</span>),
+  <span class="prop">artefactId</span>: <span class="fn">artefactId</span>(<span class="str">'sales-report'</span>),
+  <span class="prop">visible</span>: <span class="num">true</span>,
+  <span class="prop">order</span>: <span class="num">0</span>,
+});</div>
+      </div>
+    </div>
+
+    <!-- Selection Mode -->
+    <h4 style="font-size:14px; margin-bottom:10px;">Selection Mode</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      Every field supports a <code>selectionMode</code> property that controls how many values can be selected:
+    </p>
+    <table class="ref-table">
+      <thead><tr><th>Mode</th><th>Behaviour</th><th>Applies To</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>multiple</code></td>
+          <td>Default for multi_select, chip_group, tree_select. Users can pick many values.</td>
+          <td>multi_select, chip_group, tree_select</td>
+        </tr>
+        <tr>
+          <td><code>single</code></td>
+          <td>Radio behaviour &mdash; selecting one deselects the previous. Tree hides "Select All".</td>
+          <td>All list-based types</td>
+        </tr>
+        <tr>
+          <td><code>none</code></td>
+          <td>Read-only display. Control is disabled, validation skips the field.</td>
+          <td>All types</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Bar Config -->
+    <h4 style="font-size:14px; margin:24px 0 10px;">Per-Field Bar Config</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      Each field has an optional <code>barConfig</code> object that controls its bar/drawer appearance:
+    </p>
+    <table class="ref-table">
+      <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>pinnedToBar</code></td><td>boolean</td><td>Show this field's value as a tag in the criteria bar</td></tr>
+        <tr><td><code>defaultOpen</code></td><td>boolean</td><td>Start this section expanded in the drawer</td></tr>
+        <tr><td><code>expandable</code></td><td>boolean</td><td>Whether the section can be collapsed (default true)</td></tr>
+        <tr><td><code>maxVisibleItems</code></td><td>number</td><td>Truncate display after N items (0 = no limit)</td></tr>
+        <tr><td><code>enableMatchFilter</code></td><td>boolean</td><td>Enable tri-state match filter pill (tree selects)</td></tr>
+        <tr><td><code>showOnSummary</code></td><td>boolean</td><td>Include in summary bar when barMode is 'summary'</td></tr>
+      </tbody>
+    </table>
+
+    <!-- External Options -->
+    <h4 style="font-size:14px; margin:24px 0 10px;">External Data Sources for Options</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      Instead of hardcoding <code>options</code>, you can pull values from a DataSet at runtime:
+    </p>
+    <div class="code-block">{
+  <span class="prop">id</span>: <span class="str">'region'</span>,
+  <span class="prop">type</span>: <span class="str">'multi_select'</span>,
+  <span class="prop">optionsSource</span>: {
+    <span class="prop">dataSetId</span>: <span class="str">'regions-master'</span>,  <span class="cmt">// key in dataSources map</span>
+    <span class="prop">valueField</span>: <span class="str">'code'</span>,           <span class="cmt">// column for option value</span>
+    <span class="prop">labelField</span>: <span class="str">'name'</span>,           <span class="cmt">// column for option label</span>
+    <span class="prop">sortBy</span>: <span class="str">'label'</span>,             <span class="cmt">// 'label' | 'value' | 'none'</span>
+  },
+}</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 4: Admin Panels                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="admin">
+    <div class="section-header">
+      <h3>Administration Panels</h3>
+      <span class="badge badge--admin">Admin UI</span>
+    </div>
+
+    <p style="font-size:14px; color:var(--stone-600); margin-bottom:20px;">
+      Phz provides embeddable Lit components for visually managing filter definitions, bindings, rules, and presets. These panels are designed for 320px side-panel placement.
+    </p>
+
+    <!-- Legacy Admin -->
+    <h4 style="font-size:14px; margin-bottom:10px;">&lt;phz-criteria-admin&gt; &mdash; Legacy Mode</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      The original admin with 4 tabs: Fields, Layout, Rules, Settings. Edits the <code>CriteriaConfig</code> in place.
+    </p>
+    <div class="sim-admin" style="max-width:400px;">
+      <div class="sim-admin-tabs">
+        <button class="sim-admin-tab sim-admin-tab--active">Fields</button>
+        <button class="sim-admin-tab">Layout</button>
+        <button class="sim-admin-tab">Rules</button>
+        <button class="sim-admin-tab">Settings</button>
+      </div>
+      <div class="sim-admin-body">
+        <div style="font-size:12px; color:var(--stone-500); margin-bottom:10px;">Each field is an expand-to-edit card:</div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-size:13px; font-weight:600;">Region</div>
+            <div style="font-size:11px; color:var(--stone-400);">multi_select</div>
+          </div>
+          <span style="font-size:10px; color:var(--stone-400);">&#9654;</span>
+        </div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-size:13px; font-weight:600;">Date Range</div>
+            <div style="font-size:11px; color:var(--stone-400);">date_range</div>
+          </div>
+          <span style="font-size:10px; color:var(--stone-400);">&#9654;</span>
+        </div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-size:13px; font-weight:600;">Salary Range</div>
+            <div style="font-size:11px; color:var(--stone-400);">numeric_range</div>
+          </div>
+          <span style="font-size:10px; color:var(--stone-400);">&#9654;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block" style="max-width:500px;"><span class="cmt">&lt;!-- Legacy mode (default) --&gt;</span>
+&lt;<span class="fn">phz-criteria-admin</span>
+  <span class="prop">.config</span>=${criteriaConfig}
+  <span class="prop">.columns</span>=${gridColumns}
+  <span class="prop">mode</span>=<span class="str">"legacy"</span>
+  @<span class="prop">config-change</span>=${handleConfigChange}
+&gt;&lt;/<span class="fn">phz-criteria-admin</span>&gt;</div>
+
+    <!-- Registry Admin -->
+    <h4 style="font-size:14px; margin:28px 0 10px;">&lt;phz-criteria-admin&gt; &mdash; Registry Mode</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      When <code>mode="registry"</code>, the admin switches to 4 enterprise tabs: Definitions, Bindings, Rules, Presets.
+    </p>
+    <div class="sim-admin" style="max-width:500px;">
+      <div class="sim-admin-tabs">
+        <button class="sim-admin-tab sim-admin-tab--active">Definitions</button>
+        <button class="sim-admin-tab">Bindings</button>
+        <button class="sim-admin-tab">Rules</button>
+        <button class="sim-admin-tab">Presets</button>
+      </div>
+      <div class="sim-admin-body">
+        <div style="font-size:12px; color:var(--stone-500); margin-bottom:10px;">Reusable filter definitions (artefact-independent):</div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:13px; font-weight:600;">region</div>
+              <div style="font-size:11px; color:var(--stone-400);">multi_select &middot; persist &middot; 5 options</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--blue-50); color:var(--blue-700);">3 bindings</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:13px; font-weight:600;">date_period</div>
+              <div style="font-size:11px; color:var(--stone-400);">date_range &middot; persist &middot; 16 presets</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--blue-50); color:var(--blue-700);">5 bindings</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--stone-50); border:1px solid var(--stone-200); border-radius:8px; padding:10px 14px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:13px; font-weight:600;">status</div>
+              <div style="font-size:11px; color:var(--stone-400);">chip_group &middot; reset &middot; 4 options</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:var(--blue-50); color:var(--blue-700);">2 bindings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block" style="max-width:600px;"><span class="cmt">&lt;!-- Registry mode --&gt;</span>
+&lt;<span class="fn">phz-criteria-admin</span>
+  <span class="prop">mode</span>=<span class="str">"registry"</span>
+  <span class="prop">.filterDefinitions</span>=${engine.registry.getAll()}
+  <span class="prop">.filterBindings</span>=${engine.bindings.getBindingsForArtefact(artId)}
+  <span class="prop">.filterRules</span>=${engine.ruleEngine.getRulesForFilter(defId)}
+  <span class="prop">.sharedPresets</span>=${sharedPresets}
+  <span class="prop">.artefactId</span>=${artId}
+&gt;&lt;/<span class="fn">phz-criteria-admin</span>&gt;</div>
+
+    <!-- Standalone Admin Components -->
+    <h4 style="font-size:14px; margin:28px 0 10px;">Standalone Admin Components</h4>
+    <p style="font-size:13px; color:var(--stone-600); margin-bottom:12px;">
+      Three additional standalone admin components are available for embedding individually:
+    </p>
+
+    <table class="ref-table">
+      <thead><tr><th>Component</th><th>CSS Prefix</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;phz-filter-definition-admin&gt;</code></td>
+          <td><code>phz-fda-</code></td>
+          <td>Full CRUD for filter definitions + artefact binding management. Two views: Definition list and Binding list.</td>
+        </tr>
+        <tr>
+          <td><code>&lt;phz-rule-admin&gt;</code></td>
+          <td><code>phz-ra-</code></td>
+          <td>Rule CRUD with priority ordering, enable/disable toggles, and a live preview panel showing before/after.</td>
+        </tr>
+        <tr>
+          <td><code>&lt;phz-preset-admin&gt;</code></td>
+          <td><code>phz-pa-</code></td>
+          <td>Preset management with Shared/Personal tabs, scope badges, and value preview chips.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 5: Engine Architecture                     -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section" id="engine">
+    <div class="section-header">
+      <h3>Criteria Engine Architecture</h3>
+      <span class="badge badge--engine">Engine</span>
+    </div>
+
+    <p style="font-size:14px; color:var(--stone-600); margin-bottom:16px;">
+      The registry-mode criteria system has 6 architectural layers, all wired together by <code>createCriteriaEngine()</code>:
+    </p>
+
+    <div class="arch-flow">
+      <div class="arch-box arch-box--registry">Filter<br>Registry</div>
+      <span class="arch-arrow">&rarr;</span>
+      <div class="arch-box arch-box--bindings">Filter<br>Bindings</div>
+      <span class="arch-arrow">&rarr;</span>
+      <div class="arch-box arch-box--state">State<br>Manager</div>
+      <span class="arch-arrow">&rarr;</span>
+      <div class="arch-box arch-box--rules">Rules<br>Engine</div>
+      <span class="arch-arrow">&rarr;</span>
+      <div class="arch-box arch-box--output">Criteria<br>Output</div>
+      <span class="arch-arrow">&rarr;</span>
+      <div class="arch-box arch-box--admin">Admin<br>Service</div>
+    </div>
+
+    <div class="cards" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--blue-50);">&#128218;</div>
+          <div>
+            <div class="card-title">Filter Registry</div>
+            <div class="card-type">filter-registry.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Central store for <code>FilterDefinition</code> objects. Artefact-independent: define once, bind to many reports.</p>
+          <ul class="prop-list">
+            <li><span class="prop-name">register(def)</span> <span class="prop-desc">Add a new definition</span></li>
+            <li><span class="prop-name">get(id)</span> <span class="prop-desc">Retrieve by ID</span></li>
+            <li><span class="prop-name">update(id, patch)</span> <span class="prop-desc">Partial update</span></li>
+            <li><span class="prop-name">deprecate(id)</span> <span class="prop-desc">Soft-delete</span></li>
+            <li><span class="prop-name">validateDependencyGraph()</span> <span class="prop-desc">DAG cycle detection</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--purple-50);">&#128279;</div>
+          <div>
+            <div class="card-title">Filter Bindings</div>
+            <div class="card-type">filter-bindings.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Associates definitions to artefacts (reports, dashboards) with per-binding overrides for label, defaults, order, visibility.</p>
+          <ul class="prop-list">
+            <li><span class="prop-name">bind(binding)</span> <span class="prop-desc">Associate def to artefact</span></li>
+            <li><span class="prop-name">unbind(defId, artId)</span> <span class="prop-desc">Remove association</span></li>
+            <li><span class="prop-name">reorderBindings(artId, ids)</span> <span class="prop-desc">Change filter order</span></li>
+            <li><span class="prop-name">resolveArtefactFields()</span> <span class="prop-desc">Merge def + binding &rarr; SelectionFieldDef[]</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--green-50);">&#128190;</div>
+          <div>
+            <div class="card-title">State Manager</div>
+            <div class="card-type">filter-state.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>6-level state resolution chain. Supports session persistence via pluggable <code>StateStorageAdapter</code>.</p>
+          <div style="font-size:12px; margin:8px 0;">
+            <strong>Resolution priority:</strong><br>
+            <span style="color:var(--stone-500);">1.</span> Rule values &rarr;
+            <span style="color:var(--stone-500);">2.</span> Preset &rarr;
+            <span style="color:var(--stone-500);">3.</span> Persisted &rarr;
+            <span style="color:var(--stone-500);">4.</span> Binding default &rarr;
+            <span style="color:var(--stone-500);">5.</span> Definition default &rarr;
+            <span style="color:var(--stone-500);">6.</span> All selected (null)
+          </div>
+          <div class="callout callout--warn" style="margin:8px 0 0;">
+            <span class="callout-icon">&#9888;</span>
+            <span><code>null</code> means "all selected" (no filter), not "nothing selected".</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--amber-50);">&#9881;</div>
+          <div>
+            <div class="card-title">Rules Engine</div>
+            <div class="card-type">filter-rules.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>5 rule types that programmatically constrain which options are available:</p>
+          <table class="ref-table" style="margin:8px 0;">
+            <tbody>
+              <tr><td><code>exclude_pattern</code></td><td>Regex to hide matching options</td></tr>
+              <tr><td><code>include_pattern</code></td><td>Regex to keep only matching options</td></tr>
+              <tr><td><code>value_set</code></td><td>Explicit include/exclude list</td></tr>
+              <tr><td><code>tree_group_compare</code></td><td>Filter tree nodes by group field</td></tr>
+              <tr><td><code>custom</code></td><td>Plug in your own evaluator function</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:#FFE4E6;">&#128228;</div>
+          <div>
+            <div class="card-title">Criteria Output</div>
+            <div class="card-type">criteria-output.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Produces structured <code>ArtefactCriteria</code> with typed operators, ready for query building.</p>
+          <p><strong>11 operators:</strong> <code>in</code>, <code>not_in</code>, <code>between</code>, <code>equals</code>, <code>not_equals</code>, <code>like</code>, <code>not_like</code>, <code>is_null</code>, <code>is_not_null</code>, <code>greater_than</code>, <code>less_than</code></p>
+          <p>Includes debounced subscription model for real-time filter updates.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--stone-100);">&#128274;</div>
+          <div>
+            <div class="card-title">Admin Service</div>
+            <div class="card-type">filter-admin.ts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Permission-gated CRUD with immutability rules and audit logging.</p>
+          <ul class="prop-list">
+            <li><span class="prop-name">createDefinition()</span> <span class="prop-desc">With permission check</span></li>
+            <li><span class="prop-name">updateDefinition()</span> <span class="prop-desc">Type locked if bindings exist</span></li>
+            <li><span class="prop-name">deprecateDefinition()</span> <span class="prop-desc">Soft-delete with audit</span></li>
+            <li><span class="prop-name">getAuditLog()</span> <span class="prop-desc">Full operation history</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Start -->
+    <h4 style="font-size:14px; margin:28px 0 10px;">Quick Start: Full Round-Trip</h4>
+    <div class="code-block"><span class="kw">import</span> { <span class="fn">createCriteriaEngine</span>, <span class="fn">filterDefinitionId</span>, <span class="fn">artefactId</span> } <span class="kw">from</span> <span class="str">'@phozart/phz-engine'</span>;
+
+<span class="cmt">// 1. Create the engine</span>
+<span class="kw">const</span> engine = <span class="fn">createCriteriaEngine</span>({ <span class="prop">debounceMs</span>: <span class="num">300</span> });
+
+<span class="cmt">// 2. Register filter definitions</span>
+engine.registry.<span class="fn">register</span>({
+  <span class="prop">id</span>: <span class="fn">filterDefinitionId</span>(<span class="str">'region'</span>),
+  <span class="prop">label</span>: <span class="str">'Region'</span>,
+  <span class="prop">type</span>: <span class="str">'multi_select'</span>,
+  <span class="prop">sessionBehavior</span>: <span class="str">'persist'</span>,
+  <span class="prop">options</span>: [{ <span class="prop">value</span>: <span class="str">'US'</span>, <span class="prop">label</span>: <span class="str">'US'</span> }, { <span class="prop">value</span>: <span class="str">'UK'</span>, <span class="prop">label</span>: <span class="str">'UK'</span> }],
+  <span class="prop">createdAt</span>: Date.<span class="fn">now</span>(), <span class="prop">updatedAt</span>: Date.<span class="fn">now</span>(),
+});
+
+<span class="cmt">// 3. Bind to artefact</span>
+<span class="kw">const</span> reportId = <span class="fn">artefactId</span>(<span class="str">'sales-report'</span>);
+engine.bindings.<span class="fn">bind</span>({
+  <span class="prop">filterDefinitionId</span>: <span class="fn">filterDefinitionId</span>(<span class="str">'region'</span>),
+  <span class="prop">artefactId</span>: reportId,
+  <span class="prop">visible</span>: <span class="num">true</span>, <span class="prop">order</span>: <span class="num">0</span>,
+});
+
+<span class="cmt">// 4. Resolve fields for rendering</span>
+<span class="kw">const</span> fields = engine.<span class="fn">resolveFields</span>(reportId);
+
+<span class="cmt">// 5. Build structured criteria from user selections</span>
+<span class="kw">const</span> criteria = engine.<span class="fn">buildCriteria</span>(reportId, { <span class="prop">region</span>: [<span class="str">'US'</span>] });
+<span class="cmt">// { artefactId, filters: [{ operator: 'in', value: ['US'], dataField: 'region_code', ... }] }</span>
+
+<span class="cmt">// 6. Subscribe to changes (debounced)</span>
+engine.<span class="fn">subscribe</span>(<span class="kw">criteria</span> => {
+  console.<span class="fn">log</span>(<span class="str">'Filters changed:'</span>, criteria.filters);
+});</div>
+
+    <!-- Migration -->
+    <div class="callout callout--tip" style="margin-top:16px;">
+      <span class="callout-icon">&#9889;</span>
+      <span>
+        <strong>Migration from legacy:</strong> Use <code>migrateFromCriteriaConfig(config, artefactId)</code> to convert an existing <code>CriteriaConfig</code> into a full criteria engine &mdash; zero code changes to your field definitions.
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 6: Complete Component Reference              -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Component Reference</h3>
+      <span class="badge badge--field">Web Components</span>
+    </div>
+
+    <table class="ref-table">
+      <thead><tr><th>Component</th><th>Package</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;phz-selection-criteria&gt;</code></td><td>@phozart/phz-criteria</td><td>Top-level orchestrator: bar + drawer + all fields</td></tr>
+        <tr><td><code>&lt;phz-criteria-bar&gt;</code></td><td>@phozart/phz-criteria</td><td>Horizontal filter bar (button or summary mode)</td></tr>
+        <tr><td><code>&lt;phz-filter-drawer&gt;</code></td><td>@phozart/phz-criteria</td><td>Right-side slide-out panel with sections</td></tr>
+        <tr><td><code>&lt;phz-filter-section&gt;</code></td><td>@phozart/phz-criteria</td><td>Collapsible section inside drawer</td></tr>
+        <tr><td><code>&lt;phz-expanded-modal&gt;</code></td><td>@phozart/phz-criteria</td><td>Full-screen modal for large tree selects</td></tr>
+        <tr><td><code>&lt;phz-preset-sidebar&gt;</code></td><td>@phozart/phz-criteria</td><td>Preset list in modal sidebar</td></tr>
+        <tr><td><code>&lt;phz-chip-select&gt;</code></td><td>@phozart/phz-criteria</td><td>Toggle pill selection (multi/single mode)</td></tr>
+        <tr><td><code>&lt;phz-match-filter-pill&gt;</code></td><td>@phozart/phz-criteria</td><td>Tri-state cycling pill (all/matching/non-matching)</td></tr>
+        <tr><td><code>&lt;phz-tree-select&gt;</code></td><td>@phozart/phz-criteria</td><td>Hierarchical tree with checkboxes</td></tr>
+        <tr><td><code>&lt;phz-date-range-picker&gt;</code></td><td>@phozart/phz-criteria</td><td>Two-zone date picker with presets</td></tr>
+        <tr><td><code>&lt;phz-numeric-range-input&gt;</code></td><td>@phozart/phz-criteria</td><td>Min/max inputs with optional slider</td></tr>
+        <tr><td><code>&lt;phz-searchable-dropdown&gt;</code></td><td>@phozart/phz-criteria</td><td>Type-ahead search dropdown</td></tr>
+        <tr><td><code>&lt;phz-field-presence-filter&gt;</code></td><td>@phozart/phz-criteria</td><td>Column has-value/empty tri-state filter</td></tr>
+        <tr><td><code>&lt;phz-criteria-summary&gt;</code></td><td>@phozart/phz-criteria</td><td>Standalone filter summary display</td></tr>
+        <tr><td><code>&lt;phz-criteria-admin&gt;</code></td><td>@phozart/phz-criteria</td><td>Admin panel (legacy + registry modes)</td></tr>
+        <tr><td><code>&lt;phz-filter-definition-admin&gt;</code></td><td>@phozart/phz-criteria</td><td>Definition CRUD + binding management</td></tr>
+        <tr><td><code>&lt;phz-rule-admin&gt;</code></td><td>@phozart/phz-criteria</td><td>Rule CRUD with preview</td></tr>
+        <tr><td><code>&lt;phz-preset-admin&gt;</code></td><td>@phozart/phz-criteria</td><td>Preset management (shared/personal)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; padding:40px 0 0; border-top: 1px solid var(--stone-200); color:var(--stone-400); font-size:12px;">
+    Phz Grid &mdash; Filter &amp; Criteria Visual Guide &mdash; Generated Feb 2026
+  </div>
+
+</div>
+
+</body>
+</html>

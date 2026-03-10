@@ -1,0 +1,44 @@
+{
+  "name": "@phozart/phz-local",
+  "version": "0.1.0",
+  "description": "Lightweight local Node.js server with native DuckDB and filesystem persistence",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "phz-local": "bin/phz-local.js"
+  },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }
+  },
+  "sideEffects": false,
+  "files": ["dist", "bin"],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@phozart/phz-workspace": "^0.1.0",
+    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/phz-shared": "^0.1.0"
+  },
+  "optionalDependencies": {
+    "duckdb": "^1.0.0"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["local-server", "duckdb", "filesystem", "workspace"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/local"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/local#readme"
+}

@@ -1,0 +1,18 @@
+/* phz-grid — anywidget styles */
+
+.phz-grid-container {
+  width: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Jupyter-specific overrides */
+.jp-OutputArea-output .phz-grid-container {
+  overflow: visible;
+}
+
+/* Ensure the grid respects the container height in notebooks */
+phz-grid {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

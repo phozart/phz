@@ -1,0 +1,153 @@
+# ============================================================
+# phz-grid — Project Configuration
+# Generated: 2026-02-24
+# ============================================================
+
+project:
+  name: phz-grid
+  description: >-
+    Next-generation universal data grid built on Web Components with framework
+    adapters, DuckDB-WASM analytics, accessibility-first design, and an
+    open-core monetization model.
+  type: library
+  version: 0.1.0
+
+# ----------------------------------------------------------
+# Technology Stack
+# ----------------------------------------------------------
+techstack:
+  core:
+    language: typescript
+    runtime: node
+    ui_framework: lit
+    component_model: web-components
+  build:
+    bundler: vite
+    test_runner: vitest
+    test_browser: playwright
+    linter: eslint
+    formatter: prettier
+  package_manager: npm
+  monorepo: true
+  target:
+    module: esm
+    browsers: ">= last 2 versions"
+    node: ">=20"
+
+# ----------------------------------------------------------
+# Packages (monorepo structure)
+# ----------------------------------------------------------
+packages:
+  - name: "@phozart/phz-core"
+    path: packages/core
+    description: Headless grid engine — data model, state, events
+  - name: "@phozart/phz-grid"
+    path: packages/grid
+    description: Web Components grid (Lit) — rendering, virtualization, a11y
+  - name: "@phozart/phz-react"
+    path: packages/react
+    description: React wrapper / adapter
+  - name: "@phozart/phz-vue"
+    path: packages/vue
+    description: Vue wrapper / adapter
+  - name: "@phozart/phz-angular"
+    path: packages/angular
+    description: Angular wrapper / adapter
+  - name: "@phozart/phz-duckdb"
+    path: packages/duckdb
+    description: DuckDB-WASM data source adapter
+  - name: "@phozart/phz-ai"
+    path: packages/ai
+    description: AI toolkit — schema-as-contract, NL query
+  - name: "@phozart/phz-collab"
+    path: packages/collab
+    description: Real-time collaboration — Yjs CRDTs, sync adapters
+  - name: "@phozart/phz-engine"
+    path: packages/engine
+    description: BI engine — reports, dashboards, KPIs, filters, pivots, aggregation
+  - name: "@phozart/phz-widgets"
+    path: packages/widgets
+    description: Dashboard widgets — bar-chart, KPI card, trend-line, scorecard, etc.
+  - name: "@phozart/phz-criteria"
+    path: packages/criteria
+    description: Selection criteria & filter UI components
+  - name: "@phozart/phz-grid-admin"
+    path: packages/grid-admin
+    description: Grid admin panel — columns, formatting, export settings
+  - name: "@phozart/phz-engine-admin"
+    path: packages/engine-admin
+    description: Engine admin panel — report/dashboard/KPI designers
+  - name: "@phozart/phz-python"
+    path: packages/python
+    description: Python package (pip) — anywidget Jupyter widget + Panel/Streamlit adapters
+    distribution: pypi
+    python:
+      package_name: phz-grid
+      min_python: ">=3.9"
+      dependencies: [anywidget, pandas, pyarrow]
+      frameworks: [jupyter, panel, streamlit]
+
+# ----------------------------------------------------------
+# Phase Configuration
+# ----------------------------------------------------------
+phases:
+  innovation: true
+  marketing: true
+  gates:
+    mode: auto          # all gates auto-advance when criteria met
+    overrides: {}       # no manual overrides
+
+# ----------------------------------------------------------
+# Key Architectural Decisions (from research)
+# ----------------------------------------------------------
+architecture:
+  rendering:
+    default: dom-virtualization
+    optional: canvas-high-performance
+  data_backbone: duckdb-wasm + apache-arrow
+  collaboration: yjs-crdt
+  extensibility:
+    hooks: before-after-middleware     # Handsontable-style
+    slots: named-web-component-slots  # AG Grid-style
+    core: headless-functional          # TanStack-style
+  theming:
+    system: css-custom-properties
+    layers:
+      - primitive-tokens
+      - semantic-tokens
+      - component-tokens
+  accessibility:
+    priority: first-class
+    targets:
+      - screen-reader-with-virtualization
+      - forced-colors-mode
+      - motor-impairment
+      - cognitive-accessibility
+  ai:
+    pattern: schema-as-contract
+    providers: [openai, anthropic, google]
+
+# ----------------------------------------------------------
+# Open-Core Tiers
+# ----------------------------------------------------------
+licensing:
+  community:
+    license: MIT
+    features:
+      - dom-virtualization
+      - basic-sort-filter
+      - keyboard-navigation
+      - screen-reader-support
+      - web-components-core
+      - framework-adapters
+  enterprise:
+    license: commercial
+    features:
+      - duckdb-wasm-integration
+      - canvas-rendering
+      - ai-toolkit
+      - crdt-collaboration
+      - advanced-analytics
+      - excel-export
+      - integrated-charts
+      - edge-deployment

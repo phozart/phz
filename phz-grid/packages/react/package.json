@@ -1,0 +1,78 @@
+{
+  "name": "@phozart/phz-react",
+  "version": "0.1.0",
+  "description": "React wrapper / adapter for phz-grid",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./grid": {
+      "types": "./dist/grid.d.ts",
+      "import": "./dist/grid.js"
+    },
+    "./criteria": {
+      "types": "./dist/criteria.d.ts",
+      "import": "./dist/criteria.js"
+    },
+    "./admin": {
+      "types": "./dist/admin.d.ts",
+      "import": "./dist/admin.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "react",
+    "data-grid",
+    "table",
+    "hooks",
+    "web-components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/react#readme",
+  "dependencies": {
+    "@lit/react": "^1.0.8",
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/phz-grid": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@phozart/phz-workspace": ">=0.1.0",
+    "@phozart/phz-criteria": ">=0.1.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@phozart/phz-workspace": {
+      "optional": true
+    },
+    "@phozart/phz-criteria": {
+      "optional": true
+    }
+  }
+}

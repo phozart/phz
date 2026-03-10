@@ -1,0 +1,42 @@
+{
+  "name": "@phozart/phz-collab",
+  "version": "0.1.0",
+  "description": "Real-time collaboration — Yjs CRDTs, sync adapters for phz-grid",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["collaboration", "yjs", "crdt", "real-time", "data-grid"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/collab"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/collab#readme",
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0"
+  },
+  "peerDependencies": {
+    "yjs": "^13.0.0"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "@phozart/phz-duckdb",
+  "version": "0.1.0",
+  "description": "DuckDB-WASM data source adapter for phz-grid",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["duckdb", "wasm", "data-grid", "analytics", "apache-arrow"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/duckdb"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/duckdb#readme",
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@duckdb/duckdb-wasm": "^1.0.0",
+    "apache-arrow": "^16.0.0",
+    "@phozart/phz-engine": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@duckdb/duckdb-wasm": {
+      "optional": true
+    },
+    "apache-arrow": {
+      "optional": true
+    },
+    "@phozart/phz-engine": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@phozart/phz-vue",
+  "version": "0.1.0",
+  "description": "Vue wrapper / adapter for phz-grid",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["vue", "vue3", "data-grid", "table", "composables", "web-components"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/vue"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/vue#readme",
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-grid": "^0.1.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "@phozart/phz-engine",
+  "version": "0.1.0",
+  "description": "Headless BI computation engine — KPIs, metrics, dashboards, reports",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./kpi": {
+      "types": "./dist/entry-kpi.d.ts",
+      "import": "./dist/entry-kpi.js"
+    },
+    "./dashboard": {
+      "types": "./dist/entry-dashboard.d.ts",
+      "import": "./dist/entry-dashboard.js"
+    },
+    "./criteria": {
+      "types": "./dist/entry-criteria.d.ts",
+      "import": "./dist/entry-criteria.js"
+    },
+    "./expression": {
+      "types": "./dist/entry-expression.d.ts",
+      "import": "./dist/entry-expression.js"
+    },
+    "./storage": {
+      "types": "./dist/entry-storage.d.ts",
+      "import": "./dist/entry-storage.js"
+    },
+    "./explorer": {
+      "types": "./dist/explorer/index.d.ts",
+      "import": "./dist/explorer/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["bi-engine", "kpi", "dashboard", "reports", "analytics", "pivot"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/engine"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/engine#readme",
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-shared": "^0.1.0",
+    "lit": "^3.2.0"
+  }
+}

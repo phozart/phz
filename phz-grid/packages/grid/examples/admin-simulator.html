@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>phz-grid — Admin &amp; Filter Simulator</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --stone-50: #FAFAF9; --stone-100: #F5F5F4; --stone-200: #E7E5E4;
+    --stone-400: #A8A29E; --stone-500: #78716C; --stone-700: #44403C;
+    --stone-800: #292524; --stone-900: #1C1917;
+    --blue-500: #3B82F6; --blue-600: #2563EB;
+    --green-500: #22C55E; --amber-500: #F59E0B; --red-500: #EF4444;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  }
+  html, body { height: 100%; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--stone-100); color: var(--stone-900); }
+
+  /* ── Page shell ── */
+  .app { display: flex; flex-direction: column; height: 100vh; }
+
+  .topbar {
+    background: var(--stone-900); color: var(--stone-50); padding: 0 24px;
+    display: flex; align-items: center; gap: 16px; height: 48px; flex-shrink: 0;
+  }
+  .topbar h1 { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .topbar .sep { width: 1px; height: 20px; background: #44403C; }
+  .topbar .subtitle { font-size: 13px; color: var(--stone-400); }
+  .topbar .badge { background: var(--blue-600); color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+
+  /* ── Nav tabs ── */
+  .nav-tabs { display: flex; gap: 4px; margin-left: auto; }
+  .nav-tab {
+    font-size: 12px; font-weight: 500; font-family: inherit;
+    padding: 6px 14px; border-radius: 6px; border: none;
+    background: transparent; color: var(--stone-400); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .nav-tab:hover { color: var(--stone-50); background: var(--stone-800); }
+  .nav-tab.active { color: var(--stone-50); background: #44403C; }
+
+  /* ── View container ── */
+  .content { flex: 1; overflow: hidden; }
+  .view { display: none; height: 100%; }
+  .view.active { display: grid; }
+
+  /* ── Grid Admin view: 2-column split (admin is now a modal overlay) ── */
+  #view-grid-admin {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+  #view-grid-admin .code-pane { display: flex; flex-direction: column; overflow: hidden; }
+  #view-grid-admin .preview-pane { overflow: auto; padding: 20px; background: var(--stone-50); }
+
+  /* ── Filter view: 2-column split ── */
+  #view-filter {
+    grid-template-columns: minmax(400px, 500px) 1fr;
+    grid-template-rows: 1fr;
+  }
+  #view-filter .admin-pane {
+    border-right: 1px solid var(--stone-200); overflow: auto; background: white;
+  }
+  #view-filter .admin-pane phz-filter-designer { height: 100%; width: 100%; }
+  #view-filter .preview-pane { overflow: auto; padding: 20px; background: var(--stone-50); }
+
+  /* ── Code panel ── */
+  .code-tabs {
+    display: flex; gap: 0; background: var(--stone-800); flex-shrink: 0;
+  }
+  .code-tabs button {
+    background: none; border: none; padding: 8px 16px; font: inherit; font-size: 12px;
+    color: var(--stone-400); cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .code-tabs button:hover { color: var(--stone-200); }
+  .code-tabs button.active { color: var(--green-500); background: rgba(34,197,94,0.08); }
+  .code-block {
+    background: var(--stone-900); color: var(--stone-200); padding: 16px;
+    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+    overflow: auto; flex: 1; white-space: pre; tab-size: 2;
+  }
+  .code-block .kw { color: #C084FC; }
+  .code-block .str { color: #86EFAC; }
+  .code-block .attr { color: #93C5FD; }
+  .code-block .tag { color: #F9A8D4; }
+  .code-block .cmt { color: #57534E; font-style: italic; }
+  .code-block .num { color: #FCD34D; }
+  .code-block .bool { color: #F97316; }
+  .code-block .fn { color: #67E8F9; }
+
+  /* ── Column header for panels ── */
+  .pane-label {
+    display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+    background: var(--stone-900); color: var(--stone-50); font-size: 11px;
+    font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0;
+  }
+  .pane-label .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ── Change indicator ── */
+  .change-flash { animation: flash 0.4s ease; }
+  @keyframes flash {
+    0%   { background: rgba(34,197,94,0.12); }
+    100% { background: transparent; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    #view-grid-admin, #view-filter { grid-template-columns: 1fr; }
+    #view-grid-admin .preview-pane, #view-filter .preview-pane { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Top bar ── -->
+  <div class="topbar">
+    <h1>phz-grid</h1>
+    <div class="sep"></div>
+    <span class="subtitle">Admin &amp; Filter Simulator</span>
+    <span class="badge">Live Components</span>
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-view="grid-admin" role="tab">Grid Admin</button>
+      <button class="nav-tab" data-view="filter" role="tab">Filter Definitions</button>
+    </nav>
+  </div>
+
+  <!-- ── Content ── -->
+  <div class="content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         VIEW 1: Grid Admin
+         ═══════════════════════════════════════════════════════ -->
+    <div id="view-grid-admin" class="view active">
+
+      <!-- Grid admin is now a modal overlay -->
+      <phz-grid-admin id="gridAdmin" open
+        report-id="RPT-001"
+        report-name="Sales Report Q4">
+      </phz-grid-admin>
+
+      <!-- Left: Code output -->
+      <div class="code-pane">
+        <div class="pane-label">
+          <span class="dot" style="background:var(--green-500)"></span>
+          Component Declaration
+        </div>
+        <div class="code-tabs" id="gridCodeTabs">
+          <button class="active" data-lang="wc">Web Components</button>
+          <button data-lang="react">React</button>
+          <button data-lang="vue">Vue 3</button>
+          <button data-lang="angular">Angular</button>
+        </div>
+        <div class="code-block" id="gridCodeBlock"></div>
+      </div>
+
+      <!-- Right: Actual <phz-grid> preview -->
+      <div class="preview-pane">
+        <div class="pane-label" style="margin:-20px -20px 16px;padding:10px 20px">
+          <span class="dot" style="background:var(--amber-500)"></span>
+          Live Preview
+        </div>
+        <phz-grid id="previewGrid"></phz-grid>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         VIEW 2: Filter Definitions
+         ═══════════════════════════════════════════════════════ -->
+    <div id="view-filter" class="view">
+
+      <!-- Left: Filter Designer -->
+      <div class="admin-pane">
+        <phz-filter-designer id="filterDesigner"></phz-filter-designer>
+      </div>
+
+      <!-- Right: Live preview -->
+      <div class="preview-pane">
+        <div class="pane-label" style="margin:-20px -20px 16px;padding:10px 20px">
+          <span class="dot" style="background:var(--amber-500)"></span>
+          Live Preview
+        </div>
+        <phz-selection-criteria id="previewCriteria"></phz-selection-criteria>
+        <div style="margin-top:20px">
+          <phz-grid id="filteredGrid"></phz-grid>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     LOAD ACTUAL COMPONENTS (pre-built CDN bundle)
+     Build first: cd packages/grid && npx vite build --config vite.cdn-all.config.ts
+     ═══════════════════════════════════════════════════════════════ -->
+<script type="module">
+  import * as Phz from '../dist/cdn/phz-all.js';
+
+  // ─── Sample Data ──────────────────────────────────────────
+  const sampleData = [
+    { id: 1,  region: 'North America', sales: 142500, target: 150000, progress: 95, status: 'On Track', date: '2025-12-15', manager: 'Smith',     department: 'Enterprise' },
+    { id: 2,  region: 'Europe',        sales: 98200,  target: 120000, progress: 82, status: 'At Risk',  date: '2025-12-14', manager: 'Mueller',    department: 'SMB' },
+    { id: 3,  region: 'Asia Pacific',  sales: 176800, target: 160000, progress: 100,status: 'Exceeded', date: '2025-12-13', manager: 'Tanaka',     department: 'Enterprise' },
+    { id: 4,  region: 'Latin America', sales: 45600,  target: 80000,  progress: 57, status: 'Behind',   date: '2025-12-12', manager: 'Garcia',     department: 'SMB' },
+    { id: 5,  region: 'Middle East',   sales: 67300,  target: 70000,  progress: 96, status: 'On Track', date: '2025-12-11', manager: 'Al-Rashid',  department: 'Enterprise' },
+    { id: 6,  region: 'Africa',        sales: 23100,  target: 40000,  progress: 58, status: 'Behind',   date: '2025-12-10', manager: 'Okafor',     department: 'Public Sector' },
+    { id: 7,  region: 'Central Europe',sales: 88900,  target: 95000,  progress: 94, status: 'On Track', date: '2025-12-09', manager: 'Novak',      department: 'SMB' },
+    { id: 8,  region: 'South Asia',    sales: 112400, target: 100000, progress: 100,status: 'Exceeded', date: '2025-12-08', manager: 'Sharma',     department: 'Enterprise' },
+    { id: 9,  region: 'Oceania',       sales: 54200,  target: 60000,  progress: 90, status: 'On Track', date: '2025-12-07', manager: 'Williams',   department: 'Public Sector' },
+    { id: 10, region: 'Nordics',       sales: 71800,  target: 85000,  progress: 84, status: 'At Risk',  date: '2025-12-06', manager: 'Johansson',  department: 'Enterprise' },
+  ];
+
+  const columns = [
+    { field: 'region',     header: 'Region',     type: 'string',  visible: true },
+    { field: 'sales',      header: 'Sales ($)',   type: 'number',  visible: true },
+    { field: 'target',     header: 'Target ($)',  type: 'number',  visible: true },
+    { field: 'progress',   header: 'Progress',    type: 'bar',     visible: true },
+    { field: 'status',     header: 'Status',      type: 'status',  visible: true },
+    { field: 'date',       header: 'Date',        type: 'date',    visible: true },
+    { field: 'manager',    header: 'Manager',     type: 'string',  visible: false },
+    { field: 'department', header: 'Department',  type: 'string',  visible: false },
+  ];
+
+  const statusColors = {
+    'On Track':  { bg: '#DCFCE7', color: '#166534', dot: '#22C55E' },
+    'At Risk':   { bg: '#FEF3C7', color: '#92400E', dot: '#F59E0B' },
+    'Exceeded':  { bg: '#DBEAFE', color: '#1E40AF', dot: '#3B82F6' },
+    'Behind':    { bg: '#FEE2E2', color: '#991B1B', dot: '#EF4444' },
+  };
+
+  const barThresholds = [
+    { min: 90, color: '#22C55E' },
+    { min: 70, color: '#F59E0B' },
+    { min: 0,  color: '#EF4444' },
+  ];
+
+  // Build column type map
+  const columnTypes = {};
+  columns.forEach(c => { columnTypes[c.field] = c.type; });
+
+  // ─── State tracking (mirrors admin panel state) ─────────────
+  const DEFAULTS = Phz.DEFAULT_TABLE_SETTINGS;
+  let tableSettings = { ...DEFAULTS };
+  let columnFormatting = {};
+  let numberFormats = {};
+  let formattingRules = [];
+  let exportSettings = { format: 'csv', includeHeaders: true, includeFormatting: false, includeGroupHeaders: true, separator: ',' };
+  let filterPresets = {};
+  let activeGridCodeLang = 'wc';
+
+  // ─── Criteria Config for filter view ──────────────────────
+  let criteriaConfig = {
+    fields: [
+      { id: 'region', label: 'Region', type: 'multi_select',
+        options: [...new Set(sampleData.map(r => r.region))].map(v => ({ value: v, label: v })) },
+      { id: 'status', label: 'Status', type: 'chip_group',
+        options: ['On Track','At Risk','Exceeded','Behind'].map(s => ({ value: s, label: s })) },
+      { id: 'date_range', label: 'Date Range', type: 'date_range',
+        dateRangeConfig: { availablePresets: ['this_month','last_month','this_quarter','year_to_date'] } },
+      { id: 'sales_range', label: 'Sales Range', type: 'numeric_range',
+        numericRangeConfig: { min: 0, max: 200000, step: 1000, unit: '$' } },
+      { id: 'department', label: 'Department', type: 'multi_select',
+        options: [...new Set(sampleData.map(r => r.department))].map(v => ({ value: v, label: v })) },
+    ],
+    behavior: {
+      autoApply: false,
+      showSummaryStrip: true,
+      showPresetManager: true,
+      showResetButton: true,
+      layout: { barMode: 'button', buttonContent: 'icon-text', buttonLabel: 'Filters' },
+    },
+  };
+  let activeFilters = {};
+
+  // ─── Data Sources for filter designer ────────────────────
+  const dataSources = {
+    sales: {
+      columns: [
+        { field: 'region', type: 'string' },
+        { field: 'sales', type: 'number' },
+        { field: 'target', type: 'number' },
+        { field: 'progress', type: 'number' },
+        { field: 'status', type: 'string' },
+        { field: 'date', type: 'date' },
+        { field: 'manager', type: 'string' },
+        { field: 'department', type: 'string' },
+      ],
+      rows: sampleData,
+      meta: { source: 'Sales Data' },
+    },
+  };
+
+  // ─── Code generation helpers ───────────────────────────────
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const kw  = s => `<span class="kw">${esc(s)}</span>`;
+  const str = s => `<span class="str">${esc(s)}</span>`;
+  const attr = s => `<span class="attr">${esc(s)}</span>`;
+  const tag = s => `<span class="tag">${esc(s)}</span>`;
+  const cmt = s => `<span class="cmt">${esc(s)}</span>`;
+  const num = s => `<span class="num">${s}</span>`;
+  const bool = s => `<span class="bool">${s}</span>`;
+  const fn  = s => `<span class="fn">${esc(s)}</span>`;
+
+  // Check if a setting differs from defaults
+  function changed(key) { return tableSettings[key] !== DEFAULTS[key]; }
+
+  // Get visible columns
+  function getVisibleCols() { return columns.filter(c => c.visible); }
+
+  // ═══════════════════════════════════════════════════════════
+  //  GRID CODE GENERATORS
+  // ═══════════════════════════════════════════════════════════
+
+  function gridCodeWC() {
+    const ts = tableSettings;
+    const cols = getVisibleCols();
+    const L = [];
+    L.push(cmt('&lt;!-- Web Components -- plain HTML --&gt;'));
+    L.push(`${kw('import')} ${str("'phz-all.js'")};`);
+    L.push('');
+
+    // Column definitions
+    L.push(`${kw('const')} ${attr('columns')} = [`);
+    cols.forEach((c,i) => {
+      const parts = [`${attr('field')}: ${str(c.field)}`, `${attr('header')}: ${str(c.header)}`];
+      if (c.type !== 'string') parts.push(`${attr('type')}: ${str(c.type)}`);
+      if (numberFormats[c.field]) parts.push(`${attr('numberFormat')}: { ${attr('decimals')}: ${num(numberFormats[c.field].decimals ?? 0)} }`);
+      L.push(`  { ${parts.join(', ')} }${i < cols.length-1 ? ',' : ''}`);
+    });
+    L.push(`];`);
+    L.push('');
+
+    // Grid element
+    L.push(`&lt;${tag('phz-grid')}`);
+    // Always show key attributes
+    L.push(`  ${attr('selection-mode')}=${str(ts.selectionMode || 'single')}`);
+    L.push(`  ${attr('density')}=${str(ts.density || 'compact')}`);
+    L.push(`  ${attr('grid-lines')}=${str(ts.gridLines || 'horizontal')}`);
+    L.push(`  ${attr('page-size')}=${str(String(ts.pageSize || 25))}`);
+    // Conditional attributes (only if changed from defaults or notable)
+    if (ts.editMode !== 'none') L.push(`  ${attr('edit-mode')}=${str(ts.editMode)}`);
+    if (ts.rowBanding) L.push(`  ${attr('row-banding')}`);
+    if (!ts.showToolbar) L.push(`  ${attr('show-toolbar')}=${str('false')}`);
+    if (!ts.showPagination) L.push(`  ${attr('show-pagination')}=${str('false')}`);
+    if (ts.showCheckboxes) L.push(`  ${attr('show-checkboxes')}`);
+    if (!ts.hoverHighlight) L.push(`  ${attr('hover-highlight')}=${str('false')}`);
+    if (ts.cellTextOverflow !== 'wrap') L.push(`  ${attr('cell-text-overflow')}=${str(ts.cellTextOverflow)}`);
+    if (ts.compactNumbers) L.push(`  ${attr('compact-numbers')}`);
+    if (ts.showRowActions) L.push(`  ${attr('show-row-actions')}`);
+    if (ts.virtualization) L.push(`  ${attr('virtualization')}`);
+    if (ts.autoSizeColumns) L.push(`  ${attr('auto-size-columns')}`);
+    if (ts.loadingMode !== 'paginate') L.push(`  ${attr('loading-mode')}=${str(ts.loadingMode)}`);
+    // Title bar
+    if (ts.showTitleBar && ts.titleText) {
+      L.push(`  ${attr('grid-title')}=${str(ts.titleText)}`);
+      if (ts.subtitleText) L.push(`  ${attr('grid-subtitle')}=${str(ts.subtitleText)}`);
+    }
+    // Aggregation
+    if (ts.showAggregation) {
+      L.push(`  ${attr('aggregation')}`);
+      L.push(`  ${attr('aggregation-fn')}=${str(ts.aggregationFn || 'sum')}`);
+      if (ts.aggregationPosition !== 'bottom') L.push(`  ${attr('aggregation-position')}=${str(ts.aggregationPosition)}`);
+    }
+    // Grouping
+    if (ts.groupByFields && ts.groupByFields.length > 0) {
+      L.push(`  .${attr('groupBy')}=\${${fn(JSON.stringify(ts.groupByFields))}}`);
+      if (ts.groupTotals) L.push(`  ${attr('group-totals')}`);
+    }
+    // Grid line styling
+    if (changed('gridLineColor')) L.push(`  ${attr('grid-line-color')}=${str(ts.gridLineColor)}`);
+    if (changed('gridLineWidth')) L.push(`  ${attr('grid-line-width')}=${str(ts.gridLineWidth)}`);
+    if (changed('bandingColor')) L.push(`  ${attr('banding-color')}=${str(ts.bandingColor)}`);
+    // Data bindings
+    L.push(`  .${attr('columns')}=\${${fn('columns')}}`);
+    L.push(`  .${attr('data')}=\${${fn('data')}}`);
+    L.push(`  .${attr('statusColors')}=\${${fn('statusColors')}}`);
+    L.push(`  .${attr('barThresholds')}=\${${fn('barThresholds')}}`);
+    if (formattingRules.length > 0) L.push(`  .${attr('conditionalFormattingRules')}=\${${fn('rules')}}`);
+    L.push(`&gt;&lt;/${tag('phz-grid')}&gt;`);
+    return L.join('\n');
+  }
+
+  function gridCodeReact() {
+    const ts = tableSettings;
+    const cols = getVisibleCols();
+    const L = [];
+    L.push(cmt('// React -- @phozart/phz-react'));
+    L.push(`${kw('import')} { ${fn('PhzGrid')} } ${kw('from')} ${str("'@phozart/phz-react'")};`);
+    L.push('');
+    L.push(`${kw('const')} ${attr('columns')} = [`);
+    cols.forEach((c,i) => {
+      const parts = [`field: ${str(c.field)}`, `header: ${str(c.header)}`];
+      if (c.type !== 'string') parts.push(`type: ${str(c.type)}`);
+      L.push(`  { ${parts.join(', ')} }${i < cols.length-1 ? ',' : ''}`);
+    });
+    L.push(`];`);
+    L.push('');
+    L.push(`${kw('export default function')} ${fn('SalesGrid')}() {`);
+    L.push(`  ${kw('return')} (`);
+    L.push(`    &lt;${tag('PhzGrid')}`);
+    L.push(`      ${attr('columns')}={${fn('columns')}}`);
+    L.push(`      ${attr('data')}={${fn('data')}}`);
+    L.push(`      ${attr('selectionMode')}=${str(ts.selectionMode || 'single')}`);
+    L.push(`      ${attr('density')}=${str(ts.density || 'compact')}`);
+    L.push(`      ${attr('gridLines')}=${str(ts.gridLines || 'horizontal')}`);
+    L.push(`      ${attr('pageSize')}={${num(ts.pageSize || 25)}}`);
+    if (ts.editMode !== 'none') L.push(`      ${attr('editMode')}=${str(ts.editMode)}`);
+    if (ts.rowBanding) L.push(`      ${attr('rowBanding')}`);
+    if (!ts.showToolbar) L.push(`      ${attr('showToolbar')}={${bool('false')}}`);
+    if (!ts.showPagination) L.push(`      ${attr('showPagination')}={${bool('false')}}`);
+    if (ts.showCheckboxes) L.push(`      ${attr('showCheckboxes')}`);
+    if (!ts.hoverHighlight) L.push(`      ${attr('hoverHighlight')}={${bool('false')}}`);
+    if (ts.showTitleBar && ts.titleText) L.push(`      ${attr('gridTitle')}=${str(ts.titleText)}`);
+    if (ts.showAggregation) {
+      L.push(`      ${attr('aggregation')}`);
+      L.push(`      ${attr('aggregationFn')}=${str(ts.aggregationFn || 'sum')}`);
+    }
+    if (ts.groupByFields?.length > 0) L.push(`      ${attr('groupBy')}={${fn(JSON.stringify(ts.groupByFields))}}`);
+    L.push(`      ${attr('statusColors')}={${fn('statusColors')}}`);
+    L.push(`      ${attr('barThresholds')}={${fn('barThresholds')}}`);
+    if (formattingRules.length > 0) L.push(`      ${attr('conditionalFormattingRules')}={${fn('rules')}}`);
+    L.push(`    /&gt;`);
+    L.push(`  );`);
+    L.push(`}`);
+    return L.join('\n');
+  }
+
+  function gridCodeVue() {
+    const ts = tableSettings;
+    const cols = getVisibleCols();
+    const L = [];
+    L.push(cmt('// Vue 3 -- @phozart/phz-vue'));
+    L.push(`&lt;${tag('script')} ${attr('setup')} ${attr('lang')}=${str('ts')}&gt;`);
+    L.push(`${kw('import')} { ${fn('createPhzGrid')} } ${kw('from')} ${str("'@phozart/phz-vue'")};`);
+    L.push(`${kw('const')} ${attr('PhzGrid')} = ${fn('createPhzGrid')}();`);
+    L.push(`${kw('const')} ${attr('columns')} = [`);
+    cols.forEach((c,i) => {
+      const parts = [`field: ${str(c.field)}`, `header: ${str(c.header)}`];
+      if (c.type !== 'string') parts.push(`type: ${str(c.type)}`);
+      L.push(`  { ${parts.join(', ')} }${i < cols.length-1 ? ',' : ''}`);
+    });
+    L.push(`];`);
+    L.push(`&lt;/${tag('script')}&gt;`);
+    L.push('');
+    L.push(`&lt;${tag('template')}&gt;`);
+    L.push(`  &lt;${tag('PhzGrid')}`);
+    L.push(`    :${attr('columns')}="${fn('columns')}"`);
+    L.push(`    :${attr('data')}="${fn('data')}"`);
+    L.push(`    ${attr('selection-mode')}=${str(ts.selectionMode || 'single')}`);
+    L.push(`    ${attr('density')}=${str(ts.density || 'compact')}`);
+    L.push(`    ${attr('grid-lines')}=${str(ts.gridLines || 'horizontal')}`);
+    L.push(`    :${attr('page-size')}="${num(ts.pageSize || 25)}"`);
+    if (ts.editMode !== 'none') L.push(`    ${attr('edit-mode')}=${str(ts.editMode)}`);
+    if (ts.rowBanding) L.push(`    ${attr('row-banding')}`);
+    if (!ts.showToolbar) L.push(`    :${attr('show-toolbar')}="${bool('false')}"`);
+    if (!ts.showPagination) L.push(`    :${attr('show-pagination')}="${bool('false')}"`);
+    if (ts.showCheckboxes) L.push(`    ${attr('show-checkboxes')}`);
+    if (ts.showTitleBar && ts.titleText) L.push(`    ${attr('grid-title')}=${str(ts.titleText)}`);
+    if (ts.showAggregation) L.push(`    ${attr('aggregation')}`);
+    if (ts.groupByFields?.length > 0) L.push(`    :${attr('group-by')}="${fn(JSON.stringify(ts.groupByFields))}"`);
+    L.push(`    :${attr('status-colors')}="${fn('statusColors')}"`);
+    L.push(`    :${attr('bar-thresholds')}="${fn('barThresholds')}"`);
+    L.push(`  /&gt;`);
+    L.push(`&lt;/${tag('template')}&gt;`);
+    return L.join('\n');
+  }
+
+  function gridCodeAngular() {
+    const ts = tableSettings;
+    const cols = getVisibleCols();
+    const L = [];
+    L.push(cmt('// Angular -- @phozart/phz-angular'));
+    L.push(`${kw('import')} { ${fn('createPhzGridComponent')} } ${kw('from')} ${str("'@phozart/phz-angular'")};`);
+    L.push(`${kw('const')} ${attr('PhzGrid')} = ${fn('createPhzGridComponent')}();`);
+    L.push('');
+    L.push(`@${fn('Component')}({`);
+    L.push(`  ${attr('selector')}: ${str("'app-sales-grid'")},`);
+    L.push(`  ${attr('standalone')}: ${bool('true')},`);
+    L.push(`  ${attr('imports')}: [PhzGrid],`);
+    L.push(`  ${attr('template')}: \``);
+    L.push(`    &lt;${tag('phz-grid')}`);
+    L.push(`      [${attr('columns')}]="${fn('columns')}"`);
+    L.push(`      [${attr('data')}]="${fn('data')}"`);
+    L.push(`      ${attr('selection-mode')}=${str(ts.selectionMode || 'single')}`);
+    L.push(`      ${attr('density')}=${str(ts.density || 'compact')}`);
+    L.push(`      ${attr('grid-lines')}=${str(ts.gridLines || 'horizontal')}`);
+    L.push(`      [${attr('page-size')}]="${num(ts.pageSize || 25)}"`);
+    if (ts.editMode !== 'none') L.push(`      ${attr('edit-mode')}=${str(ts.editMode)}`);
+    if (ts.rowBanding) L.push(`      ${attr('row-banding')}`);
+    if (ts.showTitleBar && ts.titleText) L.push(`      ${attr('grid-title')}=${str(ts.titleText)}`);
+    if (ts.showAggregation) L.push(`      ${attr('aggregation')}`);
+    if (ts.groupByFields?.length > 0) L.push(`      [${attr('group-by')}]="${fn(JSON.stringify(ts.groupByFields))}"`);
+    L.push(`      [${attr('statusColors')}]="${fn('statusColors')}"`);
+    L.push(`      [${attr('barThresholds')}]="${fn('barThresholds')}"`);
+    L.push(`    &gt;&lt;/${tag('phz-grid')}&gt;`);
+    L.push(`  \``);
+    L.push(`})`);
+    L.push(`${kw('export class')} ${fn('SalesGridComponent')} {`);
+    L.push(`  ${attr('columns')} = [${cols.map(c => `{ field: ${str(c.field)}, header: ${str(c.header)} }`).join(', ')}];`);
+    L.push(`}`);
+    return L.join('\n');
+  }
+
+  function renderGridCode() {
+    const el = document.getElementById('gridCodeBlock');
+    switch (activeGridCodeLang) {
+      case 'wc':      el.innerHTML = gridCodeWC(); break;
+      case 'react':   el.innerHTML = gridCodeReact(); break;
+      case 'vue':     el.innerHTML = gridCodeVue(); break;
+      case 'angular': el.innerHTML = gridCodeAngular(); break;
+    }
+    // Flash to indicate change
+    el.classList.remove('change-flash');
+    void el.offsetWidth; // force reflow
+    el.classList.add('change-flash');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  //  FILTER CODE GENERATORS
+  // ═══════════════════════════════════════════════════════════
+
+
+
+  // ═══════════════════════════════════════════════════════════
+  //  APPLY SETTINGS TO LIVE GRID PREVIEW
+  // ═══════════════════════════════════════════════════════════
+
+  function applySettingsToGrid() {
+    const grid = document.getElementById('previewGrid');
+    if (!grid) return;
+    const ts = tableSettings;
+
+    // Core display
+    grid.density = ts.density || 'compact';
+    grid.gridLines = ts.gridLines || 'horizontal';
+    grid.selectionMode = ts.selectionMode || 'single';
+    grid.pageSize = ts.pageSize || 25;
+    grid.rowBanding = !!ts.rowBanding;
+    grid.hoverHighlight = ts.hoverHighlight !== false;
+    grid.showToolbar = ts.showToolbar !== false;
+    grid.showPagination = ts.showPagination !== false;
+    grid.showCheckboxes = !!ts.showCheckboxes;
+    grid.showRowActions = !!ts.showRowActions;
+    grid.showSelectionActions = ts.showSelectionActions !== false;
+    grid.showEditActions = ts.showEditActions !== false;
+    grid.showCopyActions = ts.showCopyActions !== false;
+    grid.cellTextOverflow = ts.cellTextOverflow || 'wrap';
+    grid.compactNumbers = !!ts.compactNumbers;
+    grid.autoSizeColumns = !!ts.autoSizeColumns;
+    grid.loadingMode = ts.loadingMode || 'paginate';
+    grid.virtualization = !!ts.virtualization;
+
+    // Edit mode
+    if (ts.editMode) grid.editMode = ts.editMode;
+
+    // Title
+    if (ts.showTitleBar && ts.titleText) {
+      grid.gridTitle = ts.titleText;
+      grid.gridSubtitle = ts.subtitleText || '';
+    } else {
+      grid.gridTitle = '';
+      grid.gridSubtitle = '';
+    }
+
+    // Aggregation
+    grid.aggregation = !!ts.showAggregation;
+    if (ts.showAggregation) {
+      grid.aggregationFn = ts.aggregationFn || 'sum';
+      grid.aggregationPosition = ts.aggregationPosition || 'bottom';
+    }
+
+    // Grouping
+    if (ts.groupByFields?.length > 0) {
+      grid.groupBy = ts.groupByFields;
+      grid.groupTotals = !!ts.groupTotals;
+      grid.groupTotalsFn = ts.groupTotalsFn || 'sum';
+    } else {
+      grid.groupBy = [];
+    }
+
+    // Grid line styling
+    grid.gridLineColor = ts.gridLineColor || '#E7E5E4';
+    grid.gridLineWidth = ts.gridLineWidth || 'thin';
+    grid.bandingColor = ts.bandingColor || '#FAFAF9';
+
+    // Conditional formatting rules
+    if (formattingRules.length > 0) {
+      grid.conditionalFormattingRules = [...formattingRules];
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  //  INITIALIZE COMPONENTS
+  // ═══════════════════════════════════════════════════════════
+
+  function init() {
+    // Grid Admin — pass data
+    const admin = document.getElementById('gridAdmin');
+    if (admin) {
+      admin.columns = columns;
+      admin.fields = columns.map(c => c.field);
+      admin.columnTypes = columnTypes;
+      admin.statusColors = statusColors;
+      admin.barThresholds = barThresholds;
+      admin.tableSettings = { ...DEFAULTS };
+    }
+
+    // Preview grid — pass data
+    const grid = document.getElementById('previewGrid');
+    if (grid) {
+      grid.data = sampleData;
+      grid.columns = columns.filter(c => c.visible);
+      grid.statusColors = statusColors;
+      grid.barThresholds = barThresholds;
+      grid.density = 'compact';
+      grid.gridLines = 'horizontal';
+      grid.selectionMode = 'single';
+      grid.pageSize = 25;
+      grid.showToolbar = true;
+      grid.showPagination = true;
+      grid.rowBanding = true;
+    }
+
+    // Filter Designer — pass data sources and columns
+    const filterDesigner = document.getElementById('filterDesigner');
+    if (filterDesigner) {
+      filterDesigner.availableColumns = columns.map(c => c.field);
+      filterDesigner.data = sampleData;
+      filterDesigner.dataSources = [
+        {
+          id: 'sales',
+          name: 'Sales Data',
+          columns: columns.map(c => c.field),
+          sampleRows: sampleData.slice(0, 5),
+        },
+      ];
+    }
+
+    // Filter preview — criteria + grid
+    const criteria = document.getElementById('previewCriteria');
+    if (criteria) {
+      criteria.config = criteriaConfig;
+      criteria.data = sampleData;
+      criteria.artefactId = 'RPT-001';
+    }
+
+    const filteredGrid = document.getElementById('filteredGrid');
+    if (filteredGrid) {
+      filteredGrid.data = sampleData;
+      filteredGrid.columns = columns.filter(c => c.visible);
+      filteredGrid.statusColors = statusColors;
+      filteredGrid.barThresholds = barThresholds;
+      filteredGrid.density = 'compact';
+      filteredGrid.gridLines = 'horizontal';
+      filteredGrid.pageSize = 10;
+      filteredGrid.showToolbar = true;
+      filteredGrid.showPagination = true;
+    }
+
+    // Initial code render
+    renderGridCode();
+  }
+
+  // Wait for custom elements to register before initializing
+  Promise.all([
+    customElements.whenDefined('phz-grid-admin'),
+    customElements.whenDefined('phz-grid'),
+    customElements.whenDefined('phz-filter-designer'),
+  ]).then(init).catch(err => {
+    console.error('Component registration failed:', err);
+    document.getElementById('gridCodeBlock').textContent = 'Error: Components failed to load.\nBuild the CDN bundle first:\n  cd packages/grid\n  npx vite build --config vite.cdn-all.config.ts';
+  });
+
+  // ═══════════════════════════════════════════════════════════
+  //  EVENT WIRING — Grid Admin
+  // ═══════════════════════════════════════════════════════════
+
+  const adminEl = document.getElementById('gridAdmin');
+
+  // 1. Table settings changes (Layout, Behaviour, Styling)
+  adminEl.addEventListener('table-settings-change', (e) => {
+    const { section, key, value } = e.detail;
+    tableSettings = { ...tableSettings, [key]: value };
+    applySettingsToGrid();
+    renderGridCode();
+  });
+
+  // 2. Column visibility changes
+  adminEl.addEventListener('columns-change', (e) => {
+    const { action, visibleFields } = e.detail;
+    if (action === 'show-all') {
+      columns.forEach(c => c.visible = true);
+    } else if (action === 'hide-all') {
+      columns.forEach(c => c.visible = false);
+    } else if (visibleFields) {
+      columns.forEach(c => c.visible = visibleFields.includes(c.field));
+    }
+    const grid = document.getElementById('previewGrid');
+    if (grid) grid.columns = columns.filter(c => c.visible);
+    renderGridCode();
+  });
+
+  // 3. Per-column config changes (type, formatting, number format, etc.)
+  adminEl.addEventListener('column-config-change', (e) => {
+    const { field, type, formatting, numberFormat, statusColors: sc, barThresholds: bt, dateFormat, linkTemplate, colorThresholds } = e.detail;
+    if (type) {
+      columnTypes[field] = type;
+      const col = columns.find(c => c.field === field);
+      if (col) col.type = type;
+    }
+    if (formatting) columnFormatting[field] = formatting;
+    if (numberFormat) numberFormats[field] = numberFormat;
+    // Refresh grid columns with updated types
+    const grid = document.getElementById('previewGrid');
+    if (grid) grid.columns = [...columns.filter(c => c.visible)];
+    renderGridCode();
+  });
+
+  // 4. Conditional formatting rules
+  adminEl.addEventListener('rules-change', (e) => {
+    const { action, ruleId, updates } = e.detail;
+    if (action === 'add') {
+      formattingRules.push({
+        id: ruleId,
+        field: columns[0]?.field || '',
+        condition: { operator: 'equals', value: '' },
+        style: { backgroundColor: '#ffffff', color: '#000000', fontWeight: 'normal' },
+      });
+    } else if (action === 'remove') {
+      formattingRules = formattingRules.filter(r => r.id !== ruleId);
+    } else if (action === 'update') {
+      const rule = formattingRules.find(r => r.id === ruleId);
+      if (rule && updates) {
+        if (updates.field !== undefined) rule.field = updates.field;
+        if (updates.operator !== undefined) rule.condition.operator = updates.operator;
+        if (updates.value !== undefined) rule.condition.value = updates.value;
+        if (updates.value2 !== undefined) rule.condition.value2 = updates.value2;
+        if (updates.backgroundColor !== undefined) rule.style.backgroundColor = updates.backgroundColor;
+        if (updates.color !== undefined) rule.style.color = updates.color;
+        if (updates.fontWeight !== undefined) rule.style.fontWeight = updates.fontWeight;
+      }
+    }
+    // Update admin component's rules
+    const adminComp = document.getElementById('gridAdmin');
+    if (adminComp) adminComp.formattingRules = [...formattingRules];
+    // Update preview grid
+    const grid = document.getElementById('previewGrid');
+    if (grid) grid.conditionalFormattingRules = [...formattingRules];
+    renderGridCode();
+  });
+
+  // 5. Filter preset changes
+  adminEl.addEventListener('preset-apply', (e) => {
+    console.log('Preset applied:', e.detail.name);
+    renderGridCode();
+  });
+
+  adminEl.addEventListener('presets-change', (e) => {
+    const { action, name } = e.detail;
+    if (action === 'add') filterPresets['New Preset'] = { name: 'New Preset', filters: [] };
+    else if (action === 'delete') delete filterPresets[name];
+    else if (action === 'duplicate') filterPresets[name + ' (copy)'] = { ...filterPresets[name], name: name + ' (copy)' };
+    renderGridCode();
+  });
+
+  // 6. Export settings changes
+  adminEl.addEventListener('export-settings-change', (e) => {
+    exportSettings = { ...exportSettings, ...e.detail };
+    renderGridCode();
+  });
+
+  adminEl.addEventListener('export-download', (e) => {
+    console.log('Export requested:', e.detail);
+    // In a real app, this would trigger CSV/Excel download
+  });
+
+  // 7. Save / Reset
+  adminEl.addEventListener('settings-save', (e) => {
+    console.log('Settings saved:', e.detail);
+    renderGridCode();
+  });
+
+  adminEl.addEventListener('settings-reset', (e) => {
+    tableSettings = { ...DEFAULTS };
+    columnFormatting = {};
+    numberFormats = {};
+    formattingRules = [];
+    applySettingsToGrid();
+    renderGridCode();
+  });
+
+  adminEl.addEventListener('admin-close', () => {
+    console.log('Admin panel close requested');
+  });
+
+  // ═══════════════════════════════════════════════════════════
+  //  EVENT WIRING — Filter Designer
+  // ═══════════════════════════════════════════════════════════
+
+  const filterDesignerEl = document.getElementById('filterDesigner');
+
+  filterDesignerEl.addEventListener('definition-create', (e) => {
+    console.log('Definition created:', e.detail.definition);
+  });
+
+  filterDesignerEl.addEventListener('definition-update', (e) => {
+    console.log('Definition updated:', e.detail.id, e.detail.patch);
+  });
+
+  // ═══════════════════════════════════════════════════════════
+  //  TAB SWITCHING
+  // ═══════════════════════════════════════════════════════════
+
+  // Nav tabs (Grid Admin / Report Filters)
+  document.querySelectorAll('.nav-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    });
+  });
+
+  // Code language tabs — grid
+  document.querySelectorAll('#gridCodeTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#gridCodeTabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeGridCodeLang = btn.dataset.lang;
+      renderGridCode();
+    });
+  });
+
+</script>
+</body>
+</html>

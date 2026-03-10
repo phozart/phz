@@ -1,0 +1,38 @@
+[package]
+name = "phz-data-service"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# Web framework
+axum = { version = "0.8", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+
+# Database
+tokio-postgres = { version = "0.7", features = ["with-chrono-0_4", "with-serde_json-1"] }
+deadpool-postgres = { version = "0.14", features = ["serde"] }
+
+# Arrow IPC
+arrow = { version = "55", features = ["ipc"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Date/time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Config & logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Streaming
+bytes = "1"
+futures = "0.3"
+tokio-stream = "0.1"
+
+# Error handling
+thiserror = "2"
+anyhow = "1"

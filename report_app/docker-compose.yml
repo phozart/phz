@@ -1,0 +1,58 @@
+services:
+  # Settings database — app config (reports, dashboards, presets, auth)
+  postgres-settings:
+    image: postgres:16-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: phz_settings
+      POSTGRES_USER: phz
+      POSTGRES_PASSWORD: phz
+    volumes:
+      - settings_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U phz -d phz_settings"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Data database — source data (sales_orders, employees, etc.)
+  postgres-data:
+    image: postgres:16-alpine
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: phz_data
+      POSTGRES_USER: phz
+      POSTGRES_PASSWORD: phz
+    volumes:
+      - source_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U phz -d phz_data"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Rust data service — serves Arrow IPC for analytics
+  data-service:
+    build:
+      context: ../data-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      PHZ_HOST: "0.0.0.0"
+      PHZ_PORT: "8080"
+      DATA_DB_HOST: postgres-data
+      DATA_DB_PORT: "5432"
+      DATA_DB_NAME: phz_data
+      DATA_DB_USER: phz
+      DATA_DB_PASSWORD: phz
+      DATA_DB_POOL_SIZE: "20"
+    depends_on:
+      postgres-data:
+        condition: service_healthy
+
+volumes:
+  settings_data:
+  source_data:

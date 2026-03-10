@@ -1,0 +1,39 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false
+  },
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/core" },
+    { "path": "packages/engine" },
+    { "path": "packages/duckdb" },
+    { "path": "packages/grid" },
+    { "path": "packages/criteria" },
+    { "path": "packages/widgets" },
+    { "path": "packages/workspace" },
+    { "path": "packages/ai" },
+    { "path": "packages/collab" },
+    { "path": "packages/react" },
+    { "path": "packages/vue" },
+    { "path": "packages/angular" },
+    { "path": "packages/local" },
+    { "path": "packages/viewer" },
+    { "path": "packages/editor" }
+  ]
+}

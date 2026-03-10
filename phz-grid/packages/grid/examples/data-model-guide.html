@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phz — Dashboard Data Model Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50: #FAFAF9;
+      --stone-100: #F5F5F4;
+      --stone-200: #E7E5E4;
+      --stone-300: #D6D3D1;
+      --stone-400: #A8A29E;
+      --stone-500: #78716C;
+      --stone-600: #57534E;
+      --stone-700: #44403C;
+      --stone-800: #292524;
+      --stone-900: #1C1917;
+      --blue-50: #EFF6FF;
+      --blue-100: #DBEAFE;
+      --blue-600: #2563EB;
+      --blue-700: #1D4ED8;
+      --green-50: #DCFCE7;
+      --green-600: #16A34A;
+      --green-700: #166534;
+      --amber-50: #FEF3C7;
+      --amber-600: #D97706;
+      --amber-700: #92400E;
+      --purple-50: #F3E8FF;
+      --purple-600: #7C3AED;
+      --purple-700: #6D28D9;
+      --gray-dot: #A8A29E;
+      --purple-dot: #7C3AED;
+      --amber-dot: #D97706;
+      --blue-dot: #3B82F6;
+      --green-dot: #16A34A;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--stone-100);
+      color: var(--stone-900);
+      line-height: 1.6;
+    }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      background: var(--stone-900);
+      color: #FEFDFB;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 52px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar h1 { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .topbar .sep { width: 1px; height: 20px; background: var(--stone-700); }
+    .topbar .subtitle { font-size: 13px; color: var(--stone-400); font-weight: 500; }
+
+    /* ─── Nav pills ─── */
+    .nav { display: flex; gap: 4px; margin-left: auto; }
+    .nav a {
+      font-size: 12px; font-weight: 500;
+      padding: 6px 14px; border-radius: 6px;
+      color: var(--stone-400); text-decoration: none;
+      transition: all 0.15s;
+    }
+    .nav a:hover { color: #FEFDFB; background: var(--stone-800); }
+
+    /* ─── Container ─── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+    }
+    .hero h2 {
+      font-size: 32px; font-weight: 800;
+      background: linear-gradient(135deg, var(--stone-900), var(--stone-600));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero p { font-size: 16px; color: var(--stone-500); max-width: 680px; margin: 0 auto; }
+
+    /* ─── Pipeline diagram ─── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 36px auto 0;
+      max-width: 900px;
+      padding: 0 16px;
+    }
+    .pipeline-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 20px;
+      background: white;
+      border: 2px solid var(--stone-200);
+      border-radius: 12px;
+      min-width: 130px;
+      transition: box-shadow 0.2s;
+    }
+    .pipeline-node:hover {
+      box-shadow: 0 4px 12px rgba(28,25,23,0.06);
+    }
+    .pipeline-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+    }
+    .pipeline-label {
+      font-size: 13px; font-weight: 700; color: var(--stone-900);
+    }
+    .pipeline-desc {
+      font-size: 10px; color: var(--stone-500); text-align: center; line-height: 1.4;
+    }
+    .pipeline-arrow {
+      font-size: 22px; color: var(--stone-300); padding: 0 6px; flex-shrink: 0;
+    }
+
+    /* ─── Sections ─── */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--stone-200);
+    }
+    .section-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .section-dot {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    }
+    .section-header .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge--gray { background: var(--stone-100); color: var(--stone-600); }
+    .badge--purple { background: var(--purple-50); color: var(--purple-700); }
+    .badge--amber { background: var(--amber-50); color: var(--amber-700); }
+    .badge--blue { background: var(--blue-50); color: var(--blue-700); }
+    .badge--green { background: var(--green-50); color: var(--green-700); }
+
+    /* ─── Cards grid ─── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .cards--full {
+      grid-template-columns: 1fr;
+    }
+    .cards--two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--stone-200);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 12px rgba(28,25,23,0.06); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      background: var(--stone-50);
+      border-bottom: 1px solid var(--stone-200);
+    }
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .card-icon--gray { background: var(--stone-200); }
+    .card-icon--purple { background: #F3E8FF; }
+    .card-icon--amber { background: #FEF3C7; }
+    .card-icon--blue { background: #DBEAFE; }
+    .card-icon--green { background: #DCFCE7; }
+    .card-title { font-size: 15px; font-weight: 700; }
+    .card-type {
+      font-size: 11px; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--stone-500);
+    }
+
+    .card-body { padding: 16px 20px; }
+    .card-body p { font-size: 13px; color: var(--stone-600); margin-bottom: 12px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body ul {
+      font-size: 13px; color: var(--stone-600);
+      margin: 0 0 12px 20px;
+    }
+    .card-body li { margin-bottom: 4px; }
+
+    /* ─── Code blocks ─── */
+    .code {
+      background: var(--stone-900);
+      color: #E7E5E4;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    .code .kw { color: #7C3AED; }
+    .code .str { color: #16A34A; }
+    .code .cmt { color: #78716C; }
+    .code .fn { color: #3B82F6; }
+    .code .num { color: #D97706; }
+
+    /* ─── Inline code ─── */
+    code {
+      background: var(--stone-100);
+      border: 1px solid var(--stone-200);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--stone-700);
+    }
+
+    /* ─── Sigil badges ─── */
+    .sigil {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .sigil--gray { background: var(--stone-100); color: var(--stone-600); }
+    .sigil--purple { background: #F3E8FF; color: var(--purple-700); }
+    .sigil--amber { background: #FEF3C7; color: var(--amber-700); }
+    .sigil--blue { background: #EFF6FF; color: var(--blue-700); }
+    .sigil--green { background: #DCFCE7; color: var(--green-700); }
+
+    /* ─── Tables ─── */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .ref-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--stone-50);
+      border-bottom: 2px solid var(--stone-200);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--stone-500);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ref-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--stone-200);
+      color: var(--stone-700);
+      vertical-align: top;
+    }
+    .ref-table tr:last-child td { border-bottom: none; }
+    .ref-table td code {
+      background: var(--stone-100);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    .ref-table .cat {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+    .cat--math { background: #EFF6FF; color: var(--blue-700); }
+    .cat--string { background: #F3E8FF; color: var(--purple-700); }
+    .cat--date { background: #FEF3C7; color: var(--amber-700); }
+    .cat--util { background: #DCFCE7; color: var(--green-700); }
+
+    /* ─── Callout ─── */
+    .callout {
+      padding: 14px 20px;
+      border-radius: 10px;
+      border-left: 4px solid;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+    .callout--info { background: var(--blue-50); border-color: var(--blue-600); color: var(--blue-700); }
+    .callout--tip { background: var(--green-50); border-color: var(--green-600); color: var(--green-700); }
+    .callout--warn { background: var(--amber-50); border-color: var(--amber-600); color: var(--amber-700); }
+
+    /* ─── Quick-start steps ─── */
+    .steps {
+      counter-reset: step-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .step {
+      counter-increment: step-counter;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      background: white;
+      border: 1px solid var(--stone-200);
+      border-radius: 12px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--stone-900);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-num::before { content: counter(step-counter); }
+    .step-content { flex: 1; }
+    .step-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .step-content p { font-size: 13px; color: var(--stone-600); }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 700px) {
+      .pipeline { flex-direction: column; }
+      .pipeline-arrow { transform: rotate(90deg); }
+      .cards--two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <h1>Phz</h1>
+    <div class="sep"></div>
+    <span class="subtitle">Dashboard Data Model Guide</span>
+    <nav class="nav">
+      <a href="#pipeline">Pipeline</a>
+      <a href="#fields">Fields</a>
+      <a href="#parameters">Parameters</a>
+      <a href="#calcfields">Calc Fields</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#kpis">KPIs</a>
+      <a href="#syntax">Syntax</a>
+      <a href="#functions">Functions</a>
+      <a href="#quickstart">Quick Start</a>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <h2>Dashboard Data Model</h2>
+      <p>A 5-layer computation pipeline that transforms raw data fields into actionable KPIs. Each layer builds on the previous one, creating a directed acyclic graph (DAG) of dependencies.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 1: The Computation Pipeline         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="pipeline">
+      <div class="section-header">
+        <h3>The Computation Pipeline</h3>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline-node">
+          <div class="pipeline-dot" style="background: var(--gray-dot);"></div>
+          <div class="pipeline-label">Fields</div>
+          <div class="pipeline-desc">Auto-detected<br>from data</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-node">
+          <div class="pipeline-dot" style="background: var(--purple-dot);"></div>
+          <div class="pipeline-label">Parameters</div>
+          <div class="pipeline-desc">User-adjustable<br>inputs</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-node">
+          <div class="pipeline-dot" style="background: var(--amber-dot);"></div>
+          <div class="pipeline-label">Calc Fields</div>
+          <div class="pipeline-desc">Per-row<br>transformations</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-node">
+          <div class="pipeline-dot" style="background: var(--blue-dot);"></div>
+          <div class="pipeline-label">Metrics</div>
+          <div class="pipeline-desc">Aggregate<br>values</div>
+        </div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-node">
+          <div class="pipeline-dot" style="background: var(--green-dot);"></div>
+          <div class="pipeline-label">KPIs</div>
+          <div class="pipeline-desc">Tracked business<br>outcomes</div>
+        </div>
+      </div>
+
+      <div class="callout callout--info" style="margin-top: 24px;">
+        Data flows left to right. Each layer can reference layers to its left. For example, a Metric can reference Fields, Parameters, and Calculated Fields &mdash; but not KPIs.
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 2: Fields                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="fields">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--gray-dot);"></span>
+        <h3>Fields</h3>
+        <span class="badge badge--gray">Layer 1</span>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--gray">&#x1F4C4;</div>
+            <div>
+              <div class="card-title">What Are Fields?</div>
+              <div class="card-type">Auto-detected from your data</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Fields are the raw columns in your dataset. They are automatically detected when you load data into the dashboard &mdash; you don't create or modify them manually.</p>
+            <p>Each field has a <strong>name</strong> and a <strong>type</strong> inferred from the first data row:</p>
+            <ul>
+              <li><code>string</code> &mdash; text values</li>
+              <li><code>number</code> &mdash; numeric values</li>
+              <li><code>boolean</code> &mdash; true / false</li>
+              <li><code>date</code> &mdash; date/time values</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--gray">&#x1F3F7;&#xFE0F;</div>
+            <div>
+              <div class="card-title">Reference Syntax</div>
+              <div class="card-type"><span class="sigil sigil--gray">[field_name]</span></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Reference fields in expressions using <strong>square brackets</strong>:</p>
+            <div class="code">
+<span class="cmt">// Access a field value in an expression</span>
+[salary] * <span class="num">1.1</span>
+[first_name] + <span class="str">" "</span> + [last_name]
+<span class="fn">IF</span>([status] <span class="kw">eq</span> <span class="str">"Active"</span>, <span class="num">1</span>, <span class="num">0</span>)
+            </div>
+            <div class="callout callout--tip">Fields are read-only. To create derived values, use Calculated Fields (layer 3).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 3: Parameters                       -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="parameters">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--purple-dot);"></span>
+        <h3>Parameters</h3>
+        <span class="badge badge--purple">Layer 2</span>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--purple">&#x2699;&#xFE0F;</div>
+            <div>
+              <div class="card-title">What Are Parameters?</div>
+              <div class="card-type">User-adjustable inputs</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Parameters are adjustable inputs that control dashboard behavior &mdash; targets, thresholds, weights. Users can change these <strong>without modifying the data model</strong>.</p>
+            <p><strong>When to use:</strong></p>
+            <ul>
+              <li>Dashboard filters and user preferences</li>
+              <li>Adjustable targets (e.g. performance goal = 85%)</li>
+              <li>Dynamic thresholds for KPI status bands</li>
+              <li>Weights for scoring formulas</li>
+            </ul>
+            <p><strong>Parameter types:</strong></p>
+            <ul>
+              <li><code>number</code> &mdash; with optional min/max/step</li>
+              <li><code>string</code> &mdash; free text</li>
+              <li><code>date</code> &mdash; date picker</li>
+              <li><code>boolean</code> &mdash; true/false toggle</li>
+              <li><code>select</code> &mdash; dropdown with predefined options</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--purple">&#x1F4DD;</div>
+            <div>
+              <div class="card-title">Reference Syntax</div>
+              <div class="card-type"><span class="sigil sigil--purple">$param_name</span></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Reference parameters in expressions using the <strong>dollar sign</strong>:</p>
+            <div class="code">
+<span class="cmt">// Use a parameter in a calculated field</span>
+[salary] * $bonus_rate
+
+<span class="cmt">// Compare against a parameter threshold</span>
+<span class="fn">IF</span>([score] <span class="kw">gte</span> $target, <span class="str">"Pass"</span>, <span class="str">"Fail"</span>)
+            </div>
+            <p><strong>Programmatic API:</strong></p>
+            <div class="code">
+<span class="kw">const</span> store = <span class="fn">createDashboardDataModelStore</span>(fields);
+
+store.<span class="fn">addParameter</span>({
+  id: <span class="fn">parameterId</span>(<span class="str">'bonus_rate'</span>),
+  name: <span class="str">'Bonus Rate'</span>,
+  type: <span class="str">'number'</span>,
+  defaultValue: <span class="num">0.1</span>,
+  min: <span class="num">0</span>,
+  max: <span class="num">1</span>,
+  step: <span class="num">0.05</span>,
+});
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 4: Calculated Fields                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="calcfields">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--amber-dot);"></span>
+        <h3>Calculated Fields</h3>
+        <span class="badge badge--amber">Layer 3</span>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--amber">&#x1F9EE;</div>
+            <div>
+              <div class="card-title">What Are Calculated Fields?</div>
+              <div class="card-type">Per-row transformations</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Calculated fields create <strong>new columns</strong> from existing data. They run on each row <strong>before</strong> any aggregation &mdash; perfect for transformations, ratios, and categorizations.</p>
+            <p><strong>When to use:</strong></p>
+            <ul>
+              <li>Combining fields: <code>[first_name] + " " + [last_name]</code></li>
+              <li>Normalizing: <code>[rating] / [max_rating] * 100</code></li>
+              <li>Categorizing: <code>IF([salary] &gt; 100000, "High", "Normal")</code></li>
+              <li>Parameterized: <code>[salary] * $bonus_rate</code></li>
+            </ul>
+            <div class="callout callout--warn">
+              <strong>Calculated Fields vs Metrics:</strong> Calculated fields run <em>per-row</em> BEFORE aggregation. Metrics aggregate AFTER. If you need a per-row value, use a calculated field. If you need a single aggregate (sum, average), use a metric.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--amber">&#x1F4DD;</div>
+            <div>
+              <div class="card-title">Reference Syntax</div>
+              <div class="card-type"><span class="sigil sigil--amber">~calc_name</span></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Reference calculated fields in <strong>other calculated fields</strong> using the <strong>tilde</strong>:</p>
+            <div class="code">
+<span class="cmt">// Use a calculated field in another</span>
+~performance_score / <span class="num">100</span>
+            </div>
+            <p><strong>Example expressions:</strong></p>
+            <div class="code">
+<span class="cmt">// Salary with bonus</span>
+[salary] * (<span class="num">1</span> + $bonus_rate)
+
+<span class="cmt">// Performance percentage</span>
+[rating] / [max_rating] * <span class="num">100</span>
+
+<span class="cmt">// Active flag</span>
+<span class="fn">IF</span>([status] <span class="kw">eq</span> <span class="str">"Active"</span>, <span class="num">1</span>, <span class="num">0</span>)
+
+<span class="cmt">// Clamped score</span>
+<span class="fn">CLAMP</span>([score], <span class="num">0</span>, <span class="num">100</span>)
+            </div>
+            <p><strong>Output types:</strong> Number, Text, Boolean, Date</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 5: Metrics                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="metrics">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--blue-dot);"></span>
+        <h3>Metrics</h3>
+        <span class="badge badge--blue">Layer 4</span>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--blue">&#x1F4CA;</div>
+            <div>
+              <div class="card-title">What Are Metrics?</div>
+              <div class="card-type">Aggregate values</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Metrics aggregate data across all rows into a <strong>single value</strong> (sum, average, count, etc.). They come in two modes:</p>
+            <p><strong>Simple metrics:</strong> Single field + aggregation</p>
+            <ul>
+              <li><code>avg([salary])</code> &mdash; average salary</li>
+              <li><code>count([id])</code> &mdash; headcount</li>
+              <li><code>sum([revenue])</code> &mdash; total revenue</li>
+              <li><code>min([age])</code> / <code>max([age])</code></li>
+            </ul>
+            <p><strong>Composite metrics:</strong> Expressions combining other metrics</p>
+            <ul>
+              <li><code>@total_revenue / @headcount</code> &mdash; revenue per employee</li>
+              <li><code>@active_count / @total_count * 100</code> &mdash; active percentage</li>
+            </ul>
+            <p><strong>7 aggregations:</strong> sum, avg, count, min, max, first, last</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--blue">&#x1F4DD;</div>
+            <div>
+              <div class="card-title">Reference Syntax</div>
+              <div class="card-type"><span class="sigil sigil--blue">@metric_name</span></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Reference metrics in <strong>composite metric expressions</strong> using the <strong>at sign</strong>:</p>
+            <div class="code">
+<span class="cmt">// Revenue per employee</span>
+@total_revenue / @headcount
+
+<span class="cmt">// Active rate percentage</span>
+@active_employees / @total_employees * <span class="num">100</span>
+            </div>
+            <p><strong>Programmatic API:</strong></p>
+            <div class="code">
+engine.metrics.<span class="fn">register</span>({
+  id: <span class="fn">metricId</span>(<span class="str">'avg_salary'</span>),
+  name: <span class="str">'Average Salary'</span>,
+  dataProductId: <span class="str">'employees'</span>,
+  formula: {
+    type: <span class="str">'simple'</span>,
+    field: <span class="str">'salary'</span>,
+    aggregation: <span class="str">'avg'</span>,
+  },
+  format: { type: <span class="str">'currency'</span>, decimals: <span class="num">0</span>, prefix: <span class="str">'$'</span> },
+});
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 6: KPIs                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="kpis">
+      <div class="section-header">
+        <span class="section-dot" style="background: var(--green-dot);"></span>
+        <h3>KPIs</h3>
+        <span class="badge badge--green">Layer 5</span>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--green">&#x1F3AF;</div>
+            <div>
+              <div class="card-title">What Are KPIs?</div>
+              <div class="card-type">Tracked business outcomes</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>KPIs track key business outcomes with <strong>targets</strong> and <strong>status thresholds</strong>. Link a KPI to a metric to automatically compute its value from data.</p>
+            <p><strong>Key properties:</strong></p>
+            <ul>
+              <li><strong>Metric link</strong> &mdash; which metric provides the value</li>
+              <li><strong>Target</strong> &mdash; the goal value (e.g. 90%)</li>
+              <li><strong>Direction</strong> &mdash; Higher is Better or Lower is Better</li>
+              <li><strong>Status</strong> &mdash; automatically computed: OK / Warning / Critical</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--green">&#x1F6A6;</div>
+            <div>
+              <div class="card-title">Threshold Modes</div>
+              <div class="card-type">Simple &amp; Custom Bands</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p><strong>Simple thresholds:</strong> Two values that divide into 3 zones (OK / Warning / Critical).</p>
+            <div class="code">
+thresholds: { ok: <span class="num">90</span>, warn: <span class="num">70</span> }
+<span class="cmt">// &ge; 90 = OK, 70-89 = Warning, &lt; 70 = Critical</span>
+            </div>
+            <p><strong>Custom Bands:</strong> Define 2-5 colored status zones with dynamic threshold sources.</p>
+            <div class="code">
+bands: [
+  { label: <span class="str">'Critical'</span>, color: <span class="str">'#DC2626'</span>,
+    upTo: { type: <span class="str">'static'</span>, value: <span class="num">70</span> } },
+  { label: <span class="str">'Warning'</span>,  color: <span class="str">'#D97706'</span>,
+    upTo: { type: <span class="str">'parameter'</span>, parameterId: <span class="str">'warn_threshold'</span> } },
+  { label: <span class="str">'On Track'</span>, color: <span class="str">'#16A34A'</span>,
+    upTo: { type: <span class="str">'static'</span>, value: <span class="num">100</span> } },
+]
+            </div>
+            <div class="callout callout--tip">
+              Band thresholds can be <strong>dynamic</strong> &mdash; sourced from parameters or metrics, not just static values.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 7: Expression Syntax Reference      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="syntax">
+      <div class="section-header">
+        <h3>Expression Syntax Reference</h3>
+      </div>
+
+      <div class="cards cards--two">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--gray">&#x2795;</div>
+            <div>
+              <div class="card-title">Operators</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="ref-table">
+              <thead>
+                <tr><th>Category</th><th>Operators</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Arithmetic</td>
+                  <td><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^</code></td>
+                  <td>Add, subtract, multiply, divide, modulo, power</td>
+                </tr>
+                <tr>
+                  <td>Comparison</td>
+                  <td><code>eq</code> <code>neq</code> <code>gt</code> <code>gte</code> <code>lt</code> <code>lte</code></td>
+                  <td>Equal, not equal, greater than, etc.</td>
+                </tr>
+                <tr>
+                  <td>Logic</td>
+                  <td><code>and</code> <code>or</code></td>
+                  <td>Logical AND, OR</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon card-icon--gray">&#x1F3F7;&#xFE0F;</div>
+            <div>
+              <div class="card-title">Reference Sigils</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="ref-table">
+              <thead>
+                <tr><th>Sigil</th><th>References</th><th>Example</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="sigil sigil--gray">[name]</span></td>
+                  <td>Data field</td>
+                  <td><code>[salary]</code></td>
+                </tr>
+                <tr>
+                  <td><span class="sigil sigil--purple">$name</span></td>
+                  <td>Parameter</td>
+                  <td><code>$bonus_rate</code></td>
+                </tr>
+                <tr>
+                  <td><span class="sigil sigil--amber">~name</span></td>
+                  <td>Calculated field</td>
+                  <td><code>~perf_score</code></td>
+                </tr>
+                <tr>
+                  <td><span class="sigil sigil--blue">@name</span></td>
+                  <td>Metric</td>
+                  <td><code>@avg_salary</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--info" style="margin-top: 12px;">
+              <strong>Precedence:</strong> Parentheses &gt; Power (<code>^</code>) &gt; Unary (<code>-x</code>) &gt; Multiply/Divide/Modulo &gt; Add/Subtract &gt; Comparison &gt; Logic
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 8: Built-in Functions Reference     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="functions">
+      <div class="section-header">
+        <h3>Built-in Functions Reference</h3>
+        <span class="badge badge--blue">16 Functions</span>
+      </div>
+
+      <div class="cards cards--full">
+        <div class="card">
+          <div class="card-body" style="padding: 0;">
+            <table class="ref-table">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>Category</th>
+                  <th>Arguments</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ABS</code></td>
+                  <td><span class="cat cat--math">Math</span></td>
+                  <td><code>(value)</code></td>
+                  <td>Absolute value</td>
+                  <td><code>ABS([profit])</code></td>
+                </tr>
+                <tr>
+                  <td><code>ROUND</code></td>
+                  <td><span class="cat cat--math">Math</span></td>
+                  <td><code>(value, decimals?)</code></td>
+                  <td>Round to N decimal places</td>
+                  <td><code>ROUND([score], 1)</code></td>
+                </tr>
+                <tr>
+                  <td><code>FLOOR</code></td>
+                  <td><span class="cat cat--math">Math</span></td>
+                  <td><code>(value)</code></td>
+                  <td>Round down to integer</td>
+                  <td><code>FLOOR([age])</code></td>
+                </tr>
+                <tr>
+                  <td><code>CEIL</code></td>
+                  <td><span class="cat cat--math">Math</span></td>
+                  <td><code>(value)</code></td>
+                  <td>Round up to integer</td>
+                  <td><code>CEIL([rating])</code></td>
+                </tr>
+                <tr>
+                  <td><code>UPPER</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(text)</code></td>
+                  <td>Convert to uppercase</td>
+                  <td><code>UPPER([name])</code></td>
+                </tr>
+                <tr>
+                  <td><code>LOWER</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(text)</code></td>
+                  <td>Convert to lowercase</td>
+                  <td><code>LOWER([email])</code></td>
+                </tr>
+                <tr>
+                  <td><code>TRIM</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(text)</code></td>
+                  <td>Remove leading/trailing whitespace</td>
+                  <td><code>TRIM([input])</code></td>
+                </tr>
+                <tr>
+                  <td><code>LEN</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(text)</code></td>
+                  <td>String length</td>
+                  <td><code>LEN([description])</code></td>
+                </tr>
+                <tr>
+                  <td><code>SUBSTR</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(text, start, length?)</code></td>
+                  <td>Extract substring</td>
+                  <td><code>SUBSTR([code], 0, 3)</code></td>
+                </tr>
+                <tr>
+                  <td><code>CONCAT</code></td>
+                  <td><span class="cat cat--string">String</span></td>
+                  <td><code>(a, b, ...)</code></td>
+                  <td>Concatenate strings</td>
+                  <td><code>CONCAT([first], " ", [last])</code></td>
+                </tr>
+                <tr>
+                  <td><code>YEAR</code></td>
+                  <td><span class="cat cat--date">Date</span></td>
+                  <td><code>(date)</code></td>
+                  <td>Extract year</td>
+                  <td><code>YEAR([hire_date])</code></td>
+                </tr>
+                <tr>
+                  <td><code>MONTH</code></td>
+                  <td><span class="cat cat--date">Date</span></td>
+                  <td><code>(date)</code></td>
+                  <td>Extract month (1-12)</td>
+                  <td><code>MONTH([hire_date])</code></td>
+                </tr>
+                <tr>
+                  <td><code>DAY</code></td>
+                  <td><span class="cat cat--date">Date</span></td>
+                  <td><code>(date)</code></td>
+                  <td>Extract day of month</td>
+                  <td><code>DAY([hire_date])</code></td>
+                </tr>
+                <tr>
+                  <td><code>COALESCE</code></td>
+                  <td><span class="cat cat--util">Utility</span></td>
+                  <td><code>(a, b, ...)</code></td>
+                  <td>First non-null value</td>
+                  <td><code>COALESCE([nickname], [name])</code></td>
+                </tr>
+                <tr>
+                  <td><code>IF</code></td>
+                  <td><span class="cat cat--util">Utility</span></td>
+                  <td><code>(cond, then, else)</code></td>
+                  <td>Conditional value</td>
+                  <td><code>IF([age] gte 18, "Adult", "Minor")</code></td>
+                </tr>
+                <tr>
+                  <td><code>CLAMP</code></td>
+                  <td><span class="cat cat--util">Utility</span></td>
+                  <td><code>(value, min, max)</code></td>
+                  <td>Clamp value to range</td>
+                  <td><code>CLAMP([score], 0, 100)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- Section 9: Quick Start                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="quickstart">
+      <div class="section-header">
+        <h3>Quick Start</h3>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Load Data</h4>
+            <p>Upload a CSV or pass data programmatically. Fields are auto-detected from column names and types.</p>
+            <div class="code">
+<span class="kw">const</span> engine = <span class="fn">createBIEngine</span>({ ... });
+<span class="kw">const</span> data = [
+  { name: <span class="str">'Alice'</span>, salary: <span class="num">95000</span>, rating: <span class="num">4.2</span>, department: <span class="str">'Engineering'</span> },
+  { name: <span class="str">'Bob'</span>,   salary: <span class="num">82000</span>, rating: <span class="num">3.8</span>, department: <span class="str">'Marketing'</span> },
+  ...
+];
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Create a Parameter</h4>
+            <p>Add adjustable inputs for dashboard consumers. Here we create a target percentage parameter.</p>
+            <div class="code">
+store.<span class="fn">addParameter</span>({
+  id: <span class="fn">parameterId</span>(<span class="str">'target_pct'</span>),
+  name: <span class="str">'Target %'</span>,
+  type: <span class="str">'number'</span>,
+  defaultValue: <span class="num">85</span>,
+  min: <span class="num">0</span>, max: <span class="num">100</span>, step: <span class="num">5</span>,
+});
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Create a Calculated Field</h4>
+            <p>Derive a new per-row column. This creates a normalized score (0-100) from raw rating.</p>
+            <div class="code">
+store.<span class="fn">addCalculatedField</span>({
+  id: <span class="fn">calculatedFieldId</span>(<span class="str">'norm_rating'</span>),
+  name: <span class="str">'Normalized Rating'</span>,
+  outputType: <span class="str">'number'</span>,
+  expression: { <span class="cmt">/* AST for: [rating] / 5 * 100 */</span> },
+});
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Create a Metric</h4>
+            <p>Aggregate across all rows. Here we compute the average normalized rating.</p>
+            <div class="code">
+engine.metrics.<span class="fn">register</span>({
+  id: <span class="fn">metricId</span>(<span class="str">'avg_rating'</span>),
+  name: <span class="str">'Avg Rating'</span>,
+  dataProductId: <span class="str">'employees'</span>,
+  formula: { type: <span class="str">'simple'</span>, field: <span class="str">'norm_rating'</span>, aggregation: <span class="str">'avg'</span> },
+  format: { type: <span class="str">'number'</span>, decimals: <span class="num">1</span>, suffix: <span class="str">'%'</span> },
+});
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h4>Create a KPI</h4>
+            <p>Track the metric against a target, with automatic status (OK / Warning / Critical).</p>
+            <div class="code">
+engine.kpis.<span class="fn">register</span>({
+  id: <span class="fn">kpiId</span>(<span class="str">'team-performance'</span>),
+  name: <span class="str">'Team Performance'</span>,
+  metricId: <span class="fn">metricId</span>(<span class="str">'avg_rating'</span>),
+  target: <span class="num">85</span>,
+  direction: <span class="str">'higher_is_better'</span>,
+  thresholds: { ok: <span class="num">85</span>, warn: <span class="num">70</span> },
+});
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout--tip" style="margin-top: 24px;">
+        All of these can also be created visually in the <strong>Dashboard Studio</strong> using the data model sidebar. Click the <strong>+</strong> button next to any layer section to open the guided creation modal.
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+services:
+  # ── PostgreSQL: Settings ──
+  postgres-settings:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: phz_settings
+      POSTGRES_USER: phz
+      POSTGRES_PASSWORD: ${SETTINGS_DB_PASSWORD:-phz}
+    volumes:
+      - settings_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U phz -d phz_settings"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ── PostgreSQL: Data ──
+  postgres-data:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: phz_data
+      POSTGRES_USER: phz
+      POSTGRES_PASSWORD: ${DATA_DB_PASSWORD:-phz}
+    volumes:
+      - source_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U phz -d phz_data"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ── Rust data-service ──
+  data-service:
+    build:
+      context: ./data-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      PHZ_HOST: "0.0.0.0"
+      PHZ_PORT: "8080"
+      DATA_DB_HOST: postgres-data
+      DATA_DB_PORT: "5432"
+      DATA_DB_NAME: phz_data
+      DATA_DB_USER: phz
+      DATA_DB_PASSWORD: ${DATA_DB_PASSWORD:-phz}
+      DATA_DB_POOL_SIZE: "20"
+    depends_on:
+      postgres-data:
+        condition: service_healthy
+
+  # ── Next.js report app ──
+  report-app:
+    build:
+      context: .
+      dockerfile: report_app/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3002}:3002"
+    environment:
+      # Settings DB
+      SETTINGS_DB_HOST: postgres-settings
+      SETTINGS_DB_PORT: "5432"
+      SETTINGS_DB_NAME: phz_settings
+      SETTINGS_DB_USER: phz
+      SETTINGS_DB_PASSWORD: ${SETTINGS_DB_PASSWORD:-phz}
+      # Data DB (fallback when Rust service is unavailable)
+      DATA_DB_HOST: postgres-data
+      DATA_DB_PORT: "5432"
+      DATA_DB_NAME: phz_data
+      DATA_DB_USER: phz
+      DATA_DB_PASSWORD: ${DATA_DB_PASSWORD:-phz}
+      # Rust data-service (server-side, container-to-container)
+      DATA_SERVICE_URL: http://data-service:8080
+      # Client-side URL — browser calls this directly for Arrow exports.
+      # Override with your public domain in .env:
+      #   NEXT_PUBLIC_DATA_SERVICE_URL=https://yourdomain.com/api
+      # If not set, browser-side Arrow calls go through Next.js API routes (works fine).
+      NEXT_PUBLIC_DATA_SERVICE_URL: ${NEXT_PUBLIC_DATA_SERVICE_URL:-}
+      # Auth gate — set in .env to enable password protection
+      APP_PASSWORD: ${APP_PASSWORD:-}
+    depends_on:
+      postgres-settings:
+        condition: service_healthy
+      postgres-data:
+        condition: service_healthy
+      data-service:
+        condition: service_started
+
+volumes:
+  settings_data:
+  source_data:

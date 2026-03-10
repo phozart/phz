@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling", "hatch-jupyter-builder>=0.5"]
+build-backend = "hatchling.build"
+
+[project]
+name = "phz-grid"
+version = "0.1.0"
+description = "Interactive data grid widget for Jupyter — accessible, fast, extensible"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "phozart" }]
+keywords = ["jupyter", "widget", "data-grid", "anywidget", "arrow", "pandas", "table"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Jupyter",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "anywidget>=0.9.0",
+    "traitlets>=5.0",
+    "pyarrow>=14.0",
+    "pandas>=2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/phozart/phz-grid"
+Documentation = "https://github.com/phozart/phz-grid/tree/main/packages/python#readme"
+Repository = "https://github.com/phozart/phz-grid.git"
+Issues = "https://github.com/phozart/phz-grid/issues"
+
+[project.optional-dependencies]
+polars = ["polars>=0.20"]
+panel = ["panel>=1.3"]
+streamlit = ["streamlit>=1.30"]
+dev = ["pytest", "pytest-cov", "ruff"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/phz_grid"]

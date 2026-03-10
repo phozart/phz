@@ -1,0 +1,209 @@
+/**
+ * Empty State Configuration
+ *
+ * Types and helpers for rendering user-friendly empty states across the grid,
+ * dashboard widgets, and workspace shell. Each EmptyScenario maps to a
+ * pre-configured title, description, icon, and optional call-to-action.
+ */
+
+// ========================================================================
+// Empty Scenarios
+// ========================================================================
+
+/**
+ * Union of all recognized empty state scenarios.
+ *
+ * - `no-data`: data source is connected but contains no rows
+ * - `no-results`: filters/search yielded zero matches
+ * - `no-access`: user is authenticated but lacks access to any items
+ * - `not-configured`: widget or component needs initial setup
+ * - `loading-failed`: data load attempt failed (distinct from error states)
+ * - `first-time`: brand-new user, onboarding prompt
+ * - `no-selection`: multi-select or detail panel with nothing selected
+ * - `empty-dashboard`: dashboard exists but has no widgets placed
+ * - `no-favorites`: user has not favorited/starred any artifacts
+ */
+export type EmptyScenario =
+  | 'no-data'
+  | 'no-results'
+  | 'no-access'
+  | 'not-configured'
+  | 'loading-failed'
+  | 'first-time'
+  | 'no-selection'
+  | 'empty-dashboard'
+  | 'no-favorites';
+
+// ========================================================================
+// Empty State Config
+// ========================================================================
+
+export interface EmptyStateConfig {
+  /** The scenario this config applies to */
+  scenario: EmptyScenario;
+  /** Icon name (from the shared icon system) or Unicode fallback */
+  icon: string;
+  /** Short title */
+  title: string;
+  /** Longer descriptive message */
+  description: string;
+  /** Label for the primary call-to-action button (if any) */
+  actionLabel?: string;
+  /** Action identifier dispatched when the user clicks the CTA */
+  actionId?: string;
+}
+
+// ========================================================================
+// Legacy types (retained for backward compatibility)
+// ========================================================================
+
+/** @deprecated Use EmptyScenario instead */
+export type EmptyStateReason =
+  | 'no-data'
+  | 'no-results'
+  | 'no-access'
+  | 'not-configured'
+  | 'loading-failed'
+  | 'first-time';
+
+/** @deprecated Use EmptyStateConfig instead */
+export interface EmptyState {
+  reason: EmptyStateReason;
+  title: string;
+  message: string;
+  icon?: string;
+  actionLabel?: string;
+  actionTarget?: string;
+}
+
+/** @deprecated Use createDefaultEmptyStateConfig instead */
+export function createEmptyState(
+  reason: EmptyStateReason,
+  title: string,
+  message: string,
+): EmptyState {
+  return { reason, title, message };
+}
+
+// ========================================================================
+// Default Empty State Configs
+// ========================================================================
+
+const DEFAULT_EMPTY_CONFIGS: Record<EmptyScenario, EmptyStateConfig> = {
+  'no-data': {
+    scenario: 'no-data',
+    icon: 'sourceDatabase',
+    title: 'No data available',
+    description: 'There is no data to display. Try adding a data source or importing a file.',
+    actionLabel: 'Add Data Source',
+    actionId: 'add-data-source',
+  },
+  'no-results': {
+    scenario: 'no-results',
+    icon: 'search',
+    title: 'No results found',
+    description: 'Your search or filters did not match any items. Try broadening your criteria.',
+    actionLabel: 'Clear Filters',
+    actionId: 'clear-filters',
+  },
+  'no-access': {
+    scenario: 'no-access',
+    icon: 'lock',
+    title: 'Access restricted',
+    description: 'You do not have permission to view this content. Contact your administrator for access.',
+  },
+  'not-configured': {
+    scenario: 'not-configured',
+    icon: 'settings',
+    title: 'Not configured',
+    description: 'This component needs to be set up before it can display content.',
+    actionLabel: 'Configure',
+    actionId: 'configure',
+  },
+  'loading-failed': {
+    scenario: 'loading-failed',
+    icon: 'warning',
+    title: 'Loading failed',
+    description: 'Something went wrong while loading data. Please try again.',
+    actionLabel: 'Retry',
+    actionId: 'retry',
+  },
+  'first-time': {
+    scenario: 'first-time',
+    icon: 'addCircle',
+    title: 'Welcome!',
+    description: 'You are all set. Create your first item to get started.',
+    actionLabel: 'Get Started',
+    actionId: 'get-started',
+  },
+  'no-selection': {
+    scenario: 'no-selection',
+    icon: 'columns',
+    title: 'Nothing selected',
+    description: 'Select an item from the list to view its details here.',
+  },
+  'empty-dashboard': {
+    scenario: 'empty-dashboard',
+    icon: 'dashboard',
+    title: 'Start building',
+    description: 'Drag widgets from the palette or choose a template to get started.',
+    actionLabel: 'Browse Templates',
+    actionId: 'browse-templates',
+  },
+  'no-favorites': {
+    scenario: 'no-favorites',
+    icon: 'pin',
+    title: 'No favorites yet',
+    description: 'Star items you access frequently to see them here.',
+    actionLabel: 'Browse Catalog',
+    actionId: 'browse-catalog',
+  },
+};
+
+/** @deprecated Use createDefaultEmptyStateConfig instead */
+export const DEFAULT_EMPTY_STATES: Record<EmptyStateReason, EmptyState> = {
+  'no-data': {
+    reason: 'no-data',
+    title: 'No data available',
+    message: 'There is no data to display. Try adding a data source.',
+  },
+  'no-results': {
+    reason: 'no-results',
+    title: 'No results found',
+    message: 'No records match the current filters. Try adjusting your criteria.',
+  },
+  'no-access': {
+    reason: 'no-access',
+    title: 'Access restricted',
+    message: 'You do not have permission to view this content.',
+  },
+  'not-configured': {
+    reason: 'not-configured',
+    title: 'Not configured',
+    message: 'This component has not been configured yet.',
+  },
+  'loading-failed': {
+    reason: 'loading-failed',
+    title: 'Loading failed',
+    message: 'Something went wrong while loading data. Please try again.',
+  },
+  'first-time': {
+    reason: 'first-time',
+    title: 'Get started',
+    message: 'Welcome! Create your first item to get started.',
+  },
+};
+
+/**
+ * Create a default EmptyStateConfig for a given scenario.
+ * Returns a fresh copy so callers can safely mutate it.
+ *
+ * @param scenario - The empty state scenario (defaults to 'no-data')
+ * @returns A new EmptyStateConfig object
+ */
+export function createDefaultEmptyStateConfig(
+  scenario: EmptyScenario = 'no-data',
+): EmptyStateConfig {
+  const config = DEFAULT_EMPTY_CONFIGS[scenario] ?? DEFAULT_EMPTY_CONFIGS['no-data'];
+  return { ...config };
+}

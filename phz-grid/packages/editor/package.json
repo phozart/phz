@@ -1,0 +1,46 @@
+{
+  "name": "@phozart/phz-editor",
+  "version": "0.1.0",
+  "description": "Editor shell — BI authoring environment for creating dashboards, reports, alerts, and sharing artifacts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": [
+    "dist/components/*.js"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["editor", "bi-authoring", "dashboard", "reports", "alerts", "sharing"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/editor#readme",
+  "dependencies": {
+    "@phozart/phz-shared": "^0.1.0",
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-engine": "^0.1.0",
+    "lit": "^3.2.0"
+  }
+}

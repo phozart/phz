@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtered Dashboard - phz-grid</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #FAFAF9;
+      color: #1C1917;
+    }
+    h1 { font-size: 20px; margin: 0 0 8px; }
+    .subtitle { font-size: 13px; color: #78716C; margin: 0 0 24px; }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #FFFFFF;
+      border: 1px solid #E7E5E4;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .filter-bar label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #78716C;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .filter-bar select {
+      padding: 6px 10px;
+      border: 1px solid #D6D3D1;
+      border-radius: 6px;
+      font-size: 13px;
+      background: #FAFAF9;
+    }
+    .filter-bar button {
+      padding: 6px 14px;
+      border: 1px solid #D6D3D1;
+      border-radius: 6px;
+      font-size: 12px;
+      background: #FFFFFF;
+      cursor: pointer;
+    }
+    .filter-bar button:hover { background: #F5F5F4; }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1200px;
+    }
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    .active-filter {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 12px;
+      font-size: 11px;
+      color: #1D4ED8;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Filtered Dashboard</h1>
+<p class="subtitle">
+  Demonstrates the FilterAdapter pattern: criteria filters wired to dashboard widgets.
+  Change filters to see all widgets update simultaneously.
+</p>
+
+<!--
+  This example shows how to use the CriteriaEngine + FilterAdapter
+  to create a unified filter-to-widget data pipeline.
+
+  Flow:
+  1. CriteriaEngine manages filter definitions and bindings
+  2. FilterAdapter bridges criteria output to data filtering
+  3. Widgets receive pre-filtered data and re-render automatically
+-->
+
+<!-- Filter controls -->
+<div class="filter-bar">
+  <label>Filters:</label>
+  <select id="filter-region">
+    <option value="">All Regions</option>
+    <option value="North">North</option>
+    <option value="South">South</option>
+    <option value="East">East</option>
+    <option value="West">West</option>
+  </select>
+  <select id="filter-category">
+    <option value="">All Categories</option>
+    <option value="Software">Software</option>
+    <option value="Hardware">Hardware</option>
+    <option value="Services">Services</option>
+  </select>
+  <button id="btn-clear">Clear Filters</button>
+  <span id="active-filters"></span>
+</div>
+
+<div class="dashboard-grid">
+  <!-- KPI Cards -->
+  <phz-kpi-card id="kpi-revenue"></phz-kpi-card>
+  <phz-kpi-card id="kpi-customers"></phz-kpi-card>
+  <phz-kpi-card id="kpi-avg-deal"></phz-kpi-card>
+
+  <!-- Bar Chart -->
+  <phz-bar-chart id="chart-bars" class="span-2"></phz-bar-chart>
+
+  <!-- Trend Line -->
+  <phz-trend-line id="chart-trend"></phz-trend-line>
+</div>
+
+<script type="module">
+  import {
+    createBIEngine,
+    createCriteriaEngine,
+    createFilterAdapter,
+    applyArtefactCriteria,
+  } from '../packages/engine/src/index.ts';
+
+  // -- Step 1: Raw data --
+  const allData = [
+    { region: 'North', month: 'Jan', revenue: 42000, customers: 120, category: 'Software' },
+    { region: 'South', month: 'Jan', revenue: 38000, customers: 95,  category: 'Hardware' },
+    { region: 'East',  month: 'Jan', revenue: 55000, customers: 140, category: 'Software' },
+    { region: 'West',  month: 'Jan', revenue: 61000, customers: 165, category: 'Services' },
+    { region: 'North', month: 'Feb', revenue: 45000, customers: 130, category: 'Software' },
+    { region: 'South', month: 'Feb', revenue: 41000, customers: 102, category: 'Hardware' },
+    { region: 'East',  month: 'Feb', revenue: 58000, customers: 148, category: 'Software' },
+    { region: 'West',  month: 'Feb', revenue: 63000, customers: 170, category: 'Services' },
+    { region: 'North', month: 'Mar', revenue: 48000, customers: 135, category: 'Services' },
+    { region: 'South', month: 'Mar', revenue: 43000, customers: 110, category: 'Software' },
+    { region: 'East',  month: 'Mar', revenue: 60000, customers: 155, category: 'Hardware' },
+    { region: 'West',  month: 'Mar', revenue: 67000, customers: 180, category: 'Software' },
+  ];
+
+  // -- Step 2: Create BIEngine with KPI definitions --
+  const engine = createBIEngine({
+    initialKPIs: [
+      {
+        id: 'revenue', name: 'Revenue', dataProductId: 'sales',
+        field: 'revenue', aggregation: 'sum', unit: 'currency',
+        direction: 'up', target: 500000,
+        thresholds: { green: 400000, amber: 300000, red: 0 },
+      },
+      {
+        id: 'customers', name: 'Customers', dataProductId: 'sales',
+        field: 'customers', aggregation: 'sum', unit: 'count',
+        direction: 'up', target: 1500,
+        thresholds: { green: 1200, amber: 900, red: 0 },
+      },
+      {
+        id: 'avg-deal', name: 'Avg Deal Size', dataProductId: 'sales',
+        field: 'revenue', aggregation: 'avg', unit: 'currency',
+        direction: 'up', target: 55000,
+        thresholds: { green: 50000, amber: 40000, red: 0 },
+      },
+    ],
+  });
+
+  // -- Step 3: Set up CriteriaEngine + FilterAdapter --
+  //
+  // The CriteriaEngine manages filter definitions and their bindings to
+  // artefacts (reports, dashboards). The FilterAdapter converts filter
+  // selections into row-level data filtering.
+
+  const criteriaEngine = createCriteriaEngine();
+  const artefactId = 'dashboard-1';
+
+  // Register filter definitions
+  const now = Date.now();
+  criteriaEngine.registry.register({
+    id: 'region-filter',
+    label: 'Region',
+    type: 'single_select',
+    dataField: 'region',
+    sessionBehavior: 'reset',
+    createdAt: now,
+    updatedAt: now,
+  });
+  criteriaEngine.registry.register({
+    id: 'category-filter',
+    label: 'Category',
+    type: 'single_select',
+    dataField: 'category',
+    sessionBehavior: 'reset',
+    createdAt: now,
+    updatedAt: now,
+  });
+
+  // Bind filters to the dashboard artefact
+  criteriaEngine.bindings.bind({
+    filterDefinitionId: 'region-filter',
+    artefactId,
+    visible: true,
+    order: 0,
+  });
+  criteriaEngine.bindings.bind({
+    filterDefinitionId: 'category-filter',
+    artefactId,
+    visible: true,
+    order: 1,
+  });
+
+  // Create a FilterAdapter that applies criteria to data
+  const filterAdapter = createFilterAdapter(criteriaEngine, artefactId);
+
+  // -- Step 4: Render function --
+  // Re-renders all widgets using filtered data
+
+  function renderDashboard() {
+    const filtered = filterAdapter.applyFilters(allData);
+
+    // Compute KPI values from filtered data
+    const totalRevenue = filtered.reduce((s, r) => s + r.revenue, 0);
+    const totalCustomers = filtered.reduce((s, r) => s + r.customers, 0);
+    const avgDeal = filtered.length > 0
+      ? filtered.reduce((s, r) => s + r.revenue, 0) / filtered.length
+      : 0;
+
+    // KPI: Revenue
+    const kpiRevenue = document.getElementById('kpi-revenue');
+    kpiRevenue.kpiDefinition = engine.kpis.get('revenue');
+    kpiRevenue.value = totalRevenue;
+
+    // KPI: Customers
+    const kpiCustomers = document.getElementById('kpi-customers');
+    kpiCustomers.kpiDefinition = engine.kpis.get('customers');
+    kpiCustomers.value = totalCustomers;
+
+    // KPI: Avg Deal
+    const kpiAvg = document.getElementById('kpi-avg-deal');
+    kpiAvg.kpiDefinition = engine.kpis.get('avg-deal');
+    kpiAvg.value = Math.round(avgDeal);
+
+    // Bar Chart: Revenue by region (from filtered data)
+    const regionTotals = {};
+    for (const row of filtered) {
+      regionTotals[row.region] = (regionTotals[row.region] || 0) + row.revenue;
+    }
+    const barChart = document.getElementById('chart-bars');
+    barChart.data = {
+      field: 'revenue',
+      label: 'Revenue by Region',
+      data: Object.entries(regionTotals).map(([region, total]) => ({
+        x: region, y: total, label: region,
+      })),
+    };
+
+    // Trend Line: Monthly revenue (from filtered data)
+    const monthlyTotals = {};
+    for (const row of filtered) {
+      monthlyTotals[row.month] = (monthlyTotals[row.month] || 0) + row.revenue;
+    }
+    const trendLine = document.getElementById('chart-trend');
+    trendLine.data = {
+      field: 'revenue',
+      label: 'Monthly Revenue',
+      data: Object.entries(monthlyTotals).map(([month, total]) => ({
+        x: month, y: total, label: month,
+      })),
+    };
+    trendLine.target = 150000;
+
+    // Update active filter display
+    const values = filterAdapter.getValues();
+    const activeFilters = document.getElementById('active-filters');
+    const pills = [];
+    if (values['region-filter']) pills.push(`Region: ${values['region-filter']}`);
+    if (values['category-filter']) pills.push(`Category: ${values['category-filter']}`);
+    activeFilters.innerHTML = pills
+      .map(p => `<span class="active-filter">${p}</span>`)
+      .join(' ');
+  }
+
+  // -- Step 5: Wire up filter controls --
+
+  document.getElementById('filter-region').addEventListener('change', (e) => {
+    const value = e.target.value;
+    if (value) {
+      filterAdapter.setValues({ 'region-filter': value });
+    } else {
+      // Clear by resetting and re-applying category filter
+      const current = filterAdapter.getValues();
+      filterAdapter.reset();
+      if (current['category-filter']) {
+        filterAdapter.setValues({ 'category-filter': current['category-filter'] });
+      }
+    }
+    renderDashboard();
+  });
+
+  document.getElementById('filter-category').addEventListener('change', (e) => {
+    const value = e.target.value;
+    if (value) {
+      filterAdapter.setValues({ 'category-filter': value });
+    } else {
+      const current = filterAdapter.getValues();
+      filterAdapter.reset();
+      if (current['region-filter']) {
+        filterAdapter.setValues({ 'region-filter': current['region-filter'] });
+      }
+    }
+    renderDashboard();
+  });
+
+  document.getElementById('btn-clear').addEventListener('click', () => {
+    filterAdapter.reset();
+    document.getElementById('filter-region').value = '';
+    document.getElementById('filter-category').value = '';
+    renderDashboard();
+  });
+
+  // -- Step 6: Subscribe to FilterAdapter changes --
+  // In a more complex app, the FilterAdapter's subscribe() method
+  // can notify multiple consumers automatically:
+  filterAdapter.subscribe((criteria) => {
+    console.log('Filter criteria changed:', criteria);
+  });
+
+  // Initial render
+  renderDashboard();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --build
+
+      - name: Run tests with coverage
+        run: npx vitest run --coverage
+
+  bundle-size:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check bundle sizes
+        run: npm run size
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build all packages
+        run: npm run build
+
+      - name: Build CDN bundles
+        working-directory: packages/grid
+        run: |
+          npx vite build
+          npx vite build --config vite.cdn-all.config.ts
+
+      - name: Verify CDN output
+        run: |
+          test -f packages/grid/dist/cdn/phz-grid.js
+          test -f packages/grid/dist/cdn/phz-all.js
+          echo "CDN bundles built successfully"
+          ls -lh packages/grid/dist/cdn/
+
+      - name: Upload CDN artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cdn-bundles
+          path: packages/grid/dist/cdn/
+          retention-days: 14

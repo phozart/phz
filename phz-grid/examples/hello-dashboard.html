@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Dashboard - phz-grid</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #FAFAF9;
+      color: #1C1917;
+    }
+    h1 { font-size: 20px; margin: 0 0 24px; }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1200px;
+    }
+    .span-2 { grid-column: span 2; }
+  </style>
+</head>
+<body>
+
+<h1>Hello Dashboard</h1>
+
+<!--
+  Minimal single-file dashboard example.
+  Opens directly in a browser -- no build step required.
+
+  This example demonstrates:
+  1. Creating a BIEngine with inline data
+  2. Registering KPIs and data products
+  3. Rendering KPI cards, a bar chart, and a trend line
+-->
+
+<div class="dashboard-grid">
+  <!-- KPI Card: Revenue -->
+  <phz-kpi-card id="kpi-revenue"></phz-kpi-card>
+
+  <!-- KPI Card: Customers -->
+  <phz-kpi-card id="kpi-customers"></phz-kpi-card>
+
+  <!-- KPI Card: Satisfaction -->
+  <phz-kpi-card id="kpi-satisfaction"></phz-kpi-card>
+
+  <!-- Bar Chart: Revenue by Region -->
+  <phz-bar-chart id="chart-region" class="span-2"></phz-bar-chart>
+
+  <!-- Trend Line: Monthly Revenue -->
+  <phz-trend-line id="chart-trend"></phz-trend-line>
+</div>
+
+<!--
+  Import the widget bundle.
+  In production, use the npm package: import '@phozart/phz-widgets';
+  Here we use the local dist path for zero-install demo.
+-->
+<script type="module">
+  // Step 1: Import the engine and widget components
+  // In a real project, these come from npm:
+  //   import { createBIEngine } from '@phozart/phz-engine';
+  //   import '@phozart/phz-widgets';
+  import { createBIEngine, computeStatus, computeDelta } from '../packages/engine/src/index.ts';
+
+  // Widget components register themselves as custom elements when imported.
+  // In production: import '@phozart/phz-widgets';
+  // For this demo, we'll configure them directly via properties.
+
+  // Step 2: Sample data -- normally this comes from an API or database
+  const salesData = [
+    { region: 'North', month: 'Jan', revenue: 42000, customers: 120 },
+    { region: 'South', month: 'Jan', revenue: 38000, customers: 95 },
+    { region: 'East',  month: 'Jan', revenue: 55000, customers: 140 },
+    { region: 'West',  month: 'Jan', revenue: 61000, customers: 165 },
+    { region: 'North', month: 'Feb', revenue: 45000, customers: 130 },
+    { region: 'South', month: 'Feb', revenue: 41000, customers: 102 },
+    { region: 'East',  month: 'Feb', revenue: 58000, customers: 148 },
+    { region: 'West',  month: 'Feb', revenue: 63000, customers: 170 },
+  ];
+
+  // Step 3: Create the BI Engine with KPI definitions
+  const engine = createBIEngine({
+    initialKPIs: [
+      {
+        id: 'total-revenue',
+        name: 'Total Revenue',
+        dataProductId: 'sales',
+        field: 'revenue',
+        aggregation: 'sum',
+        unit: 'currency',
+        direction: 'up',
+        target: 300000,
+        thresholds: { green: 250000, amber: 200000, red: 0 },
+      },
+      {
+        id: 'total-customers',
+        name: 'Total Customers',
+        dataProductId: 'sales',
+        field: 'customers',
+        aggregation: 'sum',
+        unit: 'count',
+        direction: 'up',
+        target: 1000,
+        thresholds: { green: 800, amber: 600, red: 0 },
+      },
+      {
+        id: 'satisfaction',
+        name: 'Satisfaction',
+        dataProductId: 'sales',
+        field: 'revenue',
+        aggregation: 'avg',
+        unit: 'percent',
+        direction: 'up',
+        target: 90,
+        thresholds: { green: 85, amber: 70, red: 0 },
+      },
+    ],
+  });
+
+  // Step 4: Compute values from data
+  const totalRevenue = salesData.reduce((sum, r) => sum + r.revenue, 0);
+  const totalCustomers = salesData.reduce((sum, r) => sum + r.customers, 0);
+  const satisfaction = 87.3; // Simulated value
+
+  // Step 5: Configure the KPI cards
+  const revenueKPI = engine.kpis.get('total-revenue');
+  const customersKPI = engine.kpis.get('total-customers');
+  const satisfactionKPI = engine.kpis.get('satisfaction');
+
+  // Revenue KPI Card
+  const kpiRevenue = document.getElementById('kpi-revenue');
+  kpiRevenue.kpiDefinition = revenueKPI;
+  kpiRevenue.value = totalRevenue;
+  kpiRevenue.previousValue = totalRevenue * 0.92; // Simulate 8% growth
+  kpiRevenue.trendData = [280000, 290000, 295000, 310000, 303000, 320000, 315000, totalRevenue];
+
+  // Customers KPI Card
+  const kpiCustomers = document.getElementById('kpi-customers');
+  kpiCustomers.kpiDefinition = customersKPI;
+  kpiCustomers.value = totalCustomers;
+  kpiCustomers.previousValue = totalCustomers * 0.95;
+  kpiCustomers.trendData = [750, 800, 820, 870, 900, 950, 980, totalCustomers];
+
+  // Satisfaction KPI Card
+  const kpiSatisfaction = document.getElementById('kpi-satisfaction');
+  kpiSatisfaction.kpiDefinition = satisfactionKPI;
+  kpiSatisfaction.value = satisfaction;
+  kpiSatisfaction.previousValue = 84.1;
+  kpiSatisfaction.trendData = [82, 83, 84, 83.5, 85, 86, 85.5, satisfaction];
+
+  // Step 6: Configure the bar chart -- revenue by region
+  const regionTotals = {};
+  for (const row of salesData) {
+    regionTotals[row.region] = (regionTotals[row.region] || 0) + row.revenue;
+  }
+
+  const barChart = document.getElementById('chart-region');
+  barChart.data = {
+    field: 'revenue',
+    label: 'Revenue by Region',
+    data: Object.entries(regionTotals).map(([region, total]) => ({
+      x: region,
+      y: total,
+      label: region,
+    })),
+  };
+  barChart.rankOrder = 'desc';
+  barChart.maxBars = 10;
+
+  // Step 7: Configure the trend line -- monthly revenue
+  const monthlyRevenue = {};
+  for (const row of salesData) {
+    monthlyRevenue[row.month] = (monthlyRevenue[row.month] || 0) + row.revenue;
+  }
+
+  const trendLine = document.getElementById('chart-trend');
+  trendLine.data = {
+    field: 'revenue',
+    label: 'Monthly Revenue Trend',
+    data: Object.entries(monthlyRevenue).map(([month, total]) => ({
+      x: month,
+      y: total,
+      label: month,
+    })),
+  };
+  trendLine.target = 200000;
+
+  // Step 8: Listen for drill-through events from widgets
+  document.addEventListener('drill-through', (e) => {
+    console.log('Drill-through:', e.detail);
+    // In a real app, navigate to a detail view or filter the grid
+  });
+</script>
+
+</body>
+</html>

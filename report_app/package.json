@@ -1,0 +1,45 @@
+{
+  "name": "phz-report-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.33.1-dev20.0",
+    "@phozart/phz-ai": "file:../phz-grid/packages/ai",
+    "@phozart/phz-collab": "file:../phz-grid/packages/collab",
+    "@phozart/phz-core": "file:../phz-grid/packages/core",
+    "@phozart/phz-criteria": "file:../phz-grid/packages/criteria",
+    "@phozart/phz-definitions": "file:../phz-grid/packages/definitions",
+    "@phozart/phz-duckdb": "file:../phz-grid/packages/duckdb",
+    "@phozart/phz-engine": "file:../phz-grid/packages/engine",
+    "@phozart/phz-engine-admin": "file:../phz-grid/packages/engine-admin",
+    "@phozart/phz-grid": "file:../phz-grid/packages/grid",
+    "@phozart/phz-grid-admin": "file:../phz-grid/packages/grid-admin",
+    "@phozart/phz-grid-creator": "file:../phz-grid/packages/grid-creator",
+    "@phozart/phz-react": "file:../phz-grid/packages/react",
+    "@phozart/phz-widgets": "file:../phz-grid/packages/widgets",
+    "@phozart/phz-workspace": "file:../phz-grid/packages/workspace",
+    "apache-arrow": "^21.1.0",
+    "lit": "^3.2.0",
+    "next": "^15.1.0",
+    "pg": "^8.20.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "yjs": "^13.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.18.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.7.0"
+  }
+}

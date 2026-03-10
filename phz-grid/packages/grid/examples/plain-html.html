@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phz — Application Shell</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #F5F5F4; color: #1C1917; }
+
+    /* ─── Layout ─── */
+    .app { display: flex; flex-direction: column; height: 100vh; }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      background: #1C1917;
+      color: #FEFDFB;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    .topbar h1 { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .topbar .sep { width: 1px; height: 20px; background: #44403C; }
+    .topbar .subtitle { font-size: 13px; color: #A8A29E; }
+
+    /* ─── Nav tabs in topbar ─── */
+    .nav-tabs { display: flex; gap: 4px; margin-left: auto; }
+    .nav-tab {
+      font-size: 12px; font-weight: 500; font-family: inherit;
+      padding: 6px 14px; border-radius: 6px; border: none;
+      background: transparent; color: #A8A29E; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-tab:hover { color: #FEFDFB; background: #292524; }
+    .nav-tab.active { color: #FEFDFB; background: #44403C; }
+
+    /* ─── Upload bar ─── */
+    .upload-bar {
+      background: #FEFDFB;
+      border-bottom: 1px solid #E7E5E4;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .upload-bar label { color: #78716C; font-weight: 500; }
+    .upload-zone-inline {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border: 1px dashed #D6D3D1; border-radius: 6px;
+      cursor: pointer; transition: all 0.15s; background: #FAFAF9;
+    }
+    .upload-zone-inline:hover { border-color: #1C1917; background: #F5F5F4; }
+    .upload-zone-inline input { display: none; }
+    .upload-info-bar { color: #44403C; }
+    .upload-info-bar .file-name { font-weight: 600; }
+    .upload-info-bar .row-count { color: #78716C; margin-left: 4px; }
+    .upload-clear-btn {
+      font-size: 10px; padding: 2px 8px; border: 1px solid #D6D3D1; border-radius: 4px;
+      background: transparent; color: #78716C; cursor: pointer; font-family: inherit;
+    }
+    .upload-clear-btn:hover { border-color: #DC2626; color: #DC2626; }
+
+    /* ─── Content area ─── */
+    .content { flex: 1; overflow: auto; }
+
+    /* ─── Views ─── */
+    .view { display: none; height: 100%; }
+    .view.active { display: block; }
+
+    /* ─── Report Admin: split layout ─── */
+    .view-split {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      height: 100%;
+    }
+    .view-split .grid-pane { overflow: auto; padding: 20px; }
+    .view-split .admin-pane {
+      border-left: 1px solid #E7E5E4;
+      overflow: auto;
+      background: white;
+    }
+
+    /* ─── Selection Criteria: split layout (admin left, content right) ─── */
+    .view-criteria-split {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      height: 100%;
+    }
+    .view-criteria-split .criteria-admin-pane {
+      border-right: 1px solid #E7E5E4;
+      overflow: auto;
+      background: white;
+    }
+    .view-criteria-split .criteria-admin-pane phz-criteria-admin {
+      height: 100%;
+      width: 320px;
+    }
+    .view-criteria-split .criteria-content-pane {
+      overflow: auto;
+      padding: 24px;
+    }
+
+    /* ─── Dashboard Admin (studio fills entire view) ─── */
+    #view-dashboard-admin { padding: 0; }
+    #view-dashboard-admin phz-dashboard-studio { height: 100%; }
+
+    /* ─── Dashboard view ─── */
+    #view-dashboard { padding: 20px; overflow: auto; }
+
+    /* ─── Widget gallery ─── */
+    #view-widgets { padding: 20px; overflow: auto; }
+    .widget-gallery { display: flex; flex-direction: column; gap: 20px; }
+    .widget-row { display: grid; gap: 16px; }
+    .widget-row--3 { grid-template-columns: repeat(3, 1fr); }
+    .widget-row--2 { grid-template-columns: repeat(2, 1fr); }
+    .widget-row--1 { grid-template-columns: 1fr; }
+    .widget-section-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.6px; color: #78716C; margin-bottom: 4px;
+    }
+
+    /* ─── Report view ─── */
+    #view-report { padding: 20px; overflow: auto; }
+
+    /* ─── Widget toggle bar ─── */
+    .widget-toggle-bar {
+      display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .widget-toggle {
+      font-size: 11px; font-weight: 600; font-family: inherit;
+      padding: 5px 14px; border-radius: 20px; border: 1px solid #D6D3D1;
+      background: #FAFAF9; color: #78716C; cursor: pointer; transition: all 0.15s;
+      text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    .widget-toggle:hover { border-color: #1C1917; color: #1C1917; }
+    .widget-toggle.active { background: #1C1917; color: #FEFDFB; border-color: #1C1917; }
+
+    /* ─── Dashboard view (auto-hydrating component) ─── */
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Top bar -->
+    <div class="topbar">
+      <h1>Phz</h1>
+      <div class="sep"></div>
+      <span class="subtitle">Application Shell</span>
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" data-view="report-admin" role="tab" aria-selected="true">Report Admin</button>
+        <button class="nav-tab" data-view="dashboard-admin" role="tab" aria-selected="false">Dashboard Admin</button>
+        <button class="nav-tab" data-view="dashboard" role="tab" aria-selected="false">Dashboard</button>
+        <button class="nav-tab" data-view="widgets" role="tab" aria-selected="false">Widgets</button>
+        <button class="nav-tab" data-view="report" role="tab" aria-selected="false">Report</button>
+        <button class="nav-tab" data-view="standalone-toolbar" role="tab" aria-selected="false">Standalone Toolbar</button>
+        <button class="nav-tab" data-view="criteria-bar" role="tab" aria-selected="false">Criteria Bar</button>
+        <button class="nav-tab" data-view="filter-studio" role="tab" aria-selected="false">Filter Studio</button>
+      </nav>
+    </div>
+
+    <!-- Upload bar -->
+    <div class="upload-bar">
+      <label>Data Source:</label>
+      <div class="upload-zone-inline" id="uploadZone">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.json,.tsv">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+        <span style="color:#44403C">Drop file or <strong>browse</strong></span>
+        <span style="color:#A8A29E;font-size:10px">.xlsx .csv .json .tsv</span>
+      </div>
+      <span class="upload-info-bar" id="uploadInfo" style="display:none">
+        <span class="file-name" id="uploadFileName"></span>
+        <span class="row-count" id="uploadRowCount"></span>
+        <button class="upload-clear-btn" id="uploadClearBtn">Reset</button>
+      </span>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+      <!-- View 1: Report Admin -->
+      <div class="view active" id="view-report-admin" role="tabpanel">
+        <div class="view-split">
+          <div class="grid-pane">
+            <phz-grid id="report-grid"
+              density="compact"
+              grid-title="EMPLOYEE REPORT"
+              grid-subtitle="HR Performance Dataset"
+              show-toolbar
+              show-pagination
+              selection-mode="multi"
+              edit-mode="dblclick"
+              user-role="admin"
+            ></phz-grid>
+          </div>
+          <div class="admin-pane">
+            <phz-grid-admin id="grid-admin" open></phz-grid-admin>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 2: Dashboard Admin (integrated studio) -->
+      <div class="view" id="view-dashboard-admin" role="tabpanel">
+        <phz-dashboard-studio id="dashboard-studio"></phz-dashboard-studio>
+      </div>
+
+      <!-- View 3: Dashboard (auto-hydrating) -->
+      <div class="view" id="view-dashboard" role="tabpanel">
+        <phz-dashboard id="main-dashboard"></phz-dashboard>
+      </div>
+
+      <!-- View 4: Widgets Gallery -->
+      <div class="view" id="view-widgets" role="tabpanel">
+        <div class="widget-toggle-bar">
+          <button class="widget-toggle active" data-section="kpi-cards">KPI Cards</button>
+          <button class="widget-toggle active" data-section="scorecard">Scorecard</button>
+          <button class="widget-toggle active" data-section="charts">Charts</button>
+          <button class="widget-toggle active" data-section="bottom-n">Bottom N</button>
+          <button class="widget-toggle active" data-section="status-table">Status Table</button>
+        </div>
+        <div class="widget-gallery">
+          <div data-widget-section="kpi-cards">
+            <div class="widget-section-title">KPI Cards</div>
+            <div class="widget-row widget-row--3">
+              <phz-kpi-card id="kpi-attendance"></phz-kpi-card>
+              <phz-kpi-card id="kpi-quality"></phz-kpi-card>
+              <phz-kpi-card id="kpi-satisfaction"></phz-kpi-card>
+            </div>
+          </div>
+          <div data-widget-section="scorecard">
+            <div class="widget-section-title">KPI Scorecard</div>
+            <div class="widget-row widget-row--1">
+              <phz-kpi-scorecard id="scorecard"></phz-kpi-scorecard>
+            </div>
+          </div>
+          <div data-widget-section="charts">
+            <div class="widget-section-title">Charts</div>
+            <div class="widget-row widget-row--2">
+              <phz-bar-chart id="bar-chart"></phz-bar-chart>
+              <phz-trend-line id="trend-line"></phz-trend-line>
+            </div>
+          </div>
+          <div data-widget-section="bottom-n">
+            <div class="widget-section-title">Bottom Performers</div>
+            <div class="widget-row widget-row--1">
+              <phz-bottom-n id="bottom-n"></phz-bottom-n>
+            </div>
+          </div>
+          <div data-widget-section="status-table">
+            <div class="widget-section-title">Status Table</div>
+            <div class="widget-row widget-row--1">
+              <phz-status-table id="status-table"></phz-status-table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 5: Report -->
+      <div class="view" id="view-report" role="tabpanel">
+        <phz-grid id="report-view-grid"
+          density="compact"
+          grid-title="PERFORMANCE REPORT"
+          grid-subtitle="Generated from Engine Config"
+          show-pagination
+          selection-mode="single"
+        ></phz-grid>
+
+        <!-- Master-Detail: detail panel -->
+        <div id="detail-panel" style="display:none; margin-top:16px; border:1px solid #E7E5E4; border-radius:8px; background:white; padding:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <h3 style="margin:0; font-size:14px; color:#1C1917;">Detail View</h3>
+            <button id="close-detail" style="padding:4px 12px; border:1px solid #D6D3D1; border-radius:6px; background:white; cursor:pointer; font-size:12px; font-family:inherit;">Close</button>
+          </div>
+          <phz-grid id="detail-grid" density="compact" show-toolbar show-pagination></phz-grid>
+        </div>
+      </div>
+
+      <!-- View 6: Standalone Toolbar -->
+      <div class="view" id="view-standalone-toolbar" role="tabpanel">
+        <div style="padding: 12px 0 8px; display:flex; align-items:center; gap:12px;">
+          <h2 style="margin:0; font-size:16px; color:#1C1917; font-weight:600;">Standalone Toolbar Demo</h2>
+          <span style="font-size:12px; color:#78716C;">Toolbar placed outside the grid, auto-wired via .grid property</span>
+        </div>
+        <phz-toolbar id="standalone-tb" slim show-export></phz-toolbar>
+        <div style="height: 8px;"></div>
+        <phz-grid id="standalone-grid"
+          density="compact"
+          grid-title=""
+          show-pagination
+          selection-mode="multi"
+        ></phz-grid>
+      </div>
+
+      <!-- View 8: Filter Studio Demo -->
+      <div class="view" id="view-filter-studio" role="tabpanel">
+        <div style="padding:16px;">
+          <!-- Status toast -->
+          <div id="fs-toast" style="display:none; position:fixed; top:60px; right:24px; z-index:2000; background:#1C1917; color:white; padding:8px 16px; border-radius:6px; font-size:12px; font-weight:500; box-shadow:0 4px 12px rgba(0,0,0,0.15); transition:opacity 0.3s;"></div>
+
+          <!-- Saved definitions list -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <div>
+              <h2 style="margin:0; font-size:16px; color:#1C1917; font-weight:600;">Filter Definitions</h2>
+              <p style="margin:2px 0 0; font-size:12px; color:#A8A29E;" id="fs-persist-status">Loading...</p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button id="fs-new-btn" style="padding:6px 14px; background:#3B82F6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">+ New Definition</button>
+              <button id="fs-clear-btn" style="padding:6px 14px; background:white; color:#DC2626; border:1px solid #FCA5A5; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer;">Clear All</button>
+            </div>
+          </div>
+          <div id="fs-def-list" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; min-height:40px;"></div>
+
+          <!-- Studio (hidden until New/Edit) -->
+          <div id="fs-studio-container" style="display:none; margin-bottom:24px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <h3 id="fs-studio-title" style="margin:0; font-size:14px; color:#1C1917; font-weight:600;">New Filter Definition</h3>
+            </div>
+            <div style="height:580px;">
+              <phz-filter-studio id="demo-filter-studio"></phz-filter-studio>
+            </div>
+          </div>
+
+          <hr style="border:none; border-top:1px solid #E7E5E4; margin:20px 0;">
+
+          <h2 style="margin:0 0 8px; font-size:16px; color:#1C1917; font-weight:600;">Filter Picker (Artefact Binding)</h2>
+          <p style="margin:0 0 16px; font-size:13px; color:#78716C;">Select which pre-built filters to bind to a report. Bindings persist in localStorage.</p>
+          <div style="height:440px;">
+            <phz-filter-picker id="demo-filter-picker"></phz-filter-picker>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 7: Criteria Bar + Drawer (with Admin panel) -->
+      <div class="view" id="view-criteria-bar" role="tabpanel">
+        <div class="view-criteria-split">
+          <!-- Left: Admin configuration panel -->
+          <div class="criteria-admin-pane">
+            <phz-criteria-admin id="criteria-admin"></phz-criteria-admin>
+          </div>
+
+          <!-- Right: Criteria bar + grid -->
+          <div class="criteria-content-pane">
+            <phz-selection-criteria id="bar-criteria"></phz-selection-criteria>
+
+            <!-- Standalone summary strip -->
+            <phz-criteria-summary id="bar-criteria-summary" style="margin-top:12px"></phz-criteria-summary>
+
+            <!-- Filtered grid -->
+            <div style="margin-top: 12px;">
+              <phz-grid id="bar-criteria-grid"
+                density="comfortable"
+                grid-title=""
+                show-pagination
+                show-toolbar
+              ></phz-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SheetJS for Excel parsing -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+  <script type="module">
+    import * as Phz from '../dist/cdn/phz-all.js';
+
+    // ══════════════════════════════════════════════════════════
+    // 1. SHARED DATASET
+    // ══════════════════════════════════════════════════════════
+
+    const sampleColumns = [
+      { field: 'id',           header: 'ID',           width: 64,  type: 'number' },
+      { field: 'name',         header: 'Name',         width: 180 },
+      { field: 'email',        header: 'Email',        width: 240 },
+      { field: 'department',   header: 'Department',   width: 130 },
+      { field: 'region',       header: 'Region',       width: 100 },
+      { field: 'role',         header: 'Role',         width: 140 },
+      { field: 'status',       header: 'Status',       width: 110, type: 'status' },
+      { field: 'attendance',   header: 'Attendance %', width: 120, type: 'bar' },
+      { field: 'quality',      header: 'Quality %',    width: 120, type: 'bar' },
+      { field: 'satisfaction', header: 'Satisfaction',  width: 120, type: 'bar' },
+      { field: 'salary',       header: 'Salary',       width: 100, type: 'number' },
+      { field: 'startDate',    header: 'Start Date',   width: 120, type: 'date' },
+    ];
+
+    const sampleData = [
+      { id: 1,  name: 'Alice Johnson',      email: 'alice@example.com',      department: 'Platform',        region: 'North', role: 'Engineering Lead', status: 'Active',   attendance: 96, quality: 92, satisfaction: 88, salary: 125000, startDate: '2022-01-15' },
+      { id: 2,  name: 'Bob Smith',           email: 'bob@example.com',        department: 'Product',         region: 'South', role: 'Designer',         status: 'Active',   attendance: 88, quality: 85, satisfaction: 78, salary: 95000,  startDate: '2022-03-22' },
+      { id: 3,  name: 'Charlie Williams',    email: 'charlie@example.com',    department: 'Data',            region: 'East',  role: 'Analyst',          status: 'Active',   attendance: 72, quality: 68, satisfaction: 65, salary: 88000,  startDate: '2022-06-10' },
+      { id: 4,  name: 'Diana Brown',         email: 'diana@example.com',      department: 'Platform',        region: 'North', role: 'Backend Dev',      status: 'Active',   attendance: 94, quality: 91, satisfaction: 86, salary: 112000, startDate: '2022-09-01' },
+      { id: 5,  name: 'Eve Jones',           email: 'eve@example.com',        department: 'Product',         region: 'South', role: 'PM',               status: 'Inactive', attendance: 45, quality: 52, satisfaction: 40, salary: 105000, startDate: '2023-01-14' },
+      { id: 6,  name: 'Frank Garcia',        email: 'frank@example.com',      department: 'Infrastructure',  region: 'East',  role: 'DevOps',           status: 'Active',   attendance: 89, quality: 87, satisfaction: 82, salary: 108000, startDate: '2023-02-28' },
+      { id: 7,  name: 'Grace Miller',        email: 'grace@example.com',      department: 'Platform',        region: 'North', role: 'Frontend Dev',     status: 'Active',   attendance: 97, quality: 95, satisfaction: 91, salary: 115000, startDate: '2023-04-15' },
+      { id: 8,  name: 'Henry Davis',         email: 'henry@example.com',      department: 'Data',            region: 'South', role: 'Data Scientist',   status: 'Active',   attendance: 82, quality: 79, satisfaction: 73, salary: 120000, startDate: '2023-05-20' },
+      { id: 9,  name: 'Iris Wilson',         email: 'iris@example.com',       department: 'Infrastructure',  region: 'East',  role: 'Security Eng',     status: 'Active',   attendance: 91, quality: 88, satisfaction: 84, salary: 110000, startDate: '2023-07-05' },
+      { id: 10, name: 'Jack Moore',          email: 'jack@example.com',       department: 'Platform',        region: 'North', role: 'Tech Lead',        status: 'Active',   attendance: 98, quality: 96, satisfaction: 93, salary: 135000, startDate: '2023-08-12' },
+      { id: 11, name: 'Karen Taylor',        email: 'karen@example.com',      department: 'Product',         region: 'South', role: 'UX Researcher',    status: 'Inactive', attendance: 55, quality: 60, satisfaction: 48, salary: 92000,  startDate: '2023-09-18' },
+      { id: 12, name: 'Leo Anderson',        email: 'leo@example.com',        department: 'Data',            region: 'East',  role: 'ML Engineer',      status: 'Active',   attendance: 87, quality: 90, satisfaction: 85, salary: 128000, startDate: '2023-10-25' },
+      { id: 13, name: 'Mia Thomas',          email: 'mia@example.com',        department: 'Infrastructure',  region: 'North', role: 'SRE',              status: 'Active',   attendance: 93, quality: 86, satisfaction: 80, salary: 115000, startDate: '2023-11-30' },
+      { id: 14, name: 'Noah Jackson',        email: 'noah@example.com',       department: 'Platform',        region: 'South', role: 'QA Lead',          status: 'Active',   attendance: 78, quality: 74, satisfaction: 70, salary: 100000, startDate: '2024-01-08' },
+      { id: 15, name: 'Olivia White',        email: 'olivia@example.com',     department: 'Platform',        region: 'East',  role: 'Architect',        status: 'Active',   attendance: 99, quality: 97, satisfaction: 95, salary: 145000, startDate: '2024-02-14' },
+      { id: 16, name: 'Paul Harris',         email: 'paul@example.com',       department: 'Product',         region: 'North', role: 'Intern',           status: 'Inactive', attendance: 35, quality: 42, satisfaction: 38, salary: 48000,  startDate: '2024-03-20' },
+      { id: 17, name: 'Quinn Martin',        email: 'quinn@example.com',      department: 'Data',            region: 'South', role: 'DBA',              status: 'Active',   attendance: 84, quality: 82, satisfaction: 76, salary: 105000, startDate: '2024-04-25' },
+      { id: 18, name: 'Rachel Lee',          email: 'rachel@example.com',     department: 'Platform',        region: 'East',  role: 'VP Engineering',   status: 'Active',   attendance: 92, quality: 94, satisfaction: 90, salary: 160000, startDate: '2024-05-30' },
+      { id: 19, name: 'Sam Clark',           email: 'sam@example.com',        department: 'Infrastructure',  region: 'North', role: 'Cloud Eng',        status: 'Active',   attendance: 76, quality: 71, satisfaction: 68, salary: 108000, startDate: '2024-06-15' },
+      { id: 20, name: 'Tina Lewis',          email: 'tina@example.com',       department: 'Platform',        region: 'South', role: 'Staff Eng',        status: 'Active',   attendance: 95, quality: 93, satisfaction: 89, salary: 140000, startDate: '2024-07-22' },
+    ];
+
+    let activeColumns = [...sampleColumns];
+    let activeData = [...sampleData];
+    let uploadedFileName = '';
+
+    // DataSet helper — single schema definition for the employee dataset
+    function createEmployeeDataSet(rows, columns) {
+      const dsColumns = (columns || sampleColumns).map(c => ({
+        field: c.field,
+        type: c.type || 'string',
+        label: c.header || c.field,
+      }));
+      return Phz.createDataSet(dsColumns, rows, {
+        source: uploadedFileName || 'Sample Data',
+        lastUpdated: new Date().toISOString(),
+        totalCount: rows.length,
+      });
+    }
+    let activeDataSet = createEmployeeDataSet(activeData, activeColumns);
+
+    // ══════════════════════════════════════════════════════════
+    // 2. BI ENGINE SETUP
+    // ══════════════════════════════════════════════════════════
+
+    const engine = Phz.createBIEngine({
+      initialDataModel: {
+        fields: [
+          { name: 'attendance', type: 'number' },
+          { name: 'quality', type: 'number' },
+          { name: 'satisfaction', type: 'number' },
+          { name: 'salary', type: 'number' },
+          { name: 'department', type: 'string' },
+          { name: 'region', type: 'string' },
+          { name: 'status', type: 'string' },
+        ],
+        parameters: [
+          {
+            id: /** @type {any} */ ('param::target_pct'),
+            name: 'Target %',
+            type: 'number',
+            defaultValue: 85,
+          },
+        ],
+        calculatedFields: [
+          {
+            id: /** @type {any} */ ('calc::performance_avg'),
+            name: 'performance_avg',
+            outputType: 'number',
+            expression: {
+              kind: 'binary_op',
+              operator: '/',
+              left: {
+                kind: 'binary_op',
+                operator: '+',
+                left: {
+                  kind: 'binary_op',
+                  operator: '+',
+                  left: { kind: 'field_ref', fieldName: 'attendance' },
+                  right: { kind: 'field_ref', fieldName: 'quality' },
+                },
+                right: { kind: 'field_ref', fieldName: 'satisfaction' },
+              },
+              right: { kind: 'literal', value: 3 },
+            },
+          },
+        ],
+      },
+    });
+
+    // Register Data Product
+    engine.dataProducts.register({
+      id: /** @type {any} */ ('employees'),
+      name: 'Employee Performance',
+      description: 'HR performance metrics dataset',
+      owner: 'HR',
+      schema: {
+        fields: [
+          { name: 'id',           type: 'number' },
+          { name: 'name',         type: 'string' },
+          { name: 'email',        type: 'string' },
+          { name: 'department',   type: 'string' },
+          { name: 'region',       type: 'string' },
+          { name: 'role',         type: 'string' },
+          { name: 'status',       type: 'string' },
+          { name: 'attendance',   type: 'number' },
+          { name: 'quality',      type: 'number' },
+          { name: 'satisfaction', type: 'number' },
+          { name: 'salary',       type: 'number' },
+          { name: 'startDate',    type: 'date' },
+        ],
+      },
+      tags: ['hr', 'performance'],
+    });
+
+    // KPI Definitions
+    const attendanceKPI = {
+      id: /** @type {any} */ ('attendance'),
+      name: 'Attendance Rate',
+      description: 'Average employee attendance rate',
+      category: 'HR',
+      target: 95,
+      unit: 'percent',
+      direction: 'higher_is_better',
+      thresholds: { ok: 90, warn: 75 },
+      deltaComparison: 'previous_period',
+      dimensions: ['department', 'region'],
+      breakdowns: [
+        { id: 'north', label: 'North' },
+        { id: 'south', label: 'South' },
+        { id: 'east',  label: 'East' },
+      ],
+      dataSource: { scoreEndpoint: '/api/kpi/attendance' },
+      trend: { enabled: true, periods: 12 },
+      sortOrder: 1,
+      metricId: /** @type {any} */ ('avg-attendance'),
+      bands: [
+        { label: 'Critical', color: '#DC2626', upTo: { type: 'static', value: 75 } },
+        { label: 'Warning',  color: '#D97706', upTo: { type: 'parameter', parameterId: 'target_pct' } },
+        { label: 'On Track', color: '#16A34A', upTo: { type: 'static', value: 100 } },
+      ],
+    };
+
+    const qualityKPI = {
+      id: /** @type {any} */ ('quality'),
+      name: 'Quality Score',
+      description: 'Average quality rating across deliverables',
+      category: 'HR',
+      target: 90,
+      unit: 'percent',
+      direction: 'higher_is_better',
+      thresholds: { ok: 85, warn: 70 },
+      deltaComparison: 'previous_period',
+      dimensions: ['department', 'region'],
+      breakdowns: [
+        { id: 'north', label: 'North' },
+        { id: 'south', label: 'South' },
+        { id: 'east',  label: 'East' },
+      ],
+      dataSource: { scoreEndpoint: '/api/kpi/quality' },
+      trend: { enabled: true, periods: 12 },
+      sortOrder: 2,
+    };
+
+    const satisfactionKPI = {
+      id: /** @type {any} */ ('satisfaction'),
+      name: 'Satisfaction Index',
+      description: 'Employee satisfaction survey results',
+      category: 'HR',
+      target: 85,
+      unit: 'percent',
+      direction: 'higher_is_better',
+      thresholds: { ok: 80, warn: 60 },
+      deltaComparison: 'previous_period',
+      dimensions: ['department', 'region'],
+      breakdowns: [
+        { id: 'north', label: 'North' },
+        { id: 'south', label: 'South' },
+        { id: 'east',  label: 'East' },
+      ],
+      dataSource: { scoreEndpoint: '/api/kpi/satisfaction' },
+      trend: { enabled: true, periods: 12 },
+      sortOrder: 3,
+    };
+
+    engine.kpis.register(attendanceKPI);
+    engine.kpis.register(qualityKPI);
+    engine.kpis.register(satisfactionKPI);
+
+    // Metrics
+    engine.metrics.register({
+      id: /** @type {any} */ ('avg-attendance'),
+      name: 'Average Attendance',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: { type: 'simple', field: 'attendance', aggregation: 'avg' },
+      format: { type: 'percent', decimals: 1 },
+    });
+
+    engine.metrics.register({
+      id: /** @type {any} */ ('avg-quality'),
+      name: 'Average Quality',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: { type: 'simple', field: 'quality', aggregation: 'avg' },
+      format: { type: 'percent', decimals: 1 },
+    });
+
+    engine.metrics.register({
+      id: /** @type {any} */ ('avg-satisfaction'),
+      name: 'Average Satisfaction',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: { type: 'simple', field: 'satisfaction', aggregation: 'avg' },
+      format: { type: 'percent', decimals: 1 },
+    });
+
+    engine.metrics.register({
+      id: /** @type {any} */ ('total-salary'),
+      name: 'Total Salary',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: { type: 'simple', field: 'salary', aggregation: 'sum' },
+      format: { type: 'currency', decimals: 0, prefix: '$' },
+    });
+
+    engine.metrics.register({
+      id: /** @type {any} */ ('headcount'),
+      name: 'Headcount',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: { type: 'simple', field: 'salary', aggregation: 'count' },
+    });
+
+    // Expression metric: weighted performance = avg_attendance * headcount / headcount (identity for demo)
+    engine.metrics.register({
+      id: /** @type {any} */ ('weighted-perf'),
+      name: 'Weighted Performance',
+      dataProductId: /** @type {any} */ ('employees'),
+      formula: {
+        type: 'expression',
+        expression: {
+          kind: 'binary_op',
+          operator: '/',
+          left: {
+            kind: 'binary_op',
+            operator: '+',
+            left: {
+              kind: 'binary_op',
+              operator: '+',
+              left: { kind: 'metric_ref', metricId: 'avg-attendance' },
+              right: { kind: 'metric_ref', metricId: 'avg-quality' },
+            },
+            right: { kind: 'metric_ref', metricId: 'avg-satisfaction' },
+          },
+          right: { kind: 'literal', value: 3 },
+        },
+      },
+      format: { type: 'percent', decimals: 1 },
+    });
+
+    // Report Config
+    const reportConfig = {
+      id: /** @type {any} */ ('employee-report'),
+      name: 'Employee Performance Report',
+      description: 'Comprehensive employee performance overview',
+      dataProductId: /** @type {any} */ ('employees'),
+      columns: [
+        { field: 'name',         header: 'Employee',     width: 180, visible: true },
+        { field: 'department',   header: 'Department',   width: 130, visible: true },
+        { field: 'region',       header: 'Region',       width: 100, visible: true },
+        { field: 'role',         header: 'Role',         width: 140, visible: true },
+        { field: 'attendance',   header: 'Attendance %', width: 120, visible: true },
+        { field: 'quality',      header: 'Quality %',    width: 120, visible: true },
+        { field: 'satisfaction', header: 'Satisfaction',  width: 120, visible: true },
+        { field: 'salary',       header: 'Salary',       width: 100, visible: true },
+        { field: 'startDate',    header: 'Start Date',   width: 120, visible: true },
+      ],
+      sort: { field: 'name', direction: 'asc' },
+      pageSize: 20,
+      created: Date.now(),
+      updated: Date.now(),
+      drillThrough: {
+        targetReportId: /** @type {any} */ ('detail-report'),
+        trigger: 'click',
+        openIn: 'panel',
+        mode: 'filtered',
+        filterFields: ['department', 'region'],
+      },
+      generateDashboard: {
+        href: '/dashboards/new?from={reportId}&mode={dataMode}',
+      },
+    };
+    engine.reports.save(reportConfig);
+
+    // Detail report — same data product, all columns, no drill
+    const detailReportConfig = {
+      id: /** @type {any} */ ('detail-report'),
+      name: 'Employee Detail',
+      dataProductId: /** @type {any} */ ('employees'),
+      columns: reportConfig.columns,
+      pageSize: 50,
+      created: Date.now(),
+      updated: Date.now(),
+    };
+    engine.reports.save(detailReportConfig);
+
+    // Dashboard Config
+    const dashboardConfig = {
+      id: /** @type {any} */ ('hr-dashboard'),
+      name: 'HR Performance Dashboard',
+      description: 'Real-time view of employee performance KPIs across regions',
+      layout: { columns: 3, rowHeight: 180, gap: 16, responsive: true },
+      widgets: [
+        {
+          id: /** @type {any} */ ('w-attendance'),
+          widgetType: 'kpi-card',
+          config: { id: /** @type {any} */ ('w-attendance'), type: 'kpi-card', kpiId: /** @type {any} */ ('attendance'), title: 'Attendance', position: { row: 0, col: 0 }, size: { rowSpan: 1, colSpan: 1 } },
+          position: { row: 0, col: 0, rowSpan: 1, colSpan: 1 },
+        },
+        {
+          id: /** @type {any} */ ('w-quality'),
+          widgetType: 'kpi-card',
+          config: { id: /** @type {any} */ ('w-quality'), type: 'kpi-card', kpiId: /** @type {any} */ ('quality'), title: 'Quality', position: { row: 0, col: 1 }, size: { rowSpan: 1, colSpan: 1 } },
+          position: { row: 0, col: 1, rowSpan: 1, colSpan: 1 },
+        },
+        {
+          id: /** @type {any} */ ('w-satisfaction'),
+          widgetType: 'kpi-card',
+          config: { id: /** @type {any} */ ('w-satisfaction'), type: 'kpi-card', kpiId: /** @type {any} */ ('satisfaction'), title: 'Satisfaction', position: { row: 0, col: 2 }, size: { rowSpan: 1, colSpan: 1 } },
+          position: { row: 0, col: 2, rowSpan: 1, colSpan: 1 },
+        },
+        {
+          id: /** @type {any} */ ('w-bar'),
+          widgetType: 'bar-chart',
+          config: { id: /** @type {any} */ ('w-bar'), type: 'bar-chart', dataProductId: /** @type {any} */ ('employees'), metricField: 'attendance', dimension: 'department', title: 'Attendance by Department', position: { row: 1, col: 0 }, size: { rowSpan: 1, colSpan: 2 } },
+          position: { row: 1, col: 0, rowSpan: 1, colSpan: 2 },
+        },
+        {
+          id: /** @type {any} */ ('w-trend'),
+          widgetType: 'trend-line',
+          config: { id: /** @type {any} */ ('w-trend'), type: 'trend-line', dataProductId: /** @type {any} */ ('employees'), metricField: 'quality', periods: 12, title: 'Quality Trend', position: { row: 1, col: 2 }, size: { rowSpan: 1, colSpan: 1 } },
+          position: { row: 1, col: 2, rowSpan: 1, colSpan: 1 },
+        },
+      ],
+      created: Date.now(),
+      updated: Date.now(),
+    };
+    engine.dashboards.save(dashboardConfig);
+
+    // ══════════════════════════════════════════════════════════
+    // 3. SCORE COMPUTATION (now via engine resolver)
+    // ══════════════════════════════════════════════════════════
+
+    // computeScoresFromData, buildDeptBarData, buildTrendData, buildStatusTableData
+    // have been replaced by the engine's widget resolver + default score provider.
+    // The <phz-dashboard> component auto-hydrates widgets from config + data.
+
+    // Still needed by Widgets gallery tab — reuse engine score provider
+    const scoreProvider = Phz.createDefaultScoreProvider();
+
+    function computeScoresFromData(data) {
+      // Adapter: translate score provider output to legacy shape for Widgets gallery
+      function getScore(kpiDef) {
+        const s = scoreProvider(kpiDef.id, data, kpiDef);
+        return { value: s.value, previous: s.previousValue, trend: s.trendData, breakdowns: s.breakdowns };
+      }
+      return {
+        attendance: getScore(attendanceKPI),
+        quality: getScore(qualityKPI),
+        satisfaction: getScore(satisfactionKPI),
+      };
+    }
+
+    function buildDeptBarData(data, field) {
+      const depts = {};
+      for (const row of data) {
+        const d = row.department || 'Unknown';
+        if (!depts[d]) depts[d] = [];
+        depts[d].push(row[field] || 0);
+      }
+      return {
+        field: field,
+        label: field.charAt(0).toUpperCase() + field.slice(1) + ' by Department',
+        data: Object.entries(depts).map(([dept, vals]) => ({
+          x: dept,
+          y: vals.reduce((a, b) => a + b, 0) / vals.length,
+          label: dept,
+        })),
+      };
+    }
+
+    function buildTrendData(trend, label) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return {
+        field: label.toLowerCase(),
+        label: label,
+        data: trend.map((v, i) => ({ x: months[i], y: v, label: months[i] })),
+      };
+    }
+
+    function buildStatusTableData(data) {
+      const groups = {};
+      for (const row of data) {
+        const dept = row.department || 'Unknown';
+        if (!groups[dept]) groups[dept] = [];
+        groups[dept].push(row);
+      }
+      return Object.entries(groups).map(([dept, rows]) => ({
+        entity: dept,
+        attendance: rows.reduce((s, r) => s + (r.attendance || 0), 0) / rows.length,
+        quality: rows.reduce((s, r) => s + (r.quality || 0), 0) / rows.length,
+        satisfaction: rows.reduce((s, r) => s + (r.satisfaction || 0), 0) / rows.length,
+      }));
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 4. ADMIN STATE & SYNC
+    // ══════════════════════════════════════════════════════════
+
+    // Admin state managed outside the grid
+    let adminColumnState = []; // { field, header, visible, frozen, width }
+    let tableSettings = {
+      containerShadow: 'md', containerRadius: 8,
+      showTitleBar: true, titleText: '', subtitleText: '',
+      titleFontFamily: 'inherit', titleFontSize: 14, subtitleFontSize: 13,
+      titleBarBg: '#1C1917', titleBarText: '#FEFDFB', titleIcon: '',
+      showToolbar: true, showSearch: true, showDensityToggle: true,
+      showColumnEditor: true, showCsvExport: true, showExcelExport: true,
+      density: 'compact',
+      loadingMode: 'paginate', pageSize: 25, headerWrapping: false,
+      showColumnGroups: false, columnGroups: [],
+      groupByFields: [],
+      groupByLevels: [],
+      groupTotals: false, groupTotalsFn: 'sum', groupTotalsOverrides: {},
+      autoSizeColumns: false, allowFiltering: true, allowSorting: true,
+      defaultSortField: '', defaultSortDirection: 'asc', rowBanding: true,
+      showPagination: true, showCheckboxes: false, virtualization: false,
+      editMode: 'dblclick', selectionMode: 'multi',
+      showRowActions: false, showSelectionActions: true,
+      showEditActions: true, showCopyActions: true,
+      fontFamily: 'inherit', fontSize: 13,
+      fontBold: false, fontItalic: false, fontUnderline: false,
+      hAlign: 'left', vAlign: 'middle', headerHAlign: 'left',
+      numberAlign: 'right', textAlign: 'left', dateAlign: 'left', booleanAlign: 'center',
+      titleBarBgColor: '#1C1917', titleBarTextColor: '#FEFDFB',
+      headerBg: '#FAFAF9', headerText: '#A8A29E',
+      bodyBg: '#FFFFFF', bodyText: '#1C1917',
+      footerBg: '#FAFAF9', footerText: '#78716C',
+    };
+    let columnFormatting = {};
+    let numberFormats = {};
+    let adminFormattingRules = [];
+    let adminFilterPresets = {
+      'Active Only': {
+        name: 'Active Only',
+        filters: [{ field: 'status', operator: 'equals', value: 'Active' }],
+      },
+      'High Attendance': {
+        name: 'High Attendance',
+        filters: [{ field: 'attendance', operator: 'greaterThanOrEqual', value: 90 }],
+      },
+      'Low Satisfaction': {
+        name: 'Low Satisfaction',
+        filters: [{ field: 'satisfaction', operator: 'lessThan', value: 70 }],
+      },
+    };
+    let adminExportSettings = { format: 'csv', includeHeaders: true, includeFormatting: false, includeGroupHeaders: true, separator: ',', selectedColumns: [], fileName: 'export' };
+
+    function buildAdminColumnState(cols) {
+      return cols.map(c => ({
+        field: c.field,
+        header: c.header || c.field,
+        visible: true,
+        frozen: false,
+        width: c.width || 120,
+      }));
+    }
+
+    function syncAdminPanel() {
+      const gridAdmin = document.getElementById('grid-admin');
+      if (!gridAdmin) return;
+      gridAdmin.columns = adminColumnState;
+      gridAdmin.formattingRules = adminFormattingRules;
+      gridAdmin.fields = activeColumns.map(c => c.field);
+      gridAdmin.filterPresets = adminFilterPresets;
+      gridAdmin.columnTypes = Object.fromEntries(activeColumns.map(c => [c.field, c.type || 'string']));
+      gridAdmin.statusColors = reportGridEl?.statusColors || statusColorsConfig;
+      gridAdmin.barThresholds = reportGridEl?.barThresholds || barThresholdsConfig;
+      gridAdmin.dateFormats = reportGridEl?.dateFormats || {};
+      gridAdmin.linkTemplates = Object.fromEntries(activeColumns.filter(c => c.linkTemplate).map(c => [c.field, c.linkTemplate]));
+      gridAdmin.tableSettings = { ...tableSettings };
+      gridAdmin.columnFormatting = columnFormatting;
+      gridAdmin.numberFormats = numberFormats;
+      gridAdmin.reportId = 'employee-report';
+      gridAdmin.reportName = 'Employee Report';
+      gridAdmin.availableReports = []; // app would populate with other reports
+      gridAdmin.open = true;
+
+      // Load saved presentation from engine report (if any)
+      const savedReport = engine.reports.get(/** @type {any} */ ('employee-report'));
+      if (savedReport && savedReport.presentation) {
+        gridAdmin.setSettings(savedReport.presentation);
+      }
+    }
+
+    // Build CSS inline style strings from columnFormatting + type-based alignment defaults
+    function applyColumnStyles() {
+      const styles = {};
+      // Type-based alignment map from tableSettings
+      const typeAlignMap = {
+        number: tableSettings.numberAlign || 'right',
+        string: tableSettings.textAlign || 'left',
+        date: tableSettings.dateAlign || 'left',
+        datetime: tableSettings.dateAlign || 'left',
+        boolean: tableSettings.booleanAlign || 'center',
+        status: tableSettings.textAlign || 'left',
+        bar: tableSettings.numberAlign || 'right',
+        link: tableSettings.textAlign || 'left',
+        image: tableSettings.textAlign || 'left',
+      };
+
+      // Apply to every column: type-based defaults first, then per-column overrides
+      for (const col of activeColumns) {
+        const parts = [];
+        const typeAlign = typeAlignMap[col.type || 'string'];
+        if (typeAlign && typeAlign !== 'left') parts.push('text-align:' + typeAlign);
+
+        const fmt = columnFormatting[col.field];
+        if (fmt) {
+          if (fmt.fontFamily) parts.push('font-family:' + fmt.fontFamily);
+          if (fmt.fontSize) parts.push('font-size:' + fmt.fontSize + 'px');
+          if (fmt.bold) parts.push('font-weight:bold');
+          if (fmt.italic) parts.push('font-style:italic');
+          if (fmt.underline) parts.push('text-decoration:underline');
+          if (fmt.hAlign) { // per-column overrides type default
+            parts.length && (parts[0] = parts[0]); // keep existing
+            // Replace any type-based text-align with per-column override
+            const idx = parts.findIndex(p => p.startsWith('text-align:'));
+            if (idx >= 0) parts[idx] = 'text-align:' + fmt.hAlign;
+            else parts.push('text-align:' + fmt.hAlign);
+          }
+          if (fmt.vAlign) parts.push('vertical-align:' + fmt.vAlign);
+          if (fmt.bgColor && fmt.bgColor !== '#FFFFFF') parts.push('background:' + fmt.bgColor);
+          if (fmt.textColor && fmt.textColor !== '#1C1917') parts.push('color:' + fmt.textColor);
+        }
+        if (parts.length) styles[col.field] = parts.join(';') + ';';
+      }
+      const reportGrid = document.getElementById('report-grid');
+      if (reportGrid) reportGrid.columnStyles = styles;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 5. WIRE UP VIEWS
+    // ══════════════════════════════════════════════════════════
+
+    const statusColorsConfig = {
+      Active:   { bg: 'rgba(22,163,74,0.08)', color: '#16A34A', dot: '#16A34A' },
+      Inactive: { bg: 'rgba(168,162,158,0.08)', color: '#A8A29E', dot: '#A8A29E' },
+    };
+    const barThresholdsConfig = [
+      { min: 90, color: '#16A34A' },
+      { min: 75, color: '#3B82F6' },
+      { min: 60, color: '#D97706' },
+      { min: 0,  color: '#DC2626' },
+    ];
+
+    function wireKpiCard(id, kpiDef, scoreData) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.kpiDefinition = kpiDef;
+      el.value = scoreData.value;
+      el.previousValue = scoreData.previous;
+      el.trendData = scoreData.trend;
+      el.cardStyle = 'expanded';
+    }
+
+    function refreshAllViews() {
+      const scores = computeScoresFromData(activeData);
+
+      // Rebuild DataSet on each refresh
+      activeDataSet = createEmployeeDataSet(activeData, activeColumns);
+
+      // --- Rebuild admin column state from activeColumns ---
+      adminColumnState = buildAdminColumnState(activeColumns);
+
+      // --- Report Admin Grid (uses .dataset for schema + data) ---
+      const reportGrid = document.getElementById('report-grid');
+      const visibleColumns = adminColumnState.filter(c => c.visible).map(c => {
+        const src = activeColumns.find(ac => ac.field === c.field);
+        return src || c;
+      });
+      reportGrid.dataSet = activeDataSet;
+      reportGrid.statusColors = statusColorsConfig;
+      reportGrid.barThresholds = barThresholdsConfig;
+
+      // --- Sync pageSize from tableSettings to grid ---
+      reportGrid.pageSize = tableSettings.pageSize;
+
+      // --- Sync Admin Panel ---
+      syncAdminPanel();
+
+      // --- Dashboard Studio ---
+      const dashboardStudio = document.getElementById('dashboard-studio');
+      dashboardStudio.engine = engine;
+      dashboardStudio.data = activeData;
+
+      // --- Dashboard (auto-hydrating from config + data) ---
+      const mainDashboard = document.getElementById('main-dashboard');
+      if (mainDashboard) {
+        mainDashboard.engine = engine;
+        mainDashboard.config = engine.dashboards.get(/** @type {any} */ ('hr-dashboard'));
+        mainDashboard.data = activeData;
+      }
+
+      // --- KPI Cards (Widgets view) ---
+      wireKpiCard('kpi-attendance', attendanceKPI, scores.attendance);
+      wireKpiCard('kpi-quality', qualityKPI, scores.quality);
+      wireKpiCard('kpi-satisfaction', satisfactionKPI, scores.satisfaction);
+
+      // --- Scorecard ---
+      const scorecard = document.getElementById('scorecard');
+      scorecard.kpiDefinitions = [attendanceKPI, qualityKPI, satisfactionKPI];
+      scorecard.scores = [
+        {
+          kpiId: /** @type {any} */ ('attendance'),
+          value: scores.attendance.value,
+          previousValue: scores.attendance.previous,
+          breakdowns: scores.attendance.breakdowns,
+        },
+        {
+          kpiId: /** @type {any} */ ('quality'),
+          value: scores.quality.value,
+          previousValue: scores.quality.previous,
+          breakdowns: scores.quality.breakdowns,
+        },
+        {
+          kpiId: /** @type {any} */ ('satisfaction'),
+          value: scores.satisfaction.value,
+          previousValue: scores.satisfaction.previous,
+          breakdowns: scores.satisfaction.breakdowns,
+        },
+      ];
+
+      // --- Bar Chart ---
+      const barChart = document.getElementById('bar-chart');
+      barChart.data = buildDeptBarData(activeData, 'attendance');
+      barChart.rankOrder = 'desc';
+      barChart.maxBars = 8;
+
+      // --- Trend Line ---
+      const trendLine = document.getElementById('trend-line');
+      trendLine.data = buildTrendData(scores.quality.trend, 'Quality Score');
+      trendLine.target = qualityKPI.target;
+      trendLine.kpiDefinition = qualityKPI;
+
+      // --- Bottom N ---
+      const bottomN = document.getElementById('bottom-n');
+      bottomN.data = activeData;
+      bottomN.metricField = 'attendance';
+      bottomN.dimensionField = 'name';
+      bottomN.n = 5;
+      bottomN.direction = 'bottom';
+      bottomN.kpiDefinition = attendanceKPI;
+
+      // --- Status Table ---
+      const statusTable = document.getElementById('status-table');
+      statusTable.data = buildStatusTableData(activeData);
+      statusTable.entityField = 'entity';
+      statusTable.kpiDefinitions = [attendanceKPI, qualityKPI, satisfactionKPI];
+
+      // --- Report View Grid ---
+      const reportViewGrid = document.getElementById('report-view-grid');
+      const gridConfig = engine.reports.toGridConfig(reportConfig);
+      reportViewGrid.columns = gridConfig.columns.map(c => {
+        const src = sampleColumns.find(sc => sc.field === c.field);
+        return { ...c, type: src?.type || 'string' };
+      });
+      reportViewGrid.data = activeData;
+      reportViewGrid.statusColors = statusColorsConfig;
+      reportViewGrid.barThresholds = barThresholdsConfig;
+      // Enable aggregation row at top
+      reportViewGrid.aggregation = true;
+      reportViewGrid.aggregationPosition = 'top';
+      reportViewGrid.aggregationFn = 'avg';
+      // Wire drill-through config from report
+      if (reportConfig.drillThrough) {
+        reportViewGrid.drillThroughConfig = reportConfig.drillThrough;
+      }
+
+      // Custom row actions: demo "Declare" and "Open Profile" actions
+      const customRowActions = [
+        { id: 'declare', label: 'Declare', icon: '\u2714', bulkEnabled: true },
+        { id: 'open-profile', label: 'Open Profile', icon: '\u2197', href: '/employees/{employeeId}?region={region}' },
+      ];
+      reportViewGrid.rowActions = customRowActions;
+      reportViewGrid.showRowActions = true;
+
+      // Wire generate dashboard config from report
+      if (reportConfig.generateDashboard) {
+        reportViewGrid.generateDashboardConfig = reportConfig.generateDashboard;
+        reportViewGrid.reportId = String(reportConfig.id);
+        reportViewGrid.reportName = reportConfig.name;
+      }
+
+      // --- Standalone Toolbar Grid ---
+      const standaloneGrid2 = document.getElementById('standalone-grid');
+      if (standaloneGrid2) {
+        standaloneGrid2.columns = activeColumns;
+        standaloneGrid2.data = activeData;
+        standaloneGrid2.statusColors = statusColorsConfig;
+        standaloneGrid2.barThresholds = barThresholdsConfig;
+      }
+
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 5b. STANDALONE TOOLBAR
+    // ══════════════════════════════════════════════════════════
+
+    {
+      const standaloneGrid = document.getElementById('standalone-grid');
+      const standaloneTb = document.getElementById('standalone-tb');
+
+      // Configure grid data
+      standaloneGrid.columns = sampleColumns;
+      standaloneGrid.data = activeData;
+      standaloneGrid.statusColors = statusColorsConfig;
+      standaloneGrid.barThresholds = barThresholdsConfig;
+
+      // Auto-wire toolbar to grid
+      standaloneTb.grid = standaloneGrid;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 5c. CRITERIA BAR + DRAWER + ADMIN
+    // ══════════════════════════════════════════════════════════
+
+    {
+      const barCriteria = document.getElementById('bar-criteria');
+      const barGrid = document.getElementById('bar-criteria-grid');
+      const barSummary = document.getElementById('bar-criteria-summary');
+      const criteriaAdmin = document.getElementById('criteria-admin');
+
+      const regionOpts = Phz.deriveOptionsFromData(activeData, 'region');
+      const salaryNums = activeData.map(r => Number(r.salary)).filter(n => !isNaN(n));
+
+      // Master datasets for external options source
+      const regionsMaster = Phz.createDataSet(
+        [
+          { field: 'code', type: 'string', label: 'Code' },
+          { field: 'name', type: 'string', label: 'Name' },
+        ],
+        [
+          { code: 'North', name: 'North Region' },
+          { code: 'South', name: 'South Region' },
+          { code: 'East', name: 'East Region' },
+          { code: 'West', name: 'West Region' },
+        ],
+        { source: 'Region Master' },
+      );
+
+      const departmentsMaster = Phz.createDataSet(
+        [
+          { field: 'id', type: 'string', label: 'ID' },
+          { field: 'name', type: 'string', label: 'Name' },
+        ],
+        [
+          { id: 'Platform', name: 'Platform Engineering' },
+          { id: 'Data', name: 'Data & Analytics' },
+          { id: 'Infrastructure', name: 'Infrastructure' },
+          { id: 'Product', name: 'Product Management' },
+        ],
+        { source: 'Department Master' },
+      );
+
+      const criteriaMasterData = { regions: regionsMaster, departments: departmentsMaster };
+
+      const barCfg = {
+        fields: [
+          {
+            id: 'direction',
+            label: 'Direction',
+            type: 'chip_group',
+            fieldRole: 'parameter',
+            dataField: 'direction',
+            options: [
+              { value: 'export', label: 'Export' },
+              { value: 'import', label: 'Import' },
+            ],
+            defaultValue: 'export',
+            barConfig: { pinnedToBar: true, defaultOpen: true, showOnSummary: true },
+          },
+          {
+            id: 'region',
+            label: 'Region',
+            type: Phz.inferCriteriaType('string', regionOpts.length),
+            dataField: 'region',
+            options: regionOpts,
+            barConfig: { pinnedToBar: true, defaultOpen: true, showOnSummary: true },
+          },
+          {
+            id: 'department',
+            label: 'Department',
+            type: 'tree_select',
+            dataField: 'department',
+            treeOptions: [
+              { value: 'Engineering', label: 'Engineering', children: [
+                { value: 'Platform', label: 'Platform' },
+                { value: 'Data', label: 'Data' },
+                { value: 'Infrastructure', label: 'Infrastructure' },
+              ]},
+              { value: 'Business', label: 'Business', children: [
+                { value: 'Product', label: 'Product' },
+              ]},
+            ],
+            barConfig: { defaultOpen: true, maxVisibleItems: 8 },
+          },
+          {
+            id: 'status',
+            label: 'Status',
+            type: 'chip_group',
+            dataField: 'status',
+            options: [
+              { value: 'Active', label: 'Active' },
+              { value: 'On Leave', label: 'On Leave' },
+              { value: 'Terminated', label: 'Terminated' },
+            ],
+            barConfig: { pinnedToBar: true, showOnSummary: true },
+          },
+          {
+            id: 'region_master',
+            label: 'Region (Master)',
+            type: 'chip_group',
+            dataField: 'region',
+            optionsSource: { dataSetId: 'regions', valueField: 'code', labelField: 'name', sortBy: 'label' },
+          },
+          {
+            id: 'salary',
+            label: 'Salary Range',
+            type: 'numeric_range',
+            dataField: 'salary',
+            numericRangeConfig: {
+              min: Math.min(...salaryNums),
+              max: Math.max(...salaryNums),
+              step: 5000,
+              showSlider: true,
+              unit: 'USD',
+            },
+          },
+          {
+            id: 'field_presence',
+            label: 'Required Fields',
+            type: 'field_presence',
+            fieldPresenceConfig: {
+              fields: ['region', 'department', 'salary', 'name'],
+              compact: true,
+            },
+          },
+        ],
+        behavior: {
+          autoApply: false,
+          drawerWidth: 520,
+          showBackdrop: true,
+          showResetButton: true,
+          pinnable: true,
+          layout: {
+            barMode: 'summary',
+            summaryPlaceholder: 'Click to apply filters',
+          },
+        },
+        presets: [
+          {
+            id: 'preset-north-platform',
+            name: 'North Platform',
+            scope: 'shared',
+            owner: 'admin',
+            values: { region: ['North'], department: ['Platform'] },
+            isDefault: false,
+            created: Date.now(),
+            updated: Date.now(),
+          },
+          {
+            id: 'preset-south',
+            name: 'South Region',
+            scope: 'personal',
+            owner: 'user1',
+            values: { region: ['South'] },
+            isDefault: false,
+            created: Date.now(),
+            updated: Date.now(),
+          },
+        ],
+      };
+
+      barCriteria.config = barCfg;
+      barCriteria.data = activeData;
+      barCriteria.presets = barCfg.presets;
+      barCriteria.dataSources = criteriaMasterData;
+
+      barGrid.columns = sampleColumns;
+      barGrid.data = activeData;
+      barGrid.statusColors = statusColorsConfig;
+      barGrid.barThresholds = barThresholdsConfig;
+      barSummary.message = `Showing all ${activeData.length} rows. Click "Filters" to open the drawer.`;
+      // Hide standalone summary when bar is in summary mode (bar itself shows the summary)
+      if (barCfg.behavior?.layout?.barMode === 'summary') {
+        barSummary.visible = false;
+      }
+
+      // --- Criteria Admin: pass config, columns, data ---
+      criteriaAdmin.criteriaConfig = barCfg;
+      criteriaAdmin.columns = sampleColumns;
+      criteriaAdmin.data = activeData;
+      criteriaAdmin.dataSources = criteriaMasterData;
+
+      // Wire admin config changes to update the criteria bar
+      criteriaAdmin.addEventListener('criteria-config-change', (e) => {
+        const updatedConfig = e.detail.config;
+        barCriteria.config = updatedConfig;
+        barCriteria.presets = updatedConfig.presets || [];
+
+        // Pass summary strip layout + visibility
+        const ly = updatedConfig.behavior?.layout;
+        // Hide standalone summary strip when barMode is 'summary' (bar itself is the summary)
+        const isSummaryMode = ly?.barMode === 'summary';
+        const showStrip = isSummaryMode ? false : (ly?.showSummaryStrip ?? updatedConfig.behavior?.showSummaryStrip ?? true);
+        barSummary.visible = showStrip;
+        barSummary.layout = ly?.summaryStrip ?? {};
+      });
+
+      // Handle pin: adjust content margin so grid isn't hidden behind pinned sidebar
+      barCriteria.addEventListener('criteria-pin-change', (e) => {
+        const contentPane = document.querySelector('.criteria-content-pane');
+        if (e.detail.pinned) {
+          contentPane.style.marginRight = e.detail.width + 'px';
+        } else {
+          contentPane.style.marginRight = '';
+        }
+      });
+
+      barCriteria.addEventListener('criteria-apply', (e) => {
+        const values = e.detail.context;
+        const filtered = Phz.applyCriteriaToData(activeData, barCfg, values);
+        barGrid.data = filtered;
+
+        const appliedFilters = [];
+        for (const field of barCfg.fields) {
+          const val = values[field.id];
+          if (val == null || val === '' || (Array.isArray(val) && val.length === 0)) continue;
+          appliedFilters.push(`${field.label}: ${Phz.formatCriteriaValue(field, val)}`);
+        }
+
+        if (appliedFilters.length > 0) {
+          barSummary.message = `Showing ${filtered.length} of ${activeData.length} rows. Active filters: ${appliedFilters.join(' \u2022 ')}`;
+          barSummary.active = true;
+        } else {
+          barSummary.message = `Showing all ${activeData.length} rows (no filters applied).`;
+          barSummary.active = false;
+        }
+      });
+
+      barCriteria.addEventListener('criteria-change', (e) => {
+        console.log('[Bar Criteria] context changed:', e.detail.context);
+      });
+
+      barCriteria.addEventListener('criteria-reset', () => {
+        barGrid.data = activeData;
+        barSummary.message = `Showing all ${activeData.length} rows (filters reset).`;
+        barSummary.active = false;
+      });
+
+      // Click summary strip to open the filter drawer
+      barSummary.addEventListener('summary-click', () => {
+        // Simulate clicking the Filters button in the criteria bar
+        const bar = barCriteria.shadowRoot?.querySelector('phz-criteria-bar');
+        const btn = bar?.shadowRoot?.querySelector('.phz-sc-bar-filters-btn');
+        if (btn) btn.click();
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 6. TAB NAVIGATION
+    // ══════════════════════════════════════════════════════════
+
+    const tabs = document.querySelectorAll('.nav-tab');
+    const views = document.querySelectorAll('.view');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const viewId = tab.dataset.view;
+
+        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        views.forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + viewId).classList.add('active');
+      });
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 7. FILE UPLOAD (shared across all views)
+    // ══════════════════════════════════════════════════════════
+
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadInfo = document.getElementById('uploadInfo');
+
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = '#1C1917'; });
+    uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = '#D6D3D1'; });
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.style.borderColor = '#D6D3D1';
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) handleFile(fileInput.files[0]);
+    });
+
+    document.getElementById('uploadClearBtn').addEventListener('click', () => {
+      activeColumns = [...sampleColumns];
+      activeData = [...sampleData];
+      uploadedFileName = '';
+      uploadInfo.style.display = 'none';
+      uploadZone.style.display = 'inline-flex';
+      refreshAllViews();
+    });
+
+    function handleFile(file) {
+      uploadedFileName = file.name;
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      if (ext === 'json') {
+        file.text().then(text => {
+          const parsed = JSON.parse(text);
+          const rows = Array.isArray(parsed) ? parsed : parsed.data || [];
+          if (rows.length > 0) loadUploadedData(rows);
+        });
+      } else if (ext === 'csv' || ext === 'tsv') {
+        file.text().then(text => {
+          const sep = ext === 'tsv' ? '\t' : ',';
+          const lines = text.trim().split('\n');
+          if (lines.length < 2) return;
+          const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g, ''));
+          const rows = lines.slice(1).map(line => {
+            const vals = line.split(sep);
+            const obj = {};
+            headers.forEach((h, i) => {
+              let v = (vals[i] || '').trim().replace(/^"|"$/g, '');
+              const n = Number(v);
+              obj[h] = v !== '' && !isNaN(n) ? n : v;
+            });
+            return obj;
+          });
+          if (rows.length > 0) loadUploadedData(rows);
+        });
+      } else if (ext === 'xlsx' || ext === 'xls') {
+        const reader = new FileReader();
+        reader.onload = e => {
+          if (typeof XLSX === 'undefined') { alert('SheetJS not loaded'); return; }
+          const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json(ws);
+          if (rows.length > 0) loadUploadedData(rows);
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    }
+
+    function loadUploadedData(rows) {
+      const fields = Object.keys(rows[0]);
+      activeColumns = fields.map(f => {
+        const sample = rows[0][f];
+        let type = 'string';
+        if (typeof sample === 'number') type = 'number';
+        if (typeof sample === 'boolean') type = 'boolean';
+        return { field: f, header: f.charAt(0).toUpperCase() + f.slice(1), type };
+      });
+      activeData = rows;
+      activeDataSet = createEmployeeDataSet(activeData, activeColumns);
+
+      document.getElementById('uploadFileName').textContent = uploadedFileName;
+      document.getElementById('uploadRowCount').textContent = ` \u2014 ${rows.length} rows`;
+      uploadInfo.style.display = 'inline';
+      uploadZone.style.display = 'none';
+
+      refreshAllViews();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 8. GRID-ADMIN EVENT LISTENERS
+    // ══════════════════════════════════════════════════════════
+
+    const gridAdminEl = document.getElementById('grid-admin');
+    const reportGridEl = document.getElementById('report-grid');
+
+    // --- columns-change: { action, visibleFields? } ---
+    gridAdminEl.addEventListener('columns-change', e => {
+      const { action, visibleFields } = e.detail || {};
+      if (action === 'update' && visibleFields) {
+        // Reorder and filter to visible only, preserving column definitions
+        const visibleCols = visibleFields.map(f =>
+          activeColumns.find(c => c.field === f)
+        ).filter(Boolean);
+        reportGridEl.columns = visibleCols;
+        // Update admin state to reflect new visibility + order
+        adminColumnState = adminColumnState.map(c => ({
+          ...c,
+          visible: visibleFields.includes(c.field),
+        }));
+      } else if (action === 'show-all') {
+        adminColumnState.forEach(c => { c.visible = true; });
+        reportGridEl.columns = activeColumns;
+      } else if (action === 'hide-all') {
+        adminColumnState.forEach(c => { c.visible = false; });
+        reportGridEl.columns = [];
+      }
+      // Force grid to rebuild internal columnDefs from new columns
+      try { reportGridEl.refresh(); } catch (_) {}
+      syncAdminPanel();
+    });
+
+    // --- rules-change: { action, ruleId?, updates? } ---
+    gridAdminEl.addEventListener('rules-change', e => {
+      const { action, ruleId, updates } = e.detail || {};
+      if (action === 'add') {
+        const newRule = {
+          id: ruleId || ('rule-' + Date.now()),
+          type: 'cell',
+          field: activeColumns[0]?.field || 'name',
+          condition: { operator: 'contains', value: '' },
+          style: { backgroundColor: '#FEF3C7', color: '#92400E' },
+          priority: adminFormattingRules.length,
+        };
+        adminFormattingRules = [...adminFormattingRules, newRule];
+      } else if (action === 'update' && ruleId && updates) {
+        adminFormattingRules = adminFormattingRules.map(r => {
+          if (r.id !== ruleId) return r;
+          const updated = { ...r };
+          if ('field' in updates) updated.field = updates.field;
+          if ('operator' in updates) updated.condition = { ...updated.condition, operator: updates.operator };
+          if ('value' in updates) updated.condition = { ...updated.condition, value: updates.value };
+          if ('value2' in updates) updated.condition = { ...updated.condition, value2: updates.value2 };
+          if ('backgroundColor' in updates) updated.style = { ...updated.style, backgroundColor: updates.backgroundColor };
+          if ('color' in updates) updated.style = { ...updated.style, color: updates.color };
+          if ('fontWeight' in updates) updated.style = { ...updated.style, fontWeight: updates.fontWeight };
+          return updated;
+        });
+      } else if (action === 'remove' && ruleId) {
+        adminFormattingRules = adminFormattingRules.filter(r => r.id !== ruleId);
+      }
+      // Push rules to grid's conditional formatting engine
+      reportGridEl.conditionalFormattingRules = [...adminFormattingRules];
+      syncAdminPanel();
+    });
+
+    // --- preset-apply: { name } ---
+    gridAdminEl.addEventListener('preset-apply', e => {
+      const { name } = e.detail || {};
+      const preset = adminFilterPresets[name];
+      if (preset && preset.filters) {
+        try {
+          const api = reportGridEl.getGridInstance();
+          api.setFilters(preset.filters);
+          reportGridEl.currentPage = 0;
+        } catch (err) {
+          console.warn('Could not apply filter preset:', err);
+        }
+      }
+    });
+
+    // --- presets-change: { action, name? } ---
+    gridAdminEl.addEventListener('presets-change', e => {
+      const { action, name } = e.detail || {};
+      if (action === 'add') {
+        const presetName = 'Preset ' + (Object.keys(adminFilterPresets).length + 1);
+        adminFilterPresets[presetName] = { filters: [], created: Date.now() };
+      } else if (action === 'delete' && name) {
+        const updated = { ...adminFilterPresets };
+        delete updated[name];
+        adminFilterPresets = updated;
+      } else if (action === 'duplicate' && name) {
+        const src = adminFilterPresets[name];
+        if (src) {
+          adminFilterPresets[name + ' (copy)'] = { ...src, created: Date.now() };
+        }
+      }
+      syncAdminPanel();
+    });
+
+    // --- export-settings-change: Partial<ExportSettings> ---
+    gridAdminEl.addEventListener('export-settings-change', e => {
+      const settings = e.detail || {};
+      adminExportSettings = { ...adminExportSettings, ...settings };
+      // Trigger export when settings change (the admin panel acts as the trigger)
+      const fmt = adminExportSettings.format || 'csv';
+      const filename = (adminExportSettings.fileName || 'export') + (fmt === 'csv' ? '.csv' : '.xlsx');
+      const exportOpts = {
+        filename,
+        includeFormatting: adminExportSettings.includeFormatting || false,
+        includeGroupHeaders: adminExportSettings.includeGroupHeaders !== false,
+        columnFormatting: columnFormatting || undefined,
+      };
+      if (fmt === 'csv') {
+        reportGridEl.exportCSV(exportOpts);
+      } else {
+        reportGridEl.exportExcel(exportOpts);
+      }
+    });
+
+    // --- column-config-change: { field, type?, dateFormat?, statusColors?, barThresholds?, linkTemplate?, formatting? } ---
+    gridAdminEl.addEventListener('column-config-change', e => {
+      const { field, type, dateFormat, statusColors, barThresholds, linkTemplate, formatting, numberFormat } = e.detail || {};
+      if (formatting) {
+        columnFormatting[field] = { ...(columnFormatting[field] || {}), ...formatting };
+        applyColumnStyles();
+        syncAdminPanel();
+      }
+      let needsColumnRefresh = false;
+      if (type) {
+        // Update column type in activeColumns and re-push to grid
+        activeColumns = activeColumns.map(c =>
+          c.field === field ? { ...c, type } : c
+        );
+        needsColumnRefresh = true;
+      }
+      if (linkTemplate !== undefined) {
+        // Store linkTemplate on the column definition
+        activeColumns = activeColumns.map(c =>
+          c.field === field ? { ...c, linkTemplate } : c
+        );
+        needsColumnRefresh = true;
+      }
+      if (needsColumnRefresh) {
+        const visibleFields = adminColumnState.filter(c => c.visible).map(c => c.field);
+        const visibleCols = visibleFields.map(f => activeColumns.find(c => c.field === f)).filter(Boolean);
+        reportGridEl.columns = visibleCols;
+        // Force grid to rebuild columnDefs from the new columns
+        try { reportGridEl.refresh(); } catch (_) {}
+      }
+      if (dateFormat !== undefined) {
+        const current = reportGridEl.dateFormats || {};
+        reportGridEl.dateFormats = { ...current, [field]: dateFormat };
+      }
+      if (statusColors !== undefined) {
+        reportGridEl.statusColors = statusColors;
+      }
+      if (barThresholds !== undefined) {
+        reportGridEl.barThresholds = barThresholds;
+      }
+      if (numberFormat !== undefined) {
+        numberFormats[field] = numberFormat;
+        const current = reportGridEl.numberFormats || {};
+        reportGridEl.numberFormats = { ...current, [field]: numberFormat };
+      }
+      syncAdminPanel();
+    });
+
+    // --- table-settings-change: { section, key, value } ---
+    gridAdminEl.addEventListener('table-settings-change', e => {
+      const { section, key, value } = e.detail || {};
+      tableSettings[key] = value;
+
+      const shadows = { none: 'none', sm: '0 1px 3px rgba(0,0,0,0.08)', md: '0 4px 16px rgba(0,0,0,0.06)', lg: '0 8px 32px rgba(0,0,0,0.1)' };
+      const radii = { none: '0', sm: '6px', md: '12px', lg: '16px' };
+
+      switch (key) {
+        // Container
+        case 'containerShadow':
+          reportGridEl.style.boxShadow = shadows[value] || 'none';
+          break;
+        case 'containerRadius':
+          reportGridEl.style.borderRadius = typeof value === 'number' ? value + 'px' : (radii[value] || '0');
+          break;
+
+        // Title bar
+        case 'showTitleBar':
+          reportGridEl.gridTitle = value ? (tableSettings.titleText || 'EMPLOYEE REPORT') : '';
+          reportGridEl.gridSubtitle = value ? (tableSettings.subtitleText || '') : '';
+          break;
+        case 'titleText':
+          if (tableSettings.showTitleBar) reportGridEl.gridTitle = value;
+          break;
+        case 'subtitleText':
+          if (tableSettings.showTitleBar) reportGridEl.gridSubtitle = value;
+          break;
+        case 'titleBarBg':
+          reportGridEl.style.setProperty('--phz-header-bar-bg', value);
+          break;
+        case 'titleBarText':
+          reportGridEl.style.setProperty('--phz-header-bar-text', value);
+          break;
+        case 'titleFontFamily':
+          reportGridEl.style.setProperty('--phz-header-bar-font', value);
+          break;
+        case 'titleFontSize':
+          reportGridEl.style.setProperty('--phz-header-bar-title-size', value + 'px');
+          break;
+        case 'subtitleFontSize':
+          reportGridEl.style.setProperty('--phz-header-bar-subtitle-size', value + 'px');
+          break;
+
+        // Toolbar
+        case 'showToolbar':
+          reportGridEl.showToolbar = value;
+          break;
+        case 'showSearch':
+          reportGridEl.style.setProperty('--phz-toolbar-search-display', value ? 'flex' : 'none');
+          break;
+        case 'showDensityToggle':
+          reportGridEl.showDensityToggle = value;
+          break;
+        case 'showColumnEditor':
+          reportGridEl.showColumnEditor = value;
+          break;
+        case 'showCsvExport':
+          reportGridEl.style.setProperty('--phz-export-csv-display', value ? 'block' : 'none');
+          if (!value && !tableSettings.showExcelExport)
+            reportGridEl.style.setProperty('--phz-toolbar-export-display', 'none');
+          else
+            reportGridEl.style.setProperty('--phz-toolbar-export-display', 'block');
+          break;
+        case 'showExcelExport':
+          reportGridEl.style.setProperty('--phz-export-excel-display', value ? 'block' : 'none');
+          if (!value && !tableSettings.showCsvExport)
+            reportGridEl.style.setProperty('--phz-toolbar-export-display', 'none');
+          else
+            reportGridEl.style.setProperty('--phz-toolbar-export-display', 'block');
+          break;
+
+        // Grid options
+        case 'loadingMode':
+          reportGridEl.loadingMode = value;
+          break;
+        case 'pageSize':
+          reportGridEl.pageSize = value;
+          break;
+        case 'rowBanding':
+          reportGridEl.rowBanding = value;
+          if (value) reportGridEl.setAttribute('row-banding', '');
+          else reportGridEl.removeAttribute('row-banding');
+          break;
+        case 'headerWrapping':
+          reportGridEl.style.setProperty('--phz-header-white-space', value ? 'normal' : 'nowrap');
+          break;
+        case 'showColumnGroups':
+          reportGridEl.columnGroups = value ? (tableSettings.columnGroups || []) : [];
+          break;
+        case 'columnGroups':
+          if (tableSettings.showColumnGroups) reportGridEl.columnGroups = value;
+          break;
+        case 'allowFiltering':
+          reportGridEl.style.setProperty('--phz-filter-icon-display', value ? 'flex' : 'none');
+          break;
+        case 'allowSorting':
+          reportGridEl.style.setProperty('--phz-sort-cursor', value ? 'pointer' : 'default');
+          break;
+        case 'autoSizeColumns':
+          reportGridEl.autoSizeColumns = value;
+          break;
+        case 'density':
+          reportGridEl.density = value;
+          reportGridEl.setAttribute('density', value);
+          break;
+        case 'autoSizeNow':
+          try { reportGridEl.autoSizeAllColumns(); } catch (_) {}
+          break;
+        case 'groupByFields':
+          reportGridEl.groupBy = value || [];
+          break;
+        case 'groupByLevels':
+          reportGridEl.groupByLevels = value || [];
+          break;
+        case 'groupTotals':
+          reportGridEl.groupTotals = value;
+          break;
+        case 'groupTotalsFn':
+          reportGridEl.groupTotalsFn = value;
+          break;
+        case 'groupTotalsOverrides':
+          reportGridEl.groupTotalsOverrides = value || {};
+          break;
+
+        // Selection & Interaction (migrated from Options tab)
+        case 'selectionMode':
+          reportGridEl.selectionMode = value;
+          break;
+        case 'editMode':
+          reportGridEl.editMode = value;
+          break;
+        case 'showPagination':
+          reportGridEl.showPagination = value;
+          break;
+        case 'showCheckboxes':
+          reportGridEl.showCheckboxes = value;
+          break;
+        case 'virtualization':
+          reportGridEl.virtualization = value;
+          break;
+        case 'showRowActions':
+          reportGridEl.showRowActions = value;
+          break;
+        case 'showSelectionActions':
+          reportGridEl.showSelectionActions = value;
+          break;
+        case 'showEditActions':
+          reportGridEl.showEditActions = value;
+          break;
+        case 'showCopyActions':
+          reportGridEl.showCopyActions = value;
+          break;
+        case 'showGenerateDashboard':
+          if (value) {
+            reportGridEl.generateDashboardConfig = reportConfig.generateDashboard || { href: '/dashboards/new?from={reportId}&mode={dataMode}' };
+          } else {
+            reportGridEl.generateDashboardConfig = undefined;
+          }
+          break;
+
+        // Typography defaults
+        case 'fontFamily':
+          reportGridEl.style.setProperty('--phz-cell-font-family', value);
+          break;
+        case 'fontSize':
+          reportGridEl.style.setProperty('--phz-cell-font-size', value + 'px');
+          break;
+        case 'fontBold':
+          reportGridEl.style.setProperty('--phz-cell-font-weight', value ? 'bold' : 'normal');
+          break;
+        case 'fontItalic':
+          reportGridEl.style.setProperty('--phz-cell-font-style', value ? 'italic' : 'normal');
+          break;
+        case 'fontUnderline':
+          reportGridEl.style.setProperty('--phz-cell-text-decoration', value ? 'underline' : 'none');
+          break;
+        case 'headerHAlign':
+          reportGridEl.style.setProperty('--phz-header-text-align', value);
+          // Also set flex justify for inner flex container
+          const justifyMap = { left: 'flex-start', center: 'center', right: 'flex-end' };
+          reportGridEl.style.setProperty('--phz-header-justify', justifyMap[value] || 'flex-start');
+          break;
+        case 'hAlign':
+          reportGridEl.style.setProperty('--phz-cell-text-align', value);
+          break;
+        case 'vAlign':
+          reportGridEl.style.setProperty('--phz-cell-vertical-align', value);
+          break;
+        case 'numberAlign':
+        case 'textAlign':
+        case 'dateAlign':
+        case 'booleanAlign':
+          applyColumnStyles();
+          break;
+
+        // Section colors
+        case 'titleBarBgColor':
+          reportGridEl.style.setProperty('--phz-header-bar-bg', value);
+          tableSettings.titleBarBg = value;
+          break;
+        case 'titleBarTextColor':
+          reportGridEl.style.setProperty('--phz-header-bar-text', value);
+          tableSettings.titleBarText = value;
+          break;
+        case 'headerBg':
+          reportGridEl.style.setProperty('--phz-header-bg', value);
+          break;
+        case 'headerText':
+          reportGridEl.style.setProperty('--phz-header-text', value);
+          break;
+        case 'bodyBg':
+          reportGridEl.style.setProperty('--phz-grid-bg', value);
+          break;
+        case 'bodyText':
+          reportGridEl.style.setProperty('--phz-grid-text', value);
+          break;
+        case 'footerBg':
+          reportGridEl.style.setProperty('--phz-footer-bg', value);
+          break;
+        case 'footerText':
+          reportGridEl.style.setProperty('--phz-footer-text', value);
+          break;
+
+        // Grid Lines & Display
+        case 'gridLines':
+          reportGridEl.gridLines = value;
+          reportGridEl.setAttribute('grid-lines', value);
+          break;
+        case 'gridLineColor':
+          reportGridEl.gridLineColor = value;
+          reportGridEl.style.setProperty('--phz-grid-line-color', value);
+          break;
+        case 'gridLineWidth':
+          reportGridEl.gridLineWidth = value;
+          reportGridEl.style.setProperty('--phz-grid-line-width', value === 'medium' ? '2px' : '1px');
+          break;
+        case 'bandingColor':
+          reportGridEl.bandingColor = value;
+          reportGridEl.style.setProperty('--phz-banding-color', value);
+          break;
+        case 'hoverHighlight':
+          reportGridEl.hoverHighlight = value;
+          if (value) reportGridEl.setAttribute('hover-highlight', '');
+          else reportGridEl.removeAttribute('hover-highlight');
+          break;
+        case 'cellTextOverflow':
+          reportGridEl.cellTextOverflow = value;
+          break;
+        case 'compactNumbers':
+          reportGridEl.compactNumbers = value;
+          break;
+      }
+      syncAdminPanel();
+    });
+
+    // --- Intercept sort when sorting is disabled ---
+    reportGridEl.addEventListener('sort-change', e => {
+      if (!tableSettings.allowSorting) {
+        // Clear the sort by removing it from the grid's internal state
+        try {
+          const api = reportGridEl.getGridInstance();
+          if (api) api.setSorting([]);
+        } catch (_) {}
+      }
+    });
+
+    // --- admin-close ---
+    gridAdminEl.addEventListener('admin-close', () => {
+      gridAdminEl.open = false;
+    });
+
+    // --- copy-settings-request ---
+    gridAdminEl.addEventListener('copy-settings-request', (e) => {
+      // In a full app, this would show a picker dialog listing available reports.
+      // For demo, log the request. Host app is responsible for:
+      // 1. Showing UI to select source report
+      // 2. Loading that report's settings
+      // 3. Applying them: tableSettings = {...sourceSettings}, columnFormatting = {...}, etc.
+      // 4. Calling syncAdminPanel() to refresh the admin panel
+      console.log('Copy settings requested for report:', e.detail.targetReportId);
+    });
+
+    // --- settings-save ---
+    gridAdminEl.addEventListener('settings-save', (e) => {
+      const { reportId, reportName, settings } = e.detail;
+      const report = engine.reports.get(/** @type {any} */ (reportId));
+      if (report) {
+        engine.reports.save({ ...report, presentation: settings });
+        console.log('Presentation settings saved for report:', reportName, settings);
+      } else {
+        console.warn('settings-save: report not found:', reportId);
+      }
+    });
+
+    // --- settings-reset ---
+    gridAdminEl.addEventListener('settings-reset', () => {
+      tableSettings = {
+        containerShadow: 'md', containerRadius: 8,
+        showTitleBar: true, titleText: '', subtitleText: '',
+        titleFontFamily: 'inherit', titleFontSize: 14, subtitleFontSize: 13,
+        titleBarBg: '#1C1917', titleBarText: '#FEFDFB', titleIcon: '',
+        showToolbar: true, showSearch: true, showDensityToggle: true,
+        showColumnEditor: true, showCsvExport: true, showExcelExport: true,
+        density: 'compact',
+        loadingMode: 'paginate', pageSize: 25, headerWrapping: false,
+        showColumnGroups: false, columnGroups: [],
+        groupByFields: [],
+        groupByLevels: [],
+        groupTotals: false, groupTotalsFn: 'sum', groupTotalsOverrides: {},
+        autoSizeColumns: false, allowFiltering: true, allowSorting: true,
+        defaultSortField: '', defaultSortDirection: 'asc', rowBanding: true,
+        showPagination: true, showCheckboxes: false, virtualization: false,
+        editMode: 'dblclick', selectionMode: 'multi',
+        showRowActions: false, showSelectionActions: true,
+        showEditActions: true, showCopyActions: true,
+        fontFamily: 'inherit', fontSize: 13,
+        fontBold: false, fontItalic: false, fontUnderline: false,
+        hAlign: 'left', vAlign: 'middle', headerHAlign: 'left',
+        numberAlign: 'right', textAlign: 'left', dateAlign: 'left', booleanAlign: 'center',
+        titleBarBgColor: '#1C1917', titleBarTextColor: '#FEFDFB',
+        headerBg: '#FAFAF9', headerText: '#A8A29E',
+        bodyBg: '#FFFFFF', bodyText: '#1C1917',
+        footerBg: '#FAFAF9', footerText: '#78716C',
+      };
+      columnFormatting = {};
+      numberFormats = {};
+      reportGridEl.pageSize = tableSettings.pageSize;
+      reportGridEl.density = tableSettings.density;
+      reportGridEl.setAttribute('density', tableSettings.density);
+      syncAdminPanel();
+      console.log('Settings reset to defaults');
+    });
+
+    // --- export-download ---
+    gridAdminEl.addEventListener('export-download', (e) => {
+      const { format, includeFormatting: inclFmt, includeGroupHeaders: inclGH } = e.detail || {};
+      const exportOpts = {
+        filename: 'export' + (format === 'csv' ? '.csv' : '.xlsx'),
+        includeFormatting: inclFmt || false,
+        includeGroupHeaders: inclGH !== false,
+        columnFormatting: columnFormatting || undefined,
+      };
+      if (format === 'excel') {
+        reportGridEl.exportExcel(exportOpts);
+      } else {
+        reportGridEl.exportCSV(exportOpts);
+      }
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 9. DASHBOARD STUDIO EVENT LISTENERS
+    // ══════════════════════════════════════════════════════════
+
+    const studioEl = document.getElementById('dashboard-studio');
+
+    studioEl.addEventListener('kpi-save', e => {
+      const { kpi } = e.detail || {};
+      if (kpi) {
+        console.log('KPI created via studio:', kpi.name);
+        refreshAllViews();
+      }
+    });
+
+    studioEl.addEventListener('metric-save', e => {
+      const detail = e.detail || {};
+      if (detail.name) {
+        console.log('Metric created via studio:', detail.name);
+      }
+    });
+
+    studioEl.addEventListener('dashboard-save', e => {
+      const detail = e.detail || {};
+      if (detail.config) {
+        engine.dashboards.save(detail.config);
+        console.log('Dashboard published:', detail.config.name);
+        // Refresh dashboard view with new config
+        const mainDashboard = document.getElementById('main-dashboard');
+        if (mainDashboard) {
+          mainDashboard.config = detail.config;
+          mainDashboard.data = activeData;
+        }
+      }
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 10. MASTER-DETAIL: ROW CLICK DRILL-THROUGH
+    // ══════════════════════════════════════════════════════════
+
+    const reportViewGrid = document.getElementById('report-view-grid');
+    const detailPanel = document.getElementById('detail-panel');
+    const detailGrid = document.getElementById('detail-grid');
+    const closeDetail = document.getElementById('close-detail');
+
+    reportViewGrid.addEventListener('drill-through', e => {
+      const { source, config } = e.detail;
+      if (!detailPanel || !detailGrid) return;
+
+      let filtered;
+      if (config.mode === 'full' || source.isSummaryRow) {
+        // Show all rows, no filtering
+        filtered = activeData;
+      } else {
+        // Apply filterFields from config
+        const action = Phz.resolveDrillAction({
+          source,
+          targetReportId: config.targetReportId,
+          openIn: config.openIn,
+          filterFields: config.filterFields,
+        });
+        filtered = activeData.filter(row =>
+          Object.entries(action.filters).every(([k, v]) => String(row[k]) === v)
+        );
+      }
+
+      detailGrid.columns = sampleColumns;
+      detailGrid.data = filtered;
+      const dept = source.rowData.department || 'All';
+      const region = source.rowData.region || 'All';
+      detailGrid.gridTitle = source.isSummaryRow ? 'All Employees' : `${dept} — ${region}`;
+      detailGrid.gridSubtitle = `${filtered.length} matching rows`;
+      detailPanel.style.display = 'block';
+    });
+
+    closeDetail.addEventListener('click', () => {
+      detailPanel.style.display = 'none';
+    });
+
+    // Row action handler — logs the event detail and demonstrates href resolution
+    reportViewGrid.addEventListener('row-action', e => {
+      const { actionId, rowId, rowData, href, isBulk, rowIds } = e.detail;
+      console.log('[row-action]', { actionId, rowId, rowData, href, isBulk, rowIds });
+      if (href) {
+        console.log('Resolved URL:', href);
+      }
+      if (actionId === '__delete') {
+        const ids = isBulk ? rowIds : [rowId];
+        console.log('Delete requested for rows:', ids);
+      }
+    });
+
+    // Generate Dashboard handler — logs event and switches to dashboard tab
+    reportViewGrid.addEventListener('generate-dashboard', e => {
+      const { dataMode, reportId, reportName, currentFilters, currentSort, visibleColumns, href } = e.detail;
+      console.log('[generate-dashboard]', { dataMode, reportId, reportName, currentFilters, currentSort, visibleColumns, href });
+      alert(`Generate Dashboard\n\nMode: ${dataMode}\nReport: ${reportName || reportId || '(none)'}\nFilters: ${currentFilters.length}\nSort: ${currentSort.length} columns\nVisible: ${visibleColumns.length} columns\nHref: ${href || '(none)'}`);
+      // Switch to dashboard tab
+      const dashTab = document.querySelector('[data-view="dashboard"]');
+      if (dashTab) dashTab.click();
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 12. WIDGET TOGGLE BUTTONS
+    // ══════════════════════════════════════════════════════════
+
+    document.querySelectorAll('.widget-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const sectionName = btn.dataset.section;
+        const section = document.querySelector(`[data-widget-section="${sectionName}"]`);
+        if (section) {
+          section.style.display = btn.classList.contains('active') ? '' : 'none';
+        }
+      });
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 13. INITIAL RENDER
+    // ══════════════════════════════════════════════════════════
+
+    // Wait for all critical custom elements to be defined before wiring
+    Promise.all([
+      customElements.whenDefined('phz-grid'),
+      customElements.whenDefined('phz-grid-admin'),
+      customElements.whenDefined('phz-dashboard-studio'),
+      customElements.whenDefined('phz-kpi-card'),
+      customElements.whenDefined('phz-bar-chart'),
+      customElements.whenDefined('phz-trend-line'),
+      customElements.whenDefined('phz-kpi-scorecard'),
+      customElements.whenDefined('phz-status-table'),
+      customElements.whenDefined('phz-bottom-n'),
+    ]).then(() => {
+      refreshAllViews();
+      applyColumnStyles(); // Apply type-based alignment defaults on initial load
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // FILTER STUDIO DEMO — with localStorage persistence
+    // ══════════════════════════════════════════════════════════
+
+    const LS_DEFS_KEY  = 'phz-demo-filter-definitions';
+    const LS_BINDS_KEY = 'phz-demo-filter-bindings';
+
+    function fsSave(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch(e) { console.warn('localStorage save failed:', e); } }
+    function fsLoad(key) { try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : null; } catch(e) { return null; } }
+
+    // ── Toast helper ──
+    let fsToastTimer;
+    function fsToast(msg) {
+      const el = document.getElementById('fs-toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.style.opacity = '1';
+      clearTimeout(fsToastTimer);
+      fsToastTimer = setTimeout(() => { el.style.opacity = '0'; setTimeout(() => { el.style.display = 'none'; }, 300); }, 2000);
+    }
+
+    // ── Flat locations dataset — 25 countries × ~3-4 UN/LOCODEs each ──
+    // This is the "data source" that gets passed to the filter studio.
+    // The tree gets built dynamically via "Build tree from data".
+    const locationsData = [
+      { country: 'United States',  countryCode: 'US', locode: 'USNYC', city: 'New York' },
+      { country: 'United States',  countryCode: 'US', locode: 'USLAX', city: 'Los Angeles' },
+      { country: 'United States',  countryCode: 'US', locode: 'USHOU', city: 'Houston' },
+      { country: 'United States',  countryCode: 'US', locode: 'USCHI', city: 'Chicago' },
+      { country: 'United States',  countryCode: 'US', locode: 'USSFO', city: 'San Francisco' },
+      { country: 'United Kingdom', countryCode: 'GB', locode: 'GBLON', city: 'London' },
+      { country: 'United Kingdom', countryCode: 'GB', locode: 'GBLIV', city: 'Liverpool' },
+      { country: 'United Kingdom', countryCode: 'GB', locode: 'GBSOU', city: 'Southampton' },
+      { country: 'United Kingdom', countryCode: 'GB', locode: 'GBFXT', city: 'Felixstowe' },
+      { country: 'Germany',        countryCode: 'DE', locode: 'DEHAM', city: 'Hamburg' },
+      { country: 'Germany',        countryCode: 'DE', locode: 'DEBRE', city: 'Bremen' },
+      { country: 'Germany',        countryCode: 'DE', locode: 'DEFRA', city: 'Frankfurt' },
+      { country: 'Germany',        countryCode: 'DE', locode: 'DEMUC', city: 'Munich' },
+      { country: 'France',         countryCode: 'FR', locode: 'FRPAR', city: 'Paris' },
+      { country: 'France',         countryCode: 'FR', locode: 'FRMRS', city: 'Marseille' },
+      { country: 'France',         countryCode: 'FR', locode: 'FRLEH', city: 'Le Havre' },
+      { country: 'France',         countryCode: 'FR', locode: 'FRLYO', city: 'Lyon' },
+      { country: 'Netherlands',    countryCode: 'NL', locode: 'NLRTM', city: 'Rotterdam' },
+      { country: 'Netherlands',    countryCode: 'NL', locode: 'NLAMS', city: 'Amsterdam' },
+      { country: 'Netherlands',    countryCode: 'NL', locode: 'NLMSV', city: 'Moerdijk' },
+      { country: 'China',          countryCode: 'CN', locode: 'CNSHA', city: 'Shanghai' },
+      { country: 'China',          countryCode: 'CN', locode: 'CNSZX', city: 'Shenzhen' },
+      { country: 'China',          countryCode: 'CN', locode: 'CNNGB', city: 'Ningbo' },
+      { country: 'China',          countryCode: 'CN', locode: 'CNQIN', city: 'Qingdao' },
+      { country: 'China',          countryCode: 'CN', locode: 'CNTAO', city: 'Tianjin' },
+      { country: 'Japan',          countryCode: 'JP', locode: 'JPTYO', city: 'Tokyo' },
+      { country: 'Japan',          countryCode: 'JP', locode: 'JPYOK', city: 'Yokohama' },
+      { country: 'Japan',          countryCode: 'JP', locode: 'JPOSA', city: 'Osaka' },
+      { country: 'Japan',          countryCode: 'JP', locode: 'JPNGO', city: 'Nagoya' },
+      { country: 'South Korea',    countryCode: 'KR', locode: 'KRPUS', city: 'Busan' },
+      { country: 'South Korea',    countryCode: 'KR', locode: 'KRINC', city: 'Incheon' },
+      { country: 'South Korea',    countryCode: 'KR', locode: 'KRSEL', city: 'Seoul' },
+      { country: 'Singapore',      countryCode: 'SG', locode: 'SGSIN', city: 'Singapore' },
+      { country: 'Singapore',      countryCode: 'SG', locode: 'SGJUR', city: 'Jurong' },
+      { country: 'UAE',            countryCode: 'AE', locode: 'AEJEA', city: 'Jebel Ali' },
+      { country: 'UAE',            countryCode: 'AE', locode: 'AEDXB', city: 'Dubai' },
+      { country: 'UAE',            countryCode: 'AE', locode: 'AEAUH', city: 'Abu Dhabi' },
+      { country: 'Brazil',         countryCode: 'BR', locode: 'BRSSZ', city: 'Santos' },
+      { country: 'Brazil',         countryCode: 'BR', locode: 'BRREC', city: 'Recife' },
+      { country: 'Brazil',         countryCode: 'BR', locode: 'BRRIO', city: 'Rio de Janeiro' },
+      { country: 'Australia',      countryCode: 'AU', locode: 'AUSYD', city: 'Sydney' },
+      { country: 'Australia',      countryCode: 'AU', locode: 'AUMEL', city: 'Melbourne' },
+      { country: 'Australia',      countryCode: 'AU', locode: 'AUBNE', city: 'Brisbane' },
+      { country: 'India',          countryCode: 'IN', locode: 'INMAA', city: 'Chennai' },
+      { country: 'India',          countryCode: 'IN', locode: 'INBOM', city: 'Mumbai' },
+      { country: 'India',          countryCode: 'IN', locode: 'INNSA', city: 'Nhava Sheva' },
+      { country: 'Canada',         countryCode: 'CA', locode: 'CAVAN', city: 'Vancouver' },
+      { country: 'Canada',         countryCode: 'CA', locode: 'CATOR', city: 'Toronto' },
+      { country: 'Canada',         countryCode: 'CA', locode: 'CAMTR', city: 'Montreal' },
+      { country: 'Mexico',         countryCode: 'MX', locode: 'MXMZL', city: 'Manzanillo' },
+      { country: 'Mexico',         countryCode: 'MX', locode: 'MXVER', city: 'Veracruz' },
+      { country: 'Mexico',         countryCode: 'MX', locode: 'MXLZC', city: 'Lazaro Cardenas' },
+      { country: 'South Africa',   countryCode: 'ZA', locode: 'ZADUR', city: 'Durban' },
+      { country: 'South Africa',   countryCode: 'ZA', locode: 'ZACPT', city: 'Cape Town' },
+      { country: 'South Africa',   countryCode: 'ZA', locode: 'ZAJNB', city: 'Johannesburg' },
+      { country: 'Spain',          countryCode: 'ES', locode: 'ESBCN', city: 'Barcelona' },
+      { country: 'Spain',          countryCode: 'ES', locode: 'ESVLC', city: 'Valencia' },
+      { country: 'Spain',          countryCode: 'ES', locode: 'ESALG', city: 'Algeciras' },
+      { country: 'Italy',          countryCode: 'IT', locode: 'ITGOA', city: 'Genoa' },
+      { country: 'Italy',          countryCode: 'IT', locode: 'ITGIT', city: 'Gioia Tauro' },
+      { country: 'Italy',          countryCode: 'IT', locode: 'ITLIV', city: 'Livorno' },
+      { country: 'Belgium',        countryCode: 'BE', locode: 'BEANR', city: 'Antwerp' },
+      { country: 'Belgium',        countryCode: 'BE', locode: 'BEZEE', city: 'Zeebrugge' },
+      { country: 'Turkey',         countryCode: 'TR', locode: 'TRIST', city: 'Istanbul' },
+      { country: 'Turkey',         countryCode: 'TR', locode: 'TRMER', city: 'Mersin' },
+      { country: 'Turkey',         countryCode: 'TR', locode: 'TRIZM', city: 'Izmir' },
+      { country: 'Malaysia',       countryCode: 'MY', locode: 'MYPKG', city: 'Port Klang' },
+      { country: 'Malaysia',       countryCode: 'MY', locode: 'MYTPP', city: 'Tanjung Pelepas' },
+      { country: 'Malaysia',       countryCode: 'MY', locode: 'MYPEN', city: 'Penang' },
+      { country: 'Egypt',          countryCode: 'EG', locode: 'EGPSD', city: 'Port Said' },
+      { country: 'Egypt',          countryCode: 'EG', locode: 'EGALX', city: 'Alexandria' },
+      { country: 'Norway',         countryCode: 'NO', locode: 'NOOSL', city: 'Oslo' },
+      { country: 'Norway',         countryCode: 'NO', locode: 'NOBER', city: 'Bergen' },
+      { country: 'Norway',         countryCode: 'NO', locode: 'NOSVG', city: 'Stavanger' },
+      { country: 'Sweden',         countryCode: 'SE', locode: 'SEGOT', city: 'Gothenburg' },
+      { country: 'Sweden',         countryCode: 'SE', locode: 'SESTO', city: 'Stockholm' },
+      { country: 'Sweden',         countryCode: 'SE', locode: 'SEMAL', city: 'Malmo' },
+      { country: 'Chile',          countryCode: 'CL', locode: 'CLSAI', city: 'San Antonio' },
+      { country: 'Chile',          countryCode: 'CL', locode: 'CLVAP', city: 'Valparaiso' },
+      { country: 'Chile',          countryCode: 'CL', locode: 'CLSCL', city: 'Santiago' },
+    ];
+
+    // Columns available from the locations dataset
+    const locationColumns = ['country', 'countryCode', 'locode', 'city'];
+
+    // ── Seed definitions (used only on first load when localStorage is empty) ──
+    const SEED_DEFINITIONS = [
+      { id: 'region', label: 'Region', type: 'multi_select', sessionBehavior: 'persist', dataField: 'region', options: [{ value: 'North', label: 'North' }, { value: 'South', label: 'South' }, { value: 'East', label: 'East' }], createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'date_period', label: 'Date Period', type: 'date_range', sessionBehavior: 'persist', dateRangeConfig: { availableGranularities: ['day','month','quarter','year'], comparisonEnabled: true }, createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'status', label: 'Status', type: 'chip_group', sessionBehavior: 'reset', dataField: 'status', options: [{ value: 'Active', label: 'Active' }, { value: 'Inactive', label: 'Inactive' }], createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'salary_range', label: 'Salary Range', type: 'numeric_range', sessionBehavior: 'reset', dataField: 'salary', numericRangeConfig: { min: 0, max: 200000, step: 5000, unit: 'USD', showSlider: true }, createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'department', label: 'Department', type: 'single_select', sessionBehavior: 'persist', dataField: 'department', options: [{ value: 'Platform', label: 'Platform' }, { value: 'Product', label: 'Product' }, { value: 'Data', label: 'Data' }, { value: 'Infrastructure', label: 'Infrastructure' }], createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'location_tree', label: 'Location (Country / UN LOCODE)', type: 'tree_select', sessionBehavior: 'persist', dataField: 'locode', selectionMode: 'multiple', createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'employee_search', label: 'Employee Search', type: 'search', sessionBehavior: 'reset', dataField: 'name', searchConfig: { minChars: 2, debounceMs: 250, maxSuggestions: 8 }, createdAt: Date.now(), updatedAt: Date.now() },
+      { id: 'role_chips', label: 'Role', type: 'chip_group', sessionBehavior: 'reset', dataField: 'role', options: [{ value: 'Engineering Lead', label: 'Eng Lead' }, { value: 'Designer', label: 'Designer' }, { value: 'Analyst', label: 'Analyst' }, { value: 'PM', label: 'PM' }, { value: 'DevOps', label: 'DevOps' }], createdAt: Date.now(), updatedAt: Date.now() },
+    ];
+
+    // ── Load state from localStorage (or seed) ──
+    let demoDefinitions = fsLoad(LS_DEFS_KEY) || [...SEED_DEFINITIONS];
+    let demoBindings    = fsLoad(LS_BINDS_KEY) || [];
+
+    function fsPersistAll() {
+      fsSave(LS_DEFS_KEY, demoDefinitions);
+      fsSave(LS_BINDS_KEY, demoBindings);
+      fsUpdatePersistStatus();
+    }
+
+    function fsUpdatePersistStatus() {
+      const el = document.getElementById('fs-persist-status');
+      if (el) el.textContent = `${demoDefinitions.length} definitions, ${demoBindings.length} bindings — saved in localStorage`;
+    }
+
+    // ── Render definition cards ──
+    function fsRenderDefList() {
+      const list = document.getElementById('fs-def-list');
+      if (!list) return;
+      if (demoDefinitions.length === 0) {
+        list.innerHTML = '<span style="color:#A8A29E; font-size:13px; padding:8px;">No definitions yet. Click "+ New Definition" to create one.</span>';
+        return;
+      }
+      list.innerHTML = demoDefinitions.map(d => `
+        <div style="display:flex; align-items:center; gap:8px; padding:8px 12px; background:#FAFAF9; border:1px solid #E7E5E4; border-radius:8px; min-width:200px;">
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:13px; font-weight:600; color:#1C1917; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${d.label}</div>
+            <div style="font-size:11px; color:#A8A29E; display:flex; gap:6px; align-items:center; margin-top:2px;">
+              <span style="background:#F5F5F4; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:600;">${d.type.replace(/_/g, ' ')}</span>
+              <span>${d.sessionBehavior}</span>
+              ${d.dataField ? `<span>· ${d.dataField}</span>` : ''}
+              ${d.treeOptions?.length ? `<span>· ${d.treeOptions.length} roots</span>` : ''}
+              ${d.options?.length ? `<span>· ${d.options.length} opts</span>` : ''}
+            </div>
+          </div>
+          <button data-edit-id="${d.id}" style="padding:4px 10px; font-size:11px; border:1px solid #D6D3D1; border-radius:4px; background:white; cursor:pointer; color:#44403C;">Edit</button>
+          <button data-delete-id="${d.id}" style="padding:4px 10px; font-size:11px; border:1px solid #FCA5A5; border-radius:4px; background:white; cursor:pointer; color:#DC2626;">Del</button>
+        </div>
+      `).join('');
+
+      // Wire edit buttons
+      list.querySelectorAll('[data-edit-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const defId = btn.dataset.editId;
+          const def = demoDefinitions.find(d => d.id === defId);
+          if (def) fsOpenStudio(def);
+        });
+      });
+
+      // Wire delete buttons
+      list.querySelectorAll('[data-delete-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const defId = btn.dataset.deleteId;
+          const def = demoDefinitions.find(d => d.id === defId);
+          if (!confirm(`Delete "${def?.label || defId}"? This cannot be undone.`)) return;
+          demoDefinitions = demoDefinitions.filter(d => d.id !== defId);
+          demoBindings = demoBindings.filter(b => b.filterDefinitionId !== defId);
+          fsPersistAll();
+          fsRenderDefList();
+          fsRefreshPicker();
+          fsToast('Definition deleted');
+        });
+      });
+    }
+
+    // ── Studio open/close ──
+    let fsEditingDef = null;
+
+    function fsOpenStudio(def) {
+      fsEditingDef = def || null;
+      const container = document.getElementById('fs-studio-container');
+      const title = document.getElementById('fs-studio-title');
+      const studio = document.getElementById('demo-filter-studio');
+      if (!container || !studio) return;
+
+      title.textContent = def ? `Editing: ${def.label}` : 'New Filter Definition';
+      container.style.display = 'block';
+
+      // Recreate the studio element to reset its internal state
+      const parent = studio.parentElement;
+      const newStudio = document.createElement('phz-filter-studio');
+      newStudio.id = 'demo-filter-studio';
+      newStudio.availableColumns = allDemoColumns;
+      newStudio.data = locationsData;
+      if (def) newStudio.definition = def;
+      parent.replaceChild(newStudio, studio);
+      fsWireStudioEvents(newStudio);
+
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function fsCloseStudio() {
+      const container = document.getElementById('fs-studio-container');
+      if (container) container.style.display = 'none';
+      fsEditingDef = null;
+    }
+
+    function fsWireStudioEvents(studio) {
+      // Reactively update the "Editing:" header as label changes
+      const observer = new MutationObserver(() => {
+        if (!fsEditingDef) return;
+        const title = document.getElementById('fs-studio-title');
+        if (!title) return;
+        // Read current label from the studio's shadow DOM
+        const root = studio.shadowRoot;
+        if (!root) return;
+        const labelInput = root.querySelector('.phz-ea-input');
+        if (labelInput && labelInput.value) {
+          title.textContent = `Editing: ${labelInput.value}`;
+        }
+      });
+      // Listen for input events bubbling through shadow DOM
+      studio.addEventListener('input', () => {
+        if (!fsEditingDef) return;
+        const title = document.getElementById('fs-studio-title');
+        const root = studio.shadowRoot;
+        if (!title || !root) return;
+        const labelInput = root.querySelector('.phz-ea-input');
+        if (labelInput && labelInput.value) {
+          title.textContent = `Editing: ${labelInput.value}`;
+        }
+      });
+
+      studio.addEventListener('filter-studio-save', (e) => {
+        const def = e.detail.definition;
+        console.log('[Filter Studio] Save:', def);
+
+        if (fsEditingDef) {
+          // Update existing
+          demoDefinitions = demoDefinitions.map(d => d.id === def.id ? def : d);
+          fsToast(`Updated "${def.label}"`);
+        } else {
+          // Check for duplicate id
+          const existing = demoDefinitions.find(d => d.id === def.id);
+          if (existing) {
+            def.id = def.id + '_' + Date.now().toString(36);
+          }
+          demoDefinitions = [...demoDefinitions, def];
+          fsToast(`Created "${def.label}"`);
+        }
+
+        fsPersistAll();
+        fsRenderDefList();
+        fsRefreshPicker();
+        fsCloseStudio();
+      });
+
+      studio.addEventListener('filter-studio-cancel', () => {
+        console.log('[Filter Studio] Cancel');
+        fsCloseStudio();
+      });
+    }
+
+    // ── Picker refresh ──
+    function fsRefreshPicker() {
+      const picker = document.getElementById('demo-filter-picker');
+      if (!picker) return;
+      picker.definitions = demoDefinitions;
+      picker.bindings = demoBindings;
+    }
+
+    // ── Init ──
+    const demoStudio = document.getElementById('demo-filter-studio');
+    const demoPicker = document.getElementById('demo-filter-picker');
+
+    // New button
+    document.getElementById('fs-new-btn')?.addEventListener('click', () => fsOpenStudio(null));
+
+    // Clear all button
+    document.getElementById('fs-clear-btn')?.addEventListener('click', () => {
+      if (!confirm('Clear all definitions and bindings from localStorage?')) return;
+      demoDefinitions = [];
+      demoBindings = [];
+      fsPersistAll();
+      fsRenderDefList();
+      fsRefreshPicker();
+      fsCloseStudio();
+      fsToast('All data cleared');
+    });
+
+    // All columns: employee columns + location columns (deduplicated)
+    const allDemoColumns = [...new Set([...sampleColumns.map(c => c.field), ...locationColumns])];
+
+    // Wire initial studio
+    if (demoStudio) {
+      demoStudio.availableColumns = allDemoColumns;
+      demoStudio.data = locationsData;
+      fsWireStudioEvents(demoStudio);
+    }
+
+    // Wire picker
+    if (demoPicker) {
+      demoPicker.definitions = demoDefinitions;
+      demoPicker.bindings = demoBindings;
+      demoPicker.artefactId = 'report-1';
+
+      demoPicker.addEventListener('binding-add', (e) => {
+        console.log('[Filter Picker] Add:', e.detail);
+        demoBindings = [...demoBindings, ...e.detail.bindings];
+        demoPicker.bindings = demoBindings;
+        fsPersistAll();
+        fsToast(`Bound ${e.detail.bindings.length} filter(s)`);
+      });
+
+      demoPicker.addEventListener('binding-remove', (e) => {
+        console.log('[Filter Picker] Remove:', e.detail);
+        demoBindings = demoBindings.filter(b => b.filterDefinitionId !== e.detail.filterDefinitionId);
+        demoPicker.bindings = demoBindings;
+        fsPersistAll();
+        fsToast('Binding removed');
+      });
+
+      demoPicker.addEventListener('binding-update', (e) => {
+        console.log('[Filter Picker] Update:', e.detail);
+        demoBindings = demoBindings.map(b =>
+          b.filterDefinitionId === e.detail.filterDefinitionId ? { ...b, ...e.detail.patch } : b
+        );
+        demoPicker.bindings = demoBindings;
+        fsPersistAll();
+        fsToast('Binding updated');
+      });
+
+      demoPicker.addEventListener('binding-reorder', (e) => {
+        console.log('[Filter Picker] Reorder:', e.detail);
+        const orderedIds = e.detail.orderedIds;
+        demoBindings = demoBindings.map(b => ({
+          ...b,
+          order: orderedIds.indexOf(b.filterDefinitionId) + 1,
+        }));
+        demoPicker.bindings = demoBindings;
+        fsPersistAll();
+        fsToast('Order updated');
+      });
+    }
+
+    // Initial render
+    fsRenderDefList();
+    fsUpdatePersistStatus();
+  </script>
+</body>
+</html>

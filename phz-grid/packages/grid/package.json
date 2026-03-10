@@ -1,0 +1,63 @@
+{
+  "name": "@phozart/phz-grid",
+  "version": "0.1.0",
+  "description": "Web Components grid (Lit) — rendering, virtualization, a11y",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./cdn": {
+      "import": "./dist/cdn/phz-grid.js"
+    },
+    "./themes": {
+      "types": "./dist/themes-only.d.ts",
+      "import": "./dist/themes-only.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens-only.d.ts",
+      "import": "./dist/tokens-only.js"
+    }
+  },
+  "sideEffects": [
+    "dist/components/*.js",
+    "dist/cdn.js",
+    "dist/cdn-all.js"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "build:cdn": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["web-components", "lit", "data-grid", "a11y", "virtual-scroll", "table"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/grid"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/grid#readme",
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-engine": "^0.1.0",
+    "lit": "^3.2.0"
+  },
+  "peerDependencies": {
+    "@phozart/phz-workspace": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@phozart/phz-workspace": { "optional": true }
+  }
+}

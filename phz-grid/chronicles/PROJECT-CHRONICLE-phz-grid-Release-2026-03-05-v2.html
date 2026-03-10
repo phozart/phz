@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Chronicle — phz-grid v0.1.0 | Release Phase</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #1c2333;
+  --bg-surface: #21262d;
+  --border: #30363d;
+  --border-accent: #58a6ff;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-bg: rgba(88,166,255,0.1);
+  --success: #3fb950;
+  --success-bg: rgba(63,185,80,0.1);
+  --warning: #d29922;
+  --warning-bg: rgba(210,153,34,0.1);
+  --danger: #f85149;
+  --danger-bg: rgba(248,81,73,0.1);
+  --purple: #bc8cff;
+  --purple-bg: rgba(188,140,255,0.1);
+  --teal: #39d2c0;
+  --teal-bg: rgba(57,210,192,0.1);
+  --orange: #f0883e;
+  --orange-bg: rgba(240,136,62,0.1);
+  --pink: #f778ba;
+  --pink-bg: rgba(247,120,186,0.1);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --transition: 0.2s ease;
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f3f4f6;
+  --bg-surface: #eaeef2;
+  --border: #d0d7de;
+  --border-accent: #0969da;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8c959f;
+  --accent: #0969da;
+  --accent-bg: rgba(9,105,218,0.08);
+  --success: #1a7f37;
+  --success-bg: rgba(26,127,55,0.08);
+  --warning: #9a6700;
+  --warning-bg: rgba(154,103,0,0.08);
+  --danger: #cf222e;
+  --danger-bg: rgba(207,34,46,0.08);
+  --purple: #8250df;
+  --purple-bg: rgba(130,80,223,0.08);
+  --teal: #1b7c83;
+  --teal-bg: rgba(27,124,131,0.08);
+  --orange: #bc4c00;
+  --orange-bg: rgba(188,76,0,0.08);
+  --pink: #bf3989;
+  --pink-bg: rgba(191,57,137,0.08);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* ─── Header ─── */
+.hero {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, var(--accent-bg) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, var(--purple-bg) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: 2.4rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+
+.hero .subtitle {
+  color: var(--text-muted); font-size: 1.1rem; margin-top: 4px;
+}
+
+.theme-toggle {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  color: var(--text); padding: 8px 16px; border-radius: 20px;
+  cursor: pointer; font-size: 0.85rem; transition: var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent); }
+
+/* ─── Stat Cards ─── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-top: 32px;
+}
+
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+  transition: var(--transition);
+}
+.stat-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.stat-value {
+  font-size: 2rem; font-weight: 800; letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.82rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;
+}
+
+.stat-accent  .stat-value { color: var(--accent); }
+.stat-success .stat-value { color: var(--success); }
+.stat-purple  .stat-value { color: var(--purple); }
+.stat-teal    .stat-value { color: var(--teal); }
+.stat-warning .stat-value { color: var(--warning); }
+.stat-orange  .stat-value { color: var(--orange); }
+.stat-pink    .stat-value { color: var(--pink); }
+
+/* ─── Sections ─── */
+.section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px; cursor: pointer; user-select: none;
+}
+
+.section-icon {
+  width: 36px; height: 36px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+
+.section-title {
+  font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+}
+
+.section-toggle {
+  margin-left: auto; font-size: 1.2rem; color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+.section.collapsed .section-toggle { transform: rotate(-90deg); }
+.section.collapsed .section-body { display: none; }
+
+/* ─── Timeline ─── */
+.timeline { position: relative; padding-left: 36px; }
+
+.timeline::before {
+  content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+
+.timeline-item {
+  position: relative; margin-bottom: 32px;
+  padding: 20px; background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+.timeline-item:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow);
+}
+
+.timeline-dot {
+  position: absolute; left: -30px; top: 24px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+
+.timeline-dot.complete { background: var(--success); }
+.timeline-dot.current { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-bg); }
+.timeline-dot.pending { background: var(--text-dim); }
+
+.timeline-phase {
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted); margin-bottom: 4px;
+}
+
+.timeline-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+
+.timeline-meta {
+  font-size: 0.82rem; color: var(--text-muted);
+}
+
+.timeline-tag {
+  display: inline-block; padding: 2px 8px;
+  border-radius: 12px; font-size: 0.72rem;
+  font-weight: 600; margin-right: 6px;
+}
+.tag-complete { background: var(--success-bg); color: var(--success); }
+.tag-current  { background: var(--accent-bg); color: var(--accent); }
+.tag-auto     { background: var(--purple-bg); color: var(--purple); }
+
+/* ─── Cards Grid ─── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+  transition: var(--transition);
+}
+.card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card-icon {
+  width: 32px; height: 32px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+}
+
+.card-title { font-weight: 600; font-size: 1rem; }
+
+.card-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+.card-footer {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+
+.badge {
+  display: inline-flex; padding: 3px 10px;
+  border-radius: 12px; font-size: 0.72rem;
+  font-weight: 600; letter-spacing: 0.03em;
+}
+
+.badge-accent  { background: var(--accent-bg); color: var(--accent); }
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-purple  { background: var(--purple-bg); color: var(--purple); }
+.badge-warning { background: var(--warning-bg); color: var(--warning); }
+.badge-teal    { background: var(--teal-bg); color: var(--teal); }
+.badge-orange  { background: var(--orange-bg); color: var(--orange); }
+.badge-pink    { background: var(--pink-bg); color: var(--pink); }
+.badge-danger  { background: var(--danger-bg); color: var(--danger); }
+
+/* ─── ADR Table ─── */
+.adr-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.adr-table th {
+  text-align: left; padding: 12px 16px;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+  text-transform: uppercase; font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.adr-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.adr-table tr:hover td {
+  background: var(--bg-card-hover);
+}
+
+/* ─── Metrics ─── */
+.metric-bar-container {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.metric-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 0.85rem; margin-bottom: 4px;
+}
+
+.metric-bar-label span:first-child { font-weight: 600; }
+.metric-bar-label span:last-child  { color: var(--text-muted); }
+
+.metric-bar {
+  height: 8px; background: var(--bg-surface);
+  border-radius: 4px; overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%; border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* ─── Package Grid ─── */
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.pkg-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+.pkg-item:hover {
+  border-color: var(--border-accent);
+}
+
+.pkg-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+.pkg-name { font-weight: 600; font-size: 0.88rem; }
+.pkg-desc { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ─── Architecture Diagram ─── */
+.arch-diagram {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  overflow-x: auto;
+}
+
+.arch-layers {
+  display: flex; flex-direction: column; gap: 24px;
+  min-width: 700px;
+}
+
+.arch-layer {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.arch-layer-title {
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); margin-bottom: 12px;
+}
+
+.arch-boxes {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+
+.arch-box {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 0.82rem; font-weight: 600;
+  border: 1px solid;
+  min-width: 120px; text-align: center;
+}
+
+/* ─── Sprint Progress ─── */
+.sprint-list {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.sprint-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+
+.sprint-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 12px;
+}
+
+.sprint-name { font-weight: 700; font-size: 1rem; }
+
+.sprint-items {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px;
+}
+
+.sprint-item-chip {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 0.75rem; background: var(--bg-surface);
+  border: 1px solid var(--border);
+}
+
+/* ─── Footer ─── */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+/* ─── Print ─── */
+@media print {
+  body { background: white; color: #1f2328; }
+  .theme-toggle { display: none; }
+  .section { page-break-inside: avoid; }
+  .hero { background: white; border-bottom-color: #d0d7de; }
+  .hero h1 { -webkit-text-fill-color: #0969da; }
+  .stat-card, .card, .pkg-item, .timeline-item, .sprint-card, .arch-diagram {
+    background: white; border-color: #d0d7de;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.6rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid { grid-template-columns: 1fr; }
+  .pkg-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<header class="hero">
+  <div class="container hero-content">
+    <div class="hero-top">
+      <div>
+        <h1>phz-grid Project Chronicle</h1>
+        <p class="subtitle">Next-generation universal data grid — Web Components, DuckDB-WASM, A11y-first</p>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card stat-accent">
+        <div class="stat-value">17</div>
+        <div class="stat-label">Packages</div>
+      </div>
+      <div class="stat-card stat-success">
+        <div class="stat-value">3,508</div>
+        <div class="stat-label">Tests Passing</div>
+      </div>
+      <div class="stat-card stat-purple">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Build Errors</div>
+      </div>
+      <div class="stat-card stat-teal">
+        <div class="stat-value">8</div>
+        <div class="stat-label">ADRs</div>
+      </div>
+      <div class="stat-card stat-warning">
+        <div class="stat-value">116+</div>
+        <div class="stat-label">Type Exports</div>
+      </div>
+      <div class="stat-card stat-orange">
+        <div class="stat-value">78</div>
+        <div class="stat-label">Items Delivered</div>
+      </div>
+      <div class="stat-card stat-pink">
+        <div class="stat-value">7.8 KB</div>
+        <div class="stat-label">Core Bundle</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ═══════════════════ PHASE TIMELINE ═══════════════════ -->
+<section class="section" id="timeline">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--accent-bg);color:var(--accent);">&#9201;</div>
+    <h2 class="section-title">Journey Timeline</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 0</div>
+        <div class="timeline-title">Innovation &amp; Discovery</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          <span class="timeline-tag tag-auto">auto gate</span>
+          PERSEVERE decision — a11y gap validated, technology stack mature, market timing optimal.
+          5 personas defined, 65 user stories across 13 epics.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 1</div>
+        <div class="timeline-title">Business Analysis</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          Marketing strategy with GTM entry points. Market sizing &amp; competitive positioning.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 2</div>
+        <div class="timeline-title">Architecture &amp; Data Design</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          8 ADRs authored. Full system architecture (C4 model, 14 sections).
+          Data model (22 sections). API contracts (10 packages incl. Python/pip).
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 3</div>
+        <div class="timeline-title">UX/UI Design</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          Design system: 357 tokens, 20 component specs, 16 interaction patterns.
+          Accessibility spec — competitive moat. Three-layer CSS token system.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 4</div>
+        <div class="timeline-title">Requirements Engineering</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          109 formal requirements (BRD). 127 traced requirements + 160 test cases (RTM). 100% coverage.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 5</div>
+        <div class="timeline-title">Contract Finalization</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          TYPE-CONTRACTS: 116+ types across 10 packages. Validation PASSED. 100% BRD coverage, 0 gaps.
+          Governance sealed with quality gates.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 6</div>
+        <div class="timeline-title">Implementation</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          10 packages implemented. 140 tests initially, expanded to 1,162.
+          All TypeScript compiles clean. Sprint 6 architecture decomposition — God Object 4,434 &#8594; 975 lines.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 7</div>
+        <div class="timeline-title">Sprint Execution</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          All 5 sprints (0-5) executed + Sprint 6 decomposition + Sprint 7 deferred items.
+          78 implementation items — all complete.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot complete"></div>
+        <div class="timeline-phase">Phase 8</div>
+        <div class="timeline-title">QA &amp; Review</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-complete">COMPLETE</span>
+          Full build clean, 3,508 tests, TYPE-CONTRACTS compliance verified.
+          Cross-package consistency confirmed. Expanded from 10 to 17 packages.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot current"></div>
+        <div class="timeline-phase">Phase 9</div>
+        <div class="timeline-title">Release</div>
+        <div class="timeline-meta">
+          <span class="timeline-tag tag-current">CURRENT</span>
+          Build stabilization complete — 0 TypeScript errors across 17 packages.
+          Documentation cleanup, test expansion to 3,508 tests with 0 failures.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ARCHITECTURE ═══════════════════ -->
+<section class="section" id="architecture">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--purple-bg);color:var(--purple);">&#9881;</div>
+    <h2 class="section-title">Architecture Overview</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="arch-diagram">
+      <div class="arch-layers">
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">Framework Adapters</div>
+          <div class="arch-boxes">
+            <div class="arch-box" style="background:var(--accent-bg);border-color:var(--accent);color:var(--accent);">phz-react</div>
+            <div class="arch-box" style="background:var(--success-bg);border-color:var(--success);color:var(--success);">phz-vue</div>
+            <div class="arch-box" style="background:var(--danger-bg);border-color:var(--danger);color:var(--danger);">phz-angular</div>
+            <div class="arch-box" style="background:var(--warning-bg);border-color:var(--warning);color:var(--warning);">phz-python</div>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">Web Components Layer (Lit v5)</div>
+          <div class="arch-boxes">
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-grid</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-widgets</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-criteria</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-grid-admin</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-engine-admin</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-grid-creator</div>
+            <div class="arch-box" style="background:var(--teal-bg);border-color:var(--teal);color:var(--teal);">phz-definitions</div>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">Business Logic &amp; Intelligence</div>
+          <div class="arch-boxes">
+            <div class="arch-box" style="background:var(--orange-bg);border-color:var(--orange);color:var(--orange);">phz-engine</div>
+            <div class="arch-box" style="background:var(--orange-bg);border-color:var(--orange);color:var(--orange);">phz-ai</div>
+            <div class="arch-box" style="background:var(--orange-bg);border-color:var(--orange);color:var(--orange);">phz-collab</div>
+            <div class="arch-box" style="background:var(--orange-bg);border-color:var(--orange);color:var(--orange);">phz-duckdb</div>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">Headless Core (Zero DOM Dependencies)</div>
+          <div class="arch-boxes">
+            <div class="arch-box" style="background:var(--purple-bg);border-color:var(--purple);color:var(--purple);font-size:1rem;">phz-core</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;">Key Architecture Principles</h3>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:var(--accent-bg);color:var(--accent);">1</div>
+            <div class="card-title">Accessibility First</div>
+          </div>
+          <div class="card-body">
+            Every feature works with screen readers, keyboard navigation, Forced Colors Mode, and motor impairment accommodations. WCAG 2.1 AA compliance. Semantic Shadow DOM for accessible virtualization.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:var(--success-bg);color:var(--success);">2</div>
+            <div class="card-title">Modular by Default</div>
+          </div>
+          <div class="card-body">
+            Tree-shakeable modules. Core bundle &lt;50 KB gzipped (achieved: 7.8 KB). Enterprise features lazy-loaded (DuckDB: 3.5 MB on demand).
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:var(--purple-bg);color:var(--purple);">3</div>
+            <div class="card-title">Schema-as-Contract</div>
+          </div>
+          <div class="card-body">
+            Grid state API generates JSON Schema that drives AI integration, documentation, and type generation. Provider-agnostic (OpenAI, Anthropic, Google, local models).
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:var(--teal-bg);color:var(--teal);">4</div>
+            <div class="card-title">Three-Model Extensibility</div>
+          </div>
+          <div class="card-body">
+            Hooks (before/after middleware), Slots (named Web Component slots), Headless Core (functional composition). Three extension patterns for different needs.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PACKAGES ═══════════════════ -->
+<section class="section" id="packages">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--teal-bg);color:var(--teal);">&#128230;</div>
+    <h2 class="section-title">Package Inventory (17)</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+
+    <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;">Community Tier (MIT)</h3>
+    <div class="pkg-grid" style="margin-bottom:24px;">
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--purple);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-core</div>
+          <div class="pkg-desc">Headless grid engine — 7.8 KB</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--teal);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-grid</div>
+          <div class="pkg-desc">Web Components (Lit v5) — ~72 KB</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--accent);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-react</div>
+          <div class="pkg-desc">React adapter — ~5 KB</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--success);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-vue</div>
+          <div class="pkg-desc">Vue adapter — ~5 KB</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--danger);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-angular</div>
+          <div class="pkg-desc">Angular adapter — ~5 KB</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;">Enterprise Tier</h3>
+    <div class="pkg-grid" style="margin-bottom:24px;">
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--orange);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-duckdb</div>
+          <div class="pkg-desc">DuckDB-WASM + Apache Arrow — 3.5 MB lazy</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--pink);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-ai</div>
+          <div class="pkg-desc">AI toolkit — schema-as-contract, NL query</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--warning);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-collab</div>
+          <div class="pkg-desc">Real-time collaboration — Yjs CRDTs</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;">BI &amp; Admin</h3>
+    <div class="pkg-grid" style="margin-bottom:24px;">
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--orange);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-engine</div>
+          <div class="pkg-desc">BI engine — reports, dashboards, KPIs</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--teal);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-widgets</div>
+          <div class="pkg-desc">Dashboard widgets — charts, cards</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--accent);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-criteria</div>
+          <div class="pkg-desc">Selection criteria &amp; filter UI</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--purple);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-grid-admin</div>
+          <div class="pkg-desc">Grid admin panel</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--purple);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-engine-admin</div>
+          <div class="pkg-desc">Engine admin panel</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--success);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-grid-creator</div>
+          <div class="pkg-desc">Stepped wizard for grid creation</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--accent);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-definitions</div>
+          <div class="pkg-desc">Serializable grid blueprints &amp; stores</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;">Specialized</h3>
+    <div class="pkg-grid">
+      <div class="pkg-item">
+        <div class="pkg-dot" style="background:var(--warning);"></div>
+        <div>
+          <div class="pkg-name">@phozart/phz-python</div>
+          <div class="pkg-desc">Python package — Jupyter, Panel, Streamlit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ADR DECISIONS ═══════════════════ -->
+<section class="section" id="decisions">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--warning-bg);color:var(--warning);">&#9878;</div>
+    <h2 class="section-title">Architecture Decision Records (8)</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <table class="adr-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Decision</th>
+          <th>Status</th>
+          <th>Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-accent">ADR-001</span></td>
+          <td><strong>Headless Core + Lit Rendering Separation</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Pure business logic in core, framework-agnostic rendering in grid. Enables framework adapters.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-purple">Foundational</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-002</span></td>
+          <td><strong>DOM Virtualization Default, Canvas Enterprise</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">DOM for 10K-500K rows (default), Canvas for 500K-100M (enterprise opt-in), Hybrid mode.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-orange">Performance</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-003</span></td>
+          <td><strong>Semantic Shadow DOM for Accessible Virtualization</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Parallel a11y tree maintains ARIA structure. First grid with accessible virtualization. WCAG 2.1 AA.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-danger">Competitive Moat</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-004</span></td>
+          <td><strong>DuckDB-WASM + Apache Arrow</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">10-100x faster than JS arrays. SQL interface. Lazy-loaded (3.5 MB WASM binary).</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-orange">Performance</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-005</span></td>
+          <td><strong>Yjs CRDTs for Collaboration</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Conflict-free real-time editing. Peer-to-peer capable. Offline-first architecture.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-teal">Enterprise</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-006</span></td>
+          <td><strong>Three-Layer CSS Token System</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Primitive &#8594; Semantic &#8594; Component tokens. 357 total tokens for full theming control.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-pink">Design System</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-007</span></td>
+          <td><strong>Schema-as-Contract AI Integration</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Provider-agnostic (OpenAI, Anthropic, Google, local). Zod-based schema generation &amp; validation.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-warning">Innovation</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-accent">ADR-008</span></td>
+          <td><strong>ESM-Only, No CommonJS</strong><br><span style="color:var(--text-muted);font-size:0.82rem;">Modern module system. Node 20+ required. Better tree-shaking, smaller bundles.</span></td>
+          <td><span class="badge badge-success">Accepted</span></td>
+          <td><span class="badge badge-accent">Ecosystem</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════ SPRINT PROGRESS ═══════════════════ -->
+<section class="section" id="sprints">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--success-bg);color:var(--success);">&#9889;</div>
+    <h2 class="section-title">Sprint Execution</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="sprint-list">
+
+      <div class="sprint-card">
+        <div class="sprint-header">
+          <span class="sprint-name">Sprints 0-5 — Foundation &amp; Features</span>
+          <span class="badge badge-success">COMPLETE</span>
+        </div>
+        <div class="card-body">Initial implementation of all 10 core packages. 140 tests, all TypeScript compiles clean.</div>
+        <div class="sprint-items">
+          <span class="sprint-item-chip">Core engine</span>
+          <span class="sprint-item-chip">Grid rendering</span>
+          <span class="sprint-item-chip">Framework adapters</span>
+          <span class="sprint-item-chip">DuckDB integration</span>
+          <span class="sprint-item-chip">AI toolkit</span>
+          <span class="sprint-item-chip">Collaboration</span>
+          <span class="sprint-item-chip">Virtualization</span>
+          <span class="sprint-item-chip">A11y</span>
+        </div>
+      </div>
+
+      <div class="sprint-card">
+        <div class="sprint-header">
+          <span class="sprint-name">Sprint 6 — Architecture Decomposition</span>
+          <span class="badge badge-success">COMPLETE</span>
+        </div>
+        <div class="card-body">God Object decomposition (phz-grid.ts: 4,434 &#8594; 975 lines), 17 Reactive Controllers extracted.</div>
+        <div class="sprint-items">
+          <span class="sprint-item-chip">God Object decomp</span>
+          <span class="sprint-item-chip">Column pinning</span>
+          <span class="sprint-item-chip">Lazy imports</span>
+          <span class="sprint-item-chip">Views wiring</span>
+          <span class="sprint-item-chip">Granular subscriptions</span>
+          <span class="sprint-item-chip">Undo/Redo</span>
+          <span class="sprint-item-chip">prepare + activate split</span>
+          <span class="sprint-item-chip">DuckDB AsyncDataSource</span>
+          <span class="sprint-item-chip">SQL push-down</span>
+          <span class="sprint-item-chip">Bridge wiring</span>
+        </div>
+      </div>
+
+      <div class="sprint-card">
+        <div class="sprint-header">
+          <span class="sprint-name">Sprint 7 — Deferred Items</span>
+          <span class="badge badge-success">COMPLETE</span>
+        </div>
+        <div class="card-body">5 previously deferred architecture items implemented with full test coverage.</div>
+        <div class="sprint-items">
+          <span class="sprint-item-chip">Unified filter algebra</span>
+          <span class="sprint-item-chip">Tiered attention</span>
+          <span class="sprint-item-chip">GridPresentation</span>
+          <span class="sprint-item-chip">QueryPlanner</span>
+          <span class="sprint-item-chip">Data quality metrics</span>
+        </div>
+      </div>
+
+      <div class="sprint-card">
+        <div class="sprint-header">
+          <span class="sprint-name">Post-QA — Expansion &amp; Stabilization</span>
+          <span class="badge badge-success">COMPLETE</span>
+        </div>
+        <div class="card-body">Expanded from 10 to 17 packages. Project rename phozart-* &#8594; phz-*. Test suite 140 &#8594; 3,508. Build stabilized to 0 errors.</div>
+        <div class="sprint-items">
+          <span class="sprint-item-chip">+7 new packages</span>
+          <span class="sprint-item-chip">Project rename</span>
+          <span class="sprint-item-chip">Docs cleanup</span>
+          <span class="sprint-item-chip">Test expansion</span>
+          <span class="sprint-item-chip">Build fix (1,034 &#8594; 0 errors)</span>
+          <span class="sprint-item-chip">Filter-report integration</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ METRICS ═══════════════════ -->
+<section class="section" id="metrics">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--orange-bg);color:var(--orange);">&#128202;</div>
+    <h2 class="section-title">Quality Metrics</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--success-bg);color:var(--success);">&#10003;</div>
+          <div class="card-title">Test Suite</div>
+        </div>
+        <div class="card-body">
+          <div class="metric-bar-container">
+            <div>
+              <div class="metric-bar-label"><span>Tests Passing</span><span>3,508 / 3,508</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:100%;background:var(--success);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Test Files</span><span>224</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:100%;background:var(--success);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Failures</span><span>0</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:0%;background:var(--danger);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--accent-bg);color:var(--accent);">&#128220;</div>
+          <div class="card-title">Build Health</div>
+        </div>
+        <div class="card-body">
+          <div class="metric-bar-container">
+            <div>
+              <div class="metric-bar-label"><span>TypeScript Errors</span><span>0 (was 1,034)</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:0%;background:var(--danger);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Packages Building</span><span>17 / 17</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:100%;background:var(--accent);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>BRD Coverage</span><span>100%</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:100%;background:var(--purple);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--teal-bg);color:var(--teal);">&#128451;</div>
+          <div class="card-title">Bundle Size</div>
+        </div>
+        <div class="card-body">
+          <div class="metric-bar-container">
+            <div>
+              <div class="metric-bar-label"><span>Core (target: &lt;50 KB)</span><span>7.8 KB gzipped</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:15.6%;background:var(--teal);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Grid (target: ~70 KB)</span><span>~72 KB gzipped</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:72%;background:var(--warning);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Framework Adapters</span><span>~5 KB each</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:5%;background:var(--success);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--warning-bg);color:var(--warning);">&#128203;</div>
+          <div class="card-title">Coverage Thresholds</div>
+        </div>
+        <div class="card-body">
+          <div class="metric-bar-container">
+            <div>
+              <div class="metric-bar-label"><span>Statements</span><span>55% min</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:55%;background:var(--warning);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Branches</span><span>70% min</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:70%;background:var(--orange);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Functions</span><span>50% min</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:50%;background:var(--warning);"></div></div>
+            </div>
+            <div>
+              <div class="metric-bar-label"><span>Lines</span><span>55% min</span></div>
+              <div class="metric-bar"><div class="metric-bar-fill" style="width:55%;background:var(--warning);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ARTIFACTS ═══════════════════ -->
+<section class="section" id="artifacts">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--pink-bg);color:var(--pink);">&#128196;</div>
+    <h2 class="section-title">Artifact Gallery</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--purple-bg);color:var(--purple);">&#9881;</div>
+          <div class="card-title">Architecture</div>
+        </div>
+        <div class="card-body">
+          System architecture (C4 model, 14 sections), data model (22 sections), filter-report integration strategy.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-purple">SYSTEM-ARCHITECTURE.md</span>
+          <span class="badge badge-purple">DATA-MODEL.md</span>
+          <span class="badge badge-purple">FILTER-REPORT-INTEGRATION.md</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--accent-bg);color:var(--accent);">&#128220;</div>
+          <div class="card-title">Contracts (Binding)</div>
+        </div>
+        <div class="card-body">
+          4 binding contracts: API (JS), API (Python), Type exports (116+), and Governance process.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-accent">API-CONTRACTS.md</span>
+          <span class="badge badge-accent">TYPE-CONTRACTS.md</span>
+          <span class="badge badge-accent">PYTHON-API-CONTRACTS.md</span>
+          <span class="badge badge-accent">CONTRACT-GOVERNANCE.md</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--warning-bg);color:var(--warning);">&#9878;</div>
+          <div class="card-title">ADRs (8)</div>
+        </div>
+        <div class="card-body">
+          Headless core, DOM virtualization, accessible Shadow DOM, DuckDB-WASM, Yjs CRDTs, CSS tokens, AI integration, ESM-only.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-warning">ADR-001 through ADR-008</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--success-bg);color:var(--success);">&#128214;</div>
+          <div class="card-title">Package Documentation</div>
+        </div>
+        <div class="card-body">
+          16 package READMEs with usage guides, code examples, API documentation, and installation instructions.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-success">16 READMEs</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--teal-bg);color:var(--teal);">&#128218;</div>
+          <div class="card-title">Planning</div>
+        </div>
+        <div class="card-body">
+          Implementation plan (78 items, 6 sprints). 10 supporting analysis documents including reviews, roadmaps, and QA verification.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-teal">IMPLEMENTATION-PLAN.md</span>
+          <span class="badge badge-teal">10 analysis docs</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--orange-bg);color:var(--orange);">&#128736;</div>
+          <div class="card-title">Configuration</div>
+        </div>
+        <div class="card-body">
+          Project config (YAML), CLAUDE.md orchestration anchor, CI workflows, Vitest config with coverage thresholds.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-orange">project.config.yaml</span>
+          <span class="badge badge-orange">CLAUDE.md</span>
+          <span class="badge badge-orange">.github/</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DESIGN SYSTEM ═══════════════════ -->
+<section class="section" id="design">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--pink-bg);color:var(--pink);">&#127912;</div>
+    <h2 class="section-title">Design System</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--pink-bg);color:var(--pink);">&#127752;</div>
+          <div class="card-title">Token Architecture</div>
+        </div>
+        <div class="card-body">
+          <strong>357 tokens</strong> across three layers:<br>
+          <strong>Layer 1 — Primitive:</strong> Brand colors, spacing scale, typography<br>
+          <strong>Layer 2 — Semantic:</strong> Backgrounds, text, borders, interactive states<br>
+          <strong>Layer 3 — Component:</strong> Grid-specific (header, cell, row, scrollbar)
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-pink">CSS Custom Properties</span>
+          <span class="badge badge-pink">Forced Colors</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--accent-bg);color:var(--accent);">&#128444;</div>
+          <div class="card-title">Component Library</div>
+        </div>
+        <div class="card-body">
+          <strong>20 component specifications</strong> with full state matrices, interaction patterns, and accessibility annotations.
+          <strong>16 interaction patterns</strong> covering keyboard, mouse, touch, and assistive technology.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-accent">20 Specs</span>
+          <span class="badge badge-accent">16 Patterns</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--success-bg);color:var(--success);">&#9855;</div>
+          <div class="card-title">Accessibility</div>
+        </div>
+        <div class="card-body">
+          <strong>WCAG 2.1 AA target</strong> — the competitive moat.<br>
+          Semantic Shadow DOM for accessible virtualization (industry first).
+          Screen readers, keyboard navigation, Forced Colors Mode, motor impairment accommodations.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-success">WCAG 2.1 AA</span>
+          <span class="badge badge-success">Industry First</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CONTRACTS ═══════════════════ -->
+<section class="section" id="contracts">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--accent-bg);color:var(--accent);">&#128221;</div>
+    <h2 class="section-title">Contract Framework</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--accent-bg);color:var(--accent);">&#128203;</div>
+          <div class="card-title">API Contracts</div>
+        </div>
+        <div class="card-body">
+          Binding JavaScript API signatures for all 10 packages. Factory functions, core interfaces, event system, state management.
+          Separate Python API contracts for pip package with feature parity.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-accent">Binding v1.0</span>
+          <span class="badge badge-accent">10 packages</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--purple-bg);color:var(--purple);">&#128300;</div>
+          <div class="card-title">Type Contracts</div>
+        </div>
+        <div class="card-body">
+          Complete TypeScript type export inventory. 116+ types across 10 packages with generic reconciliation strategy.
+          Validation passed with 100% BRD coverage, 0 gaps.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-purple">Binding v1.0</span>
+          <span class="badge badge-purple">116+ types</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--teal-bg);color:var(--teal);">&#128218;</div>
+          <div class="card-title">Data Model</div>
+        </div>
+        <div class="card-body">
+          22 sections covering complete data model. All state structures, events, configurations.
+          Immutability and type safety contracts enforced across packages.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-teal">Binding v1.0</span>
+          <span class="badge badge-teal">22 sections</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--warning-bg);color:var(--warning);">&#128272;</div>
+          <div class="card-title">Governance</div>
+        </div>
+        <div class="card-body">
+          Change management process (RFC required). Quality gates: 80% coverage, WCAG AA, performance benchmarks.
+          Dependency constraints, versioning strategy, and emergency change process.
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-warning">Active</span>
+          <span class="badge badge-warning">Quality Gates</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<section class="section" id="techstack">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--success-bg);color:var(--success);">&#128187;</div>
+    <h2 class="section-title">Technology Stack</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Core Platform</div>
+        </div>
+        <div class="card-body" style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="badge badge-accent">TypeScript (strict)</span>
+          <span class="badge badge-accent">ESM-only</span>
+          <span class="badge badge-accent">Lit v5</span>
+          <span class="badge badge-accent">Web Components</span>
+          <span class="badge badge-accent">Node 20+</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Testing &amp; Quality</div>
+        </div>
+        <div class="card-body" style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="badge badge-success">Vitest</span>
+          <span class="badge badge-success">Playwright</span>
+          <span class="badge badge-success">ESLint</span>
+          <span class="badge badge-success">Prettier</span>
+          <span class="badge badge-success">@vitest/coverage-v8</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Enterprise Integrations</div>
+        </div>
+        <div class="card-body" style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="badge badge-orange">DuckDB-WASM</span>
+          <span class="badge badge-orange">Apache Arrow</span>
+          <span class="badge badge-orange">Yjs CRDTs</span>
+          <span class="badge badge-orange">Zod</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Polyglot &amp; Framework Support</div>
+        </div>
+        <div class="card-body" style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="badge badge-purple">React</span>
+          <span class="badge badge-purple">Vue</span>
+          <span class="badge badge-purple">Angular</span>
+          <span class="badge badge-purple">Python (anywidget)</span>
+          <span class="badge badge-purple">Jupyter</span>
+          <span class="badge badge-purple">Panel</span>
+          <span class="badge badge-purple">Streamlit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BUILD STABILIZATION ═══════════════════ -->
+<section class="section" id="build-fix">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:var(--danger-bg);color:var(--danger);">&#128295;</div>
+    <h2 class="section-title">Build Stabilization Journey</h2>
+    <span class="section-toggle">&#9660;</span>
+  </div>
+  <div class="section-body">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;">
+      <p style="margin-bottom:20px;color:var(--text-muted);">The 17-package monorepo accumulated type drift across sprint work. A systematic build stabilization effort reduced errors from <strong style="color:var(--danger);">1,034</strong> to <strong style="color:var(--success);">0</strong>.</p>
+
+      <div class="metric-bar-container">
+        <div>
+          <div class="metric-bar-label"><span>Starting Point</span><span style="color:var(--danger);">1,034 errors</span></div>
+          <div class="metric-bar"><div class="metric-bar-fill" style="width:100%;background:var(--danger);"></div></div>
+        </div>
+        <div>
+          <div class="metric-bar-label"><span>After Core Type Fixes</span><span style="color:var(--warning);">~600 errors</span></div>
+          <div class="metric-bar"><div class="metric-bar-fill" style="width:58%;background:var(--warning);"></div></div>
+        </div>
+        <div>
+          <div class="metric-bar-label"><span>After Controller Fixes</span><span style="color:var(--orange);">~300 errors</span></div>
+          <div class="metric-bar"><div class="metric-bar-fill" style="width:29%;background:var(--orange);"></div></div>
+        </div>
+        <div>
+          <div class="metric-bar-label"><span>After Grid Component Fixes</span><span style="color:var(--accent);">154 errors</span></div>
+          <div class="metric-bar"><div class="metric-bar-fill" style="width:15%;background:var(--accent);"></div></div>
+        </div>
+        <div>
+          <div class="metric-bar-label"><span>Final Result</span><span style="color:var(--success);">0 errors</span></div>
+          <div class="metric-bar"><div class="metric-bar-fill" style="width:0%;background:var(--success);"></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <h4 style="font-size:0.88rem;font-weight:700;margin-bottom:12px;">Key Fix Categories</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="badge badge-accent">Core type alignment (ColumnDefinition, SortState, FilterState)</span>
+          <span class="badge badge-purple">API method corrections (clearSort, deselectAll, groupBy)</span>
+          <span class="badge badge-teal">Controller signature fixes (clipboard, conditional-formatting)</span>
+          <span class="badge badge-orange">Decorator config (experimentalDecorators, useDefineForClassFields)</span>
+          <span class="badge badge-warning">Stale dist/ cleanup (TS5055 errors)</span>
+          <span class="badge badge-pink">Test type corrections (event payloads, state shapes)</span>
+          <span class="badge badge-success">Converter API updates (initialState.sort vs defaultSortField)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <p>phz-grid Project Chronicle &middot; Generated 2026-03-05 &middot; Phase 9 (Release)</p>
+  <p style="margin-top:4px;">17 packages &middot; 3,508 tests &middot; 0 build errors &middot; MIT Open Source</p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('collapsed');
+}
+
+// Animate metric bars on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.metric-bar-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { bar.style.width = w; });
+        });
+      });
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.metric-bar-container').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

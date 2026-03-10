@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+.vite/
+
+# Test coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+build/
+*.whl
+
+# VitePress
+packages/docs/.vitepress/cache/
+packages/docs/.vitepress/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude Code
+.claude/
+
+# Compiled config files
+vitest.config.d.ts
+vitest.config.d.ts.map
+vitest.config.js
+vitest.config.js.map
+
+# Screenshots / artifacts
+*.png
+nul
+
+# Demo apps (not published)
+packages/demo/
+
+# Generated HTML guides/demos
+docs/guides/*.html
+
+# Scratch / brainstorming
+idea/
+archive/

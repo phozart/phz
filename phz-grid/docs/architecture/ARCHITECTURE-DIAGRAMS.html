@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>phz-grid Architecture Diagrams</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #F5F5F4; color: #1C1917; line-height: 1.6;
+  }
+
+  /* --- Layout --- */
+  .page-header {
+    background: #1C1917; color: #FAFAF9; padding: 32px 48px;
+  }
+  .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .page-header p { color: #A8A29E; font-size: 14px; margin-top: 6px; }
+
+  .toc {
+    background: #FFFFFF; border-bottom: 1px solid #E7E5E4;
+    padding: 16px 48px; position: sticky; top: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  .toc-label { font-size: 11px; font-weight: 700; color: #78716C; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 8px; }
+  .toc a {
+    font-size: 13px; color: #1C1917; text-decoration: none;
+    padding: 4px 12px; border-radius: 6px; border: 1px solid #D6D3D1;
+    transition: all 0.15s;
+  }
+  .toc a:hover { background: #1C1917; color: #FAFAF9; border-color: #1C1917; }
+
+  .diagram-section {
+    max-width: 1400px; margin: 32px auto; padding: 0 24px;
+  }
+  .diagram-card {
+    background: #FFFFFF; border-radius: 12px;
+    border: 1px solid #E7E5E4; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(28,25,23,0.04);
+  }
+  .diagram-header {
+    padding: 20px 28px; border-bottom: 1px solid #E7E5E4;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .diagram-number {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: #1C1917; color: #FAFAF9; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .diagram-header h2 { font-size: 18px; font-weight: 700; }
+  .diagram-header p { font-size: 13px; color: #78716C; margin-top: 2px; }
+
+  .diagram-body { padding: 28px; overflow-x: auto; }
+
+  /* --- SVG Diagram Styles --- */
+  svg { display: block; margin: 0 auto; }
+  svg text { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+
+  /* --- Legend --- */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 16px; padding: 16px 28px;
+    border-top: 1px solid #E7E5E4; background: #FAFAF9;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; color: #57534E;
+  }
+  .legend-swatch {
+    width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* --- Notes --- */
+  .notes {
+    padding: 16px 28px; border-top: 1px solid #E7E5E4; background: #FFFBEB;
+  }
+  .notes h3 { font-size: 13px; font-weight: 700; color: #92400E; margin-bottom: 6px; }
+  .notes ul { padding-left: 18px; font-size: 13px; color: #78350F; }
+  .notes li { margin-bottom: 3px; }
+
+  .duplication-note {
+    background: #FEF2F2; border-top-color: #FECACA;
+  }
+  .duplication-note h3 { color: #991B1B; }
+  .duplication-note ul { color: #7F1D1D; }
+
+  /* --- Footer --- */
+  .footer {
+    text-align: center; padding: 32px; font-size: 12px; color: #A8A29E;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>phz-grid Architecture Diagrams</h1>
+  <p>Package connections, data flows, and use-case breakdowns &mdash; Generated 2026-03-01</p>
+</div>
+
+<div class="toc">
+  <span class="toc-label">Jump to</span>
+  <a href="#d1">1. Package Overview</a>
+  <a href="#d2">2. Grid + Configuration</a>
+  <a href="#d3">3. Filter Definition System</a>
+  <a href="#d4">4. Report Filter Binding</a>
+  <a href="#d5">5. BI Engine Facade</a>
+  <a href="#d6">6. Dashboard + Widgets</a>
+  <a href="#d7">7. Full Data Flow</a>
+  <a href="#d8">8. Duplication Analysis</a>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 1: Package Dependency Overview                              -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d1">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">1</div>
+    <div>
+      <h2>Package Dependency Overview</h2>
+      <p>How packages import from each other. Arrows mean "depends on".</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="920" height="580" viewBox="0 0 920 580">
+      <!-- Core (center bottom) -->
+      <rect x="380" y="480" width="160" height="56" rx="10" fill="#1C1917"/>
+      <text x="460" y="512" text-anchor="middle" fill="#FAFAF9" font-size="15" font-weight="700">@phozart/phz-core</text>
+      <text x="460" y="528" text-anchor="middle" fill="#A8A29E" font-size="10">Headless Engine + Types</text>
+
+      <!-- Engine -->
+      <rect x="380" y="360" width="160" height="56" rx="10" fill="#7C3AED"/>
+      <text x="460" y="392" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-engine</text>
+      <text x="460" y="408" text-anchor="middle" fill="#DDD6FE" font-size="10">BI Engine (headless)</text>
+      <!-- engine → core -->
+      <line x1="460" y1="416" x2="460" y2="480" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+      <!-- Grid (Lit) -->
+      <rect x="160" y="360" width="160" height="56" rx="10" fill="#2563EB"/>
+      <text x="240" y="392" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-grid</text>
+      <text x="240" y="408" text-anchor="middle" fill="#BFDBFE" font-size="10">Web Components (Lit)</text>
+      <!-- grid → core -->
+      <line x1="280" y1="416" x2="420" y2="480" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+      <!-- Widgets -->
+      <rect x="600" y="240" width="160" height="56" rx="10" fill="#059669"/>
+      <text x="680" y="272" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-widgets</text>
+      <text x="680" y="288" text-anchor="middle" fill="#A7F3D0" font-size="10">Lit Dashboard Widgets</text>
+      <!-- widgets → engine -->
+      <line x1="640" y1="296" x2="500" y2="360" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <!-- Criteria -->
+      <rect x="160" y="240" width="160" height="56" rx="10" fill="#D97706"/>
+      <text x="240" y="272" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-criteria</text>
+      <text x="240" y="288" text-anchor="middle" fill="#FDE68A" font-size="10">Filter UI Components</text>
+      <!-- criteria → core (implicit via types) -->
+      <line x1="240" y1="296" x2="240" y2="360" stroke="#D97706" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-amber)"/>
+      <text x="248" y="332" font-size="9" fill="#D97706">uses core types</text>
+
+      <!-- Grid Admin -->
+      <rect x="20" y="120" width="160" height="56" rx="10" fill="#DC2626"/>
+      <text x="100" y="152" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-grid-admin</text>
+      <text x="100" y="168" text-anchor="middle" fill="#FCA5A5" font-size="10">Grid Config Panel</text>
+      <!-- grid-admin → engine (re-exports) -->
+      <line x1="140" y1="176" x2="400" y2="360" stroke="#DC2626" stroke-width="2" marker-end="url(#arrow-red)"/>
+      <text x="230" y="260" font-size="9" fill="#DC2626">imports ReportPresentation</text>
+
+      <!-- Engine Admin -->
+      <rect x="380" y="120" width="160" height="56" rx="10" fill="#BE185D"/>
+      <text x="460" y="152" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">phz-engine-admin</text>
+      <text x="460" y="168" text-anchor="middle" fill="#FBCFE8" font-size="10">BI Admin Panel</text>
+      <!-- engine-admin → engine -->
+      <line x1="460" y1="176" x2="460" y2="360" stroke="#BE185D" stroke-width="2" marker-end="url(#arrow-pink)"/>
+
+      <!-- React / Vue / Angular (lightweight) -->
+      <rect x="600" y="360" width="140" height="44" rx="8" fill="#E7E5E4" stroke="#D6D3D1"/>
+      <text x="670" y="386" text-anchor="middle" fill="#57534E" font-size="12" font-weight="600">react / vue / angular</text>
+      <!-- → core -->
+      <line x1="640" y1="404" x2="540" y2="480" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- DuckDB -->
+      <rect x="740" y="360" width="120" height="44" rx="8" fill="#E7E5E4" stroke="#D6D3D1"/>
+      <text x="800" y="386" text-anchor="middle" fill="#57534E" font-size="12" font-weight="600">phz-duckdb</text>
+      <!-- → core -->
+      <line x1="770" y1="404" x2="540" y2="490" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- AI + Collab -->
+      <rect x="740" y="460" width="120" height="44" rx="8" fill="#E7E5E4" stroke="#D6D3D1"/>
+      <text x="800" y="486" text-anchor="middle" fill="#57534E" font-size="12" font-weight="600">ai / collab</text>
+      <!-- → core -->
+      <line x1="740" y1="486" x2="540" y2="500" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- Host App (top) -->
+      <rect x="200" y="20" width="520" height="56" rx="10" fill="#FAFAF9" stroke="#D6D3D1" stroke-width="2" stroke-dasharray="6,4"/>
+      <text x="460" y="48" text-anchor="middle" fill="#57534E" font-size="14" font-weight="700">Host Application</text>
+      <text x="460" y="64" text-anchor="middle" fill="#A8A29E" font-size="11">Imports whichever packages it needs</text>
+
+      <!-- Host → various -->
+      <line x1="300" y1="76" x2="100" y2="120" stroke="#D6D3D1" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="460" y1="76" x2="460" y2="120" stroke="#D6D3D1" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="600" y1="76" x2="680" y2="240" stroke="#D6D3D1" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="350" y1="76" x2="240" y2="240" stroke="#D6D3D1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrow-purple" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7C3AED"/></marker>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2563EB"/></marker>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#059669"/></marker>
+        <marker id="arrow-amber" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#D97706"/></marker>
+        <marker id="arrow-red" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#DC2626"/></marker>
+        <marker id="arrow-pink" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#BE185D"/></marker>
+        <marker id="arrow-gray" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#A8A29E"/></marker>
+        <marker id="arrow-dark" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#1C1917"/></marker>
+      </defs>
+    </svg>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#1C1917"></div>Core (zero-DOM foundation)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#7C3AED"></div>Engine (headless BI computation)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2563EB"></div>Grid (Lit rendering layer)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#059669"></div>Widgets (Lit dashboard components)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#D97706"></div>Criteria (filter UI)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#DC2626"></div>Grid Admin</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#BE185D"></div>Engine Admin</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#E7E5E4;border-color:#D6D3D1"></div>Adapters (react, vue, duckdb, ai, collab)</div>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 2: Grid + Grid Configuration                               -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d2">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">2</div>
+    <div>
+      <h2>Grid + Grid Configuration</h2>
+      <p>How <code>&lt;phz-grid&gt;</code> renders data and how <code>&lt;phz-grid-admin&gt;</code> configures it via ReportPresentation.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="460" viewBox="0 0 900 460">
+      <!-- Core -->
+      <rect x="340" y="380" width="220" height="60" rx="10" fill="#1C1917"/>
+      <text x="450" y="407" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">@phozart/phz-core</text>
+      <text x="450" y="425" text-anchor="middle" fill="#A8A29E" font-size="10">createGrid() &rarr; GridInstance</text>
+      <text x="450" y="436" text-anchor="middle" fill="#A8A29E" font-size="10">StateManager, RowModel pipeline, EventEmitter</text>
+
+      <!-- Grid Component -->
+      <rect x="60" y="180" width="280" height="140" rx="10" fill="#2563EB"/>
+      <text x="200" y="206" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">&lt;phz-grid&gt;</text>
+      <text x="200" y="225" text-anchor="middle" fill="#BFDBFE" font-size="11">Lit Web Component</text>
+      <line x1="80" y1="238" x2="320" y2="238" stroke="#3B82F6" stroke-width="0.5"/>
+      <text x="80" y="256" fill="#DBEAFE" font-size="10">columns, data, sort, filter, selection, edit</text>
+      <text x="80" y="270" fill="#DBEAFE" font-size="10">&lt;phz-toolbar&gt; search, export, density</text>
+      <text x="80" y="284" fill="#DBEAFE" font-size="10">&lt;phz-filter-popover&gt; per-column filters</text>
+      <text x="80" y="298" fill="#DBEAFE" font-size="10">&lt;phz-column-chooser&gt; show/hide columns</text>
+      <text x="80" y="312" fill="#DBEAFE" font-size="10">&lt;phz-context-menu&gt; right-click actions</text>
+      <!-- grid → core -->
+      <line x1="200" y1="320" x2="390" y2="380" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <text x="270" y="356" font-size="9" fill="#2563EB">re-exports all core types</text>
+
+      <!-- Grid Admin -->
+      <rect x="560" y="100" width="280" height="180" rx="10" fill="#DC2626"/>
+      <text x="700" y="126" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">&lt;phz-grid-admin&gt;</text>
+      <text x="700" y="145" text-anchor="middle" fill="#FCA5A5" font-size="11">Grid Configuration Panel</text>
+      <line x1="580" y1="155" x2="820" y2="155" stroke="#EF4444" stroke-width="0.5"/>
+      <text x="580" y="173" fill="#FECACA" font-size="10">&lt;phz-admin-columns&gt; column order/visibility</text>
+      <text x="580" y="187" fill="#FECACA" font-size="10">&lt;phz-admin-formatting&gt; number/color rules</text>
+      <text x="580" y="201" fill="#FECACA" font-size="10">&lt;phz-admin-filters&gt; saved filter views</text>
+      <text x="580" y="215" fill="#FECACA" font-size="10">&lt;phz-admin-theme&gt; density, font, colors</text>
+      <text x="580" y="229" fill="#FECACA" font-size="10">&lt;phz-admin-export&gt; CSV/Excel settings</text>
+      <text x="580" y="243" fill="#FECACA" font-size="10">&lt;phz-admin-options&gt; pagination, selection</text>
+      <text x="580" y="257" fill="#FECACA" font-size="10">&lt;phz-admin-table-settings&gt; master tab nav</text>
+
+      <!-- ReportPresentation -->
+      <rect x="560" y="340" width="220" height="56" rx="8" fill="#7C3AED"/>
+      <text x="670" y="365" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">ReportPresentation</text>
+      <text x="670" y="382" text-anchor="middle" fill="#DDD6FE" font-size="10">TableSettings, ColumnFormatting,</text>
+      <text x="670" y="392" text-anchor="middle" fill="#DDD6FE" font-size="10">NumberFormat, ExportSettings</text>
+
+      <!-- grid-admin emits → presentation -->
+      <path d="M700,280 L700,340" stroke="#DC2626" stroke-width="2" marker-end="url(#arrow-red)"/>
+      <text x="710" y="310" font-size="9" fill="#DC2626">emits config</text>
+
+      <!-- presentation → grid (host wires it) -->
+      <path d="M560,368 L340,300" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-purple)"/>
+      <text x="420" y="320" font-size="9" fill="#7C3AED">host applies to grid</text>
+
+      <!-- grid-admin → engine (import) -->
+      <path d="M600,280 L500,380" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)"/>
+      <text x="530" y="340" font-size="9" fill="#DC2626" transform="rotate(-30,530,340)">imports from engine</text>
+
+      <!-- Data source label -->
+      <rect x="60" y="20" width="200" height="44" rx="8" fill="#FAFAF9" stroke="#D6D3D1"/>
+      <text x="160" y="42" text-anchor="middle" fill="#57534E" font-size="12" font-weight="600">Data Source</text>
+      <text x="160" y="56" text-anchor="middle" fill="#A8A29E" font-size="10">rows: Record&lt;string, unknown&gt;[]</text>
+      <line x1="160" y1="64" x2="200" y2="180" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+    </svg>
+  </div>
+  <div class="notes">
+    <h3>Key Insight</h3>
+    <ul>
+      <li><strong>grid-admin</strong> does NOT import from <strong>grid</strong>. It imports <code>ReportPresentation</code> types from <strong>engine</strong>.</li>
+      <li>The host application is responsible for wiring admin output to the grid's properties.</li>
+      <li>Grid re-exports everything from core, so consumers only need <code>@phozart/phz-grid</code>.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 3: Filter Definition System                                -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d3">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">3</div>
+    <div>
+      <h2>Filter Definition System</h2>
+      <p>How filter definitions, rules, presets, and state management connect inside the engine's CriteriaEngine.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="520" viewBox="0 0 900 520">
+      <!-- CriteriaEngine box -->
+      <rect x="40" y="40" width="820" height="440" rx="14" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="60" y="30" font-size="14" font-weight="700" fill="#7C3AED">CriteriaEngine (engine/criteria-engine.ts)</text>
+
+      <!-- FilterRegistry -->
+      <rect x="80" y="80" width="240" height="120" rx="10" fill="#7C3AED"/>
+      <text x="200" y="106" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterRegistry</text>
+      <text x="200" y="122" text-anchor="middle" fill="#DDD6FE" font-size="10">filter-registry.ts</text>
+      <line x1="100" y1="130" x2="300" y2="130" stroke="#8B5CF6" stroke-width="0.5"/>
+      <text x="100" y="148" fill="#EDE9FE" font-size="10">FilterDefinition { id, label, type,</text>
+      <text x="100" y="162" fill="#EDE9FE" font-size="10">  dataField, options, treeOptions,</text>
+      <text x="100" y="176" fill="#EDE9FE" font-size="10">  dateRangeConfig, dependsOn, ... }</text>
+      <text x="100" y="192" fill="#EDE9FE" font-size="10">register(), get(), deprecate()</text>
+
+      <!-- FilterBindingStore -->
+      <rect x="360" y="80" width="240" height="120" rx="10" fill="#2563EB"/>
+      <text x="480" y="106" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterBindingStore</text>
+      <text x="480" y="122" text-anchor="middle" fill="#BFDBFE" font-size="10">filter-bindings.ts</text>
+      <line x1="380" y1="130" x2="580" y2="130" stroke="#3B82F6" stroke-width="0.5"/>
+      <text x="380" y="148" fill="#DBEAFE" font-size="10">FilterBinding { filterDefinitionId,</text>
+      <text x="380" y="162" fill="#DBEAFE" font-size="10">  artefactId, visible, order,</text>
+      <text x="380" y="176" fill="#DBEAFE" font-size="10">  labelOverride, defaultValueOverride,</text>
+      <text x="380" y="190" fill="#DBEAFE" font-size="10">  targetScope }</text>
+
+      <!-- Arrow: Registry → Bindings -->
+      <line x1="320" y1="140" x2="360" y2="140" stroke="#1C1917" stroke-width="2" marker-end="url(#arrow-dark)"/>
+      <text x="330" y="132" font-size="8" fill="#57534E">binds to</text>
+
+      <!-- FilterRuleEngine -->
+      <rect x="80" y="240" width="240" height="100" rx="10" fill="#D97706"/>
+      <text x="200" y="266" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterRuleEngine</text>
+      <text x="200" y="282" text-anchor="middle" fill="#FDE68A" font-size="10">filter-rules.ts</text>
+      <line x1="100" y1="290" x2="300" y2="290" stroke="#F59E0B" stroke-width="0.5"/>
+      <text x="100" y="308" fill="#FEF3C7" font-size="10">FilterRule { exclude_pattern,</text>
+      <text x="100" y="322" fill="#FEF3C7" font-size="10">  include_pattern, value_set, custom }</text>
+
+      <!-- FilterStateManager -->
+      <rect x="360" y="240" width="240" height="100" rx="10" fill="#059669"/>
+      <text x="480" y="266" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterStateManager</text>
+      <text x="480" y="282" text-anchor="middle" fill="#A7F3D0" font-size="10">filter-state.ts</text>
+      <line x1="380" y1="290" x2="580" y2="290" stroke="#10B981" stroke-width="0.5"/>
+      <text x="380" y="308" fill="#D1FAE5" font-size="10">resolveFilterValue() cascade:</text>
+      <text x="380" y="322" fill="#D1FAE5" font-size="10">rule &rarr; preset &rarr; persisted &rarr; binding &rarr; def</text>
+
+      <!-- CriteriaOutputManager -->
+      <rect x="180" y="380" width="300" height="80" rx="10" fill="#BE185D"/>
+      <text x="330" y="406" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">CriteriaOutputManager</text>
+      <text x="330" y="422" text-anchor="middle" fill="#FBCFE8" font-size="10">criteria-output.ts</text>
+      <line x1="200" y1="430" x2="460" y2="430" stroke="#DB2777" stroke-width="0.5"/>
+      <text x="200" y="448" fill="#FCE7F3" font-size="10">buildCriteria() &rarr; ArtefactCriteria { filters[], isComplete }</text>
+
+      <!-- FilterAdminService -->
+      <rect x="640" y="80" width="200" height="100" rx="10" fill="#DC2626"/>
+      <text x="740" y="106" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterAdminService</text>
+      <text x="740" y="122" text-anchor="middle" fill="#FCA5A5" font-size="10">filter-admin.ts</text>
+      <line x1="660" y1="130" x2="820" y2="130" stroke="#EF4444" stroke-width="0.5"/>
+      <text x="660" y="148" fill="#FECACA" font-size="10">CRUD definitions/bindings</text>
+      <text x="660" y="162" fill="#FECACA" font-size="10">AdminPermissions guard</text>
+      <text x="660" y="176" fill="#FECACA" font-size="10">AuditLogEntry tracking</text>
+
+      <!-- Arrows into CriteriaOutput -->
+      <line x1="200" y1="340" x2="270" y2="380" stroke="#D97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+      <line x1="480" y1="340" x2="390" y2="380" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <line x1="200" y1="200" x2="200" y2="240" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+      <line x1="480" y1="200" x2="480" y2="240" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- Admin → Registry/Bindings -->
+      <line x1="640" y1="110" x2="320" y2="110" stroke="#DC2626" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+      <line x1="640" y1="150" x2="600" y2="150" stroke="#DC2626" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+    </svg>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#7C3AED"></div>Registry: reusable filter definitions</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2563EB"></div>Bindings: attach definitions to artefacts</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#D97706"></div>Rules: constrain available options</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#059669"></div>State: value resolution cascade</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#BE185D"></div>Output: structured ArtefactCriteria</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#DC2626"></div>Admin: CRUD + permissions</div>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 4: Report Filter Binding                                   -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d4">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">4</div>
+    <div>
+      <h2>Report &amp; Dashboard Filter Binding</h2>
+      <p>How <code>FilterBinding</code> links reusable <code>FilterDefinition</code>s to reports and dashboards via <code>ArtefactId</code>.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="500" viewBox="0 0 900 500">
+      <!-- FilterDefinitions (left pool) -->
+      <rect x="40" y="60" width="200" height="200" rx="10" fill="#7C3AED"/>
+      <text x="140" y="86" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterRegistry</text>
+      <text x="140" y="102" text-anchor="middle" fill="#DDD6FE" font-size="10">Shared pool of definitions</text>
+      <line x1="60" y1="112" x2="220" y2="112" stroke="#8B5CF6" stroke-width="0.5"/>
+
+      <!-- Individual defs -->
+      <rect x="60" y="122" width="160" height="26" rx="5" fill="#6D28D9"/>
+      <text x="140" y="139" text-anchor="middle" fill="#EDE9FE" font-size="10">region (multi_select)</text>
+      <rect x="60" y="154" width="160" height="26" rx="5" fill="#6D28D9"/>
+      <text x="140" y="171" text-anchor="middle" fill="#EDE9FE" font-size="10">date_range (date_range)</text>
+      <rect x="60" y="186" width="160" height="26" rx="5" fill="#6D28D9"/>
+      <text x="140" y="203" text-anchor="middle" fill="#EDE9FE" font-size="10">product (tree_select)</text>
+      <rect x="60" y="218" width="160" height="26" rx="5" fill="#6D28D9"/>
+      <text x="140" y="235" text-anchor="middle" fill="#EDE9FE" font-size="10">status (single_select)</text>
+
+      <!-- Bindings (middle) -->
+      <rect x="310" y="20" width="280" height="60" rx="10" fill="#2563EB"/>
+      <text x="450" y="46" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">FilterBinding[]</text>
+      <text x="450" y="62" text-anchor="middle" fill="#BFDBFE" font-size="10">{ filterDefinitionId, artefactId, visible, order, overrides... }</text>
+
+      <!-- Report artefact -->
+      <rect x="620" y="60" width="240" height="120" rx="10" fill="#DC2626"/>
+      <text x="740" y="86" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">Report: "Sales Report"</text>
+      <text x="740" y="102" text-anchor="middle" fill="#FCA5A5" font-size="10">ArtefactId: report:sales-q4</text>
+      <line x1="640" y1="112" x2="840" y2="112" stroke="#EF4444" stroke-width="0.5"/>
+      <text x="640" y="130" fill="#FECACA" font-size="10">Bound filters:</text>
+      <text x="660" y="144" fill="#FECACA" font-size="10">[1] region (visible, order:0)</text>
+      <text x="660" y="158" fill="#FECACA" font-size="10">[2] date_range (visible, order:1)</text>
+      <text x="660" y="172" fill="#FECACA" font-size="10">[3] status (hidden)</text>
+
+      <!-- Dashboard artefact -->
+      <rect x="620" y="220" width="240" height="120" rx="10" fill="#059669"/>
+      <text x="740" y="246" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">Dashboard: "Ops Dashboard"</text>
+      <text x="740" y="262" text-anchor="middle" fill="#A7F3D0" font-size="10">ArtefactId: dashboard:ops-main</text>
+      <line x1="640" y1="272" x2="840" y2="272" stroke="#10B981" stroke-width="0.5"/>
+      <text x="640" y="290" fill="#D1FAE5" font-size="10">Bound filters:</text>
+      <text x="660" y="304" fill="#D1FAE5" font-size="10">[1] region (label:"Area", order:0)</text>
+      <text x="660" y="318" fill="#D1FAE5" font-size="10">[2] product (visible, order:1)</text>
+      <text x="660" y="332" fill="#D1FAE5" font-size="10">[3] date_range (default:"ytd")</text>
+
+      <!-- Binding arrows -->
+      <!-- region → report -->
+      <line x1="220" y1="135" x2="620" y2="100" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      <!-- date_range → report -->
+      <line x1="220" y1="167" x2="620" y2="115" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      <!-- status → report (dashed = hidden) -->
+      <line x1="220" y1="231" x2="620" y2="145" stroke="#2563EB" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-blue)"/>
+
+      <!-- region → dashboard -->
+      <line x1="220" y1="135" x2="620" y2="270" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <!-- product → dashboard -->
+      <line x1="220" y1="199" x2="620" y2="290" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <!-- date_range → dashboard -->
+      <line x1="220" y1="167" x2="620" y2="310" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- resolveArtefactFields output -->
+      <rect x="310" y="390" width="540" height="80" rx="10" fill="#1C1917"/>
+      <text x="580" y="416" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">resolveArtefactFields(registry, bindings, artefactId)</text>
+      <text x="580" y="436" text-anchor="middle" fill="#A8A29E" font-size="11">&darr; merges definition + binding overrides &darr;</text>
+      <text x="580" y="456" text-anchor="middle" fill="#D6D3D1" font-size="11">SelectionFieldDef[] &mdash; ready for criteria UI components</text>
+
+      <!-- Arrows down to resolve -->
+      <line x1="740" y1="180" x2="650" y2="390" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-dark)"/>
+      <line x1="740" y1="340" x2="650" y2="390" stroke="#059669" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-dark)"/>
+
+      <!-- ArtefactId bridge label -->
+      <rect x="310" y="100" width="240" height="48" rx="8" fill="#FAFAF9" stroke="#D6D3D1"/>
+      <text x="430" y="120" text-anchor="middle" fill="#57534E" font-size="11" font-weight="600">ArtefactId Bridge (engine/types.ts)</text>
+      <text x="430" y="136" text-anchor="middle" fill="#A8A29E" font-size="10">reportArtefactId() / dashboardArtefactId()</text>
+    </svg>
+  </div>
+  <div class="notes">
+    <h3>Key Points</h3>
+    <ul>
+      <li><strong>Same filter definition</strong> (e.g. "region") can be bound to multiple artefacts with <strong>different overrides</strong> (label, default, visibility).</li>
+      <li><strong>ArtefactId</strong> is a branded string with prefix: <code>report:sales-q4</code>, <code>dashboard:ops-main</code>.</li>
+      <li>Bindings are the <strong>many-to-many join table</strong> between definitions and artefacts.</li>
+      <li><strong>targetScope</strong> on bindings can further restrict to specific widgets within a dashboard.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 5: BI Engine Facade                                        -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d5">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">5</div>
+    <div>
+      <h2>BI Engine Facade</h2>
+      <p>The <code>createBIEngine()</code> facade wires together all engine sub-systems.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="480" viewBox="0 0 900 480">
+      <!-- BIEngine box -->
+      <rect x="60" y="50" width="780" height="390" rx="14" fill="none" stroke="#7C3AED" stroke-width="2"/>
+      <text x="80" y="40" font-size="14" font-weight="700" fill="#7C3AED">BIEngine (engine/engine.ts)</text>
+
+      <!-- Row 1: Registries -->
+      <rect x="90" y="80" width="140" height="56" rx="8" fill="#7C3AED"/>
+      <text x="160" y="105" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">DataProducts</text>
+      <text x="160" y="120" text-anchor="middle" fill="#DDD6FE" font-size="9">data-product.ts</text>
+
+      <rect x="250" y="80" width="120" height="56" rx="8" fill="#7C3AED"/>
+      <text x="310" y="105" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">KPIs</text>
+      <text x="310" y="120" text-anchor="middle" fill="#DDD6FE" font-size="9">kpi.ts</text>
+
+      <rect x="390" y="80" width="120" height="56" rx="8" fill="#7C3AED"/>
+      <text x="450" y="105" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">Metrics</text>
+      <text x="450" y="120" text-anchor="middle" fill="#DDD6FE" font-size="9">metric.ts</text>
+
+      <rect x="530" y="80" width="130" height="56" rx="8" fill="#DC2626"/>
+      <text x="595" y="105" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">Reports</text>
+      <text x="595" y="120" text-anchor="middle" fill="#FCA5A5" font-size="9">report.ts</text>
+
+      <rect x="680" y="80" width="140" height="56" rx="8" fill="#059669"/>
+      <text x="750" y="105" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">Dashboards</text>
+      <text x="750" y="120" text-anchor="middle" fill="#A7F3D0" font-size="9">dashboard.ts</text>
+
+      <!-- Row 2: Computation -->
+      <rect x="90" y="160" width="140" height="50" rx="8" fill="#2563EB"/>
+      <text x="160" y="185" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">Aggregation</text>
+      <text x="160" y="200" text-anchor="middle" fill="#BFDBFE" font-size="9">aggregation.ts</text>
+
+      <rect x="250" y="160" width="120" height="50" rx="8" fill="#2563EB"/>
+      <text x="310" y="185" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">Pivot</text>
+      <text x="310" y="200" text-anchor="middle" fill="#BFDBFE" font-size="9">pivot.ts</text>
+
+      <rect x="390" y="160" width="140" height="50" rx="8" fill="#2563EB"/>
+      <text x="460" y="185" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">Chart Projection</text>
+      <text x="460" y="200" text-anchor="middle" fill="#BFDBFE" font-size="9">chart-projection.ts</text>
+
+      <rect x="550" y="160" width="130" height="50" rx="8" fill="#2563EB"/>
+      <text x="615" y="185" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">Status</text>
+      <text x="615" y="200" text-anchor="middle" fill="#BFDBFE" font-size="9">status.ts</text>
+
+      <rect x="700" y="160" width="130" height="50" rx="8" fill="#2563EB"/>
+      <text x="765" y="185" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">Drill-Through</text>
+      <text x="765" y="200" text-anchor="middle" fill="#BFDBFE" font-size="9">drill-through.ts</text>
+
+      <!-- Row 3: Criteria Engine -->
+      <rect x="90" y="240" width="350" height="70" rx="8" fill="#BE185D"/>
+      <text x="265" y="268" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">CriteriaEngine</text>
+      <text x="265" y="284" text-anchor="middle" fill="#FBCFE8" font-size="10">registry + bindings + state + rules + output + admin</text>
+      <text x="265" y="298" text-anchor="middle" fill="#FBCFE8" font-size="9">(See Diagram 3 for internal breakdown)</text>
+
+      <!-- Row 3: Widget Resolver / Data Model -->
+      <rect x="470" y="240" width="180" height="70" rx="8" fill="#D97706"/>
+      <text x="560" y="268" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">Widget Resolver</text>
+      <text x="560" y="284" text-anchor="middle" fill="#FDE68A" font-size="10">widget-resolver.ts</text>
+      <text x="560" y="298" text-anchor="middle" fill="#FDE68A" font-size="9">resolveWidgetProps()</text>
+
+      <rect x="670" y="240" width="150" height="70" rx="8" fill="#D97706"/>
+      <text x="745" y="268" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">Data Model</text>
+      <text x="745" y="284" text-anchor="middle" fill="#FDE68A" font-size="10">expression-*.ts</text>
+      <text x="745" y="298" text-anchor="middle" fill="#FDE68A" font-size="9">formula, calc fields</text>
+
+      <!-- Row 4: resolve-criteria + report-service -->
+      <rect x="90" y="340" width="250" height="60" rx="8" fill="#1C1917"/>
+      <text x="215" y="366" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">resolve-criteria.ts</text>
+      <text x="215" y="384" text-anchor="middle" fill="#A8A29E" font-size="10">resolveReportCriteria() / resolveDashboardCriteria()</text>
+
+      <rect x="370" y="340" width="240" height="60" rx="8" fill="#1C1917"/>
+      <text x="490" y="366" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">report-service.ts</text>
+      <text x="490" y="384" text-anchor="middle" fill="#A8A29E" font-size="10">createReportService() / createDashboardService()</text>
+
+      <!-- Public methods -->
+      <rect x="640" y="340" width="190" height="60" rx="8" fill="#FAFAF9" stroke="#D6D3D1"/>
+      <text x="735" y="362" text-anchor="middle" fill="#57534E" font-size="11" font-weight="600">BIEngine public API</text>
+      <text x="735" y="378" text-anchor="middle" fill="#A8A29E" font-size="9">getReportFilters()</text>
+      <text x="735" y="390" text-anchor="middle" fill="#A8A29E" font-size="9">getDashboardFilters()</text>
+
+      <!-- Arrows -->
+      <line x1="340" y1="370" x2="370" y2="370" stroke="#57534E" stroke-width="1.5" marker-end="url(#arrow-dark)"/>
+      <line x1="610" y1="370" x2="640" y2="370" stroke="#57534E" stroke-width="1.5" marker-end="url(#arrow-dark)"/>
+      <line x1="265" y1="310" x2="265" y2="340" stroke="#BE185D" stroke-width="1.5" marker-end="url(#arrow-dark)"/>
+    </svg>
+  </div>
+  <div class="notes">
+    <h3>BIEngine is a single facade</h3>
+    <ul>
+      <li>Created via <code>createBIEngine(config)</code>. All sub-registries and engines are internal.</li>
+      <li><strong>Reports</strong> and <strong>Dashboards</strong> both store optional <code>criteriaConfig</code> for inline filter definitions.</li>
+      <li><strong>resolve-criteria.ts</strong> auto-hydrates inline CriteriaConfig into the registry if no bindings exist (backward compat).</li>
+      <li><strong>report-service.ts</strong> is the runtime glue that subscribes to filter changes and produces <code>GridFilterParams</code>.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 6: Dashboard + Widgets                                     -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d6">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">6</div>
+    <div>
+      <h2>Dashboard + Widgets</h2>
+      <p>How <code>&lt;phz-dashboard&gt;</code> renders widgets, and how the engine-admin configures them.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="560" viewBox="0 0 900 560">
+      <!-- Engine Admin (top) -->
+      <rect x="40" y="20" width="360" height="140" rx="10" fill="#BE185D"/>
+      <text x="220" y="46" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">&lt;phz-engine-admin&gt;</text>
+      <text x="220" y="62" text-anchor="middle" fill="#FBCFE8" font-size="10">BI Administration Panel</text>
+      <line x1="60" y1="72" x2="380" y2="72" stroke="#DB2777" stroke-width="0.5"/>
+      <text x="60" y="90" fill="#FCE7F3" font-size="10">&lt;phz-dashboard-builder&gt; layout, add/remove widgets</text>
+      <text x="60" y="104" fill="#FCE7F3" font-size="10">&lt;phz-dashboard-studio&gt; visual drag-drop editor</text>
+      <text x="60" y="118" fill="#FCE7F3" font-size="10">&lt;phz-report-designer&gt; columns, sort, grouping</text>
+      <text x="60" y="132" fill="#FCE7F3" font-size="10">&lt;phz-kpi-designer&gt; KPI definition + thresholds</text>
+      <text x="60" y="146" fill="#FCE7F3" font-size="10">&lt;phz-widget-config-panel&gt; widget data bindings</text>
+
+      <!-- DashboardConfig output -->
+      <rect x="440" y="30" width="200" height="56" rx="8" fill="#059669"/>
+      <text x="540" y="55" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">DashboardConfig</text>
+      <text x="540" y="72" text-anchor="middle" fill="#A7F3D0" font-size="10">{ layout, widgets: WidgetPlacement[] }</text>
+      <line x1="400" y1="58" x2="440" y2="58" stroke="#BE185D" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+      <!-- EnhancedDashboardConfig output -->
+      <rect x="680" y="30" width="200" height="56" rx="8" fill="#059669"/>
+      <text x="780" y="55" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">EnhancedDashboardConfig</text>
+      <text x="780" y="72" text-anchor="middle" fill="#A7F3D0" font-size="10">{ widgets, placements, globalFilters }</text>
+
+      <text x="650" y="58" text-anchor="middle" fill="#57534E" font-size="9">or</text>
+
+      <!-- WidgetPlacement detail -->
+      <rect x="440" y="110" width="440" height="56" rx="8" fill="#FAFAF9" stroke="#D6D3D1"/>
+      <text x="660" y="132" text-anchor="middle" fill="#57534E" font-size="11" font-weight="600">WidgetPlacement = { id, widgetType, config: WidgetConfig, position }</text>
+      <text x="660" y="150" text-anchor="middle" fill="#A8A29E" font-size="10">10 types: kpi-card, kpi-scorecard, bar-chart, trend-line, bottom-n, pivot-table, data-table, status-table, drill-link, custom</text>
+
+      <!-- Arrow from config to placements -->
+      <line x1="540" y1="86" x2="560" y2="110" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-dark)"/>
+
+      <!-- Widget Resolver -->
+      <rect x="200" y="200" width="280" height="56" rx="10" fill="#D97706"/>
+      <text x="340" y="226" text-anchor="middle" fill="#FAFAF9" font-size="13" font-weight="700">resolveWidgetProps(placement, ctx)</text>
+      <text x="340" y="242" text-anchor="middle" fill="#FDE68A" font-size="10">widget-resolver.ts &mdash; maps config + data &rarr; display props</text>
+      <line x1="560" y1="166" x2="400" y2="200" stroke="#D97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+
+      <!-- Raw data input -->
+      <rect x="40" y="200" width="130" height="44" rx="8" fill="#FAFAF9" stroke="#D6D3D1"/>
+      <text x="105" y="222" text-anchor="middle" fill="#57534E" font-size="11" font-weight="600">Raw Data[]</text>
+      <text x="105" y="236" text-anchor="middle" fill="#A8A29E" font-size="9">from API / DuckDB</text>
+      <line x1="170" y1="222" x2="200" y2="228" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- phz-dashboard component -->
+      <rect x="120" y="300" width="660" height="240" rx="12" fill="#2563EB"/>
+      <text x="450" y="326" text-anchor="middle" fill="#FAFAF9" font-size="15" font-weight="700">&lt;phz-dashboard&gt;</text>
+      <text x="450" y="344" text-anchor="middle" fill="#BFDBFE" font-size="10">CSS Grid layout | props: config, engine, data, selectionContext</text>
+      <line x1="140" y1="355" x2="760" y2="355" stroke="#3B82F6" stroke-width="0.5"/>
+
+      <!-- Widget slots -->
+      <rect x="150" y="370" width="130" height="80" rx="8" fill="#1E40AF"/>
+      <text x="215" y="395" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">&lt;phz-kpi-card&gt;</text>
+      <text x="215" y="415" text-anchor="middle" fill="#93C5FD" font-size="9">value, kpiDefinition</text>
+      <text x="215" y="435" text-anchor="middle" fill="#93C5FD" font-size="9">trendData, cardStyle</text>
+
+      <rect x="295" y="370" width="130" height="80" rx="8" fill="#1E40AF"/>
+      <text x="360" y="395" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">&lt;phz-bar-chart&gt;</text>
+      <text x="360" y="415" text-anchor="middle" fill="#93C5FD" font-size="9">chartData, rankOrder</text>
+      <text x="360" y="435" text-anchor="middle" fill="#93C5FD" font-size="9">maxBars</text>
+
+      <rect x="440" y="370" width="130" height="80" rx="8" fill="#1E40AF"/>
+      <text x="505" y="395" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">&lt;phz-scorecard&gt;</text>
+      <text x="505" y="415" text-anchor="middle" fill="#93C5FD" font-size="9">kpiDefinitions[]</text>
+      <text x="505" y="435" text-anchor="middle" fill="#93C5FD" font-size="9">scores[]</text>
+
+      <rect x="585" y="370" width="130" height="80" rx="8" fill="#1E40AF"/>
+      <text x="650" y="395" text-anchor="middle" fill="#FAFAF9" font-size="11" font-weight="600">&lt;phz-trend-line&gt;</text>
+      <text x="650" y="415" text-anchor="middle" fill="#93C5FD" font-size="9">chartData, target</text>
+      <text x="650" y="435" text-anchor="middle" fill="#93C5FD" font-size="9">periods</text>
+
+      <!-- phz-widget (enhanced path) -->
+      <rect x="150" y="465" width="560" height="56" rx="8" fill="#1E3A8A"/>
+      <text x="430" y="490" text-anchor="middle" fill="#FAFAF9" font-size="12" font-weight="700">&lt;phz-widget&gt; (Enhanced path)</text>
+      <text x="430" y="508" text-anchor="middle" fill="#93C5FD" font-size="10">config: EnhancedWidgetConfig | Uses processWidgetData() internally</text>
+
+      <!-- Arrow from resolver to dashboard -->
+      <line x1="340" y1="256" x2="340" y2="300" stroke="#D97706" stroke-width="2" marker-end="url(#arrow-blue)"/>
+      <text x="348" y="280" font-size="9" fill="#D97706">ResolvedWidgetProps</text>
+    </svg>
+  </div>
+  <div class="notes">
+    <h3>Two rendering paths</h3>
+    <ul>
+      <li><strong>Legacy</strong>: <code>DashboardConfig</code> &rarr; <code>resolveWidgetProps()</code> &rarr; individual widget components</li>
+      <li><strong>Enhanced</strong>: <code>EnhancedDashboardConfig</code> &rarr; <code>&lt;phz-widget&gt;</code> handles everything including <code>processWidgetData()</code></li>
+      <li><strong>engine-admin</strong> creates/edits the config objects; the host passes them to <code>&lt;phz-dashboard&gt;</code></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 7: Full Data Flow                                          -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d7">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">7</div>
+    <div>
+      <h2>Full End-to-End Data Flow</h2>
+      <p>From user interaction to data display, showing how all the pieces connect at runtime.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="700" viewBox="0 0 900 700">
+      <!-- Step 1: Admin defines -->
+      <rect x="40" y="20" width="380" height="60" rx="10" fill="#BE185D"/>
+      <text x="50" y="40" fill="#FCE7F3" font-size="10" font-weight="700">STEP 1: ADMIN DEFINES</text>
+      <text x="50" y="56" fill="#FAFAF9" font-size="12">engine-admin creates Reports, Dashboards, KPIs, Metrics</text>
+      <text x="50" y="70" fill="#FBCFE8" font-size="10">criteria admin defines FilterDefinitions + binds to artefacts</text>
+
+      <!-- Step 2: Engine loads -->
+      <rect x="460" y="20" width="400" height="60" rx="10" fill="#7C3AED"/>
+      <text x="470" y="40" fill="#EDE9FE" font-size="10" font-weight="700">STEP 2: ENGINE LOADS</text>
+      <text x="470" y="56" fill="#FAFAF9" font-size="12">createBIEngine({ initialReports, initialDashboards, ... })</text>
+      <text x="470" y="70" fill="#DDD6FE" font-size="10">Populates registries: DataProducts, KPIs, Metrics, Reports, Dashboards</text>
+
+      <line x1="420" y1="50" x2="460" y2="50" stroke="#57534E" stroke-width="2" marker-end="url(#arrow-dark)"/>
+
+      <!-- Step 3: User opens report -->
+      <rect x="40" y="120" width="380" height="80" rx="10" fill="#DC2626"/>
+      <text x="50" y="140" fill="#FECACA" font-size="10" font-weight="700">STEP 3: USER OPENS REPORT</text>
+      <text x="50" y="160" fill="#FAFAF9" font-size="12">createReportService(engine, reportId)</text>
+      <text x="50" y="176" fill="#FCA5A5" font-size="10">&rarr; engine.getReportFilters(reportId)</text>
+      <text x="50" y="190" fill="#FCA5A5" font-size="10">&rarr; resolveReportCriteria() auto-hydrates if needed</text>
+
+      <!-- Step 4: Filter fields resolved -->
+      <rect x="460" y="120" width="400" height="80" rx="10" fill="#2563EB"/>
+      <text x="470" y="140" fill="#BFDBFE" font-size="10" font-weight="700">STEP 4: FILTERS RESOLVED</text>
+      <text x="470" y="160" fill="#FAFAF9" font-size="12">CriteriaResolutionResult returned</text>
+      <text x="470" y="176" fill="#DBEAFE" font-size="10">fields: SelectionFieldDef[] (merged def + binding overrides)</text>
+      <text x="470" y="190" fill="#DBEAFE" font-size="10">source: 'registry' | 'hydrated' | 'none'</text>
+
+      <line x1="420" y1="160" x2="460" y2="160" stroke="#57534E" stroke-width="2" marker-end="url(#arrow-dark)"/>
+
+      <!-- Step 5: Criteria UI renders -->
+      <rect x="40" y="240" width="380" height="80" rx="10" fill="#D97706"/>
+      <text x="50" y="260" fill="#FDE68A" font-size="10" font-weight="700">STEP 5: CRITERIA UI</text>
+      <text x="50" y="280" fill="#FAFAF9" font-size="12">&lt;phz-criteria-bar&gt; / &lt;phz-filter-drawer&gt;</text>
+      <text x="50" y="296" fill="#FEF3C7" font-size="10">Renders fields from ReportService.getFields()</text>
+      <text x="50" y="310" fill="#FEF3C7" font-size="10">Each field type renders its specific component</text>
+
+      <!-- Step 6: User makes selection -->
+      <rect x="460" y="240" width="400" height="80" rx="10" fill="#D97706"/>
+      <text x="470" y="260" fill="#FDE68A" font-size="10" font-weight="700">STEP 6: USER SELECTS FILTERS</text>
+      <text x="470" y="280" fill="#FAFAF9" font-size="12">reportService.setValue('region', ['EMEA'])</text>
+      <text x="470" y="296" fill="#FEF3C7" font-size="10">&rarr; notify() fires all subscribers</text>
+      <text x="470" y="310" fill="#FEF3C7" font-size="10">&rarr; builds GridFilterParams { fields, values, criteria }</text>
+
+      <line x1="420" y1="280" x2="460" y2="280" stroke="#57534E" stroke-width="2" marker-end="url(#arrow-dark)"/>
+
+      <!-- Step 7: ArtefactCriteria produced -->
+      <rect x="200" y="360" width="500" height="60" rx="10" fill="#1C1917"/>
+      <text x="210" y="380" fill="#A8A29E" font-size="10" font-weight="700">STEP 7: ARTEFACT CRITERIA PRODUCED</text>
+      <text x="210" y="400" fill="#FAFAF9" font-size="12">ArtefactCriteria { artefactId, filters: FilterCriterion[], isComplete }</text>
+      <text x="210" y="414" fill="#A8A29E" font-size="10">Each FilterCriterion has: operator, value, dataField, resolvedFrom</text>
+
+      <line x1="450" y1="320" x2="450" y2="360" stroke="#57534E" stroke-width="2" marker-end="url(#arrow-dark)"/>
+
+      <!-- Step 8: Grid consumes -->
+      <rect x="40" y="460" width="380" height="80" rx="10" fill="#2563EB"/>
+      <text x="50" y="480" fill="#BFDBFE" font-size="10" font-weight="700">STEP 8a: GRID CONSUMES</text>
+      <text x="50" y="500" fill="#FAFAF9" font-size="12">&lt;phz-grid&gt; receives filtered data</text>
+      <text x="50" y="516" fill="#DBEAFE" font-size="10">Host converts ArtefactCriteria to API params or local filter</text>
+      <text x="50" y="530" fill="#DBEAFE" font-size="10">Grid re-renders with updated data through RowModel pipeline</text>
+
+      <!-- Step 8b: Dashboard consumes -->
+      <rect x="460" y="460" width="400" height="80" rx="10" fill="#059669"/>
+      <text x="470" y="480" fill="#A7F3D0" font-size="10" font-weight="700">STEP 8b: DASHBOARD CONSUMES</text>
+      <text x="470" y="500" fill="#FAFAF9" font-size="12">&lt;phz-dashboard&gt; uses same filter context</text>
+      <text x="470" y="516" fill="#D1FAE5" font-size="10">selectionContext passed to widget resolver</text>
+      <text x="470" y="530" fill="#D1FAE5" font-size="10">All widgets re-render with filtered dataset</text>
+
+      <line x1="350" y1="420" x2="230" y2="460" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+      <line x1="550" y1="420" x2="660" y2="460" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- Step 9: Display -->
+      <rect x="200" y="580" width="500" height="80" rx="10" fill="#FAFAF9" stroke="#D6D3D1" stroke-width="2"/>
+      <text x="450" y="605" text-anchor="middle" fill="#1C1917" font-size="14" font-weight="700">User Sees</text>
+      <text x="450" y="625" text-anchor="middle" fill="#57534E" font-size="11">Grid with filtered/sorted data | Dashboard with KPI cards, charts, tables</text>
+      <text x="450" y="645" text-anchor="middle" fill="#A8A29E" font-size="10">Criteria bar showing active filter selections | Export with filter metadata</text>
+
+      <line x1="230" y1="540" x2="350" y2="580" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+      <line x1="660" y1="540" x2="550" y2="580" stroke="#A8A29E" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+    </svg>
+  </div>
+</div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DIAGRAM 8: Duplication Analysis                                    -->
+<!-- ================================================================== -->
+<div class="diagram-section" id="d8">
+<div class="diagram-card">
+  <div class="diagram-header">
+    <div class="diagram-number">8</div>
+    <div>
+      <h2>Duplication &amp; Overlap Analysis</h2>
+      <p>Areas where code or concepts are duplicated across packages.</p>
+    </div>
+  </div>
+  <div class="diagram-body">
+    <svg width="900" height="600" viewBox="0 0 900 600">
+      <!-- DUP 1: ReportService vs DashboardService -->
+      <rect x="40" y="30" width="400" height="120" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <text x="60" y="55" fill="#991B1B" font-size="13" font-weight="700">DUP-1: ReportService &cong; DashboardService</text>
+      <text x="60" y="75" fill="#7F1D1D" font-size="11">report-service.ts lines 76-171 vs 187-281</text>
+      <text x="60" y="92" fill="#7F1D1D" font-size="10">createReportService() and createDashboardService() are</text>
+      <text x="60" y="106" fill="#7F1D1D" font-size="10">nearly identical (same logic, different branded ID type).</text>
+      <text x="60" y="120" fill="#991B1B" font-size="10" font-weight="600">FIX: Extract createArtefactService(engine, artefactId, resolution)</text>
+      <text x="60" y="136" fill="#7F1D1D" font-size="10">Then ReportService/DashboardService are thin wrappers.</text>
+
+      <!-- DUP 2: resolveReportCriteria vs resolveDashboardCriteria -->
+      <rect x="460" y="30" width="400" height="120" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <text x="480" y="55" fill="#991B1B" font-size="13" font-weight="700">DUP-2: resolveReportCriteria &cong; resolveDashboard...</text>
+      <text x="480" y="75" fill="#7F1D1D" font-size="11">resolve-criteria.ts lines 159-210 vs 216-263</text>
+      <text x="480" y="92" fill="#7F1D1D" font-size="10">Identical 4-case resolution logic duplicated for</text>
+      <text x="480" y="106" fill="#7F1D1D" font-size="10">report vs dashboard. Only diff: ID→ArtefactId bridge.</text>
+      <text x="480" y="120" fill="#991B1B" font-size="10" font-weight="600">FIX: Extract resolveArtefactCriteria(artId, engine, getConfig)</text>
+      <text x="480" y="136" fill="#7F1D1D" font-size="10">Public functions become one-liners.</text>
+
+      <!-- DUP 3: migrateCriteriaConfig × 3 -->
+      <rect x="40" y="180" width="400" height="120" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <text x="60" y="205" fill="#991B1B" font-size="13" font-weight="700">DUP-3: CriteriaConfig Migration &times; 3</text>
+      <text x="60" y="225" fill="#7F1D1D" font-size="11">Three places hydrate CriteriaConfig &rarr; registry+bindings:</text>
+      <text x="60" y="242" fill="#7F1D1D" font-size="10">1. filter-bindings.ts: migrateCriteriaConfig()</text>
+      <text x="60" y="256" fill="#7F1D1D" font-size="10">2. criteria-engine.ts: migrateFromCriteriaConfig()</text>
+      <text x="60" y="270" fill="#7F1D1D" font-size="10">3. resolve-criteria.ts: hydrateInlineConfig()</text>
+      <text x="60" y="286" fill="#991B1B" font-size="10" font-weight="600">FIX: Keep one canonical hydrate(), others delegate to it.</text>
+
+      <!-- DUP 4: Widget rendering paths -->
+      <rect x="460" y="180" width="400" height="120" rx="10" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
+      <text x="480" y="205" fill="#92400E" font-size="13" font-weight="700">OVERLAP-4: Two Widget Rendering Paths</text>
+      <text x="480" y="225" fill="#78350F" font-size="11">phz-dashboard.ts renderWidget() vs phz-widget.ts</text>
+      <text x="480" y="242" fill="#78350F" font-size="10">Legacy: dashboard resolves props via widget-resolver.ts</text>
+      <text x="480" y="256" fill="#78350F" font-size="10">  then renders specific components directly.</text>
+      <text x="480" y="270" fill="#78350F" font-size="10">Enhanced: dashboard uses &lt;phz-widget&gt; which re-resolves</text>
+      <text x="480" y="284" fill="#78350F" font-size="10">  internally via processWidgetData().</text>
+      <text x="480" y="298" fill="#92400E" font-size="10" font-weight="600">NOTE: Two paths exist intentionally for backward compat.</text>
+
+      <!-- DUP 5: Criteria Admin components -->
+      <rect x="40" y="330" width="400" height="120" rx="10" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
+      <text x="60" y="355" fill="#92400E" font-size="13" font-weight="700">OVERLAP-5: Criteria Admin Components</text>
+      <text x="60" y="375" fill="#78350F" font-size="11">criteria/ package has multiple overlapping admins:</text>
+      <text x="60" y="395" fill="#78350F" font-size="10">&lt;phz-criteria-admin&gt; original admin panel</text>
+      <text x="60" y="409" fill="#78350F" font-size="10">&lt;phz-filter-definition-admin&gt; registry-mode admin</text>
+      <text x="60" y="423" fill="#78350F" font-size="10">&lt;phz-filter-designer&gt; newer replacement</text>
+      <text x="60" y="437" fill="#78350F" font-size="10">&lt;phz-filter-configurator&gt; newest replacement</text>
+
+      <!-- DUP 6: criteria types in core vs engine -->
+      <rect x="460" y="330" width="400" height="120" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+      <text x="480" y="355" fill="#991B1B" font-size="13" font-weight="700">DUP-6: Filter Types Spread Across Packages</text>
+      <text x="480" y="375" fill="#7F1D1D" font-size="11">core/types/selection-context.ts: 600+ lines of types</text>
+      <text x="480" y="395" fill="#7F1D1D" font-size="10">Includes: FilterDefinition, FilterBinding, FilterRule,</text>
+      <text x="480" y="409" fill="#7F1D1D" font-size="10">ArtefactCriteria, AdminPermissions, AuditLogEntry...</text>
+      <text x="480" y="423" fill="#7F1D1D" font-size="10">These are ENGINE concepts living in CORE.</text>
+      <text x="480" y="437" fill="#991B1B" font-size="10" font-weight="600">NOTE: Originally placed in core for cross-package access.</text>
+
+      <!-- Summary -->
+      <rect x="40" y="490" width="820" height="90" rx="10" fill="#1C1917"/>
+      <text x="450" y="515" text-anchor="middle" fill="#FAFAF9" font-size="14" font-weight="700">Summary of Recommended Actions</text>
+      <text x="60" y="540" fill="#A8A29E" font-size="11">DUP-1, DUP-2: Extract shared logic from ReportService/DashboardService and resolve-criteria &mdash; reduces ~120 lines</text>
+      <text x="60" y="558" fill="#A8A29E" font-size="11">DUP-3: Consolidate three CriteriaConfig hydration paths into one canonical function &mdash; reduces ~80 lines</text>
+      <text x="60" y="576" fill="#A8A29E" font-size="11">OVERLAP-4, 5: Intentional (backward compat / evolution). Deprecate legacy path + old admin components when ready.</text>
+    </svg>
+  </div>
+  <div class="duplication-note notes">
+    <h3>Impact Assessment</h3>
+    <ul>
+      <li><strong>DUP-1 + DUP-2</strong> are the most impactful. Fixing them reduces maintenance burden and prevents the two paths from diverging.</li>
+      <li><strong>DUP-3</strong> is a correctness risk: if migration logic changes, you must update three places.</li>
+      <li><strong>DUP-6</strong> is a design trade-off (types in core for sharing). Could consider a <code>@phozart/phz-types</code> package long-term.</li>
+      <li><strong>OVERLAP-4/5</strong> are evolution artifacts. Mark the old paths as <code>@deprecated</code> in JSDoc.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  phz-grid Architecture Diagrams &mdash; Auto-generated from source analysis, 2026-03-01
+</div>
+
+</body>
+</html>

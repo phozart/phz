@@ -1,0 +1,59 @@
+{
+  "name": "@phozart/phz-workspace",
+  "version": "0.1.0",
+  "description": "Unified workspace for admin, authoring, and configuration components",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./grid-admin": { "types": "./dist/grid-admin/index.d.ts", "import": "./dist/grid-admin/index.js" },
+    "./engine-admin": { "types": "./dist/engine-admin/index.d.ts", "import": "./dist/engine-admin/index.js" },
+    "./grid-creator": { "types": "./dist/grid-creator/index.d.ts", "import": "./dist/grid-creator/index.js" },
+    "./criteria-admin": { "types": "./dist/criteria-admin/index.d.ts", "import": "./dist/criteria-admin/index.js" },
+    "./definition-ui": { "types": "./dist/definition-ui/index.d.ts", "import": "./dist/definition-ui/index.js" },
+    "./client": { "types": "./dist/client/index.d.ts", "import": "./dist/client/index.js" },
+    "./registry": { "types": "./dist/registry/index.d.ts", "import": "./dist/registry/index.js" },
+    "./schema": { "types": "./dist/schema/index.d.ts", "import": "./dist/schema/index.js" },
+    "./connectors": { "types": "./dist/adapters/remote-connector.d.ts", "import": "./dist/adapters/remote-connector.js" },
+    "./templates": { "types": "./dist/templates/index.d.ts", "import": "./dist/templates/index.js" },
+    "./layout": { "types": "./dist/layout/index.d.ts", "import": "./dist/layout/index.js" },
+    "./alerts": { "types": "./dist/alerts/index.d.ts", "import": "./dist/alerts/index.js" },
+    "./filters": { "types": "./dist/filters/index.d.ts", "import": "./dist/filters/index.js" },
+    "./explore": { "types": "./dist/explore/index.d.ts", "import": "./dist/explore/index.js" },
+    "./all": { "types": "./dist/all.d.ts", "import": "./dist/all.js" },
+    "./styles": { "types": "./dist/styles/index.d.ts", "import": "./dist/styles/index.js" },
+    "./navigation": { "types": "./dist/navigation/index.d.ts", "import": "./dist/navigation/index.js" },
+    "./local": { "types": "./dist/local/index.d.ts", "import": "./dist/local/index.js" },
+    "./authoring": { "types": "./dist/authoring/index.d.ts", "import": "./dist/authoring/index.js" }
+  },
+  "sideEffects": ["dist/all.js", "dist/phz-workspace.js", "dist/components/**/*.js", "dist/grid-admin/**/*.js", "dist/engine-admin/**/*.js", "dist/grid-creator/**/*.js", "dist/criteria-admin/**/*.js", "dist/definition-ui/**/*.js", "dist/shell/**/*.js", "dist/catalog/**/*.js", "dist/placements/**/*.js", "dist/adapters/phz-connection-editor.js", "dist/authoring/phz-*.js"],
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@phozart/phz-core": "^0.1.0",
+    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/phz-criteria": "^0.1.0",
+    "@phozart/phz-shared": "^0.1.0",
+    "lit": "^3.2.0"
+  },
+  "author": "phozart",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=20" },
+  "keywords": ["workspace", "admin", "authoring", "web-components", "lit"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phozart/phz-grid.git",
+    "directory": "packages/workspace"
+  },
+  "bugs": {
+    "url": "https://github.com/phozart/phz-grid/issues"
+  },
+  "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/workspace#readme"
+}

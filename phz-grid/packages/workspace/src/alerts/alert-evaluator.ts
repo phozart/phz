@@ -1,0 +1,160 @@
+/**
+ * @phozart/phz-workspace — Alert Evaluator (N.1)
+ *
+ * Pure functions for evaluating alert rules against current metric values.
+ * No DOM, no network, no side effects.
+ */
+
+import type {
+  AlertRule,
+  AlertCondition,
+  SimpleThreshold,
+  CompoundCondition,
+  BreachRecord,
+  BreachId,
+} from '../types.js';
+import { breachId } from '../types.js';
+
+export interface ConditionResult {
+  triggered: boolean;
+  currentValue?: number;
+  thresholdValue?: number;
+  metric?: string;
+}
+
+export interface EvaluationResult {
+  triggered: boolean;
+  breachedConditions: ConditionResult[];
+  currentValue?: number;
+  thresholdValue?: number;
+  message: string;
+}
+
+// --- Condition evaluation ---
+
+export function evaluateCondition(
+  condition: AlertCondition,
+  values: Map<string, number>,
+): ConditionResult {
+  switch (condition.kind) {
+    case 'threshold': return evaluateThreshold(condition, values);
+    case 'compound': return evaluateCompound(condition, values);
+  }
+}
+
+function evaluateThreshold(
+  cond: SimpleThreshold,
+  values: Map<string, number>,
+): ConditionResult {
+  const value = values.get(cond.metric);
+  if (value === undefined || isNaN(value)) {
+    return { triggered: false, metric: cond.metric };
+  }
+
+  let triggered: boolean;
+  switch (cond.operator) {
+    case '>': triggered = value > cond.value; break;
+    case '<': triggered = value < cond.value; break;
+    case '>=': triggered = value >= cond.value; break;
+    case '<=': triggered = value <= cond.value; break;
+    case '==': triggered = value === cond.value; break;
+    case '!=': triggered = value !== cond.value; break;
+    default: triggered = false;
+  }
+
+  return {
+    triggered,
+    currentValue: value,
+    thresholdValue: cond.value,
+    metric: cond.metric,
+  };
+}
+
+function evaluateCompound(
+  cond: CompoundCondition,
+  values: Map<string, number>,
+): ConditionResult {
+  const childResults = cond.children.map(c => evaluateCondition(c, values));
+
+  let triggered: boolean;
+  switch (cond.op) {
+    case 'AND': triggered = childResults.every(r => r.triggered); break;
+    case 'OR': triggered = childResults.some(r => r.triggered); break;
+    case 'NOT': triggered = !childResults[0]?.triggered; break;
+    default: triggered = false;
+  }
+
+  return { triggered };
+}
+
+// --- Rule evaluation ---
+
+export function evaluateRule(
+  rule: AlertRule,
+  values: Map<string, number>,
+): EvaluationResult {
+  if (!rule.enabled) {
+    return { triggered: false, breachedConditions: [], message: '' };
+  }
+
+  const result = evaluateCondition(rule.condition, values);
+
+  const breachedConditions: ConditionResult[] = [];
+  if (result.triggered) {
+    breachedConditions.push(result);
+  }
+
+  return {
+    triggered: result.triggered,
+    breachedConditions,
+    currentValue: result.currentValue,
+    thresholdValue: result.thresholdValue,
+    message: result.triggered
+      ? `${rule.name}: ${result.metric ?? 'condition'} ${result.currentValue ?? ''} breached threshold ${result.thresholdValue ?? ''}`
+      : '',
+  };
+}
+
+// --- Batch evaluation ---
+
+let breachCounter = 0;
+
+export function evaluateRules(
+  rules: AlertRule[],
+  values: Map<string, number>,
+  existingBreaches?: BreachRecord[],
+): BreachRecord[] {
+  const now = Date.now();
+  const results: BreachRecord[] = [];
+
+  for (const rule of rules) {
+    // Cooldown check
+    if (rule.cooldownMs > 0 && existingBreaches) {
+      const lastBreach = existingBreaches
+        .filter(b => b.ruleId === rule.id)
+        .sort((a, b) => b.detectedAt - a.detectedAt)[0];
+
+      if (lastBreach && (now - lastBreach.detectedAt) < rule.cooldownMs) {
+        continue;
+      }
+    }
+
+    const evaluation = evaluateRule(rule, values);
+    if (evaluation.triggered) {
+      results.push({
+        id: breachId(`breach_${now}_${++breachCounter}`),
+        ruleId: rule.id,
+        artifactId: rule.artifactId,
+        widgetId: rule.widgetId,
+        status: 'active',
+        detectedAt: now,
+        currentValue: evaluation.currentValue ?? 0,
+        thresholdValue: evaluation.thresholdValue ?? 0,
+        severity: rule.severity,
+        message: evaluation.message,
+      });
+    }
+  }
+
+  return results;
+}

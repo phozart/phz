@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Chronicle — phz-grid BI Implementation Guide | 2026-03-07</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #1c2333;
+  --bg-surface: #21262d;
+  --border: #30363d;
+  --border-accent: #58a6ff;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent: #58a6ff;
+  --accent-bg: rgba(88,166,255,0.1);
+  --success: #3fb950;
+  --success-bg: rgba(63,185,80,0.1);
+  --warning: #d29922;
+  --warning-bg: rgba(210,153,34,0.1);
+  --danger: #f85149;
+  --danger-bg: rgba(248,81,73,0.1);
+  --purple: #bc8cff;
+  --purple-bg: rgba(188,140,255,0.1);
+  --teal: #39d2c0;
+  --teal-bg: rgba(57,210,192,0.1);
+  --orange: #f0883e;
+  --orange-bg: rgba(240,136,62,0.1);
+  --pink: #f778ba;
+  --pink-bg: rgba(247,120,186,0.1);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --transition: 0.2s ease;
+}
+
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f3f4f6;
+  --bg-surface: #eaeef2;
+  --border: #d0d7de;
+  --border-accent: #0969da;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --text-dim: #8c959f;
+  --accent: #0969da;
+  --accent-bg: rgba(9,105,218,0.08);
+  --success: #1a7f37;
+  --success-bg: rgba(26,127,55,0.08);
+  --warning: #9a6700;
+  --warning-bg: rgba(154,103,0,0.08);
+  --danger: #cf222e;
+  --danger-bg: rgba(207,34,46,0.08);
+  --purple: #8250df;
+  --purple-bg: rgba(130,80,223,0.08);
+  --teal: #1b7c83;
+  --teal-bg: rgba(27,124,131,0.08);
+  --orange: #bc4c00;
+  --orange-bg: rgba(188,76,0,0.08);
+  --pink: #bf3989;
+  --pink-bg: rgba(191,57,137,0.08);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, var(--accent-bg) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, var(--purple-bg) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-block;
+  background: var(--accent-bg);
+  color: var(--accent);
+  padding: 4px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+.hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+.hero .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 720px; }
+.hero-meta {
+  display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap;
+  font-size: 13px; color: var(--text-dim);
+}
+.hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+/* Nav */
+nav {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(12px);
+}
+nav .container {
+  display: flex; gap: 0; overflow-x: auto;
+  scrollbar-width: none;
+}
+nav .container::-webkit-scrollbar { display: none; }
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition);
+}
+nav a:hover { color: var(--text); border-bottom-color: var(--border); }
+nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed; top: 12px; right: 16px; z-index: 200;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text); padding: 6px 14px; border-radius: var(--radius);
+  cursor: pointer; font-size: 13px; font-family: var(--font);
+  transition: var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent); }
+
+/* Sections */
+.section { padding: 48px 0; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title {
+  font-size: 1.4rem; font-weight: 700; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::before {
+  content: '';
+  width: 4px; height: 24px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.section-subtitle {
+  font-size: 1rem; font-weight: 600; margin: 24px 0 12px;
+  color: var(--text);
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: var(--transition);
+}
+.card:hover { border-color: var(--border-accent); }
+.card-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Code */
+pre {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-surface);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+pre code { background: none; padding: 0; }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin: 12px 0;
+}
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+}
+td { color: var(--text); }
+tr:hover td { background: var(--bg-card-hover); }
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-accent { background: var(--accent-bg); color: var(--accent); }
+.tag-success { background: var(--success-bg); color: var(--success); }
+.tag-warning { background: var(--warning-bg); color: var(--warning); }
+.tag-purple { background: var(--purple-bg); color: var(--purple); }
+.tag-teal { background: var(--teal-bg); color: var(--teal); }
+.tag-orange { background: var(--orange-bg); color: var(--orange); }
+.tag-pink { background: var(--pink-bg); color: var(--pink); }
+
+/* Grid layouts */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+
+/* Flow diagram */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+.flow-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 120px;
+}
+.flow-arrow {
+  color: var(--accent);
+  font-size: 20px;
+  padding: 0 8px;
+  font-weight: 700;
+}
+.flow-step.highlight {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Numbered steps */
+.steps { counter-reset: step-counter; }
+.step {
+  position: relative;
+  padding-left: 48px;
+  margin-bottom: 24px;
+  counter-increment: step-counter;
+}
+.step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0; top: 2px;
+  width: 32px; height: 32px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.step-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+.step-desc { font-size: 0.875rem; color: var(--text-muted); }
+
+/* Callout */
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 16px 0;
+  font-size: 0.875rem;
+}
+.callout.warn { border-left-color: var(--warning); background: var(--warning-bg); }
+.callout.danger { border-left-color: var(--danger); background: var(--danger-bg); }
+.callout.success { border-left-color: var(--success); background: var(--success-bg); }
+
+/* Layer diagram */
+.layer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 16px 0;
+}
+.layer {
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.layer .layer-pkg {
+  font-size: 11px;
+  font-weight: 400;
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.4rem; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .flow { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
+  nav a { padding: 10px 12px; font-size: 12px; }
+}
+
+/* Print */
+@media print {
+  nav, .theme-toggle { display: none; }
+  .section { page-break-inside: avoid; }
+  body { background: #fff; color: #000; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">Chronicle Entry</div>
+    <h1>BI Implementation Guide</h1>
+    <p class="subtitle">
+      Complete reference for developers and AI coding assistants on how to implement
+      reports, dashboards, KPIs, and widgets using the phz-grid BI stack.
+    </p>
+    <div class="hero-meta">
+      <span>Date: 2026-03-07</span>
+      <span>Type: System Review &amp; Implementation Guide</span>
+      <span>Packages: 7 (engine, widgets, criteria, definitions, grid-admin, engine-admin, grid-creator)</span>
+      <span>Version: 0.1.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#packages">Packages</a>
+    <a href="#report-guide">Build a Report</a>
+    <a href="#dashboard-guide">Build a Dashboard</a>
+    <a href="#kpi-guide">Build KPIs</a>
+    <a href="#filter-guide">Filters</a>
+    <a href="#admin-guide">Admin Panels</a>
+    <a href="#types">Key Types</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#pitfalls">Pitfalls</a>
+  </div>
+</nav>
+
+<!-- Section: Overview -->
+<section class="section" id="overview">
+  <div class="container">
+    <h2 class="section-title">System Overview</h2>
+    <p class="card-desc" style="max-width:800px;margin-bottom:24px;">
+      The phz-grid BI stack is a modular, headless system for building reports, dashboards,
+      and analytics UIs. It separates computation (engine) from rendering (widgets) and
+      configuration (definitions, admin). Everything is TypeScript, ESM-only, and framework-agnostic
+      via Web Components (Lit v3).
+    </p>
+
+    <div class="layer-stack">
+      <div class="layer" style="background:var(--pink-bg);color:var(--pink);">
+        UI Layer: grid-admin, engine-admin, grid-creator, criteria
+        <span class="layer-pkg">Admin panels, wizards, filter UI</span>
+      </div>
+      <div class="layer" style="background:var(--purple-bg);color:var(--purple);">
+        Rendering Layer: widgets (20+ components)
+        <span class="layer-pkg">KPI cards, charts, gauges, dashboards</span>
+      </div>
+      <div class="layer" style="background:var(--accent-bg);color:var(--accent);">
+        Computation Layer: engine (BIEngine facade)
+        <span class="layer-pkg">Aggregation, pivot, expressions, status, drill-through</span>
+      </div>
+      <div class="layer" style="background:var(--teal-bg);color:var(--teal);">
+        Serialization Layer: definitions
+        <span class="layer-pkg">GridDefinition, stores, converters, Zod validation</span>
+      </div>
+      <div class="layer" style="background:var(--success-bg);color:var(--success);">
+        Core Layer: core (headless grid engine)
+        <span class="layer-pkg">State, events, types, views, row model</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Key principle:</strong> The engine is pure computation with zero DOM dependencies.
+      It runs in Node.js, Web Workers, or the browser. Widgets are Lit Web Components that
+      consume engine output. Admin panels are separate packages that configure engine artifacts.
+    </div>
+  </div>
+</section>
+
+<!-- Section: Architecture -->
+<section class="section" id="architecture">
+  <div class="container">
+    <h2 class="section-title">Architecture &amp; Data Flow</h2>
+
+    <h3 class="section-subtitle">Data Flow: Report</h3>
+    <div class="flow">
+      <div class="flow-step">Data Source</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">ReportConfig</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step highlight">BIEngine</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">toGridConfig()</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">createGrid()</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">&lt;phz-grid&gt;</div>
+    </div>
+
+    <h3 class="section-subtitle">Data Flow: Dashboard</h3>
+    <div class="flow">
+      <div class="flow-step">Data Source</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">DashboardConfig</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step highlight">BIEngine</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">resolveWidgetProps()</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">&lt;phz-dashboard&gt;</div>
+    </div>
+
+    <h3 class="section-subtitle">Data Flow: KPI</h3>
+    <div class="flow">
+      <div class="flow-step">KPIDefinition</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">KPIScoreResponse</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step highlight">computeStatus()</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">StatusResult</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">&lt;phz-kpi-card&gt;</div>
+    </div>
+
+    <h3 class="section-subtitle">Filter Integration (Option D &mdash; Pragmatic Hybrid)</h3>
+    <div class="card">
+      <p class="card-desc">Two entry points, one unified system:</p>
+      <table>
+        <thead><tr><th>Mode</th><th>How</th><th>When</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-accent">Inline</span></td>
+            <td><code>reportConfig.criteriaConfig</code> passed directly</td>
+            <td>Simple cases, developer-defined filters</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">Registry</span></td>
+            <td><code>FilterRegistry</code> + <code>FilterBindingStore</code></td>
+            <td>Admin-managed, reusable filter definitions</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-teal">Auto-Hydration</span></td>
+            <td>Inline config auto-registers into registry on load</td>
+            <td>Backward compatibility; engine handles automatically</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="card-desc" style="margin-top:12px;">
+        Resolution order: Registry bindings (if exist) &rarr; Auto-hydrated inline &rarr; Empty.
+        Divergence detection alerts if both inline and registry exist but differ.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Packages -->
+<section class="section" id="packages">
+  <div class="container">
+    <h2 class="section-title">Package Inventory (BI Stack)</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="tag tag-accent">engine</span> @phozart/phz-engine</div>
+        <div class="card-desc">
+          Headless BI computation engine. 100+ exports: BIEngine facade, KPI/metric registries,
+          aggregation, pivot, chart projection, expression compiler (5-layer DAG), filter system
+          (CriteriaEngine), drill-through, window functions, anomaly detection, config layering.
+          <br><br><strong>Key file:</strong> <code>packages/engine/src/engine.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-purple">widgets</span> @phozart/phz-widgets</div>
+        <div class="card-desc">
+          20+ Lit Web Components for dashboards. KPI card, scorecard, gauge, bar/line/area/pie/
+          scatter/heatmap/waterfall/funnel charts, trend-line, bottom-N, status table, drill-link,
+          query builder, export menu. SVG-based (no D3). 3 built-in themes.
+          <br><br><strong>Key file:</strong> <code>packages/widgets/src/components/phz-dashboard.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-teal">criteria</span> @phozart/phz-criteria</div>
+        <div class="card-desc">
+          Selection criteria and filter UI. Bar + drawer paradigm, panel variant. Field types:
+          date-range, tree-select, chip-select, numeric-range, searchable-dropdown, field-presence.
+          Admin: filter designer, rule manager, preset manager, binding configurator.
+          <br><br><strong>Key file:</strong> <code>packages/criteria/src/components/phz-selection-criteria.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-orange">definitions</span> @phozart/phz-definitions</div>
+        <div class="card-desc">
+          Serializable grid blueprints with Zod validation. GridDefinition type with data sources
+          (local, URL, data-product, DuckDB-query). Converters: gridConfigToDefinition() &harr;
+          definitionToGridConfig(). Stores: in-memory, localStorage. Migration system.
+          <br><br><strong>Key file:</strong> <code>packages/definitions/src/types/grid-definition.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-pink">grid-admin</span> @phozart/phz-grid-admin</div>
+        <div class="card-desc">
+          Visual configuration admin panel. Tabs: table settings, columns (dual-list picker),
+          conditional formatting, filters/presets, export (CSV/Excel), theme, views, data source,
+          criteria bindings. Emits granular events. getSettings()/setSettings() API.
+          <br><br><strong>Key file:</strong> <code>packages/grid-admin/src/components/phz-grid-admin.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-warning">engine-admin</span> @phozart/phz-engine-admin</div>
+        <div class="card-desc">
+          BI artifact designers. 13+ components: ReportDesigner (6-step), KPIDesigner (6-step),
+          DashboardBuilder (3-panel canvas), MetricBuilder, PivotDesigner, FilterStudio,
+          ExpressionBuilder, DataBrowser. SaveController (state machine), UndoController, drag-drop.
+          <br><br><strong>Key file:</strong> <code>packages/engine-admin/src/components/phz-engine-admin.ts</code>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-success">grid-creator</span> @phozart/phz-grid-creator</div>
+        <div class="card-desc">
+          5-step wizard: Report Identity &rarr; Data Source &rarr; Column Selection &rarr;
+          Configuration &rarr; Review &amp; Create. Pure functional state machine. Emits
+          <code>grid-definition-create</code> event with CreatePayload. Steps 1-3 are placeholder stubs.
+          <br><br><strong>Key file:</strong> <code>packages/grid-creator/src/wizard-state.ts</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Build a Report -->
+<section class="section" id="report-guide">
+  <div class="container">
+    <h2 class="section-title">How To: Build a Report</h2>
+    <p class="card-desc" style="margin-bottom:24px;">
+      A report in phz-grid is a configured data view with columns, sorting, filtering,
+      aggregation, conditional formatting, and optional drill-through navigation.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-title">Create the BI Engine</div>
+        <div class="step-desc">Initialize the engine facade. All registries are created internally.</div>
+        <pre><code>import { createBIEngine } from '@phozart/phz-engine';
+
+const engine = createBIEngine({
+  // Optional: pre-load data
+  initialDataProducts: [myDataProduct],
+  // Optional: custom compute backend (default: JS)
+  // computeBackend: myDuckDBBackend,
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Register Data Products</div>
+        <div class="step-desc">Data products define the schema and source of your data.</div>
+        <pre><code>engine.dataProducts.register({
+  id: dataProductId('sales'),
+  name: 'Sales Data',
+  fields: [
+    { name: 'region', type: 'string' },
+    { name: 'revenue', type: 'number' },
+    { name: 'date', type: 'date' },
+  ],
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Create a Report Configuration</div>
+        <div class="step-desc">
+          Define columns, sorting, filtering, and optional aggregation.
+          Use <code>reports.createBlank()</code> for a starter config.
+        </div>
+        <pre><code>const report = engine.reports.createBlank('Sales by Region');
+report.dataProductId = dataProductId('sales');
+report.columns = [
+  { field: 'region', header: 'Region', visible: true },
+  { field: 'revenue', header: 'Revenue', width: 150, visible: true },
+  { field: 'date', header: 'Date', visible: true },
+];
+report.sort = { field: 'revenue', direction: 'desc' };
+report.aggregation = {
+  fields: [
+    { field: 'revenue', functions: ['sum', 'avg'] },
+  ],
+};
+report.conditionalFormatting = [
+  {
+    field: 'revenue',
+    rules: [
+      { condition: 'greaterThan', value: 100000,
+        style: { backgroundColor: '#dcfce7' } },
+    ],
+  },
+];
+
+engine.reports.save(report);</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Convert to Grid Config &amp; Render</div>
+        <div class="step-desc">
+          Use <code>toGridConfig()</code> to produce a config compatible with <code>createGrid()</code>.
+        </div>
+        <pre><code>import { createGrid } from '@phozart/phz-core';
+
+const gridConfig = engine.reports.toGridConfig(report);
+// gridConfig = { columns, sort, filter, presentation }
+
+const grid = createGrid({
+  columns: gridConfig.columns,
+  data: myRawData,
+  initialState: {
+    sort: gridConfig.sort,
+    filter: gridConfig.filter,
+  },
+});
+
+// Bind to &lt;phz-grid&gt; element
+const el = document.querySelector('phz-grid');
+el.gridApi = grid;</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Add Filters (Optional)</div>
+        <div class="step-desc">
+          Use the ReportService for managed filter state with auto-resolution.
+        </div>
+        <pre><code>import { createReportService } from '@phozart/phz-engine';
+
+const reportService = createReportService(engine, report.id);
+const fields = reportService.getFields();       // SelectionFieldDef[]
+const params = reportService.getFilterParams();  // GridFilterParams
+
+// Apply filters programmatically
+reportService.setValue('region', ['US', 'CA']);
+
+// Subscribe to filter changes
+reportService.subscribe((filterParams) => {
+  // Re-query or re-filter data
+  grid.setState({ filter: filterParams.criteria });
+});
+
+// Connect to criteria UI
+const criteriaEl = document.querySelector('phz-selection-criteria');
+criteriaEl.config = { fields };
+criteriaEl.addEventListener('criteria-apply', (e) => {
+  reportService.setValues(e.detail.context);
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Persist with Definitions (Optional)</div>
+        <div class="step-desc">
+          Serialize the report to a GridDefinition for storage/sharing.
+        </div>
+        <pre><code>import { gridConfigToDefinition, exportDefinition,
+  createLocalStorageStore } from '@phozart/phz-definitions';
+
+const def = gridConfigToDefinition(gridConfig, {
+  name: 'Sales by Region',
+  description: 'Regional revenue report',
+});
+
+// Export as JSON
+const json = exportDefinition(def);
+
+// Or persist to store
+const store = createLocalStorageStore();
+store.save(def);</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Build a Dashboard -->
+<section class="section" id="dashboard-guide">
+  <div class="container">
+    <h2 class="section-title">How To: Build a Dashboard</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-title">Define Widget Placements</div>
+        <div class="step-desc">
+          Dashboards use a 12-column CSS grid. Each widget has position (row, col) and
+          size (rowSpan, colSpan).
+        </div>
+        <pre><code>const dashboardConfig = {
+  id: dashboardId('sales-ops'),
+  name: 'Sales Operations',
+  layout: { columns: 12, rowHeight: 80, gap: 16, responsive: true },
+  widgets: [
+    {
+      id: widgetId('revenue-kpi'),
+      type: 'kpi-card',
+      title: 'Total Revenue',
+      position: { row: 0, col: 0 },
+      size: { colSpan: 3, rowSpan: 2 },
+      kpiId: kpiId('total-revenue'),
+      cardStyle: 'expanded',
+    },
+    {
+      id: widgetId('region-chart'),
+      type: 'bar-chart',
+      title: 'Revenue by Region',
+      position: { row: 0, col: 3 },
+      size: { colSpan: 9, rowSpan: 4 },
+      dataProductId: dataProductId('sales'),
+      metricField: 'revenue',
+      dimension: 'region',
+      rankOrder: 'desc',
+    },
+    {
+      id: widgetId('trend'),
+      type: 'trend-line',
+      title: 'Revenue Trend',
+      position: { row: 4, col: 0 },
+      size: { colSpan: 6, rowSpan: 3 },
+      dataProductId: dataProductId('sales'),
+      metricField: 'revenue',
+      periods: 12,
+      showTarget: true,
+    },
+    {
+      id: widgetId('bottom-5'),
+      type: 'bottom-n',
+      title: 'Bottom 5 Regions',
+      position: { row: 4, col: 6 },
+      size: { colSpan: 6, rowSpan: 3 },
+      dataProductId: dataProductId('sales'),
+      dimension: 'region',
+      metricField: 'revenue',
+      n: 5,
+      direction: 'bottom',
+    },
+  ],
+  autoRefreshInterval: 300000, // 5 minutes
+};
+
+engine.dashboards.save(dashboardConfig);</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Render with &lt;phz-dashboard&gt;</div>
+        <div class="step-desc">
+          The dashboard component resolves widget types and renders them in a CSS Grid layout.
+        </div>
+        <pre><code>import '@phozart/phz-widgets';
+import { applyTheme, darkTheme } from '@phozart/phz-widgets';
+
+const dashboard = document.querySelector('phz-dashboard');
+dashboard.config = dashboardConfig;
+dashboard.engine = engine;
+dashboard.data = myRawData;
+
+// Apply theme
+applyTheme(dashboard, darkTheme);
+
+// Listen for drill-through events
+dashboard.addEventListener('drill-through', (e) => {
+  const { source, xValue, value } = e.detail;
+  // Navigate to detail report with context
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Add Global Filters (Enhanced Dashboard)</div>
+        <div class="step-desc">
+          Use EnhancedDashboardConfig for global filters that scope to specific widgets.
+        </div>
+        <pre><code>import { upgradeDashboardConfig } from '@phozart/phz-engine';
+
+const enhanced = upgradeDashboardConfig(dashboardConfig);
+enhanced.globalFilters = [
+  {
+    id: 'region-filter',
+    label: 'Region',
+    type: 'multi_select',
+    field: 'region',
+    options: ['US', 'EU', 'APAC'],
+    widgetScope: ['region-chart', 'bottom-5'], // only affects these
+  },
+];
+enhanced.theme = 'dark';</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Standalone Widget Rendering</div>
+        <div class="step-desc">
+          Use <code>&lt;phz-widget&gt;</code> to render a single widget outside a dashboard context.
+        </div>
+        <pre><code>&lt;phz-widget
+  .config=${{ type: 'bar-chart', dataProductId: 'sales', ... }}
+  .data=${myData}
+  .engine=${engine}
+&gt;&lt;/phz-widget&gt;</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Individual Widget Components</div>
+        <div class="step-desc">
+          For maximum control, use individual widget components directly.
+        </div>
+        <pre><code>// KPI Card
+&lt;phz-kpi-card
+  .kpiDefinition=${{ id: 'rev', name: 'Revenue', unit: 'currency', target: 100000 }}
+  .value=${85000}
+  .previousValue=${80000}
+  .trendData=${[75000, 78000, 82000, 85000]}
+  .cardStyle=${'expanded'}
+&gt;&lt;/phz-kpi-card&gt;
+
+// Bar Chart
+&lt;phz-bar-chart
+  .data=${{ field: 'sales', label: 'Sales', data: chartData }}
+  .maxBars=${10}
+  .rankOrder=${'desc'}
+  .mode=${'grouped'}
+&gt;&lt;/phz-bar-chart&gt;
+
+// Gauge
+&lt;phz-gauge
+  .value=${73}
+  .min=${0}
+  .max=${100}
+  .thresholds=${[
+    { value: 50, color: '#DC2626', label: 'Critical' },
+    { value: 75, color: '#D97706', label: 'Warning' },
+    { value: 100, color: '#16A34A', label: 'Good' },
+  ]}
+  .label=${'Uptime'}
+  .unit=${'%'}
+&gt;&lt;/phz-gauge&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: KPI Guide -->
+<section class="section" id="kpi-guide">
+  <div class="container">
+    <h2 class="section-title">How To: Define KPIs</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-title">Register a KPI Definition</div>
+        <div class="step-desc">
+          KPIs have targets, thresholds, direction, breakdowns, and optional alerts.
+        </div>
+        <pre><code>engine.kpis.register({
+  id: kpiId('total-revenue'),
+  name: 'Total Revenue',
+  description: 'Monthly recurring revenue across all products',
+  category: 'Financial',
+  target: 1000000,
+  unit: 'currency',
+  unitLabel: 'USD',
+  direction: 'higher_is_better',
+  thresholds: { ok: 90, warn: 70 }, // percentage of target
+  deltaComparison: 'previous_period',
+  dimensions: ['region', 'product'],
+  breakdowns: [
+    { id: 'us', label: 'United States', targetOverride: 500000 },
+    { id: 'eu', label: 'Europe', targetOverride: 300000 },
+    { id: 'apac', label: 'APAC', targetOverride: 200000 },
+  ],
+  sparkline: { enabled: true, periods: 6 },
+  defaultCardStyle: 'expanded',
+  dataSource: {
+    scoreEndpoint: '/api/kpi/revenue/score',
+    trendEndpoint: '/api/kpi/revenue/trend',
+    breakdownEndpoint: '/api/kpi/revenue/breakdown',
+  },
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Compute Status &amp; Delta</div>
+        <div class="step-desc">
+          Use the status engine to classify KPI values against thresholds.
+        </div>
+        <pre><code>const kpi = engine.kpis.get(kpiId('total-revenue'));
+
+// Status classification
+const status = engine.status.compute(850000, kpi);
+// { status: 'ok'|'warn'|'crit'|'unknown', value, threshold, percentage }
+
+// Delta computation
+const delta = engine.status.computeDelta(850000, 780000, kpi);
+// { value: 70000, percentage: 8.97, direction: 'improving', unit: 'USD' }
+
+// Full score classification
+const score = { kpiId: 'total-revenue', value: 850000, previousValue: 780000 };
+const classified = engine.status.classify(score, kpi);
+// { status, delta, breakdowns: [...] }</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Register Metrics (Calculated Values)</div>
+        <div class="step-desc">
+          Metrics are named calculations. They support simple, conditional, composite, and expression formulas.
+        </div>
+        <pre><code>// Simple metric
+engine.metrics.register({
+  id: metricId('avg-deal-size'),
+  name: 'Average Deal Size',
+  dataProductId: dataProductId('sales'),
+  formula: { type: 'simple', field: 'deal_value', aggregation: 'avg' },
+});
+
+// Composite metric (combines others)
+engine.metrics.register({
+  id: metricId('revenue-per-rep'),
+  name: 'Revenue per Rep',
+  dataProductId: dataProductId('sales'),
+  formula: {
+    type: 'composite',
+    expression: '{total-revenue} / {rep-count}',
+    fields: [metricId('total-revenue'), metricId('rep-count')],
+  },
+});</code></pre>
+      </div>
+
+      <div class="step">
+        <div class="step-title">Scorecard &amp; Status Table</div>
+        <div class="step-desc">
+          Display multiple KPIs at once with scorecard or status table widgets.
+        </div>
+        <pre><code>// Scorecard widget in dashboard
+{
+  type: 'kpi-scorecard',
+  kpis: [kpiId('total-revenue'), kpiId('deal-count'), kpiId('win-rate')],
+  breakdowns: ['region'],
+  expandable: true,
+}
+
+// Status table widget
+{
+  type: 'status-table',
+  entityDimension: 'sales_rep',
+  kpis: [kpiId('quota-attainment'), kpiId('pipeline-coverage')],
+  showAlertBadges: true,
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Filter Guide -->
+<section class="section" id="filter-guide">
+  <div class="container">
+    <h2 class="section-title">Filter Integration</h2>
+
+    <h3 class="section-subtitle">Architecture: Two Systems, One API</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="tag tag-accent">System A: Inline Config</span></div>
+        <div class="card-desc">
+          <code>criteriaConfig</code> on ReportConfig or DashboardConfig. Developer writes filter
+          definitions directly. Simple, code-first approach.
+        </div>
+        <pre><code>report.criteriaConfig = {
+  fields: [
+    { id: 'region', label: 'Region',
+      type: 'multi_select',
+      options: [...] },
+    { id: 'date', label: 'Date Range',
+      type: 'date_range' },
+  ],
+};</code></pre>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="tag tag-purple">System B: Filter Registry</span></div>
+        <div class="card-desc">
+          Admin-managed, reusable definitions stored in <code>FilterRegistry</code> and bound
+          to artefacts via <code>FilterBindingStore</code>. Enterprise-grade.
+        </div>
+        <pre><code>// Register reusable definition
+engine.criteria.registry.register({
+  id: 'region-filter',
+  label: 'Region',
+  type: 'multi_select',
+  dataField: 'region',
+  options: [...],
+});
+// Bind to report
+engine.criteria.bindings.bind({
+  filterDefinitionId: 'region-filter',
+  artefactId: reportArtefactId(report.id),
+  order: 1,
+  visible: true,
+});</code></pre>
+      </div>
+    </div>
+
+    <h3 class="section-subtitle">Criteria UI Components</h3>
+    <table>
+      <thead>
+        <tr><th>Component</th><th>Tag</th><th>Use Case</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SelectionCriteria</td>
+          <td><code>&lt;phz-selection-criteria&gt;</code></td>
+          <td>Full bar + slide-out drawer paradigm (recommended)</td>
+        </tr>
+        <tr>
+          <td>CriteriaPanel</td>
+          <td><code>&lt;phz-criteria-panel&gt;</code></td>
+          <td>Simple inline panel with fields grid</td>
+        </tr>
+        <tr>
+          <td>CriteriaBar</td>
+          <td><code>&lt;phz-criteria-bar&gt;</code></td>
+          <td>Horizontal summary bar with filter tags</td>
+        </tr>
+        <tr>
+          <td>FilterDrawer</td>
+          <td><code>&lt;phz-filter-drawer&gt;</code></td>
+          <td>Right-side slide-out panel (520px, resizable)</td>
+        </tr>
+        <tr>
+          <td>FilterDesigner</td>
+          <td><code>&lt;phz-filter-designer&gt;</code></td>
+          <td>Admin: definition + rule + preset management</td>
+        </tr>
+        <tr>
+          <td>FilterConfigurator</td>
+          <td><code>&lt;phz-filter-configurator&gt;</code></td>
+          <td>Admin: bind definitions to specific artefacts</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-subtitle">Field Types</h3>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">date_range</div>
+        <div class="card-desc">Calendar + quick presets (Relative, Rolling, To Date). Fiscal calendar, week numbering, granularity tabs.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">tree_select</div>
+        <div class="card-desc">Hierarchical multi-select with tri-state checkboxes, search, expand-to-modal.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">chip_group / multi_select</div>
+        <div class="card-desc">Pill-based toggleable options. Single or multi mode.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">single_select</div>
+        <div class="card-desc">Native &lt;select&gt; dropdown.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">numeric_range</div>
+        <div class="card-desc">Min/max inputs + slider. Unit display, step control.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">search</div>
+        <div class="card-desc">Type-ahead with debounce, min chars, match mode.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">field_presence</div>
+        <div class="card-desc">Filter by has_value / empty / any. Pill interface.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">text</div>
+        <div class="card-desc">Free-text input.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Admin Panels -->
+<section class="section" id="admin-guide">
+  <div class="container">
+    <h2 class="section-title">Admin Panels</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="tag tag-pink">PhzGridAdmin</span> Grid Visual Config</div>
+        <div class="card-desc">
+          <strong>Tabs:</strong> Table Settings | Columns | Formatting | Filters | Export | Theme | Views | Data Source | Criteria
+          <br><br>
+          <strong>API:</strong>
+        </div>
+        <pre><code>const admin = document.querySelector('phz-grid-admin');
+admin.open = true;
+admin.reportId = 'my-report';
+admin.columns = myColumns;
+
+// Get bundled settings
+const settings = admin.getSettings();
+// Returns ReportPresentation object
+
+// Hydrate from saved
+admin.setSettings(savedPresentation);
+
+// Listen for auto-save
+admin.addEventListener('settings-auto-save', (e) => {
+  persist(e.detail.settings);
+});</code></pre>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="tag tag-warning">PhzEngineAdmin</span> BI Artifact Designers</div>
+        <div class="card-desc">
+          <strong>Tabs:</strong> Reports | Dashboards | KPIs | Metrics | Data Products | Filters
+          <br><br>
+          <strong>Designers:</strong>
+        </div>
+        <pre><code>// Report Designer (6 steps)
+// Data Product -> Columns -> Filters/Sort ->
+// Aggregation -> Drill-Through -> Review
+
+// KPI Designer (6 steps)
+// Identity -> Measurement -> Thresholds ->
+// Comparison -> Visualization -> Preview
+
+// Dashboard Builder (3 panels)
+// Widget Catalog | Grid Canvas (12-col) |
+// Widget Config Sidebar
+
+// Each emits save events:
+admin.addEventListener('report-save', ...);
+admin.addEventListener('kpi-save', ...);
+admin.addEventListener('dashboard-save', ...);</code></pre>
+      </div>
+    </div>
+
+    <h3 class="section-subtitle">SaveController Pattern</h3>
+    <div class="card">
+      <div class="card-desc">
+        Reusable Lit ReactiveController for managing async save state across admin components.
+      </div>
+      <pre><code>import { SaveController } from '@phozart/phz-engine-admin';
+
+// States: 'idle' -> 'saving' -> 'saved' (auto-dismiss 3s) -> 'idle'
+//                            -> 'error' (manual dismiss/retry)
+
+class MyAdmin extends LitElement {
+  private save = new SaveController(this);
+
+  async handleSave() {
+    await this.save.save(async () => {
+      await api.persist(this.getConfig());
+    });
+  }
+
+  render() {
+    return html`
+      &lt;phz-save-indicator .state=${this.save.state}&gt;&lt;/phz-save-indicator&gt;
+      &lt;button @click=${this.handleSave}
+              ?disabled=${this.save.state === 'saving'}&gt;Save&lt;/button&gt;
+    `;
+  }
+}</code></pre>
+    </div>
+
+    <h3 class="section-subtitle">Grid Creator Wizard</h3>
+    <div class="flow">
+      <div class="flow-step">Report Identity</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">Data Source</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">Column Selection</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">Configuration</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step highlight">Review &amp; Create</div>
+    </div>
+    <pre><code>&lt;phz-grid-creator
+  .open=${true}
+  @grid-definition-create=${(e) => {
+    const payload = e.detail; // { name, description, dataProductId, columns, config }
+    // Store, convert to GridDefinition, or pass to createGrid()
+  }}
+  @wizard-cancel=${() => { /* handle close */ }}
+&gt;&lt;/phz-grid-creator&gt;</code></pre>
+  </div>
+</section>
+
+<!-- Section: Key Types -->
+<section class="section" id="types">
+  <div class="container">
+    <h2 class="section-title">Key Types Reference</h2>
+
+    <h3 class="section-subtitle">Engine Types</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Package</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>BIEngine</code></td><td>engine</td><td>Main facade interface (registries, compute, status, filters)</td></tr>
+        <tr><td><code>ReportConfig</code></td><td>engine</td><td>Report definition (columns, sort, filter, aggregation, pivot)</td></tr>
+        <tr><td><code>DashboardConfig</code></td><td>engine</td><td>Dashboard layout + widget placements</td></tr>
+        <tr><td><code>EnhancedDashboardConfig</code></td><td>engine</td><td>V2 with global filters, themes, enhanced widgets</td></tr>
+        <tr><td><code>KPIDefinition</code></td><td>engine</td><td>KPI target, thresholds, direction, breakdowns, alerts</td></tr>
+        <tr><td><code>MetricDefinition</code></td><td>engine</td><td>Named calculation (simple/conditional/composite/expression)</td></tr>
+        <tr><td><code>WidgetConfig</code></td><td>engine</td><td>Union of all 10 widget type configs</td></tr>
+        <tr><td><code>StatusResult</code></td><td>engine</td><td>ok/warn/crit/unknown + value + threshold + percentage</td></tr>
+        <tr><td><code>AggregationConfig</code></td><td>engine</td><td>Fields + aggregation functions (sum, avg, min, max, count)</td></tr>
+        <tr><td><code>PivotConfig</code></td><td>engine</td><td>rowFields, columnFields, valueField, aggregation</td></tr>
+        <tr><td><code>ExpressionNode</code></td><td>engine</td><td>AST for the 5-layer expression system</td></tr>
+        <tr><td><code>CriteriaEngine</code></td><td>engine</td><td>Unified filter facade (registry, bindings, state, rules, output)</td></tr>
+        <tr><td><code>ReportPresentation</code></td><td>engine</td><td>Visual styling bundle (from grid-admin)</td></tr>
+        <tr><td><code>ComputeBackend</code></td><td>engine</td><td>Pluggable computation strategy (JS, DuckDB, server)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-subtitle">Definition Types</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Package</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>GridDefinition</code></td><td>definitions</td><td>Root serializable type (columns, data source, defaults, behavior, views, access)</td></tr>
+        <tr><td><code>DefinitionColumnSpec</code></td><td>definitions</td><td>Serializable column (no functions, JSON-safe)</td></tr>
+        <tr><td><code>DefinitionDataSource</code></td><td>definitions</td><td>Union: local | url | data-product | duckdb-query</td></tr>
+        <tr><td><code>DefinitionStore</code></td><td>definitions</td><td>Interface: save/load/list/delete/duplicate/clear</td></tr>
+        <tr><td><code>DefinitionEnvelope</code></td><td>definitions</td><td>JSON export wrapper with format + version + timestamp</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-subtitle">Widget Types</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Tag</th><th>Config Fields</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>kpi-card</td><td><code>&lt;phz-kpi-card&gt;</code></td><td>kpiId, cardStyle (compact/expanded/minimal)</td></tr>
+        <tr><td>kpi-scorecard</td><td><code>&lt;phz-kpi-scorecard&gt;</code></td><td>kpis[], breakdowns[], expandable</td></tr>
+        <tr><td>bar-chart</td><td><code>&lt;phz-bar-chart&gt;</code></td><td>dataProductId, metricField, dimension, rankOrder, mode</td></tr>
+        <tr><td>line-chart</td><td><code>&lt;phz-line-chart&gt;</code></td><td>series[], xAxisType, yMin/yMax, showGrid, showLegend</td></tr>
+        <tr><td>area-chart</td><td><code>&lt;phz-area-chart&gt;</code></td><td>series[], stacked, colors[]</td></tr>
+        <tr><td>pie-chart</td><td><code>&lt;phz-pie-chart&gt;</code></td><td>data[], donut, innerRadius, outerRadius</td></tr>
+        <tr><td>gauge</td><td><code>&lt;phz-gauge&gt;</code></td><td>value, min, max, thresholds[], label, unit</td></tr>
+        <tr><td>trend-line</td><td><code>&lt;phz-trend-line&gt;</code></td><td>dataProductId, metricField, periods, showTarget</td></tr>
+        <tr><td>bottom-n</td><td><code>&lt;phz-bottom-n&gt;</code></td><td>dimension, metricField, n, direction</td></tr>
+        <tr><td>scatter-chart</td><td><code>&lt;phz-scatter-chart&gt;</code></td><td>data[], bubbleMode, minSize, maxSize</td></tr>
+        <tr><td>heatmap</td><td><code>&lt;phz-heatmap&gt;</code></td><td>data[], colorScale, showLabels</td></tr>
+        <tr><td>waterfall</td><td><code>&lt;phz-waterfall-chart&gt;</code></td><td>data[], showConnectors</td></tr>
+        <tr><td>funnel</td><td><code>&lt;phz-funnel-chart&gt;</code></td><td>data[], showPercentages, showConversions</td></tr>
+        <tr><td>status-table</td><td><code>&lt;phz-status-table&gt;</code></td><td>entityField, kpiDefinitions[], showAlertBadges</td></tr>
+        <tr><td>drill-link</td><td><code>&lt;phz-drill-link&gt;</code></td><td>targetReportId, filterMapping</td></tr>
+        <tr><td>pivot-table</td><td>embedded</td><td>reportId (references report's pivot config)</td></tr>
+        <tr><td>data-table</td><td>embedded</td><td>reportId (references report's column config)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-subtitle">Branded ID Factories</h3>
+    <pre><code>import { kpiId, metricId, reportId, dashboardId, widgetId, dataProductId } from '@phozart/phz-engine';
+
+// Create typed IDs (prevents accidental mixing)
+const myKpi = kpiId('total-revenue');        // KPIId
+const myReport = reportId('sales-report');   // ReportId
+const myDash = dashboardId('sales-ops');     // DashboardId
+
+// ArtefactId bridge (for filter system)
+import { reportArtefactId, dashboardArtefactId } from '@phozart/phz-engine';
+const artId = reportArtefactId(myReport);    // "report:sales-report"</code></pre>
+  </div>
+</section>
+
+<!-- Section: Patterns -->
+<section class="section" id="patterns">
+  <div class="container">
+    <h2 class="section-title">Implementation Patterns</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Facade Pattern</div>
+        <div class="card-desc">
+          <code>createBIEngine()</code> returns a single object wrapping all subsystems
+          (registries, compute, status, criteria). Always start here.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Pure Function + Component Split</div>
+        <div class="card-desc">
+          Logic exported as pure functions (testable, reusable). Components import
+          and call logic, handle rendering/events.
+          Example: <code>computeStackedSegments()</code> (pure) &rarr; <code>PhzBarChart</code> (component).
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Config Layering</div>
+        <div class="card-desc">
+          Configs support 3 layers: <code>system &rarr; admin &rarr; user</code>.
+          Use <code>mergeReportConfigs(layers)</code> or <code>mergeDashboardConfigs(layers)</code>
+          to produce the effective config.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Widget Resolution Pipeline</div>
+        <div class="card-desc">
+          <code>resolveWidgetProps(widget, context)</code> transforms widget config into
+          render-ready props. Handles KPI scoring, chart projection, data filtering.
+          Pure function.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">5-Layer Expression DAG</div>
+        <div class="card-desc">
+          Fields &rarr; Parameters &rarr; Calculated Fields &rarr; Metrics &rarr; KPIs.
+          Circular dependency detection via DFS. Compiled closures are 5-10x faster than tree-walk.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Event Emission Pattern</div>
+        <div class="card-desc">
+          All Lit components use <code>dispatchEvent(new CustomEvent('name', { bubbles: true, composed: true, detail }))</code>.
+          Parent listens and re-dispatches or handles.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Pluggable Compute Backend</div>
+        <div class="card-desc">
+          Default is <code>JSComputeBackend</code> (pure JS). Replace with
+          <code>DuckDBComputeBackend</code> for SQL push-down or a custom server backend.
+          Interface: <code>aggregate()</code>, <code>pivot()</code>, <code>filter()</code>, <code>computeCalculatedFields()</code>.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Serialization Round-Trip</div>
+        <div class="card-desc">
+          <code>gridConfigToDefinition(config, meta)</code> &rarr; <code>exportDefinition(def)</code> &rarr;
+          JSON string &rarr; <code>importDefinition(json)</code> &rarr; <code>definitionToGridConfig(def)</code>.
+          Auto-migrates schema versions.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-subtitle">Theming</h3>
+    <pre><code>import { applyTheme, lightTheme, darkTheme, highContrastTheme, resolveTheme } from '@phozart/phz-widgets';
+
+// Apply to any element (sets CSS custom properties)
+applyTheme(dashboardElement, darkTheme);
+
+// Or resolve by name
+const theme = resolveTheme('dark'); // 'light' | 'dark' | 'high-contrast' | 'system'
+
+// Theme tokens set: --phz-surface, --phz-text, --phz-border, --phz-accent,
+// --phz-success, --phz-warning, --phz-critical, --phz-chart-0 through --phz-chart-7
+
+// Theme switcher component
+&lt;phz-theme-switcher @theme-change=${(e) => applyTheme(dashboard, e.detail.theme)}&gt;
+&lt;/phz-theme-switcher&gt;</code></pre>
+
+    <h3 class="section-subtitle">Widget Export</h3>
+    <pre><code>import { exportToCSV, exportToClipboard, exportToImage } from '@phozart/phz-widgets';
+
+const columns = [{ key: 'region', label: 'Region' }, { key: 'revenue', label: 'Revenue' }];
+const data = [{ region: 'US', revenue: 500000 }, { region: 'EU', revenue: 300000 }];
+
+exportToCSV(data, columns, 'report.csv');      // Downloads CSV
+await exportToClipboard(data, columns);         // Copies TSV to clipboard
+await exportToImage(chartElement, 'chart.png'); // PNG or SVG</code></pre>
+  </div>
+</section>
+
+<!-- Section: Pitfalls -->
+<section class="section" id="pitfalls">
+  <div class="container">
+    <h2 class="section-title">Common Pitfalls &amp; Guidelines</h2>
+
+    <div class="callout danger">
+      <strong>Do NOT import engine types in core.</strong> Core is the foundation; engine depends on core.
+      Never create circular dependencies. If grid needs engine features, use dynamic <code>import()</code>.
+    </div>
+
+    <div class="callout warn">
+      <strong>Always use branded IDs.</strong> Use <code>kpiId('x')</code>, <code>reportId('x')</code>,
+      <code>dashboardId('x')</code>, etc. Do not pass raw strings where branded types are expected.
+    </div>
+
+    <div class="callout warn">
+      <strong>Widget components need loading/error handling.</strong> Every widget accepts
+      <code>loading: boolean</code> and <code>error: string | null</code>. Always set these.
+      The widget renders spinner/error/empty states automatically via <code>resolveWidgetState()</code>.
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Pitfall</th><th>Solution</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Passing raw data to widgets without engine processing</td>
+          <td>Use <code>processWidgetData()</code> or <code>resolveWidgetProps()</code> to transform data first</td>
+        </tr>
+        <tr>
+          <td>Forgetting <code>.open</code> binding on admin modals</td>
+          <td>Always bind <code>.open=${showAdmin}</code> on <code>&lt;phz-grid-admin&gt;</code>, <code>&lt;phz-grid-creator&gt;</code></td>
+        </tr>
+        <tr>
+          <td>Using <code>innerHTML</code> for widget content</td>
+          <td>All widgets use Shadow DOM. Set properties via JS, not attributes for complex data</td>
+        </tr>
+        <tr>
+          <td>Not registering KPIs before using scorecard/status widgets</td>
+          <td>Always <code>engine.kpis.register()</code> before rendering KPI widgets</td>
+        </tr>
+        <tr>
+          <td>Mixing inline criteriaConfig with registry when both exist</td>
+          <td>Pick one. If both exist, registry takes precedence. Divergence callback fires.</td>
+        </tr>
+        <tr>
+          <td>Missing <code>dataProductId</code> on chart widgets</td>
+          <td>Bar chart, trend-line, bottom-N all require <code>dataProductId</code> for data resolution</td>
+        </tr>
+        <tr>
+          <td>Not applying theme before rendering</td>
+          <td>Call <code>applyTheme()</code> on the dashboard element before setting config. Themes cascade via CSS variables.</td>
+        </tr>
+        <tr>
+          <td>Stale filter state after report switch</td>
+          <td>Call <code>reportService.destroy()</code> and create new service when switching reports</td>
+        </tr>
+        <tr>
+          <td>Expression evaluation returns null unexpectedly</td>
+          <td>NULL propagates (SQL-style). Check inputs with IS NULL / COALESCE in expressions.</td>
+        </tr>
+        <tr>
+          <td>Dashboard layout overflow</td>
+          <td>Widget colSpan must not exceed <code>layout.columns</code> (default 12). Use <code>clampColSpan()</code> from responsive-layout.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-subtitle">Build Order</h3>
+    <div class="callout">
+      When building packages, respect the dependency chain:
+      <code>definitions &rarr; core &rarr; engine &rarr; widgets &rarr; criteria &rarr; grid-admin &rarr; engine-admin &rarr; grid-creator</code>.
+      Always <code>npm run build --workspace=packages/&lt;pkg&gt;</code> after changes.
+    </div>
+
+    <h3 class="section-subtitle">Testing</h3>
+    <div class="card">
+      <div class="card-desc">
+        <strong>All computation is testable without DOM.</strong> Engine, aggregation, pivot, expression,
+        status, and widget resolution are pure functions. Use Vitest directly.
+        <br><br>
+        Widget components test logic via exported pure functions (e.g., <code>computeStackedSegments()</code>,
+        <code>valueToAngle()</code>, <code>computeHeatmapCells()</code>). DOM rendering tests use
+        Lit's test utilities.
+        <br><br>
+        <strong>Current coverage:</strong> 3,508 tests across 224 files, all passing.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Quick Reference -->
+<section class="section" id="quick-ref" style="padding-bottom:80px;">
+  <div class="container">
+    <h2 class="section-title">Quick Reference: File Locations</h2>
+    <table>
+      <thead>
+        <tr><th>What</th><th>File</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>BIEngine facade</td><td><code>packages/engine/src/engine.ts</code></td></tr>
+        <tr><td>KPI definitions &amp; registry</td><td><code>packages/engine/src/kpi.ts</code></td></tr>
+        <tr><td>Metric catalog</td><td><code>packages/engine/src/metric.ts</code></td></tr>
+        <tr><td>Report config store</td><td><code>packages/engine/src/report.ts</code></td></tr>
+        <tr><td>Dashboard config store</td><td><code>packages/engine/src/dashboard.ts</code></td></tr>
+        <tr><td>Enhanced dashboard (v2)</td><td><code>packages/engine/src/dashboard-enhanced.ts</code></td></tr>
+        <tr><td>Widget types &amp; validation</td><td><code>packages/engine/src/widget.ts</code></td></tr>
+        <tr><td>Widget data processor</td><td><code>packages/engine/src/widget-data-processor.ts</code></td></tr>
+        <tr><td>Widget resolver</td><td><code>packages/engine/src/widget-resolver.ts</code></td></tr>
+        <tr><td>Status computation</td><td><code>packages/engine/src/status.ts</code></td></tr>
+        <tr><td>Aggregation engine</td><td><code>packages/engine/src/aggregation.ts</code></td></tr>
+        <tr><td>Pivot engine</td><td><code>packages/engine/src/pivot.ts</code></td></tr>
+        <tr><td>Chart projection</td><td><code>packages/engine/src/chart-projection.ts</code></td></tr>
+        <tr><td>Expression compiler</td><td><code>packages/engine/src/expression-compiler.ts</code></td></tr>
+        <tr><td>Expression AST types</td><td><code>packages/engine/src/expression-types.ts</code></td></tr>
+        <tr><td>Criteria engine</td><td><code>packages/engine/src/criteria/criteria-engine.ts</code></td></tr>
+        <tr><td>Filter resolution</td><td><code>packages/engine/src/criteria/resolve-criteria.ts</code></td></tr>
+        <tr><td>Report/Dashboard service</td><td><code>packages/engine/src/report-service.ts</code></td></tr>
+        <tr><td>Compute backend (JS)</td><td><code>packages/engine/src/compute-backend.ts</code></td></tr>
+        <tr><td>Drill-through</td><td><code>packages/engine/src/drill-through.ts</code></td></tr>
+        <tr><td>Config merge/layering</td><td><code>packages/engine/src/config-merge.ts</code></td></tr>
+        <tr><td>Dashboard component</td><td><code>packages/widgets/src/components/phz-dashboard.ts</code></td></tr>
+        <tr><td>Widget router</td><td><code>packages/widgets/src/components/phz-widget.ts</code></td></tr>
+        <tr><td>KPI card component</td><td><code>packages/widgets/src/components/phz-kpi-card.ts</code></td></tr>
+        <tr><td>Bar chart component</td><td><code>packages/widgets/src/components/phz-bar-chart.ts</code></td></tr>
+        <tr><td>Themes &amp; switcher</td><td><code>packages/widgets/src/themes.ts</code></td></tr>
+        <tr><td>Widget export utils</td><td><code>packages/widgets/src/widget-export.ts</code></td></tr>
+        <tr><td>Responsive layout</td><td><code>packages/widgets/src/responsive-layout.ts</code></td></tr>
+        <tr><td>Cross-filter logic</td><td><code>packages/widgets/src/cross-filter.ts</code></td></tr>
+        <tr><td>Selection criteria</td><td><code>packages/criteria/src/components/phz-selection-criteria.ts</code></td></tr>
+        <tr><td>Filter designer</td><td><code>packages/criteria/src/components/phz-filter-designer.ts</code></td></tr>
+        <tr><td>Grid admin facade</td><td><code>packages/grid-admin/src/components/phz-grid-admin.ts</code></td></tr>
+        <tr><td>Engine admin facade</td><td><code>packages/engine-admin/src/components/phz-engine-admin.ts</code></td></tr>
+        <tr><td>Save controller</td><td><code>packages/engine-admin/src/save-controller.ts</code></td></tr>
+        <tr><td>Grid definition type</td><td><code>packages/definitions/src/types/grid-definition.ts</code></td></tr>
+        <tr><td>Converters</td><td><code>packages/definitions/src/converters/</code></td></tr>
+        <tr><td>Zod validation</td><td><code>packages/definitions/src/validation/schemas.ts</code></td></tr>
+        <tr><td>Definition stores</td><td><code>packages/definitions/src/store/</code></td></tr>
+        <tr><td>Wizard state machine</td><td><code>packages/grid-creator/src/wizard-state.ts</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+
+// Nav active state
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+// Scroll spy
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('nav a').forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -80% 0px' });
+
+document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

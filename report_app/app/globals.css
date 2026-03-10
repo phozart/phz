@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* Light mode (default) */
+:root, html.light {
+  --bg-primary: #fafaf9;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f4;
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-muted: #a8a29e;
+  --border: #e7e5e4;
+  --accent: #ea580c;
+  --accent-muted: #fed7aa;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* Dark mode */
+html.dark {
+  --bg-primary: #0c0a09;
+  --bg-secondary: #1c1917;
+  --bg-tertiary: #292524;
+  --text-primary: #fafaf9;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+  --border: #44403c;
+  --accent: #f97316;
+  --accent-muted: #9a3412;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+  /* phz-widgets theme (CSS custom props penetrate Shadow DOM) */
+  --phz-w-bg: #1c1917;
+  --phz-w-text: #fafaf9;
+  --phz-w-text-secondary: #a8a29e;
+  --phz-w-text-muted: #78716c;
+  --phz-w-border: #44403c;
+  --phz-w-surface: #292524;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Indeterminate progress bar */
+@keyframes indeterminate {
+  0% { transform: translateX(-100%); width: 40%; }
+  50% { width: 60%; }
+  100% { transform: translateX(250%); width: 40%; }
+}
+.animate-indeterminate {
+  animation: indeterminate 1.5s ease-in-out infinite;
+}

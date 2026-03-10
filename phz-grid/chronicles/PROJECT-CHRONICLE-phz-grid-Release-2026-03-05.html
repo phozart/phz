@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Chronicle - phz-grid v0.1.0</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-card-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --accent: #58a6ff;
+    --accent-bg: rgba(88,166,255,0.1);
+    --success: #3fb950;
+    --success-bg: rgba(63,185,80,0.1);
+    --warning: #d29922;
+    --warning-bg: rgba(210,153,34,0.1);
+    --danger: #f85149;
+    --purple: #bc8cff;
+    --purple-bg: rgba(188,140,255,0.1);
+    --teal: #39d2c0;
+    --teal-bg: rgba(57,210,192,0.1);
+    --orange: #f0883e;
+    --orange-bg: rgba(240,136,62,0.1);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  [data-theme="light"] {
+    --bg: #f6f8fa;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f3f4f6;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --text-dim: #8b949e;
+    --accent: #0969da;
+    --accent-bg: rgba(9,105,218,0.08);
+    --success: #1a7f37;
+    --success-bg: rgba(26,127,55,0.08);
+    --warning: #9a6700;
+    --warning-bg: rgba(154,103,0,0.08);
+    --danger: #cf222e;
+    --purple: #8250df;
+    --purple-bg: rgba(130,80,223,0.08);
+    --teal: #0e8a7a;
+    --teal-bg: rgba(14,138,122,0.08);
+    --orange: #bc4c00;
+    --orange-bg: rgba(188,76,0,0.08);
+    --shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  header .container {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; color: #fff;
+  }
+  .logo h1 { font-size: 22px; font-weight: 700; }
+  .logo .version {
+    background: var(--accent-bg); color: var(--accent);
+    padding: 2px 10px; border-radius: 12px; font-size: 13px; font-weight: 600;
+  }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .theme-toggle {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 6px 14px; border-radius: var(--radius); cursor: pointer;
+    font-size: 13px; font-family: var(--font); transition: all 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  /* Navigation */
+  nav {
+    background: var(--bg-card); border-bottom: 1px solid var(--border);
+    padding: 0; overflow-x: auto;
+  }
+  nav .container { display: flex; gap: 0; }
+  nav a {
+    color: var(--text-muted); text-decoration: none; padding: 12px 16px;
+    font-size: 14px; font-weight: 500; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--border); }
+  nav a.active { color: var(--accent); border-color: var(--accent); }
+
+  /* Main */
+  main { padding: 32px 0 64px; }
+  section { margin-bottom: 48px; scroll-margin-top: 120px; }
+  h2 {
+    font-size: 20px; font-weight: 700; margin-bottom: 20px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .badge {
+    font-size: 12px; font-weight: 600; padding: 2px 8px;
+    border-radius: 10px; background: var(--accent-bg); color: var(--accent);
+  }
+  h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; transition: all 0.2s;
+  }
+  .card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .card-grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+  /* Stats */
+  .stat { text-align: center; }
+  .stat-value { font-size: 32px; font-weight: 800; line-height: 1.2; }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .stat-accent .stat-value { color: var(--accent); }
+  .stat-success .stat-value { color: var(--success); }
+  .stat-purple .stat-value { color: var(--purple); }
+  .stat-warning .stat-value { color: var(--warning); }
+  .stat-teal .stat-value { color: var(--teal); }
+  .stat-orange .stat-value { color: var(--orange); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 11px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 24px; }
+  .tl-dot {
+    position: absolute; left: -32px; top: 4px; width: 22px; height: 22px;
+    border-radius: 50%; border: 2px solid var(--border); background: var(--bg-card);
+    display: flex; align-items: center; justify-content: center; font-size: 10px;
+  }
+  .tl-dot.complete { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+  .tl-dot.current { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(88,166,255,0.4); } 50% { box-shadow: 0 0 0 6px rgba(88,166,255,0); } }
+  .tl-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .tl-phase { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tl-title { font-size: 15px; font-weight: 600; margin: 4px 0; }
+  .tl-desc { font-size: 13px; color: var(--text-muted); }
+
+  /* Badges */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500;
+  }
+  .pill-accent { background: var(--accent-bg); color: var(--accent); }
+  .pill-success { background: var(--success-bg); color: var(--success); }
+  .pill-purple { background: var(--purple-bg); color: var(--purple); }
+  .pill-teal { background: var(--teal-bg); color: var(--teal); }
+  .pill-warning { background: var(--warning-bg); color: var(--warning); }
+  .pill-orange { background: var(--orange-bg); color: var(--orange); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: var(--bg-card-hover); }
+
+  /* Collapsible */
+  details { margin-bottom: 12px; }
+  details summary {
+    cursor: pointer; font-weight: 600; padding: 12px 16px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); list-style: none;
+    display: flex; align-items: center; gap: 8px; font-size: 14px;
+    transition: all 0.2s;
+  }
+  details summary:hover { border-color: var(--accent); }
+  details summary::before { content: '\25B6'; font-size: 10px; transition: transform 0.2s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  details summary::-webkit-details-marker { display: none; }
+  details .detail-content { padding: 16px; border: 1px solid var(--border); border-top: 0; border-radius: 0 0 var(--radius) var(--radius); background: var(--bg-card); }
+
+  /* Code */
+  code {
+    font-family: var(--font-mono); font-size: 13px;
+    background: var(--bg); padding: 2px 6px; border-radius: 4px;
+  }
+  pre {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; }
+
+  /* Mermaid */
+  .mermaid-container {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px; text-align: center;
+    overflow-x: auto;
+  }
+  .mermaid { display: inline-block; }
+
+  /* Package cards */
+  .pkg-card { display: flex; flex-direction: column; gap: 8px; }
+  .pkg-name { font-weight: 700; font-size: 14px; color: var(--accent); font-family: var(--font-mono); }
+  .pkg-desc { font-size: 13px; color: var(--text-muted); flex: 1; }
+  .pkg-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text-dim); }
+
+  /* Progress bar */
+  .progress-bar {
+    height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 4px; transition: width 0.5s ease;
+  }
+
+  /* Print */
+  @media print {
+    header { position: static; }
+    nav { display: none; }
+    .theme-toggle { display: none; }
+    .card:hover { border-color: var(--border); box-shadow: none; }
+    body { background: #fff; color: #000; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
+    header .container { flex-direction: column; align-items: flex-start; }
+    nav a { padding: 10px 12px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-icon">G</div>
+      <div>
+        <h1>phz-grid <span class="version">v0.1.0</span></h1>
+        <div style="font-size:13px;color:var(--text-muted)">Project Chronicle &mdash; 2026-03-05</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="pill pill-success">Phase 9: Release</span>
+      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#packages">Packages</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#artifacts">Artifacts</a>
+    <a href="#metrics">Metrics</a>
+    <a href="#tech-stack">Tech Stack</a>
+  </div>
+</nav>
+
+<main>
+<div class="container">
+
+<!-- ============ OVERVIEW ============ -->
+<section id="overview">
+  <h2>Overview Dashboard</h2>
+  <div class="card-grid" style="margin-bottom:24px">
+    <div class="card stat stat-accent">
+      <div class="stat-value">14</div>
+      <div class="stat-label">Packages</div>
+    </div>
+    <div class="card stat stat-success">
+      <div class="stat-value">1,162</div>
+      <div class="stat-label">Tests Passing</div>
+    </div>
+    <div class="card stat stat-purple">
+      <div class="stat-value">80K+</div>
+      <div class="stat-label">Lines of TypeScript</div>
+    </div>
+    <div class="card stat stat-warning">
+      <div class="stat-value">92</div>
+      <div class="stat-label">Test Files</div>
+    </div>
+    <div class="card stat stat-teal">
+      <div class="stat-value">10</div>
+      <div class="stat-label">Phases Complete</div>
+    </div>
+    <div class="card stat stat-orange">
+      <div class="stat-value">8</div>
+      <div class="stat-label">ADRs</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Project Summary</h3>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:12px">
+      Next-generation universal data grid built on Web Components with framework adapters,
+      DuckDB-WASM analytics, accessibility-first design, and an open-core monetization model.
+    </p>
+    <div class="badge-row">
+      <span class="pill pill-accent">Web Components</span>
+      <span class="pill pill-accent">Lit v5</span>
+      <span class="pill pill-success">TypeScript Strict</span>
+      <span class="pill pill-purple">DuckDB-WASM</span>
+      <span class="pill pill-teal">Yjs CRDTs</span>
+      <span class="pill pill-warning">WCAG 2.2 AA</span>
+      <span class="pill pill-orange">AI Toolkit</span>
+      <span class="pill pill-accent">ESM-Only</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Open-Core Model</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
+      <div>
+        <div style="font-weight:600;color:var(--success);margin-bottom:6px">Community (MIT)</div>
+        <ul style="font-size:13px;color:var(--text-muted);list-style:none;padding:0">
+          <li>DOM Virtualization</li>
+          <li>Basic Sort / Filter</li>
+          <li>Keyboard Navigation</li>
+          <li>Screen Reader Support</li>
+          <li>Web Components Core</li>
+          <li>Framework Adapters (React, Vue, Angular)</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;color:var(--purple);margin-bottom:6px">Enterprise (Commercial)</div>
+        <ul style="font-size:13px;color:var(--text-muted);list-style:none;padding:0">
+          <li>DuckDB-WASM Integration</li>
+          <li>Canvas Rendering</li>
+          <li>AI Toolkit</li>
+          <li>CRDT Collaboration</li>
+          <li>Advanced Analytics</li>
+          <li>Excel Export + Integrated Charts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline">
+  <h2>Journey Timeline <span class="badge">10 Phases</span></h2>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 0</div>
+        <div class="tl-title">Innovation &amp; Discovery</div>
+        <div class="tl-desc">
+          Design thinking, feasibility validation. Decision: PERSEVERE &mdash;
+          accessibility gap validated, technology stack mature, market timing optimal.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 1</div>
+        <div class="tl-title">Business Analysis</div>
+        <div class="tl-desc">
+          5 personas defined, 65 user stories across 13 epics, marketing strategy with GTM entry points.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 2</div>
+        <div class="tl-title">Architecture &amp; Data Design</div>
+        <div class="tl-desc">
+          8 ADRs, full system architecture, data model (22 sections), API contracts (10 packages incl. Python/pip).
+          Added @phozart/phz-python for pip install via anywidget + Arrow IPC.
+        </div>
+        <div class="badge-row">
+          <span class="pill pill-accent">8 ADRs</span>
+          <span class="pill pill-purple">22 Data Model Sections</span>
+          <span class="pill pill-teal">10 API Contracts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 3</div>
+        <div class="tl-title">UX/UI Design</div>
+        <div class="tl-desc">
+          Design system (357 tokens), 20 component specs, accessibility spec (competitive moat), 16 interaction patterns.
+        </div>
+        <div class="badge-row">
+          <span class="pill pill-warning">357 Tokens</span>
+          <span class="pill pill-accent">20 Component Specs</span>
+          <span class="pill pill-success">16 Interactions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 4</div>
+        <div class="tl-title">Requirements Engineering</div>
+        <div class="tl-desc">
+          109 formal requirements (BRD), 127 traced requirements + 160 test cases (RTM), 100% coverage.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 5</div>
+        <div class="tl-title">Contract Finalization</div>
+        <div class="tl-desc">
+          All contracts FINALIZED &mdash; 116+ types across 10 packages. Validation PASSED (100% BRD coverage, 0 gaps).
+          Governance sealed with quality gates.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 6</div>
+        <div class="tl-title">Implementation</div>
+        <div class="tl-desc">
+          10 packages implemented, 140 tests passing (core:51, grid:21, duckdb:16, ai:19, collab:33).
+          All TypeScript compiles clean.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 7</div>
+        <div class="tl-title">Sprint Execution</div>
+        <div class="tl-desc">
+          All 5 sprints executed successfully. Full feature implementation across all packages.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot complete">&#10003;</div>
+      <div class="tl-content">
+        <div class="tl-phase">Phase 8</div>
+        <div class="tl-title">QA &amp; Review</div>
+        <div class="tl-desc">
+          Full build clean, 140/140 initial tests, TYPE-CONTRACTS compliance verified.
+          Post-QA: expanded to 15 packages, test suite grew from 140 to 1,162 tests across 92 files.
+        </div>
+        <div class="badge-row">
+          <span class="pill pill-success">1,162 Tests</span>
+          <span class="pill pill-accent">92 Test Files</span>
+          <span class="pill pill-purple">0 Regressions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot current">&#9679;</div>
+      <div class="tl-content" style="border-color:var(--accent)">
+        <div class="tl-phase" style="color:var(--accent)">Phase 9 &mdash; Current</div>
+        <div class="tl-title">Release</div>
+        <div class="tl-desc">
+          Final release preparation. Project rename phozart-* &rarr; phz-* complete.
+          Docs pruned for release. All packages ready for npm publish.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PACKAGES ============ -->
+<section id="packages">
+  <h2>Package Gallery <span class="badge">14 Packages</span></h2>
+  <div class="card-grid-3">
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-core</div>
+      <div class="pkg-desc">Headless grid engine &mdash; data model, state, events. Zero DOM dependencies. createGrid() factory with full GridApi.</div>
+      <div class="pkg-meta"><span class="pill pill-success">51 tests</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-grid</div>
+      <div class="pkg-desc">&lt;phz-grid&gt; Web Component (Lit v5). Three-layer CSS tokens, 7 cell renderers, 5 cell editors. AriaManager, KeyboardNavigator, ForcedColorsAdapter.</div>
+      <div class="pkg-meta"><span class="pill pill-success">21+ tests</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-react</div>
+      <div class="pkg-desc">React wrapper. &lt;PhzGrid&gt; with forwardRef. 6 hooks: useGridState, useGridSelection, useGridSort, useGridFilter, useGridEdit, useGridData.</div>
+      <div class="pkg-meta"><span class="pill pill-success">7 test files</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-vue</div>
+      <div class="pkg-desc">Vue adapter. Factory pattern with createPhzGridComponent(). 5 composable factories for grid operations.</div>
+      <div class="pkg-meta"><span class="pill pill-success">1 test file</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-angular</div>
+      <div class="pkg-desc">Angular adapter. Factory pattern, createPhzGridComponent(), createGridService() injectable factory.</div>
+      <div class="pkg-meta"><span class="pill pill-success">1 test file</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-duckdb</div>
+      <div class="pkg-desc">DuckDB-WASM data source. In-browser SQL analytics, Apache Arrow zero-copy, file loading (CSV/Parquet/JSON/Arrow).</div>
+      <div class="pkg-meta"><span class="pill pill-success">16 tests</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-ai</div>
+      <div class="pkg-desc">AI toolkit. Schema-as-contract, NL-to-SQL, anomaly detection, data summarization. OpenAI, Anthropic, Google providers.</div>
+      <div class="pkg-meta"><span class="pill pill-success">19 tests</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-collab</div>
+      <div class="pkg-desc">Real-time collaboration. Yjs CRDTs, presence awareness, change tracking, conflict resolution, WebSocket + WebRTC sync.</div>
+      <div class="pkg-meta"><span class="pill pill-success">33 tests</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-engine</div>
+      <div class="pkg-desc">BI engine. Reports, dashboards, KPIs, filters, pivots, aggregation, expressions, formula parsing, drill-through.</div>
+      <div class="pkg-meta"><span class="pill pill-success">33 test files</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-widgets</div>
+      <div class="pkg-desc">Dashboard widgets. Bar chart, KPI card, trend line, scorecard, status table, selection bar, view manager.</div>
+      <div class="pkg-meta"><span class="pill pill-success">9 test files</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-criteria</div>
+      <div class="pkg-desc">Selection criteria &amp; filter UI components. Combobox, filter configurator, designer, preset admin, rule editor.</div>
+      <div class="pkg-meta"><span class="pill pill-success">7 test files</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-grid-admin</div>
+      <div class="pkg-desc">Grid admin panel. Columns, formatting, export settings, filters, data source, themes, options, criteria, reports.</div>
+      <div class="pkg-meta"><span class="pill pill-success">10 test files</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-engine-admin</div>
+      <div class="pkg-desc">Engine admin panel. Report designer, dashboard builder, KPI designer, pivot designer.</div>
+      <div class="pkg-meta"><span class="pill pill-success">4 test files</span><span class="pill pill-purple">Enterprise</span></div>
+    </div>
+
+    <div class="card pkg-card">
+      <div class="pkg-name">@phozart/phz-python</div>
+      <div class="pkg-desc">Python package (pip). Jupyter anywidget with Arrow IPC. Supports pandas, polars, pyarrow. Panel + Streamlit adapters.</div>
+      <div class="pkg-meta"><span class="pill pill-warning">PyPI</span><span class="pill pill-accent">MIT</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section id="architecture">
+  <h2>Architecture Diagrams</h2>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>System Context (C4 Level 1)</h3>
+    <div class="mermaid-container">
+      <pre class="mermaid">
+graph TB
+    subgraph "Developer Environment"
+        DEV[Web Developer]
+    end
+    subgraph "End User Environment"
+        USER["End User (Screen Reader, Keyboard, Touch)"]
+    end
+    subgraph "phz-grid Ecosystem"
+        CORE["@phozart/phz-core\nHeadless Engine"]
+        GRID["@phozart/phz-grid\nWeb Components"]
+        REACT["@phozart/phz-react"]
+        VUE["@phozart/phz-vue"]
+        ANGULAR["@phozart/phz-angular"]
+        DUCKDB["@phozart/phz-duckdb\nEnterprise"]
+        AI["@phozart/phz-ai\nEnterprise"]
+        COLLAB["@phozart/phz-collab\nEnterprise"]
+    end
+    subgraph "External Systems"
+        LLM["LLM Providers\nOpenAI, Anthropic, Google"]
+        DATA["Data Sources\nCSV, Parquet, JSON, Arrow"]
+        SYNC["Sync Backends\nWebSocket, WebRTC"]
+    end
+    DEV -->|Integrates| REACT
+    DEV -->|Integrates| VUE
+    DEV -->|Integrates| ANGULAR
+    REACT --> GRID
+    VUE --> GRID
+    ANGULAR --> GRID
+    GRID --> CORE
+    DUCKDB --> CORE
+    AI --> CORE
+    COLLAB --> CORE
+    USER -->|Interacts| GRID
+    DUCKDB -->|Queries| DATA
+    AI -->|Tool Use| LLM
+    COLLAB -->|Syncs| SYNC
+      </pre>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Package Dependency Graph</h3>
+    <div class="mermaid-container">
+      <pre class="mermaid">
+graph LR
+    core["phz-core"]
+    grid["phz-grid"]
+    react["phz-react"]
+    vue["phz-vue"]
+    angular["phz-angular"]
+    duckdb["phz-duckdb"]
+    ai["phz-ai"]
+    collab["phz-collab"]
+    engine["phz-engine"]
+    widgets["phz-widgets"]
+    criteria["phz-criteria"]
+    gridadmin["phz-grid-admin"]
+    engineadmin["phz-engine-admin"]
+    python["phz-python"]
+
+    grid --> core
+    react --> grid
+    vue --> grid
+    angular --> grid
+    duckdb --> core
+    ai --> core
+    collab --> core
+    engine --> core
+    widgets --> engine
+    criteria --> core
+    gridadmin --> grid
+    gridadmin --> criteria
+    engineadmin --> engine
+    engineadmin --> widgets
+    python -.->|Arrow IPC| core
+
+    style core fill:#58a6ff,color:#000
+    style grid fill:#58a6ff,color:#000
+    style duckdb fill:#f0883e,color:#000
+    style ai fill:#f0883e,color:#000
+    style collab fill:#f0883e,color:#000
+    style engine fill:#f0883e,color:#000
+      </pre>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Core Engine Data Flow</h3>
+    <div class="mermaid-container">
+      <pre class="mermaid">
+flowchart LR
+    A[Raw Data] --> B[Parse]
+    B --> C[Filter]
+    C --> D[Sort]
+    D --> E[Group]
+    E --> F[Flatten]
+    F --> G[Virtualize]
+    G --> H[Render]
+
+    style A fill:#39d2c0,color:#000
+    style H fill:#3fb950,color:#000
+      </pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Three-Layer Token Architecture</h3>
+    <div class="mermaid-container">
+      <pre class="mermaid">
+graph TB
+    subgraph "Layer 1: Brand Tokens"
+        B1["--phz-color-blue-500"]
+        B2["--phz-font-size-base"]
+        B3["--phz-spacing-4"]
+    end
+    subgraph "Layer 2: Semantic Tokens"
+        S1["--phz-color-primary"]
+        S2["--phz-text-body"]
+        S3["--phz-gap-md"]
+    end
+    subgraph "Layer 3: Component Tokens"
+        C1["--phz-grid-header-bg"]
+        C2["--phz-cell-font-size"]
+        C3["--phz-row-gap"]
+    end
+    B1 --> S1
+    B2 --> S2
+    B3 --> S3
+    S1 --> C1
+    S2 --> C2
+    S3 --> C3
+      </pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECISIONS ============ -->
+<section id="decisions">
+  <h2>Architecture Decision Records <span class="badge">8 ADRs</span></h2>
+
+  <details>
+    <summary><span class="pill pill-accent">ADR-001</span> Headless Core + Lit Rendering Layer Separation</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> Data grid libraries traditionally bundle state management with rendering, creating tight coupling. TanStack Table proved the headless pattern works, but developers still need default rendering.</p>
+      <p><strong>Decision:</strong> Two separate layers: <code>@phozart/phz-core</code> (headless, zero DOM) and <code>@phozart/phz-grid</code> (Lit Web Components rendering). Core runs in Node.js, Web Workers, or browser.</p>
+      <p><strong>Consequence:</strong> Framework adapters are thin wrappers. Core can be tested without browser. State logic is reusable across rendering targets.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-accent">ADR-002</span> DOM Virtualization Default, Canvas Enterprise</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> DOM virtualization supports native browser features (selection, a11y, CSS); canvas enables extreme performance for millions of rows.</p>
+      <p><strong>Decision:</strong> DOM virtualization as default (accessible, styleable). Canvas rendering as opt-in enterprise feature for high-performance scenarios.</p>
+      <p><strong>Consequence:</strong> Community tier gets full accessibility. Enterprise users can switch to canvas for million-row datasets.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-warning">ADR-003</span> Semantic Shadow DOM for Accessible Virtualization</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> <strong>Core differentiator.</strong> Every major grid breaks screen reader accessibility with virtualization. AG Grid, Handsontable, MUI DataGrid, PrimeNG all have critical issues. Sarah Higley (Microsoft) publicly criticized AG Grid's ARIA implementation.</p>
+      <p><strong>Decision:</strong> Semantic Shadow DOM approach that maintains correct ARIA attributes, focus management, and screen reader context during virtualization.</p>
+      <p><strong>Consequence:</strong> phz-grid becomes the first data grid to solve accessible virtualization correctly.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-purple">ADR-004</span> DuckDB-WASM + Apache Arrow Data Backbone</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> JavaScript arrays are inefficient for large-scale client-side analytics: no indexing, poor cache locality, single-threaded, no columnar operations.</p>
+      <p><strong>Decision:</strong> DuckDB-WASM for in-browser SQL analytics with Apache Arrow for zero-copy data transfer between the engine and grid.</p>
+      <p><strong>Consequence:</strong> 100x+ performance improvement for large datasets. SQL-powered filtering, sorting, aggregation in the browser.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-teal">ADR-005</span> Yjs CRDTs for Real-Time Collaboration</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> CRDTs provide mathematically guaranteed convergence without central coordination, unlike Operational Transform (Google Docs pre-2021).</p>
+      <p><strong>Decision:</strong> Yjs CRDT library for real-time collaboration with WebSocket and WebRTC sync providers.</p>
+      <p><strong>Consequence:</strong> Offline-first, peer-to-peer capable. Presence awareness and conflict-free merging built-in.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-orange">ADR-006</span> Three-Layer CSS Custom Property Theming</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> Traditional approaches (inline styles, CSS classes) have significant drawbacks. Inline styles can't use pseudo-classes; CSS class approaches lead to 500+ classes.</p>
+      <p><strong>Decision:</strong> Three-layer CSS custom property system: Brand Tokens &rarr; Semantic Tokens &rarr; Component Tokens.</p>
+      <p><strong>Consequence:</strong> Full dark mode support, Forced Colors Mode compatibility, easy theming with ~50 variables instead of 500+ classes.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-accent">ADR-007</span> Schema-as-Contract for AI Integration</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> LLMs with function calling need structured contracts. Unstructured prompts produce freeform text with no type safety or validation.</p>
+      <p><strong>Decision:</strong> Grid state API generates JSON Schema 7 that serves as the contract between AI models and the grid. Supports OpenAI, Anthropic, Google providers.</p>
+      <p><strong>Consequence:</strong> Natural language queries produce structured, validated actions. Schema drives AI integration, docs, and type generation.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="pill pill-success">ADR-008</span> ESM-Only, No CommonJS</summary>
+    <div class="detail-content">
+      <p><strong>Status:</strong> Accepted</p>
+      <p><strong>Context:</strong> In 2026, all modern browsers, Node.js 12+, and build tools (Vite, Rollup, esbuild) support ESM natively. CommonJS prevents tree-shaking and static analysis.</p>
+      <p><strong>Decision:</strong> ESM-only distribution. No CommonJS, no UMD, no dual publishing.</p>
+      <p><strong>Consequence:</strong> Full tree-shaking support. Core bundle target &lt;50 KB gzipped. Simpler build configuration.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ============ ARTIFACTS ============ -->
+<section id="artifacts">
+  <h2>Artifact Gallery <span class="badge">25+ Artifacts</span></h2>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Architecture Documents</h3>
+    <table>
+      <thead><tr><th>Document</th><th>Location</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>System Architecture</td><td><code>docs/architecture/SYSTEM-ARCHITECTURE.md</code></td><td>C4 model, 14 sections covering all architectural layers</td></tr>
+        <tr><td>Data Model</td><td><code>docs/architecture/DATA-MODEL.md</code></td><td>22 sections: grid state, columns, data sources, events</td></tr>
+        <tr><td>Filter-Report Integration</td><td><code>docs/architecture/FILTER-REPORT-INTEGRATION.md</code></td><td>Pragmatic Hybrid (Option D) integration design</td></tr>
+        <tr><td>ADR-001 through ADR-008</td><td><code>docs/architecture/ADR/</code></td><td>8 Architecture Decision Records</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Contract Documents</h3>
+    <table>
+      <thead><tr><th>Document</th><th>Location</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>API Contracts (JS)</td><td><code>docs/contracts/API-CONTRACTS.md</code></td><td>Public APIs for all JavaScript packages</td></tr>
+        <tr><td>API Contracts (Python)</td><td><code>docs/contracts/PYTHON-API-CONTRACTS.md</code></td><td>Python pip package API specification</td></tr>
+        <tr><td>Type Contracts</td><td><code>docs/contracts/TYPE-CONTRACTS.md</code></td><td>116+ TypeScript types across 10 packages</td></tr>
+        <tr><td>Contract Governance</td><td><code>docs/contracts/CONTRACT-GOVERNANCE.md</code></td><td>Versioning, breaking changes, quality gates</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>Configuration &amp; CI/CD</h3>
+    <table>
+      <thead><tr><th>File</th><th>Location</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Project Config</td><td><code>project.config.yaml</code></td><td>Project definition, tech stack, package registry</td></tr>
+        <tr><td>CI Pipeline</td><td><code>.github/workflows/ci.yml</code></td><td>Test + Build on Node 20/22, Vitest, TypeScript</td></tr>
+        <tr><td>Publish Pipeline</td><td><code>.github/workflows/publish.yml</code></td><td>npm publish workflow</td></tr>
+        <tr><td>Changelog</td><td><code>CHANGELOG.md</code></td><td>Keep a Changelog format, v0.1.0 release notes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Package READMEs</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+      <span class="pill pill-accent">packages/core/README.md</span>
+      <span class="pill pill-accent">packages/grid/README.md</span>
+      <span class="pill pill-accent">packages/react/README.md</span>
+      <span class="pill pill-accent">packages/vue/README.md</span>
+      <span class="pill pill-accent">packages/angular/README.md</span>
+      <span class="pill pill-purple">packages/duckdb/README.md</span>
+      <span class="pill pill-purple">packages/ai/README.md</span>
+      <span class="pill pill-purple">packages/collab/README.md</span>
+      <span class="pill pill-purple">packages/engine/README.md</span>
+      <span class="pill pill-purple">packages/widgets/README.md</span>
+      <span class="pill pill-accent">packages/criteria/README.md</span>
+      <span class="pill pill-accent">packages/grid-admin/README.md</span>
+      <span class="pill pill-purple">packages/engine-admin/README.md</span>
+      <span class="pill pill-warning">packages/python/README.md</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METRICS ============ -->
+<section id="metrics">
+  <h2>Metrics Dashboard</h2>
+
+  <div class="card-grid" style="margin-bottom:24px">
+    <div class="card">
+      <h3>Test Coverage by Package</h3>
+      <div style="font-size:13px">
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>engine</span><span>33 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--success)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>grid-admin</span><span>10 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%;background:var(--accent)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>widgets</span><span>9 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:27%;background:var(--accent)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>react</span><span>7 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:21%;background:var(--teal)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>criteria</span><span>7 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:21%;background:var(--teal)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>core</span><span>6 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:18%;background:var(--purple)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>grid</span><span>9 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:27%;background:var(--purple)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>engine-admin</span><span>4 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:12%;background:var(--orange)"></div></div>
+
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>collab / duckdb / ai</span><span>3 files</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:9%;background:var(--orange)"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Codebase Composition</h3>
+      <table style="font-size:13px">
+        <tr><td>Source files (.ts)</td><td style="text-align:right;font-weight:700">211</td></tr>
+        <tr><td>Test files (.test.ts)</td><td style="text-align:right;font-weight:700">92</td></tr>
+        <tr><td>Total TypeScript lines</td><td style="text-align:right;font-weight:700">80,310</td></tr>
+        <tr><td>Test-to-source ratio</td><td style="text-align:right;font-weight:700">1 : 2.3</td></tr>
+        <tr><td>Packages (npm)</td><td style="text-align:right;font-weight:700">13</td></tr>
+        <tr><td>Packages (pypi)</td><td style="text-align:right;font-weight:700">1</td></tr>
+        <tr><td>ADRs</td><td style="text-align:right;font-weight:700">8</td></tr>
+        <tr><td>BRD Requirements</td><td style="text-align:right;font-weight:700">109</td></tr>
+        <tr><td>RTM Requirements</td><td style="text-align:right;font-weight:700">127</td></tr>
+        <tr><td>RTM Test Cases</td><td style="text-align:right;font-weight:700">160</td></tr>
+        <tr><td>Design Tokens</td><td style="text-align:right;font-weight:700">357</td></tr>
+        <tr><td>Type Contracts</td><td style="text-align:right;font-weight:700">116+</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Phase Gate Summary</h3>
+    <table>
+      <thead><tr><th>Phase</th><th>Name</th><th>Status</th><th>Key Deliverable</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>Innovation &amp; Discovery</td><td><span class="pill pill-success">COMPLETE</span></td><td>PERSEVERE decision</td></tr>
+        <tr><td>1</td><td>Business Analysis</td><td><span class="pill pill-success">COMPLETE</span></td><td>5 personas, 65 user stories, 13 epics</td></tr>
+        <tr><td>2</td><td>Architecture &amp; Data Design</td><td><span class="pill pill-success">COMPLETE</span></td><td>8 ADRs, system architecture, data model</td></tr>
+        <tr><td>3</td><td>UX/UI Design</td><td><span class="pill pill-success">COMPLETE</span></td><td>357 design tokens, 20 component specs</td></tr>
+        <tr><td>4</td><td>Requirements Engineering</td><td><span class="pill pill-success">COMPLETE</span></td><td>109 BRD requirements, 100% RTM coverage</td></tr>
+        <tr><td>5</td><td>Contract Finalization</td><td><span class="pill pill-success">COMPLETE</span></td><td>116+ types, 0 gaps, governance sealed</td></tr>
+        <tr><td>6</td><td>Implementation</td><td><span class="pill pill-success">COMPLETE</span></td><td>10 packages, 140 tests, clean compile</td></tr>
+        <tr><td>7</td><td>Sprint Execution</td><td><span class="pill pill-success">COMPLETE</span></td><td>5 sprints completed</td></tr>
+        <tr><td>8</td><td>QA &amp; Review</td><td><span class="pill pill-success">COMPLETE</span></td><td>1,162 tests, type compliance verified</td></tr>
+        <tr><td>9</td><td>Release</td><td><span class="pill pill-accent">CURRENT</span></td><td>npm/pypi publish preparation</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ TECH STACK ============ -->
+<section id="tech-stack">
+  <h2>Technology Stack</h2>
+  <div class="card-grid-3">
+    <div class="card">
+      <h3>Core</h3>
+      <table style="font-size:13px">
+        <tr><td>Language</td><td><strong>TypeScript (strict)</strong></td></tr>
+        <tr><td>Runtime</td><td><strong>Node.js &ge;20</strong></td></tr>
+        <tr><td>UI Framework</td><td><strong>Lit v5</strong></td></tr>
+        <tr><td>Component Model</td><td><strong>Web Components</strong></td></tr>
+        <tr><td>Module System</td><td><strong>ESM-only</strong></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Build &amp; Test</h3>
+      <table style="font-size:13px">
+        <tr><td>Bundler</td><td><strong>Vite</strong></td></tr>
+        <tr><td>Test Runner</td><td><strong>Vitest</strong></td></tr>
+        <tr><td>E2E Tests</td><td><strong>Playwright</strong></td></tr>
+        <tr><td>Linter</td><td><strong>ESLint</strong></td></tr>
+        <tr><td>Formatter</td><td><strong>Prettier</strong></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Key Dependencies</h3>
+      <table style="font-size:13px">
+        <tr><td>Data Engine</td><td><strong>DuckDB-WASM</strong></td></tr>
+        <tr><td>Data Format</td><td><strong>Apache Arrow</strong></td></tr>
+        <tr><td>Collaboration</td><td><strong>Yjs (CRDTs)</strong></td></tr>
+        <tr><td>AI Providers</td><td><strong>OpenAI, Anthropic, Google</strong></td></tr>
+        <tr><td>Python Bridge</td><td><strong>anywidget + Arrow IPC</strong></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKFLOW ============ -->
+<section id="workflow">
+  <h2>Development Workflow</h2>
+  <div class="card" style="margin-bottom:16px">
+    <h3>CI/CD Pipeline</h3>
+    <div class="mermaid-container">
+      <pre class="mermaid">
+flowchart LR
+    A[Push / PR] --> B[Typecheck\ntsc --build]
+    B --> C[Test\nVitest]
+    C --> D{Node 20 + 22}
+    D --> E[Build\nnpm run build]
+    E --> F[Publish\nnpm publish]
+
+    style A fill:#58a6ff,color:#000
+    style F fill:#3fb950,color:#000
+      </pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Key Milestones</h3>
+    <table>
+      <thead><tr><th>Date</th><th>Event</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>2026-02-24</td><td>Initial commit &mdash; monorepo setup</td><td>14 packages scaffolded, 140 tests</td></tr>
+        <tr><td>2026-02-24</td><td>v0.1.0 changelog published</td><td>Full feature set documented</td></tr>
+        <tr><td>2026-02-28</td><td>Post-QA reconciliation</td><td>5 new packages, rename, 1,162 tests</td></tr>
+        <tr><td>2026-03-05</td><td>Release preparation (current)</td><td>Phase 9 active, chronicle generated</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer style="background:var(--bg-card);border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--text-muted);font-size:13px">
+  <div class="container">
+    phz-grid Project Chronicle &mdash; Generated 2026-03-05 &mdash; Phase 9: Release
+  </div>
+</footer>
+
+<script type="module">
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    localStorage.setItem('phz-chronicle-theme', html.getAttribute('data-theme'));
+  }
+  window.toggleTheme = toggleTheme;
+
+  // Restore theme
+  const saved = localStorage.getItem('phz-chronicle-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-120px 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Load Mermaid
+  import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs').then(m => {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default';
+    m.default.initialize({
+      startOnLoad: true,
+      theme: theme,
+      securityLevel: 'loose',
+      flowchart: { curve: 'basis', padding: 20 }
+    });
+  });
+</script>
+
+</body>
+</html>
