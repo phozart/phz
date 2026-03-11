@@ -66,5 +66,4 @@ docs/guides/*.html
 # Scratch / brainstorming
 idea/
 archive/
-data/
 .claude/
