@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-grid — CSV Exporter
+ * @phozart/grid — CSV Exporter
  *
  * Exports grid data to CSV format. Respects current sort/filter state
  * (exports what the user sees). Triggers browser download.
  */
-import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/core';
 import { formatCellForCopy } from '../clipboard/copy-engine.js';
 
 export interface ExportGroupRow {

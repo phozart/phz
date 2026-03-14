@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — Conditional Formatting Engine
+ * @phozart/grid — Conditional Formatting Engine
  *
  * Evaluates ConditionalFormattingRule against cell values and returns
  * computed styles. Supports color scales, data bars, icon sets, and
  * threshold-based highlighting for targets/anomalies.
  */
-import type { ConditionalFormattingRule, CellStyleConfig, FilterOperator, RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { ConditionalFormattingRule, CellStyleConfig, FilterOperator, RowData, ColumnDefinition } from '@phozart/core';
 export interface ComputedCellStyle {
     backgroundColor?: string;
     color?: string;

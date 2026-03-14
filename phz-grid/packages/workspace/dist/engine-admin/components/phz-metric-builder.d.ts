@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — Metric Builder
+ * @phozart/engine-admin — Metric Builder
  *
  * Create/edit metric definitions: name, data product, formula, format.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { BIEngine } from '@phozart/phz-engine';
+import type { BIEngine } from '@phozart/engine';
 export declare class PhzMetricBuilder extends LitElement {
     static styles: import("lit").CSSResult[];
     engine?: BIEngine;

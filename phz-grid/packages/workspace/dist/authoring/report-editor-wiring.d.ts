@@ -7,7 +7,7 @@
  *
  * Tasks: 1.1, 1.4 (WB-002, WB-003)
  */
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 import { type ReportEditorState } from './report-editor-state.js';
 /**
  * Handle a field-add event from the data source panel.

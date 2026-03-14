@@ -1,4 +1,4 @@
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { ReportPresentation } from '@phozart/engine';
 import type { PhzGridProps } from '../phz-grid.js';
 /**
  * Converts a ReportPresentation bundle into a partial set of PhzGridProps.

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-grid-admin — Column Configurator (Dual-List Picker)
+ * @phozart/grid-admin — Column Configurator (Dual-List Picker)
  *
  * Side-by-side Available/Selected panels with search, drag-to-reorder,
  * multi-select, move up/down, and per-column settings (type, status colors,
  * bar thresholds, date formats).
  */
 import { LitElement } from 'lit';
-import type { ColumnColorThreshold, ColumnFormatting } from '@phozart/phz-engine';
+import type { ColumnColorThreshold, ColumnFormatting } from '@phozart/engine';
 export type { ColumnColorThreshold, ColumnFormatting };
 interface ColumnItem {
     field: string;

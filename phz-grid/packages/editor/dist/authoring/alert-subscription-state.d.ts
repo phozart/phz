@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-editor — Alert & Subscription State (B-2.12)
+ * @phozart/editor — Alert & Subscription State (B-2.12)
  *
  * State machine for personal alerts and report subscriptions.
  * Authors can create, edit, and manage their alert thresholds
  * and scheduled report deliveries.
  */
-import type { PersonalAlert } from '@phozart/phz-shared/types';
-import type { Subscription } from '@phozart/phz-shared/types';
+import type { PersonalAlert } from '@phozart/shared/types';
+import type { Subscription } from '@phozart/shared/types';
 export interface AlertSubscriptionState {
     /** All personal alerts for the current user. */
     alerts: PersonalAlert[];

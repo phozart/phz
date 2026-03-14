@@ -7,8 +7,8 @@ import {
   formatErrorForClipboard,
   createErrorState,
   isRetryableError,
-} from '@phozart/phz-shared/types';
-import type { ErrorScenario, ErrorDetails, ErrorState } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { ErrorScenario, ErrorDetails, ErrorState } from '@phozart/shared/types';
 
 // ========================================================================
 // createDefaultErrorStateConfig

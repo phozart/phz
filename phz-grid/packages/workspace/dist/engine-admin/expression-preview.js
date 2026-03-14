@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — Expression Preview Logic
+ * @phozart/engine-admin — Expression Preview Logic
  *
  * Pure functions for evaluating expressions against sample data,
  * inferring result types, and building validation warnings.
  * Used by the expression builder's preview panel.
  */
-import { evaluateRowExpression } from '@phozart/phz-engine';
+import { evaluateRowExpression } from '@phozart/engine';
 // --- Sample Data Evaluation ---
 export function evaluateSampleRows(expression, sampleData, params = {}) {
     return sampleData.map(row => {

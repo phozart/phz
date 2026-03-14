@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Match Filter Pill
+ * @phozart/criteria — Match Filter Pill
  *
  * Tri-state pill that cycles: all → matching → non-matching → all.
  * Used alongside tree selects to filter which items are shown.
@@ -7,7 +7,7 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { MatchFilterState } from '@phozart/phz-core';
+import type { MatchFilterState } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 const CYCLE: MatchFilterState[] = ['all', 'matching', 'non-matching'];

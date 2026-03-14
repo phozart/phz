@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { computeStatus } from '@phozart/phz-engine';
-import { kpiId } from '@phozart/phz-engine';
-import type { KPIDefinition } from '@phozart/phz-engine';
+import { computeStatus } from '@phozart/engine';
+import { kpiId } from '@phozart/engine';
+import type { KPIDefinition } from '@phozart/engine';
 
 describe('Status Table logic', () => {
   const kpi: KPIDefinition = {

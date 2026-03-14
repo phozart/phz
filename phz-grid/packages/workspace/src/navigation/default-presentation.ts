@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-workspace — DefaultPresentation (V.5)
+ * @phozart/workspace — DefaultPresentation (V.5)
  *
- * @deprecated Import from '@phozart/phz-shared/artifacts' instead.
+ * @deprecated Import from '@phozart/shared/artifacts' instead.
  * These re-exports will be removed in v16.
  */
 
@@ -12,4 +12,4 @@ export {
   applyPersonalView,
   type DefaultPresentation,
   type PersonalView,
-} from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/artifacts';

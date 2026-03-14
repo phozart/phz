@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-vue — Type definitions
+ * @phozart/vue — Type definitions
  */
 import type {
   GridApi,
@@ -18,7 +18,7 @@ import type {
   FilterChangeEvent,
   CellEditCommitEvent,
   CellClickEvent,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 export interface PhzGridProps {
   data: unknown[];

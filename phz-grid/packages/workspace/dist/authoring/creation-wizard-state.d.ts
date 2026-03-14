@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Creation Wizard Simplification State (B-3.02)
+ * @phozart/workspace — Creation Wizard Simplification State (B-3.02)
  *
  * Simplified 3-step wizard: Choose Type -> Configure -> Review.
  * Supports template selection from the templates subsystem and quick-create

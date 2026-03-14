@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression Validator
+ * @phozart/engine — Expression Validator
  *
  * Static validation of ExpressionNode trees.
  * Checks reference resolution, type compatibility, and arity.
@@ -10,15 +10,36 @@ const FUNCTION_ARITY = {
     ROUND: { min: 1, max: 2 },
     FLOOR: { min: 1, max: 1 },
     CEIL: { min: 1, max: 1 },
+    SQRT: { min: 1, max: 1 },
+    POWER: { min: 2, max: 2 },
+    MOD: { min: 2, max: 2 },
+    LOG: { min: 1, max: 2 },
+    EXP: { min: 1, max: 1 },
     UPPER: { min: 1, max: 1 },
     LOWER: { min: 1, max: 1 },
     TRIM: { min: 1, max: 1 },
     LEN: { min: 1, max: 1 },
     SUBSTR: { min: 2, max: 3 },
     CONCAT: { min: 1, max: 99 },
+    LEFT: { min: 2, max: 2 },
+    RIGHT: { min: 2, max: 2 },
+    REPLACE: { min: 3, max: 3 },
+    REPEAT: { min: 2, max: 2 },
     YEAR: { min: 1, max: 1 },
     MONTH: { min: 1, max: 1 },
     DAY: { min: 1, max: 1 },
+    DATE_DIFF: { min: 3, max: 3 },
+    DATE_ADD: { min: 3, max: 3 },
+    FORMAT_DATE: { min: 2, max: 2 },
+    STDDEV: { min: 1, max: 99 },
+    VARIANCE: { min: 1, max: 99 },
+    PERCENTILE: { min: 2, max: 99 },
+    RANK: { min: 1, max: 99 },
+    DENSE_RANK: { min: 1, max: 99 },
+    LAG: { min: 2, max: 3 },
+    LEAD: { min: 2, max: 3 },
+    RUNNING_SUM: { min: 1, max: 99 },
+    NTILE: { min: 2, max: 2 },
     COALESCE: { min: 1, max: 99 },
     IF: { min: 3, max: 3 },
     CLAMP: { min: 3, max: 3 },

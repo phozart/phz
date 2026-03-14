@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-grid — PhzCellEditor (Abstract Base)
+ * @phozart/grid — PhzCellEditor (Abstract Base)
  *
  * All custom cell editors extend this class.
  */

@@ -3,8 +3,8 @@ import {
   createFilterStateManager, resolveFilterValue, createMemoryStorageAdapter,
   reconcilePersistedState,
 } from '../criteria/filter-state.js';
-import type { FilterDefinition, StateResolutionInputs } from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+import type { FilterDefinition, StateResolutionInputs } from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 
 function makeDef(id: string, sessionBehavior: 'reset' | 'persist' = 'reset'): FilterDefinition {
   return {

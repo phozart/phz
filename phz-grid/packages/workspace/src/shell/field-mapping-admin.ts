@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Field Mapping Admin Logic (L.15)
+ * @phozart/workspace — Field Mapping Admin Logic (L.15)
  *
  * Builds a mapping table from DataSourceSchema[] for the field-mapping admin UI.
  */

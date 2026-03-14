@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Dirty Tracker
+ * @phozart/engine — Dirty Tracker
  *
  * Tracks which widgets need re-resolution after data, filter, or config changes.
  * Integration points:

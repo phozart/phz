@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Calculated Field Form
+ * @phozart/engine-admin — Calculated Field Form
  *
  * Slide-over form for creating/editing calculated fields with expression builder.
  */
@@ -13,7 +13,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { calculatedFieldId, evaluateRowExpression } from '@phozart/phz-engine';
+import { calculatedFieldId, evaluateRowExpression } from '@phozart/engine';
 import './phz-expression-builder.js';
 const OUTPUT_TYPES = [
     { value: 'number', label: 'Number' },

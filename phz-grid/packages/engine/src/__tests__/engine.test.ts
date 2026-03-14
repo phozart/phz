@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createBIEngine } from '../engine.js';
 import { dataProductId, kpiId, metricId, reportId, dashboardId, widgetId, reportArtefactId, dashboardArtefactId, widgetArtefactId, parseArtefactId } from '../types.js';
-import { artefactId, filterDefinitionId } from '@phozart/phz-core';
+import { artefactId, filterDefinitionId } from '@phozart/core';
 import type { KPIDefinition } from '../kpi.js';
 import type { DataProductDef } from '../data-product.js';
 

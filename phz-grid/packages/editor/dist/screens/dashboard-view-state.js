@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Dashboard View State (B-2.05)
+ * @phozart/editor — Dashboard View State (B-2.05)
  *
  * Read-only dashboard view state for the editor context.
  * Same visual as the viewer shell, but with the editor chrome

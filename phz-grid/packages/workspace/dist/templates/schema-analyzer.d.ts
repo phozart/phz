@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Schema Analyzer
+ * @phozart/workspace — Schema Analyzer
  *
  * Analyzes a DataSourceSchema and produces a FieldProfile describing
  * the data's characteristics for template matching and auto-binding.

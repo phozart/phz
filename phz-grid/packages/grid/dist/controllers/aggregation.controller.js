@@ -32,5 +32,37 @@ export class AggregationController {
             default: return String(values.length);
         }
     }
+    /**
+     * Compute a summary row for all visible columns.
+     * Returns a map of field -> formatted aggregation value.
+     */
+    computeSummaryRow(rows, columns, fn) {
+        const result = {};
+        for (const col of columns) {
+            // Only numeric columns get sum/avg/min/max. Date/datetime values as strings
+            // cannot be meaningfully Number()-coerced, so they only support count.
+            if (col.type === 'number') {
+                result[col.field] = this.computeColumnAgg(rows, col, fn);
+            }
+            else if (fn === 'count') {
+                result[col.field] = this.computeColumnAgg(rows, col, 'count');
+            }
+            else {
+                result[col.field] = '';
+            }
+        }
+        return result;
+    }
+    static getSummaryLabel(fn) {
+        const labels = {
+            sum: 'Sum',
+            avg: 'Average',
+            min: 'Minimum',
+            max: 'Maximum',
+            count: 'Count',
+            none: '',
+        };
+        return labels[fn] ?? '';
+    }
 }
 //# sourceMappingURL=aggregation.controller.js.map

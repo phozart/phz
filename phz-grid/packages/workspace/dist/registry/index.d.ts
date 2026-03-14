@@ -6,4 +6,6 @@ export type { ValidationResult } from './config-schemas.js';
 export { generateFormFields } from './schema-form-generator.js';
 export type { FormFieldDescriptor, SimpleSchema, PropertyDef } from './schema-form-generator.js';
 export { filterVariants, sortVariantsByName } from './phz-variant-picker.js';
+export { createWidgetThumbnailState, getThumbnail, getThumbnailsByCategory, getVariantThumbnail, setCustomThumbnail, setThumbnailLoading, setThumbnailLoaded, setThumbnailError, } from './widget-thumbnail-state.js';
+export type { ThumbnailEntry, WidgetThumbnailState } from './widget-thumbnail-state.js';
 //# sourceMappingURL=index.d.ts.map

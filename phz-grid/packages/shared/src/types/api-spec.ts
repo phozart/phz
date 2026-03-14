@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — API spec types (A-1.22)
+ * @phozart/shared — API spec types (A-1.22)
  *
  * REST API specification types for backend integration, including
  * role-based access control and complete API configuration.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/grid-creator — Stepped wizard for creating new grids/reports
+ * @phozart/workspace/grid-creator — Stepped wizard for creating new grids/reports
  */
 export { PhzGridCreator } from './phz-grid-creator.js';
 export { PhzCreatorStep } from './phz-creator-step.js';

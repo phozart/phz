@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid-admin — <phz-admin-views>
+ * @phozart/grid-admin — <phz-admin-views>
  *
  * Full CRUD management tab for saved views within the grid admin panel.
  * Lists views, allows rename, delete, set default.
  */
 import { LitElement } from 'lit';
-import type { ViewsSummary } from '@phozart/phz-core';
+import type { ViewsSummary } from '@phozart/core';
 export declare class PhzAdminViews extends LitElement {
     static styles: import("lit").CSSResult[];
     views: ViewsSummary[];

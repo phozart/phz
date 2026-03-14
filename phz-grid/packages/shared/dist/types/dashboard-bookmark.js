@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Dashboard Bookmark Types
+ * @phozart/shared — Dashboard Bookmark Types
  *
  * Serializable bookmark types for persisting full dashboard interaction state.
  * All types are plain objects — no class instances, no functions, no Maps/Sets.

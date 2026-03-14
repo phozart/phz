@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Funnel Chart
+ * @phozart/widgets — Funnel Chart
  *
  * SVG funnel visualization with stage labels, conversion rates,
  * percentages, tooltips, and SR accessibility.

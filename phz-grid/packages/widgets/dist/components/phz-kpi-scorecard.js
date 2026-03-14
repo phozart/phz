@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — KPI Scorecard
+ * @phozart/widgets — KPI Scorecard
  *
  * Matrix: KPIs (rows) x breakdowns (columns) with status cells.
  */
@@ -12,7 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { classifyKPIScore } from '@phozart/phz-engine';
+import { classifyKPIScore } from '@phozart/engine';
 import { formatTooltipContent } from '../tooltip.js';
 import { resolveWidgetState } from '../widget-states.js';
 let PhzKPIScorecard = class PhzKPIScorecard extends LitElement {

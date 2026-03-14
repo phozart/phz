@@ -132,7 +132,7 @@
 
 ### Current State: Well-Designed, Not Connected
 
-The `@phozart/phz-duckdb` package has correct initialization, query execution, and streaming. ADR-004 lays out an ambitious vision. But **zero bytes of DuckDB output flow into the grid's rendering pipeline**. The grid always uses the JavaScript row model.
+The `@phozart/duckdb` package has correct initialization, query execution, and streaming. ADR-004 lays out an ambitious vision. But **zero bytes of DuckDB output flow into the grid's rendering pipeline**. The grid always uses the JavaScript row model.
 
 ### Critical Bugs to Fix First
 
@@ -217,7 +217,7 @@ The AI toolkit already has `dialect: 'duckdb'` support — just needs the execut
 ### Bundle Size Strategy
 
 DuckDB-WASM is ~5MB. Strategy:
-1. **Never bundled** — `@phozart/phz-duckdb` uses dynamic `import()` at runtime
+1. **Never bundled** — `@phozart/duckdb` uses dynamic `import()` at runtime
 2. **Separate package** — not included in the base grid bundle
 3. **Lazy initialization** — WASM loads only when `createDuckDBDataSource()` is called
 4. **Web Worker isolation** — all DuckDB work happens off main thread

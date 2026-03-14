@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine/explorer — Pivot Preview Controller
+ * @phozart/engine/explorer — Pivot Preview Controller
  *
  * Headless controller for preview mode (table/chart/sql).
  * Also converts DropZoneState -> ExploreQuery.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 export function toExploreQuery(state, options) {
     const dimensions = [

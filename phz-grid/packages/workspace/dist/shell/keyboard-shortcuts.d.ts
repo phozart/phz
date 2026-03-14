@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Keyboard Shortcuts (L.12)
+ * @phozart/workspace — Keyboard Shortcuts (L.12)
  *
  * Pure registry for workspace-level keyboard shortcuts.
  * Ctrl and Meta (Cmd on macOS) are treated equivalently.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Template Bindings
+ * @phozart/workspace — Template Bindings
  *
  * Resolves field bindings for template widget slots and provides
  * auto-binding heuristics based on FieldProfile.

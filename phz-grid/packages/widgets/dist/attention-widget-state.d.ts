@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Attention Widget State (7A-D)
+ * @phozart/widgets — Attention Widget State (7A-D)
  *
  * Compact attention summary state for dashboard widgets.
  * Supports priority summary, top items, and responsive container variants.
  *
  * Pure functions only — no side effects, no DOM.
  */
-import type { FilterableAttentionItem } from '@phozart/phz-shared/types';
+import type { FilterableAttentionItem } from '@phozart/shared/types';
 export interface AttentionWidgetState {
     /** All items provided to the widget. */
     items: FilterableAttentionItem[];

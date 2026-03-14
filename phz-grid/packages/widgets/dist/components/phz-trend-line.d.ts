@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Trend Line
+ * @phozart/widgets — Trend Line
  *
  * SVG line chart with optional target reference line and status zones.
  */
 import { LitElement } from 'lit';
-import type { ChartDataSeries, KPIDefinition } from '@phozart/phz-engine';
+import type { ChartDataSeries, KPIDefinition } from '@phozart/engine';
 export declare class PhzTrendLine extends LitElement {
     static styles: import("lit").CSSResult[];
     data?: ChartDataSeries;

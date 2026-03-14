@@ -1,6 +1,6 @@
 /**
  * SSR-safe theme exports — no Lit component imports.
- * Use: import { themes, applyGridTheme } from '@phozart/phz-grid/themes';
+ * Use: import { themes, applyGridTheme } from '@phozart/grid/themes';
  */
 export {
   type GridTheme,

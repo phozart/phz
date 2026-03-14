@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — KPI Form
+ * @phozart/engine-admin — KPI Form
  *
  * Slide-over form for creating/editing KPIs.
  * Supports simple thresholds and custom threshold bands with dynamic sources.
@@ -14,7 +14,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { kpiId } from '@phozart/phz-engine';
+import { kpiId } from '@phozart/engine';
 const BAND_PRESET_COLORS = ['#DC2626', '#D97706', '#F59E0B', '#16A34A', '#3B82F6', '#7C3AED'];
 let PhzKpiForm = class PhzKpiForm extends LitElement {
     constructor() {

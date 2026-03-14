@@ -10,7 +10,7 @@ import type {
   LocalQuery,
   LocalQueryResult,
   QueryBackendCapabilities,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import type { DataAdapter, DataQuery } from '../adapters/data-adapter.js';
 
 export interface ServerQueryBackendOptions {

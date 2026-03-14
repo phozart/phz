@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Filter Definition Studio
+ * @phozart/engine-admin — Filter Definition Studio
  *
  * Rich 3-panel visual builder for creating/editing filter definitions.
  * Layout: Type Catalog (200px) | Configuration Form (1fr) | Live Preview (360px)
@@ -20,10 +20,10 @@ import type {
   DateGranularity, DatePresetGroup, WeekStartDay, WeekNumbering,
   FilterDataSource, ValueSourceConfig, OptionsSource,
   TreeLevelConfig, TreeSourceConfig,
-} from '@phozart/phz-core';
-import { filterDefinitionId, resolveLabelTemplate, buildTreeFromSource } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId, resolveLabelTemplate, buildTreeFromSource } from '@phozart/core';
 
-// @phozart/phz-criteria is loaded dynamically in connectedCallback to avoid
+// @phozart/criteria is loaded dynamically in connectedCallback to avoid
 // a static compile-time edge that creates a circular tsconfig reference.
 
 /* ── Type catalog items ── */
@@ -635,7 +635,7 @@ export class PhzFilterStudio extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    import('@phozart/phz-criteria');
+    import('@phozart/criteria');
     if (this.definition) {
       this.selectedType = this.definition.type;
       this.draft = { ...this.definition };

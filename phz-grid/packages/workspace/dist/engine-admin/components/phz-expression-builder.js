@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Expression Builder
+ * @phozart/engine-admin — Expression Builder
  *
  * Dual-mode expression editor (Block mode + Formula mode).
  * Both modes edit the same ExpressionNode tree.
@@ -13,7 +13,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
-import { parseFormula, formatFormula, validateExpression } from '@phozart/phz-engine';
+import { parseFormula, formatFormula, validateExpression } from '@phozart/engine';
 const LAYER_COLORS = {
     field: '#A8A29E',
     parameter: '#7C3AED',

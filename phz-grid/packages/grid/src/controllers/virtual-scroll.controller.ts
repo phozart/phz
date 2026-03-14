@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { RowData, AsyncDataSource, SortDirection } from '@phozart/phz-core';
+import type { RowData, AsyncDataSource, SortDirection } from '@phozart/core';
 import type { ScrollMode, Density } from '../types.js';
 import { VirtualScroller } from '../virtual-scroller.js';
 import { RemoteDataManager } from '../remote-data-manager.js';

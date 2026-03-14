@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Ownership Model (U.5)
+ * @phozart/workspace — Filter Ownership Model (U.5)
  *
  * Bridges FilterDefinitions, ArtifactFilterContracts, security bindings,
  * and filter rules into the existing FilterContextManager system.

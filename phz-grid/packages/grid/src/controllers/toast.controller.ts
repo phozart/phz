@@ -1,9 +1,22 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
+export type ToastIcon = 'copy' | 'export' | 'check' | 'error' | 'info';
+
+export interface ToastOptions {
+  icon?: ToastIcon;
+  duration?: number;
+  dismissible?: boolean;
+}
+
 export interface ToastInfo {
   message: string;
   type: 'success' | 'info' | 'error';
+  icon?: ToastIcon;
+  duration?: number;
+  dismissible?: boolean;
 }
+
+const DEFAULT_DURATION = 2500;
 
 export class ToastController implements ReactiveController {
   private host: ReactiveControllerHost;
@@ -18,16 +31,31 @@ export class ToastController implements ReactiveController {
 
   hostConnected(): void {}
   hostDisconnected(): void {
-    if (this.timer) clearTimeout(this.timer);
+    this.clearTimer();
+    this.toast = null;
   }
 
-  show(message: string, type: 'success' | 'info' | 'error' = 'info'): void {
-    if (this.timer) clearTimeout(this.timer);
-    this.toast = { message, type };
+  show(message: string, type: 'success' | 'info' | 'error' = 'info', options?: ToastOptions): void {
+    this.clearTimer();
+    this.toast = { message, type, ...options };
+    const duration = options?.duration ?? DEFAULT_DURATION;
     this.timer = setTimeout(() => {
       this.toast = null;
       this.host.requestUpdate();
-    }, 2500);
+    }, duration);
     this.host.requestUpdate();
+  }
+
+  dismiss(): void {
+    this.clearTimer();
+    this.toast = null;
+    this.host.requestUpdate();
+  }
+
+  private clearTimer(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
   }
 }

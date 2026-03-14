@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Data Source Types
+ * @phozart/core — Data Source Types
  */
 
 import type { RowData } from './row.js';

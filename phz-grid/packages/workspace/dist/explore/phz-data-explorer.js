@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Data Explorer Orchestrator (P.5)
+ * @phozart/workspace — Data Explorer Orchestrator (P.5)
  *
  * Main headless controller combining field palette, drop zones,
  * preview, chart suggest, and undo/redo.

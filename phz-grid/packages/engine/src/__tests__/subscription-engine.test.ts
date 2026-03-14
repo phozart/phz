@@ -10,7 +10,7 @@ import {
   getNextScheduledRun,
   isDueForExecution,
 } from '../subscriptions/subscription-engine.js';
-import type { Subscription, SubscriptionSchedule } from '@phozart/phz-shared/types';
+import type { Subscription, SubscriptionSchedule } from '@phozart/shared/types';
 
 // --- Test helpers ---
 

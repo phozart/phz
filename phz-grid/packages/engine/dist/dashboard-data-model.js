@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Dashboard Data Model Store
+ * @phozart/engine — Dashboard Data Model Store
  *
  * Manages the 5-layer computation DAG: Fields → Parameters → Calculated Fields → Metrics → KPIs.
  * Provides CRUD for parameters and calculated fields, and computation pipeline.

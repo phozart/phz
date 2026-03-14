@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Undo Integration
+ * @phozart/workspace — Dashboard Undo Integration
  *
  * Wraps UndoManager<DashboardEditorState> with labeled actions.
  */

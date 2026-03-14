@@ -108,11 +108,11 @@ We will implement a **Schema-as-Contract AI Toolkit** using Zod for schema gener
 ### Implementation
 
 ```typescript
-// @phozart/phz-ai
+// @phozart/ai
 
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
-import type { GridApi, GridState, ColumnDef } from '@phozart/phz-core';
+import type { GridApi, GridState, ColumnDef } from '@phozart/core';
 
 export class AISchemaGenerator {
   constructor(private gridApi: GridApi) {}
@@ -418,8 +418,8 @@ export class AnthropicAdapter implements LLMAdapter {
 ### Usage Example
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
-import { NLQueryProcessor, OpenAIAdapter } from '@phozart/phz-ai';
+import { createGrid } from '@phozart/core';
+import { NLQueryProcessor, OpenAIAdapter } from '@phozart/ai';
 
 // Create grid
 const gridApi = createGrid({

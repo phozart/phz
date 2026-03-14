@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Bookmark State Machine
+ * @phozart/workspace — Bookmark State Machine
  *
  * Pure functions for managing dashboard bookmark CRUD and interaction
  * state capture/restore. No side effects, no DOM.
@@ -9,8 +9,8 @@ import type {
   DashboardBookmark,
   DashboardInteractionState,
   SerializedDrillDownState,
-} from '@phozart/phz-shared';
-import { createBookmarkId } from '@phozart/phz-shared';
+} from '@phozart/shared';
+import { createBookmarkId } from '@phozart/shared';
 
 // ========================================================================
 // State

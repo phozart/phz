@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Default Widget Manifests
+ * @phozart/workspace — Default Widget Manifests
  *
  * Full WidgetManifest definitions for all 13 built-in widget types.
  */

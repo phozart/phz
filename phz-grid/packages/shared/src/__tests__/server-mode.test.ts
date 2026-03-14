@@ -7,8 +7,8 @@ import {
   createDefaultServerGridConfig,
   isServerMode,
   hasServerCapability,
-} from '@phozart/phz-shared/coordination';
-import type { ServerGridConfig } from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
+import type { ServerGridConfig } from '@phozart/shared/coordination';
 
 // ========================================================================
 // createDefaultServerGridConfig

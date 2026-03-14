@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Hybrid Engine Tests (WI 23)
+ * @phozart/duckdb — Hybrid Engine Tests (WI 23)
  *
  * Tests auto-switching between JS row model and DuckDB SQL based on row count.
  */

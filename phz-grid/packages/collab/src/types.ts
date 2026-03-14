@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Type Definitions
+ * @phozart/collab — Type Definitions
  *
  * Real-time collaboration types using Yjs CRDTs.
  */
@@ -12,7 +12,7 @@ import type {
   ColumnDefinition,
   GridState,
   Unsubscribe,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 // Yjs Doc type stub — the real type comes from the yjs peer dependency
 export interface YDoc {

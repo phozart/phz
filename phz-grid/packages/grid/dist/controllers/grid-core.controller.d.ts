@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import { type GridApi, type ColumnDefinition, type RowData, type RowId, type SortDirection, type DataSet, type DataSetMeta, type DataSetColumn, type QueryBackend, type ProgressiveLoadConfig, type ProgressivePhase } from '@phozart/phz-core';
+import { type GridApi, type ColumnDefinition, type RowData, type RowId, type SortDirection, type DataSet, type DataSetMeta, type DataSetColumn, type QueryBackend, type ProgressiveLoadConfig, type ProgressivePhase } from '@phozart/core';
 import { AriaManager } from '../a11y/aria-manager.js';
 export interface StateSyncPayload {
     visibleRows: RowData[];
@@ -21,7 +21,7 @@ export interface GridCoreHost extends ReactiveControllerHost {
     columns: ColumnDefinition[];
     selectionMode: string;
     editMode: string;
-    ariaLabels: import('@phozart/phz-core').AriaLabels;
+    ariaLabels: import('@phozart/core').AriaLabels;
     defaultSortField: string;
     defaultSortDirection: 'asc' | 'desc';
     autoSizeColumns: boolean;

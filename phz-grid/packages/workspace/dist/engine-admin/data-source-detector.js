@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Source Detector
+ * @phozart/engine-admin — Data Source Detector
  *
  * Pure utility functions for schema detection, delimiter detection,
  * CSV parsing, and source config validation.

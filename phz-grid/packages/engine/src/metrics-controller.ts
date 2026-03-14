@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — MetricsController
+ * @phozart/engine — MetricsController
  *
  * Lit reactive controller that exposes EngineMetrics data
  * to admin UI components with configurable auto-refresh.

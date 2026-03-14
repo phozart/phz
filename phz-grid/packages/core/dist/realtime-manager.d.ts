@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — RealtimeManager
+ * @phozart/core — RealtimeManager
  *
  * Manages real-time push updates from a generic RealtimeProvider.
  * Applies delta updates (insert/update/delete/refresh), detects

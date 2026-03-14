@@ -1,5 +1,5 @@
 import { useState, useCallback, type RefObject } from 'react';
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { ReportPresentation } from '@phozart/engine';
 import type { GridAdminApi } from '../phz-grid-admin.js';
 
 export interface GridAdminHookResult {

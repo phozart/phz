@@ -1,14 +1,14 @@
 /**
- * @phozart/phz-editor — EditorShellConfig (B-2.02)
+ * @phozart/editor — EditorShellConfig (B-2.02)
  *
  * Configuration type and factory for the editor shell.
  * Defines which features are enabled, adapter references,
  * theming, and initial state overrides.
  */
-import type { ViewerContext } from '@phozart/phz-shared/adapters';
-import type { DataAdapter } from '@phozart/phz-shared/adapters';
-import type { MeasureRegistryAdapter } from '@phozart/phz-shared/adapters';
-import type { PersistenceAdapter } from '@phozart/phz-shared/adapters';
+import type { ViewerContext } from '@phozart/shared/adapters';
+import type { DataAdapter } from '@phozart/shared/adapters';
+import type { MeasureRegistryAdapter } from '@phozart/shared/adapters';
+import type { PersistenceAdapter } from '@phozart/shared/adapters';
 import type { EditorScreen } from './editor-state.js';
 export interface EditorFeatureFlags {
     /** Enable the visual explorer screen. */

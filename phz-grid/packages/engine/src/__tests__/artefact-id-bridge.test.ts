@@ -8,8 +8,8 @@
 import { describe, it, expect } from 'vitest';
 import { createBIEngine } from '../engine.js';
 import { reportId, dashboardId, reportArtefactId, dashboardArtefactId, widgetArtefactId, widgetId, parseArtefactId } from '../types.js';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
-import type { ArtefactId } from '@phozart/phz-core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
+import type { ArtefactId } from '@phozart/core';
 
 describe('ArtefactId type bridge', () => {
   it('reportArtefactId prefixes with "report:"', () => {

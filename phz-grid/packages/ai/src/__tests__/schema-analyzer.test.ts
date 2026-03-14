@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Schema Analyzer Tests
+ * @phozart/ai — Schema Analyzer Tests
  *
  * Tests for field classification, widget suggestion, and layout generation.
  */

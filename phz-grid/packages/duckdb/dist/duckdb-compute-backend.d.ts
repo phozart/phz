@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-duckdb — DuckDB ComputeBackend
+ * @phozart/duckdb — DuckDB ComputeBackend
  *
  * Implements ComputeBackend by generating SQL and delegating execution
  * to a DuckDB connection via the DuckDBQueryExecutor interface.
  */
-import type { AggregationConfig, PivotConfig } from '@phozart/phz-core';
-import type { ComputeBackend, CalculatedFieldInput } from '@phozart/phz-engine';
-import type { AggregationResult } from '@phozart/phz-engine';
-import type { PivotResult } from '@phozart/phz-engine';
+import type { AggregationConfig, PivotConfig } from '@phozart/core';
+import type { ComputeBackend, CalculatedFieldInput } from '@phozart/engine';
+import type { AggregationResult } from '@phozart/engine';
+import type { PivotResult } from '@phozart/engine';
 import { type FilterInput } from './sql-builder.js';
 export interface DuckDBQueryExecutor {
     execute(sql: string, params?: unknown[]): Promise<Record<string, unknown>[]>;

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — Attention System (C-2.12)
+ * @phozart/engine — Attention System (C-2.12)
  *
  * State management for the attention panel (notifications, alerts,
- * action items). Consumes AttentionItem from @phozart/phz-shared.
+ * action items). Consumes AttentionItem from @phozart/shared.
  *
  * Pure functions only — no side effects, no DOM.
  */
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 export interface AttentionSystemState {
     items: AttentionItem[];
     unreadCount: number;

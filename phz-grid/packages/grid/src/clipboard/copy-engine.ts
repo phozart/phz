@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — Copy Engine
+ * @phozart/grid — Copy Engine
  *
  * Pure utility module for clipboard copy operations.
  * Handles cell value formatting and TSV generation.
  * No DOM or Lit dependencies — fully testable in isolation.
  */
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 import { formatDate, DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from '../formatters/date-formatter.js';
 
 export interface ColumnGroup {

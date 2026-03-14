@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { ColumnDefinition, RowData, RowId } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData, RowId } from '@phozart/core';
 import type { ToastController } from './toast.controller.js';
 import { formatCellForCopy, copyToClipboard, buildCopyText } from '../clipboard/copy-engine.js';
 
@@ -35,7 +35,7 @@ export class ClipboardController implements ReactiveController {
     const colType = (col?.type as string) ?? 'string';
     const text = formatCellForCopy(row[field], colType, this.host.copyFormatted, this.host.dateFormats[field]);
     copyToClipboard(text);
-    this.host.toast.show('Cell copied', 'success');
+    this.host.toast.show('Cell copied', 'success', { icon: 'copy' });
   }
 
   copyRow(rowId: RowId): void {
@@ -44,7 +44,7 @@ export class ClipboardController implements ReactiveController {
     const cols = this.host.columnDefs.filter(c => !this.host.excludeFieldsFromCopy.includes(c.field));
     const result = buildCopyText([row], cols, { includeHeaders: this.host.copyHeaders, formatted: this.host.copyFormatted, dateFormats: this.host.dateFormats });
     copyToClipboard(result.text);
-    this.host.toast.show('Row copied', 'success');
+    this.host.toast.show('Row copied', 'success', { icon: 'copy' });
   }
 
   copyCellRange(includeHeaders: boolean): void {
@@ -57,18 +57,18 @@ export class ClipboardController implements ReactiveController {
     const cols = this.host.columnDefs.slice(minC, maxC + 1).filter(c => !this.host.excludeFieldsFromCopy.includes(c.field));
     const result = buildCopyText(rows, cols, { includeHeaders, formatted: this.host.copyFormatted, dateFormats: this.host.dateFormats });
     copyToClipboard(result.text);
-    this.host.toast.show(`${rows.length * cols.length} cells copied`, 'success');
+    this.host.toast.show(`${rows.length * cols.length} cells copied`, 'success', { icon: 'copy' });
   }
 
   copySelectedRows(includeHeaders: boolean): void {
     const rows = this.host.visibleRows.filter(r => this.host.selectedRowIds.has(r.__id));
     const cols = this.host.columnDefs.filter(c => !this.host.excludeFieldsFromCopy.includes(c.field));
     if (this.host.maxCopyRows > 0 && rows.length > this.host.maxCopyRows) {
-      this.host.toast.show(`Cannot copy more than ${this.host.maxCopyRows} rows`, 'error');
+      this.host.toast.show(`Cannot copy more than ${this.host.maxCopyRows} rows`, 'error', { icon: 'error' });
       return;
     }
     const result = buildCopyText(rows, cols, { includeHeaders, formatted: this.host.copyFormatted, dateFormats: this.host.dateFormats });
     copyToClipboard(result.text);
-    this.host.toast.show(`${rows.length} rows copied`, 'success');
+    this.host.toast.show(`${rows.length} rows copied`, 'success', { icon: 'copy' });
   }
 }

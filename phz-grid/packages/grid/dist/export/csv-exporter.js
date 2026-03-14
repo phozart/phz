@@ -119,8 +119,9 @@ export function exportToCSV(gridApi, columnDefs, options = {}) {
         }
     }
     else {
-        // Flat rows — use sorted row model
-        const allRows = gridApi.getSortedRowModel().rows;
+        // Flat rows — prefer pre-filtered rows (respects client-side search),
+        // fall back to sorted row model for full dataset export.
+        const allRows = options.rows ?? gridApi.getSortedRowModel().rows;
         let dataRows;
         if (selectedOnly) {
             const sel = gridApi.getSelection();

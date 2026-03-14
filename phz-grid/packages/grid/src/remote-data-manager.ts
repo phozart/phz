@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — RemoteDataManager
+ * @phozart/grid — RemoteDataManager
  *
  * Manages async data fetching with page-based caching for remote data sources.
- * Works with the AsyncDataSource interface from @phozart/phz-core.
+ * Works with the AsyncDataSource interface from @phozart/core.
  */
 
-import type { AsyncDataSource, DataFetchRequest } from '@phozart/phz-core';
+import type { AsyncDataSource, DataFetchRequest } from '@phozart/core';
 
 export interface RemoteDataManagerOptions {
   dataSource: AsyncDataSource;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Model Sidebar
+ * @phozart/engine-admin — Data Model Sidebar
  *
  * 5-section collapsible sidebar for the computation DAG layers:
  * Fields (gray) → Parameters (purple) → Calculated Fields (amber) → Metrics (blue) → KPIs (green)

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Row Model Pipeline
+ * @phozart/core — Row Model Pipeline
  *
  * Implements the data processing pipeline:
  *   Raw Data → Parse → Filter → Sort → Group → Flatten → Virtualize

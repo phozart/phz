@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — ServerDataOrchestrator
+ * @phozart/core — ServerDataOrchestrator
  *
  * Debounces rapid state changes and cancels superseded in-flight requests
  * via AbortController. Generates unique requestIds for deduplication.

@@ -1,17 +1,17 @@
 /**
- * @phozart/phz-local — Filesystem Workspace Adapter (R.2)
+ * @phozart/local — Filesystem Workspace Adapter (R.2)
  *
  * Implements WorkspaceAdapter over the filesystem.
  * Artifacts stored as: {dataDir}/artifacts/{type}/{id}.json
  * History versions as: {dataDir}/artifacts/{type}/{id}.v{n}.json
  * Uses atomic writes (write .tmp, rename) to prevent corruption.
  */
-import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/phz-engine';
-import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/phz-engine';
-import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/phz-shared/definitions';
-import type { WorkspaceAdapter, ArtifactHistoryExtension, VersionSummary } from '@phozart/phz-workspace';
-import type { PlacementId, ArtifactMeta, ArtifactFilter, PlacementFilter, AlertRule, AlertRuleId, BreachRecord, BreachId, AlertSubscription, TemplateDefinition, TemplateId } from '@phozart/phz-workspace';
-import type { PlacementRecord } from '@phozart/phz-workspace';
+import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/engine';
+import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/engine';
+import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/shared/definitions';
+import type { WorkspaceAdapter, ArtifactHistoryExtension, VersionSummary } from '@phozart/workspace';
+import type { PlacementId, ArtifactMeta, ArtifactFilter, PlacementFilter, AlertRule, AlertRuleId, BreachRecord, BreachId, AlertSubscription, TemplateDefinition, TemplateId } from '@phozart/workspace';
+import type { PlacementRecord } from '@phozart/workspace';
 export declare class FsWorkspaceAdapter implements WorkspaceAdapter, ArtifactHistoryExtension {
     private dataDir;
     constructor(dataDir: string);

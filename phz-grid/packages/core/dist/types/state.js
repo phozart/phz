@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — State Types
+ * @phozart/core — State Types
  */
 export const DEFAULT_BREAKPOINTS = {
     xs: 0,

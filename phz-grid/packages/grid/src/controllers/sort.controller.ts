@@ -1,15 +1,17 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition, SortDirection } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, SortDirection } from '@phozart/core';
 import type { AriaManager } from '../a11y/aria-manager.js';
 
 export interface SortHost extends ReactiveControllerHost {
   gridApi: GridApi | null;
   ariaManager: AriaManager | null;
   sortColumns: Array<{ field: string; direction: SortDirection }>;
+  sortDebounceMs?: number;
 }
 
 export class SortController implements ReactiveController {
   private host: SortHost;
+  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(host: SortHost) {
     this.host = host;
@@ -17,11 +19,34 @@ export class SortController implements ReactiveController {
   }
 
   hostConnected(): void {}
-  hostDisconnected(): void {}
+
+  hostDisconnected(): void {
+    if (this.debounceTimer !== null) {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = null;
+    }
+  }
 
   handleHeaderClick(col: ColumnDefinition, e: MouseEvent): void {
     if (!this.host.gridApi) return;
     if ((e.target as HTMLElement).closest('.phz-filter-btn')) return;
+
+    const debounceMs = this.host.sortDebounceMs;
+    if (debounceMs && debounceMs > 0) {
+      if (this.debounceTimer !== null) {
+        clearTimeout(this.debounceTimer);
+      }
+      this.debounceTimer = setTimeout(() => {
+        this.debounceTimer = null;
+        this.executeSortAction(col, e);
+      }, debounceMs);
+    } else {
+      this.executeSortAction(col, e);
+    }
+  }
+
+  private executeSortAction(col: ColumnDefinition, e: MouseEvent): void {
+    if (!this.host.gridApi) return;
 
     if (e.ctrlKey || e.metaKey) {
       const existing = this.host.sortColumns.find(s => s.field === col.field);

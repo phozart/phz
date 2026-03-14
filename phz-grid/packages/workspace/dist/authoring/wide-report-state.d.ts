@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Wide Report Editor State (B-3.03)
+ * @phozart/workspace — Wide Report Editor State (B-3.03)
  *
  * Pure functions for managing reports with 30+ columns.
  * Supports column groups, horizontal scroll with frozen columns,

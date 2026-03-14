@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Grid Options Panel
+ * @phozart/grid-admin — Grid Options Panel
  *
  * Display/Behavior/Features/Pagination grouped toggles.
  */

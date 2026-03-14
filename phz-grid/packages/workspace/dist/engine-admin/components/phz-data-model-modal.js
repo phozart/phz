@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Model Modal
+ * @phozart/engine-admin — Data Model Modal
  *
  * Centered 720px modal workspace for creating/editing data model entities.
  * Replaces the narrow 380px slide-over with guidance header, existing items

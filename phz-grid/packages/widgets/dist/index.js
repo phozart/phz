@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Lit Web Component Widgets
+ * @phozart/widgets — Lit Web Component Widgets
  *
  * KPI cards, scorecards, charts, dashboards, and more.
  * All components are framework-agnostic Web Components.
@@ -30,6 +30,7 @@ export { PhzScatterChart, computeNiceScale as scatterNiceScale, scalePoint, comp
 export { PhzHeatmap, hexToRGB, interpolateColor, computeHeatmapCells, buildHeatmapAccessibleDescription } from './components/phz-heatmap.js';
 export { PhzWaterfallChart, computeWaterfallBars, computeWaterfallBounds, buildWaterfallAccessibleDescription, WATERFALL_COLORS } from './components/phz-waterfall-chart.js';
 export { PhzFunnelChart, computeFunnelStages, computeOverallConversion, buildFunnelAccessibleDescription, FUNNEL_PALETTE } from './components/phz-funnel-chart.js';
+export { PhzSlicer, filterItems, toggleMultiValue, selectAll, selectNone, clampRange, buildRangeValues } from './components/phz-slicer.js';
 // Responsive layout
 export { resolveBreakpoint, computeResponsiveColumns, clampColSpan, computeResponsiveLayout, generateContainerQueryCSS } from './responsive-layout.js';
 // Cross-filtering
@@ -68,4 +69,8 @@ export { createValueOnlyRenderer, createSparklineRenderer, createDeltaRenderer, 
 export { initialImpactChainState, computeChainLayout, getChainContainerVariant, toggleNodeExpand, setContainerWidth, getHypothesisColor, getHypothesisLabel, getNodeRoleColor, computeChainSummary, resolveConclusion } from './impact-chain-state.js';
 // Decision Tree Variants (7A-C)
 export { DECISION_TREE_VARIANTS } from './decision-tree-variants.js';
+// Unified Chart Component
+export { PhzChart } from './components/phz-chart.js';
+// Chart subsystem
+export * from './chart/index.js';
 //# sourceMappingURL=index.js.map

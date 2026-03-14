@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — State Types
+ * @phozart/core — State Types
  */
 import type { RowId } from './row.js';
 import type { CellPosition } from './cell.js';
@@ -95,6 +95,7 @@ export interface ColumnState {
     order: string[];
     widths: Record<string, number>;
     visibility: Record<string, boolean>;
+    pinOverrides: Record<string, 'left' | 'right' | null>;
 }
 export interface FocusState {
     activeCell: CellPosition | null;
@@ -122,6 +123,7 @@ export interface HistoryState {
     canRedo: boolean;
     undoStack: number;
     redoStack: number;
+    lastActionLabel?: string;
 }
 export interface ResponsiveState {
     breakpoint: Breakpoint;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Template Validator
+ * @phozart/workspace — Template Validator
  *
  * Validates a TemplateDefinition against a ManifestRegistry
  * to ensure all referenced widget types exist and the layout is consistent.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — KPI Generator
+ * @phozart/ai — KPI Generator
  *
  * Generates KPI configurations from natural language descriptions + data schema.
  * Uses the NL parser for extraction and fuzzy field matching.

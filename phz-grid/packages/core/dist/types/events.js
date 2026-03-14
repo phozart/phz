@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Event Types
+ * @phozart/core — Event Types
  */
 export {};
 //# sourceMappingURL=events.js.map

@@ -75,42 +75,42 @@
 
 | Package | Description | Key Feature |
 |---------|-------------|-------------|
-| @phozart/phz-core | Headless grid engine | StateManager, GridApi, subscribeSelector(), tiered attention |
-| @phozart/phz-grid | Web Components rendering | 17 Reactive Controllers, virtual scrolling, column pinning |
-| @phozart/phz-definitions | Serializable blueprints | GridDefinition, Zod validation, stores, converters |
+| @phozart/core | Headless grid engine | StateManager, GridApi, subscribeSelector(), tiered attention |
+| @phozart/grid | Web Components rendering | 17 Reactive Controllers, virtual scrolling, column pinning |
+| @phozart/definitions | Serializable blueprints | GridDefinition, Zod validation, stores, converters |
 
 ### BI Engine (MIT)
 
 | Package | Description | Key Feature |
 |---------|-------------|-------------|
-| @phozart/phz-engine | BI computation | BIEngine facade, KPIs, metrics, aggregation, pivot, expressions |
-| @phozart/phz-widgets | Dashboard widgets | 20+ Lit components (charts, KPIs, gauges), SVG-based, 3 themes |
-| @phozart/phz-criteria | Filter UI | Bar + drawer, 8 field types, presets, admin tools |
+| @phozart/engine | BI computation | BIEngine facade, KPIs, metrics, aggregation, pivot, expressions |
+| @phozart/widgets | Dashboard widgets | 20+ Lit components (charts, KPIs, gauges), SVG-based, 3 themes |
+| @phozart/criteria | Filter UI | Bar + drawer, 8 field types, presets, admin tools |
 
 ### Admin & Tools (MIT)
 
 | Package | Description | Key Feature |
 |---------|-------------|-------------|
-| @phozart/phz-grid-admin | Grid visual config | Columns, formatting, theme, export, views |
-| @phozart/phz-engine-admin | BI artifact designers | Report/KPI/Dashboard designers, SaveController |
-| @phozart/phz-grid-creator | Creation wizard | 5-step wizard, pure state machine |
+| @phozart/grid-admin | Grid visual config | Columns, formatting, theme, export, views |
+| @phozart/engine-admin | BI artifact designers | Report/KPI/Dashboard designers, SaveController |
+| @phozart/grid-creator | Creation wizard | 5-step wizard, pure state machine |
 
 ### Framework Adapters (MIT)
 
 | Package | Description | Key Feature |
 |---------|-------------|-------------|
-| @phozart/phz-react | React wrapper | PhzGrid, PhzGridAdmin, hooks |
-| @phozart/phz-vue | Vue wrapper | definePhzGrid, definePhzGridAdmin |
-| @phozart/phz-angular | Angular wrapper | PhzGridModule |
+| @phozart/react | React wrapper | PhzGrid, PhzGridAdmin, hooks |
+| @phozart/vue | Vue wrapper | definePhzGrid, definePhzGridAdmin |
+| @phozart/angular | Angular wrapper | PhzGridModule |
 
 ### Specialized (MIT)
 
 | Package | Description | Key Feature |
 |---------|-------------|-------------|
-| @phozart/phz-duckdb | DuckDB-WASM adapter | SQL push-down, AsyncDataSource, DuckDBBridge |
-| @phozart/phz-ai | AI toolkit | Schema-as-contract, NL query |
-| @phozart/phz-collab | Collaboration | Yjs CRDTs, sync adapters |
-| @phozart/phz-python | Python package | pip install, anywidget + Arrow IPC |
+| @phozart/duckdb | DuckDB-WASM adapter | SQL push-down, AsyncDataSource, DuckDBBridge |
+| @phozart/ai | AI toolkit | Schema-as-contract, NL query |
+| @phozart/collab | Collaboration | Yjs CRDTs, sync adapters |
+| @phozart/python | Python package | pip install, anywidget + Arrow IPC |
 
 ---
 

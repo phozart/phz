@@ -1,10 +1,10 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
-import type { RowGroup } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
+import type { RowGroup } from '@phozart/core';
 import { downloadCSV, type ExportGroupRow } from '../export/csv-exporter.js';
 import { downloadExcel, type CellFormatting } from '../export/excel-exporter.js';
 import type { ToastController } from './toast.controller.js';
-import type { DataSetMeta } from '@phozart/phz-core';
+import type { DataSetMeta } from '@phozart/core';
 
 type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
 
@@ -70,7 +70,7 @@ export class ExportController implements ReactiveController {
       compactNumbers: this.host.compactNumbers || undefined,
       dataSetMeta: this.host._dataSetMeta,
     });
-    this.host.toast.show(`Exported ${options?.selectedOnly ? 'selected' : filteredRows.length} rows`, 'success');
+    this.host.toast.show(`Exported ${options?.selectedOnly ? 'selected' : filteredRows.length} rows`, 'success', { icon: 'export' });
   }
 
   exportExcel(options?: {
@@ -105,7 +105,7 @@ export class ExportController implements ReactiveController {
       compactNumbers: this.host.compactNumbers || undefined,
       dataSetMeta: this.host._dataSetMeta,
     });
-    this.host.toast.show('Exported to Excel', 'success');
+    this.host.toast.show('Exported to Excel', 'success', { icon: 'export' });
   }
 
   private buildExportGroupRows(): ExportGroupRow[] {

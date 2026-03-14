@@ -8,7 +8,7 @@
  * Tasks: 1.1, 1.4 (WB-002, WB-003)
  */
 
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 import {
   addColumn,
   removeColumn,

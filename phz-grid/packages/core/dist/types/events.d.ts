@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Event Types
+ * @phozart/core — Event Types
  */
 import type { RowId, RowData } from './row.js';
 import type { CellPosition } from './cell.js';

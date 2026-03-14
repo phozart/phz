@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Type Exports
+ * @phozart/core — Type Exports
  */
 
 export * from './common.js';

@@ -14,7 +14,7 @@
  *   ></phz-data-source-panel>
  */
 import { LitElement } from 'lit';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 export declare class PhzDataSourcePanel extends LitElement {
     static styles: import("lit").CSSResult;
     /** The data adapter to query for sources and schemas. */

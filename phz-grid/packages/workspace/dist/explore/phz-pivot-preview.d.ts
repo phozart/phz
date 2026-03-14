@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Pivot Preview Controller (P.3)
+ * @phozart/workspace — Pivot Preview Controller (P.3)
  *
  * Headless controller for preview mode (table/chart/sql).
  * Also converts DropZoneState → ExploreQuery.

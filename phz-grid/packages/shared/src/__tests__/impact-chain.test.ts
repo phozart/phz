@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Impact Chain Type Tests (7A-C)
+ * @phozart/shared — Impact Chain Type Tests (7A-C)
  */
 import { describe, it, expect } from 'vitest';
 import type {

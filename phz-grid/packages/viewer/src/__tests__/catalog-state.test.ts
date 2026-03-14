@@ -14,8 +14,12 @@ import {
   toggleViewMode,
   getCurrentPage,
   getTotalPages,
+  addRecentItem,
+  getRecentArtifacts,
+  loadPersistedFavorites,
+  loadPersistedRecents,
 } from '../screens/catalog-state.js';
-import type { VisibilityMeta } from '@phozart/phz-shared/artifacts';
+import type { VisibilityMeta } from '@phozart/shared/artifacts';
 
 const makeArtifact = (id: string, name: string, type: string, visibility = 'published'): VisibilityMeta => ({
   id,
@@ -220,6 +224,104 @@ describe('catalog-state', () => {
     it('returns 1 for empty results', () => {
       const state = createCatalogState();
       expect(getTotalPages(state)).toBe(1);
+    });
+  });
+
+  describe('recent items', () => {
+    it('creates state with empty recentItems by default', () => {
+      const state = createCatalogState();
+      expect(state.recentItems).toEqual([]);
+    });
+
+    it('addRecentItem adds artifact to recents', () => {
+      const state = createCatalogState({ artifacts: sampleArtifacts });
+      const updated = addRecentItem(state, 'd1');
+      expect(updated.recentItems).toHaveLength(1);
+      expect(updated.recentItems[0].id).toBe('d1');
+      expect(typeof updated.recentItems[0].timestamp).toBe('number');
+    });
+
+    it('addRecentItem moves existing item to front (most recent)', () => {
+      let state = createCatalogState({ artifacts: sampleArtifacts });
+      state = addRecentItem(state, 'd1');
+      state = addRecentItem(state, 'r1');
+      state = addRecentItem(state, 'd1'); // re-add d1
+      expect(state.recentItems).toHaveLength(2);
+      expect(state.recentItems[0].id).toBe('d1');
+      expect(state.recentItems[1].id).toBe('r1');
+    });
+
+    it('addRecentItem caps at 10 items (oldest removed)', () => {
+      let state = createCatalogState();
+      for (let i = 0; i < 12; i++) {
+        state = addRecentItem(state, `item-${i}`);
+      }
+      expect(state.recentItems).toHaveLength(10);
+      // Most recent should be first
+      expect(state.recentItems[0].id).toBe('item-11');
+      // Oldest surviving should be item-2 (items 0 and 1 evicted)
+      expect(state.recentItems[9].id).toBe('item-2');
+    });
+
+    it('getRecentArtifacts returns matching artifacts from the artifacts array', () => {
+      let state = createCatalogState({ artifacts: sampleArtifacts });
+      state = addRecentItem(state, 'r1');
+      state = addRecentItem(state, 'd1');
+      const recents = getRecentArtifacts(state);
+      expect(recents).toHaveLength(2);
+      expect(recents[0].id).toBe('d1'); // most recent first
+      expect(recents[1].id).toBe('r1');
+    });
+
+    it('getRecentArtifacts returns empty array if no recents', () => {
+      const state = createCatalogState({ artifacts: sampleArtifacts });
+      expect(getRecentArtifacts(state)).toEqual([]);
+    });
+
+    it('getRecentArtifacts skips IDs not found in artifacts', () => {
+      let state = createCatalogState({ artifacts: sampleArtifacts });
+      state = addRecentItem(state, 'd1');
+      state = addRecentItem(state, 'nonexistent');
+      const recents = getRecentArtifacts(state);
+      expect(recents).toHaveLength(1);
+      expect(recents[0].id).toBe('d1');
+    });
+  });
+
+  describe('persistence helpers', () => {
+    it('loadPersistedFavorites sets favoriteIds from array', () => {
+      const state = createCatalogState();
+      const updated = loadPersistedFavorites(state, ['d1', 'r1', 'g1']);
+      expect(updated.favoriteIds).toEqual(new Set(['d1', 'r1', 'g1']));
+    });
+
+    it('loadPersistedFavorites replaces existing favorites', () => {
+      const state = createCatalogState({ favoriteIds: new Set(['old-1']) });
+      const updated = loadPersistedFavorites(state, ['d1']);
+      expect(updated.favoriteIds.has('old-1')).toBe(false);
+      expect(updated.favoriteIds.has('d1')).toBe(true);
+    });
+
+    it('loadPersistedRecents sets recentItems from array', () => {
+      const items = [
+        { id: 'd1', timestamp: 1000 },
+        { id: 'r1', timestamp: 900 },
+      ];
+      const state = createCatalogState();
+      const updated = loadPersistedRecents(state, items);
+      expect(updated.recentItems).toEqual(items);
+    });
+
+    it('loadPersistedRecents caps at 10 items', () => {
+      const items = Array.from({ length: 15 }, (_, i) => ({
+        id: `item-${i}`,
+        timestamp: 1000 - i,
+      }));
+      const state = createCatalogState();
+      const updated = loadPersistedRecents(state, items);
+      expect(updated.recentItems).toHaveLength(10);
+      expect(updated.recentItems[0].id).toBe('item-0');
+      expect(updated.recentItems[9].id).toBe('item-9');
     });
   });
 });

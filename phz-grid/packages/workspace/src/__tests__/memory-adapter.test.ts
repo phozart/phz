@@ -3,13 +3,13 @@ import { MemoryWorkspaceAdapter } from '../adapters/memory-adapter.js';
 import { createPlacement } from '../placement.js';
 import { placementId } from '../types.js';
 import type { PlacementRecord } from '../placement.js';
-import { reportId, dashboardId, kpiId, metricId } from '@phozart/phz-engine';
-import type { ReportConfig } from '@phozart/phz-engine';
-import type { DashboardConfig } from '@phozart/phz-engine';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import type { MetricDef } from '@phozart/phz-engine';
-import { createDefinitionId } from '@phozart/phz-shared/definitions';
-import type { GridDefinition } from '@phozart/phz-shared/definitions';
+import { reportId, dashboardId, kpiId, metricId } from '@phozart/engine';
+import type { ReportConfig } from '@phozart/engine';
+import type { DashboardConfig } from '@phozart/engine';
+import type { KPIDefinition } from '@phozart/engine';
+import type { MetricDef } from '@phozart/engine';
+import { createDefinitionId } from '@phozart/shared/definitions';
+import type { GridDefinition } from '@phozart/shared/definitions';
 
 function makeReport(id: string, name: string): ReportConfig {
   return { id: reportId(id), name } as ReportConfig;

@@ -1,11 +1,11 @@
-# @phozart/phz-grid
+# @phozart/grid
 
 Web Components rendering layer for the phz-grid SDK. Built with Lit, provides custom elements for the data grid, toolbar, column chooser, context menu, and more. Includes accessibility support (ARIA, keyboard navigation, Forced Colors Mode), cell renderers/editors, export utilities, and a three-layer CSS token system.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-grid
+npm install @phozart/grid
 ```
 
 ## Quick Start
@@ -13,7 +13,7 @@ npm install @phozart/phz-grid
 ### As a Module
 
 ```ts
-import '@phozart/phz-grid';
+import '@phozart/grid';
 ```
 
 ```html
@@ -102,7 +102,7 @@ import {
   ImageCellRenderer,
   ProgressCellRenderer,
   renderSparkline,
-} from '@phozart/phz-grid';
+} from '@phozart/grid';
 ```
 
 ### Custom Renderers
@@ -110,7 +110,7 @@ import {
 Extend `PhzCellRenderer` to create custom renderers:
 
 ```ts
-import { PhzCellRenderer } from '@phozart/phz-grid';
+import { PhzCellRenderer } from '@phozart/grid';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
@@ -134,7 +134,7 @@ import {
   SelectCellEditor,
   DateCellEditor,
   CheckboxCellEditor,
-} from '@phozart/phz-grid';
+} from '@phozart/grid';
 ```
 
 ### Custom Editors
@@ -142,7 +142,7 @@ import {
 Extend `PhzCellEditor`:
 
 ```ts
-import { PhzCellEditor } from '@phozart/phz-grid';
+import { PhzCellEditor } from '@phozart/grid';
 
 @customElement('my-rating-editor')
 class RatingEditor extends PhzCellEditor {
@@ -159,7 +159,7 @@ class RatingEditor extends PhzCellEditor {
 phz-grid uses a three-layer CSS custom property system:
 
 ```ts
-import { BrandTokens, SemanticTokens, ComponentTokens, generateTokenStyles } from '@phozart/phz-grid';
+import { BrandTokens, SemanticTokens, ComponentTokens, generateTokenStyles } from '@phozart/grid';
 ```
 
 ```css
@@ -185,7 +185,7 @@ phz-grid {
 ## Accessibility
 
 ```ts
-import { AriaManager, KeyboardNavigator, ForcedColorsAdapter, forcedColorsCSS } from '@phozart/phz-grid';
+import { AriaManager, KeyboardNavigator, ForcedColorsAdapter, forcedColorsCSS } from '@phozart/grid';
 ```
 
 - Full keyboard navigation (arrow keys, Tab, Enter, Escape)
@@ -196,7 +196,7 @@ import { AriaManager, KeyboardNavigator, ForcedColorsAdapter, forcedColorsCSS } 
 ## Export
 
 ```ts
-import { exportToCSV, downloadCSV, exportToExcel, downloadExcel } from '@phozart/phz-grid';
+import { exportToCSV, downloadCSV, exportToExcel, downloadExcel } from '@phozart/grid';
 
 // CSV
 const csv = exportToCSV(data, columns, options);
@@ -210,7 +210,7 @@ downloadExcel(excel, 'export.xlsx');
 ## Features
 
 ```ts
-import { createConditionalFormattingEngine, detectAnomalies } from '@phozart/phz-grid';
+import { createConditionalFormattingEngine, detectAnomalies } from '@phozart/grid';
 
 // Conditional formatting
 const engine = createConditionalFormattingEngine([
@@ -228,7 +228,7 @@ const anomalies = detectAnomalies(data, 'revenue');
 ## Clipboard
 
 ```ts
-import { buildCopyText, copyToClipboard } from '@phozart/phz-grid';
+import { buildCopyText, copyToClipboard } from '@phozart/grid';
 
 const text = buildCopyText(selectedCells, data, columns);
 await copyToClipboard(text);
@@ -240,10 +240,10 @@ In addition to core types (`string`, `number`, `boolean`, `date`, `custom`), the
 
 ## Re-exports
 
-This package re-exports everything from `@phozart/phz-core` for convenience. You can import core types directly:
+This package re-exports everything from `@phozart/core` for convenience. You can import core types directly:
 
 ```ts
-import { createGrid, type ColumnDefinition, type GridApi } from '@phozart/phz-grid';
+import { createGrid, type ColumnDefinition, type GridApi } from '@phozart/grid';
 ```
 
 ## License

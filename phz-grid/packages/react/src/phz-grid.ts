@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzGrid React Component
+ * @phozart/react — PhzGrid React Component
  *
  * Wraps the <phz-grid> Web Component for React using @lit/react's
  * createComponent() for automatic property bridging. Event handlers
@@ -31,8 +31,21 @@ import type {
   StateChangeEvent,
   QueryBackend,
   ProgressiveLoadConfig,
-} from '@phozart/phz-core';
-import { PhzGrid as PhzGridElement } from '@phozart/phz-grid';
+  DataSet,
+  AsyncDataSource,
+  DrillThroughConfig,
+  GridRowDrillSource,
+  GenerateDashboardConfig,
+  ColumnFormatting,
+} from '@phozart/core';
+import {
+  PhzGrid as PhzGridElement,
+  type RowAction,
+  type ComputedColumnDef,
+  type ColumnProfile,
+  type RowActionEventDetail,
+  type GenerateDashboardEventDetail,
+} from '@phozart/grid';
 
 // ---------------------------------------------------------------------------
 // @lit/react base component — auto-bridges Lit @property fields to React props
@@ -158,16 +171,16 @@ export interface PhzGridProps {
   maxCopyRows?: number;
   excludeFieldsFromCopy?: string[];
   enableAnomalyDetection?: boolean;
-  columnFormatting?: Record<string, any>;
-  computedColumns?: any[];
-  columnProfiles?: any[];
-  rowActions?: any[];
-  drillThroughConfig?: any;
-  generateDashboardConfig?: any;
+  columnFormatting?: Record<string, ColumnFormatting>;
+  computedColumns?: ComputedColumnDef[];
+  columnProfiles?: ColumnProfile[];
+  rowActions?: RowAction[];
+  drillThroughConfig?: DrillThroughConfig;
+  generateDashboardConfig?: GenerateDashboardConfig;
   reportId?: string;
   reportName?: string;
-  dataSet?: any;
-  remoteDataSource?: any;
+  dataSet?: DataSet;
+  remoteDataSource?: AsyncDataSource;
   virtualRowHeight?: number;
   groupTotalsOverrides?: Record<string, 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none'>;
   allowFiltering?: boolean;
@@ -191,14 +204,14 @@ export interface PhzGridProps {
   onScroll?: (event: ScrollEvent) => void;
 
   // Extended event handlers
-  onRowAction?: (detail: any) => void;
-  onDrillThrough?: (detail: any) => void;
-  onCopy?: (detail: any) => void;
-  onGenerateDashboard?: (detail: any) => void;
-  onVirtualScroll?: (detail: any) => void;
-  onRemoteDataLoad?: (detail: any) => void;
-  onRemoteDataError?: (detail: any) => void;
-  onAdminSettings?: (detail: any) => void;
+  onRowAction?: (detail: RowActionEventDetail) => void;
+  onDrillThrough?: (detail: { source: GridRowDrillSource; config: DrillThroughConfig; field: string; value: unknown }) => void;
+  onCopy?: (detail: { text: string; rowCount: number; colCount: number; source: 'cell' | 'range' | 'rows' }) => void;
+  onGenerateDashboard?: (detail: GenerateDashboardEventDetail) => void;
+  onVirtualScroll?: (detail: { startIndex: number; endIndex: number; totalCount: number }) => void;
+  onRemoteDataLoad?: (detail: { offset: number; count: number; totalCount: number }) => void;
+  onRemoteDataError?: (detail: { error: Error; offset: number }) => void;
+  onAdminSettings?: (detail: Record<string, never>) => void;
 
   // Slots as children
   children?: ReactNode;

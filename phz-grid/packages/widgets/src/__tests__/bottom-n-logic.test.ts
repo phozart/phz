@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Bottom-N Pure Logic Tests
+ * @phozart/widgets -- Bottom-N Pure Logic Tests
  *
  * Tests for PhzBottomN rankedData getter (sorting and slicing logic).
  */
@@ -16,7 +16,7 @@ vi.mock('lit/decorators.js', () => ({
   property: () => () => {},
   state: () => () => {},
 }));
-vi.mock('@phozart/phz-engine', () => ({
+vi.mock('@phozart/engine', () => ({
   computeStatus: () => ({ level: 'ok', color: '#16A34A', label: 'On track' }),
   STATUS_COLORS: { ok: '#16A34A', warn: '#D97706', crit: '#DC2626', unknown: '#A8A29E' },
 }));

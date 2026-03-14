@@ -2,7 +2,7 @@
  * Component Patterns — Helpers for form density, modals, drawers, empty states,
  * loading skeletons, status badges, and overflow prevention.
  *
- * Extracted from @phozart/phz-workspace styles (S.7).
+ * Extracted from @phozart/workspace styles (S.7).
  * Pure functions and constants only — no Lit/CSS dependencies.
  */
 

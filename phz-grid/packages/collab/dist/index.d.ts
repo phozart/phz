@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Real-time Collaboration
+ * @phozart/collab — Real-time Collaboration
  *
  * Yjs CRDT-based collaboration for phz-grid.
  * Provides presence awareness, change tracking, conflict resolution,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Schema Form Generator
+ * @phozart/workspace — Schema Form Generator
  *
  * Generates UI field descriptors from a simple JSON Schema-like object,
  * enabling dynamic form rendering for widget configuration panels.

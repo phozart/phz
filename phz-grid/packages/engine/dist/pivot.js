@@ -1,7 +1,8 @@
 /**
- * @phozart/phz-engine — Pivot Engine
+ * @phozart/engine — Pivot Engine
  *
  * Computes pivot tables: groups rows by row/column fields and aggregates values.
+ * Supports row totals, subtotals, grand totals, and "show values as" transformations.
  */
 import { computeAggregation } from './aggregation.js';
 /**
@@ -12,7 +13,7 @@ import { computeAggregation } from './aggregation.js';
  */
 export function computePivot(rows, config) {
     if (rows.length === 0 || config.valueFields.length === 0) {
-        return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [] };
+        return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [], rowTotals: [], subtotals: [] };
     }
     // Collect unique row and column header combinations
     const rowKeyMap = new Map();
@@ -56,19 +57,197 @@ export function computePivot(rows, config) {
         const cellRows = intersections.get(key) ?? [];
         return computeCellValue(cellRows);
     }));
-    // Compute grand totals using grouped intersections (avoid O(rows*cols) re-scan)
-    const colGroups = new Map();
-    for (const [key, cellRows] of intersections) {
-        const colKey = key.split('###')[1];
-        if (!colGroups.has(colKey))
-            colGroups.set(colKey, []);
-        colGroups.get(colKey).push(...cellRows);
+    // Compute grand totals (default true for backward compat)
+    const showGrandTotals = config.showGrandTotals !== false;
+    let grandTotals = [];
+    if (showGrandTotals) {
+        const colGroups = new Map();
+        for (const [key, cellRows] of intersections) {
+            const colKey = key.split('###')[1];
+            if (!colGroups.has(colKey))
+                colGroups.set(colKey, []);
+            colGroups.get(colKey).push(...cellRows);
+        }
+        grandTotals = colKeys.map(colKey => {
+            const colRows = colGroups.get(colKey) ?? [];
+            return computeCellValue(colRows);
+        });
     }
-    const grandTotals = colKeys.map(colKey => {
-        const colRows = colGroups.get(colKey) ?? [];
-        return computeCellValue(colRows);
-    });
-    return { rowHeaders, columnHeaders, cells, grandTotals };
+    // Compute row totals (sum across columns for each row)
+    let rowTotals = [];
+    if (config.showRowTotals) {
+        rowTotals = rowKeys.map(rowKey => {
+            const allRowData = rowKeyMap.get(rowKey) ?? [];
+            return computeCellValue(allRowData);
+        });
+    }
+    // Compute subtotals (group by first N-1 row fields, insert subtotal rows)
+    let subtotals = [];
+    if (config.showSubtotals && config.rowFields.length > 1) {
+        subtotals = computeSubtotals(rowHeaders, rowKeys, rows, colKeys, config, computeCellValue);
+    }
+    let result = { rowHeaders, columnHeaders, cells, grandTotals, rowTotals, subtotals };
+    // Apply "show values as" transformations
+    if (config.valueFields.some(vf => vf.showAs && vf.showAs !== 'value')) {
+        result = applyShowValuesAs(result, config);
+    }
+    return result;
+}
+/**
+ * Compute subtotal rows for multi-level row fields.
+ * Groups by the first row field and inserts subtotals after each group.
+ */
+function computeSubtotals(rowHeaders, rowKeys, rows, colKeys, config, computeCellValue) {
+    const subtotals = [];
+    const depth = 0; // Currently only support depth=0 (first level grouping)
+    // Group row indices by first row field value
+    const groupMap = new Map();
+    for (let i = 0; i < rowHeaders.length; i++) {
+        const groupKey = rowHeaders[i][0];
+        if (!groupMap.has(groupKey))
+            groupMap.set(groupKey, []);
+        groupMap.get(groupKey).push(i);
+    }
+    // Group source data by first row field
+    const dataByGroup = new Map();
+    for (const row of rows) {
+        const groupKey = String(row[config.rowFields[0]] ?? '');
+        if (!dataByGroup.has(groupKey))
+            dataByGroup.set(groupKey, []);
+        dataByGroup.get(groupKey).push(row);
+    }
+    for (const [groupKey, indices] of groupMap) {
+        const lastIndex = indices[indices.length - 1];
+        const groupRows = dataByGroup.get(groupKey) ?? [];
+        // Compute subtotal values per column
+        const values = colKeys.map(colKey => {
+            const colField = config.columnFields[0];
+            const colValue = colKey.split('|||')[0];
+            const matchingRows = groupRows.filter(r => String(r[colField] ?? '') === colValue);
+            return computeCellValue(matchingRows);
+        });
+        // Compute row total for subtotal
+        const rowTotal = computeCellValue(groupRows);
+        subtotals.push({
+            rowIndex: lastIndex,
+            label: `${groupKey} — Subtotal`,
+            values,
+            rowTotal,
+            depth,
+        });
+    }
+    return subtotals;
+}
+/**
+ * Post-process pivot cells based on each valueField's showAs setting.
+ */
+export function applyShowValuesAs(result, config) {
+    const { cells, grandTotals, rowTotals } = result;
+    const multiMeasure = config.valueFields.length > 1;
+    // Deep clone cells to avoid mutating the input
+    const newCells = cells.map(row => [...row]);
+    for (let vfi = 0; vfi < config.valueFields.length; vfi++) {
+        const showAs = config.valueFields[vfi].showAs;
+        if (!showAs || showAs === 'value')
+            continue;
+        // Helper to extract/set the numeric value for this measure from a cell
+        const getNum = (cell) => {
+            if (cell === null || cell === undefined)
+                return 0;
+            if (multiMeasure) {
+                const arr = cell;
+                const v = arr[vfi];
+                return typeof v === 'number' ? v : 0;
+            }
+            return typeof cell === 'number' ? cell : 0;
+        };
+        const setNum = (cell, value) => {
+            if (multiMeasure) {
+                const arr = [...cell];
+                arr[vfi] = value;
+                return arr;
+            }
+            return value;
+        };
+        switch (showAs) {
+            case 'pct_of_grand': {
+                for (let ri = 0; ri < newCells.length; ri++) {
+                    for (let ci = 0; ci < newCells[ri].length; ci++) {
+                        const grandVal = getNum(grandTotals[ci]);
+                        const cellVal = getNum(newCells[ri][ci]);
+                        const pct = grandVal !== 0 ? (cellVal / grandVal) * 100 : 0;
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), pct);
+                    }
+                }
+                break;
+            }
+            case 'pct_of_row': {
+                for (let ri = 0; ri < newCells.length; ri++) {
+                    const rowTotalVal = getNum(rowTotals[ri]);
+                    for (let ci = 0; ci < newCells[ri].length; ci++) {
+                        const cellVal = getNum(newCells[ri][ci]);
+                        const pct = rowTotalVal !== 0 ? (cellVal / rowTotalVal) * 100 : 0;
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), pct);
+                    }
+                }
+                break;
+            }
+            case 'pct_of_column': {
+                // Column total = sum of all cells in the column
+                const colTotals = [];
+                for (let ci = 0; ci < (newCells[0]?.length ?? 0); ci++) {
+                    let total = 0;
+                    for (let ri = 0; ri < newCells.length; ri++) {
+                        total += getNum(cells[ri][ci]); // Use original cells for total
+                    }
+                    colTotals.push(total);
+                }
+                for (let ri = 0; ri < newCells.length; ri++) {
+                    for (let ci = 0; ci < newCells[ri].length; ci++) {
+                        const cellVal = getNum(newCells[ri][ci]);
+                        const pct = colTotals[ci] !== 0 ? (cellVal / colTotals[ci]) * 100 : 0;
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), pct);
+                    }
+                }
+                break;
+            }
+            case 'running_total': {
+                for (let ri = 0; ri < newCells.length; ri++) {
+                    let running = 0;
+                    for (let ci = 0; ci < newCells[ri].length; ci++) {
+                        running += getNum(cells[ri][ci]); // Use original cells
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), running);
+                    }
+                }
+                break;
+            }
+            case 'rank': {
+                for (let ci = 0; ci < (newCells[0]?.length ?? 0); ci++) {
+                    // Collect values in this column, sort descending, assign rank
+                    const indexed = newCells.map((row, ri) => ({ ri, val: getNum(cells[ri][ci]) }));
+                    indexed.sort((a, b) => b.val - a.val);
+                    for (let rank = 0; rank < indexed.length; rank++) {
+                        const { ri } = indexed[rank];
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), rank + 1);
+                    }
+                }
+                break;
+            }
+            case 'difference_from_previous': {
+                for (let ci = 0; ci < (newCells[0]?.length ?? 0); ci++) {
+                    let prevVal = 0;
+                    for (let ri = 0; ri < newCells.length; ri++) {
+                        const curVal = getNum(cells[ri][ci]); // Use original cells
+                        const diff = ri === 0 ? 0 : curVal - prevVal;
+                        prevVal = curVal;
+                        newCells[ri][ci] = setNum(newCells[ri][ci] ?? (multiMeasure ? config.valueFields.map(() => null) : null), diff);
+                    }
+                }
+                break;
+            }
+        }
+    }
+    return { ...result, cells: newCells };
 }
 /**
  * Flatten a pivot result back to rows for export or display.

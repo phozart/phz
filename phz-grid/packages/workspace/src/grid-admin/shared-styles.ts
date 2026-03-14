@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Shared Styles
+ * @phozart/grid-admin — Shared Styles
  *
  * Common CSS for admin components. Uses phz-admin- prefix.
  * Design: Console-mode aesthetic with warm multi-layer shadows,

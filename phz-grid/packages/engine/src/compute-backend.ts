@@ -1,13 +1,14 @@
 /**
- * @phozart/phz-engine — ComputeBackend Strategy
+ * @phozart/engine — ComputeBackend Strategy
  *
  * Abstraction layer for computation: aggregation, pivot, filter, calculated fields.
  * BIEngine uses this to delegate work to either the JS engine or DuckDB-WASM.
  */
 
-import type { AggregationConfig, PivotConfig, FilterOperator } from '@phozart/phz-core';
+import type { AggregationConfig, PivotConfig, FilterOperator } from '@phozart/core';
 import type { AggregationResult } from './aggregation.js';
 import type { PivotResult } from './pivot.js';
+import type { ExpressionNode } from './expression-types.js';
 import { computeAggregations } from './aggregation.js';
 import { computePivot } from './pivot.js';
 
@@ -19,7 +20,7 @@ export interface ComputeFilterInput {
 
 export interface CalculatedFieldInput {
   name: string;
-  expression: string;
+  expression: string | ExpressionNode;
 }
 
 export interface ComputeBackend {
@@ -110,7 +111,12 @@ export class JSComputeBackend implements ComputeBackend {
     return data.map(row => {
       const newRow = { ...row };
       for (const field of fields) {
-        newRow[field.name] = evaluateSimpleExpression(row, field.expression);
+        // String expressions use simple evaluator; AST expressions are not supported in JS backend
+        if (typeof field.expression === 'string') {
+          newRow[field.name] = evaluateSimpleExpression(row, field.expression);
+        } else {
+          newRow[field.name] = null;
+        }
       }
       return newRow;
     });

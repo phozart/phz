@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Chart Analytics Overlays
+ * @phozart/engine — Chart Analytics Overlays
  *
  * Types and pure computation functions for chart analytics overlays:
  * reference lines, trend lines, threshold bands, average lines, and target lines.

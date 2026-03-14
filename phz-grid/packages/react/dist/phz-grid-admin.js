@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzGridAdmin React Component
+ * @phozart/react — PhzGridAdmin React Component
  *
  * Wraps the <phz-grid-admin> Web Component for React using @lit/react.
  * Uses React's ref system to expose the GridAdminApi.
@@ -8,7 +8,7 @@
  */
 import React, { createElement, forwardRef, useRef, useEffect, useImperativeHandle, } from 'react';
 import { createComponent } from '@lit/react';
-import { PhzGridAdmin as PhzGridAdminElement } from '@phozart/phz-workspace/grid-admin';
+import { PhzGridAdmin as PhzGridAdminElement } from '@phozart/workspace/grid-admin';
 const PhzGridAdminLit = createComponent({
     tagName: 'phz-grid-admin',
     elementClass: PhzGridAdminElement,

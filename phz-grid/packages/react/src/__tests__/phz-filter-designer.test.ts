@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzFilterDesigner Component Tests
+ * @phozart/react — PhzFilterDesigner Component Tests
  *
  * Structural validation: exports, component shape, prop interface, imperative API.
  */
@@ -41,11 +41,11 @@ vi.mock('@lit/react', () => ({
   EventName: {},
 }));
 
-vi.mock('@phozart/phz-criteria', () => ({
+vi.mock('@phozart/criteria', () => ({
   PhzFilterDesigner: class PhzFilterDesigner {},
 }));
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 import { PhzFilterDesigner, type PhzFilterDesignerProps, type FilterDesignerApi } from '../phz-filter-designer.js';
 

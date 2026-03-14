@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-view-switcher>
+ * @phozart/grid — <phz-view-switcher>
  *
  * Dropdown UI for switching between saved grid views.
  * Renders in the toolbar area. Shows active view name, dirty indicator,
@@ -8,7 +8,7 @@
 
 import { LitElement, html, css, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { ViewsSummary } from '@phozart/phz-core';
+import type { ViewsSummary } from '@phozart/core';
 import { forcedColorsCSS } from '../a11y/forced-colors-adapter.js';
 
 @customElement('phz-view-switcher')

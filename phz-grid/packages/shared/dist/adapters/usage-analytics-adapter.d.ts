@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — UsageAnalyticsAdapter SPI
+ * @phozart/shared — UsageAnalyticsAdapter SPI
  *
  * Telemetry contract for capturing user interactions. The shell emits
  * events through this adapter; consumer applications route them to

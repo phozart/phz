@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Filter Rules Engine
+ * @phozart/engine — Filter Rules Engine
  *
  * 5 rule types that programmatically constrain filter options.
  * Rules are the highest priority in state resolution.
  */
-import type { FilterDefinitionId, FilterRule, FilterRuleResult, SelectionFieldOption, TreeNode, RuleEvaluationContext } from '@phozart/phz-core';
+import type { FilterDefinitionId, FilterRule, FilterRuleResult, SelectionFieldOption, TreeNode, RuleEvaluationContext } from '@phozart/core';
 export type CustomRuleEvaluator = (params: Record<string, unknown> | undefined, options: SelectionFieldOption[], treeNodes?: TreeNode[], context?: RuleEvaluationContext) => {
     included: string[];
     excluded: string[];

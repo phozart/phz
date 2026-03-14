@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import type { FilterDefinition, FilterBinding, FilterBarFieldConfig } from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterBinding, FilterBarFieldConfig } from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 
 function makeDef(id: string, overrides?: Partial<FilterDefinition>): FilterDefinition {
   return {

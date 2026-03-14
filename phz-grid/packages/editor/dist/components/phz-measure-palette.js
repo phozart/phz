@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-measure-palette> (B-2.07)
+ * @phozart/editor — <phz-measure-palette> (B-2.07)
  *
  * Measure registry palette component. Displays measures and KPIs
  * with search, category filtering, and drag-to-widget support.

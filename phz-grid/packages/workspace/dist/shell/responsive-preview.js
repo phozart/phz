@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — ResponsivePreview Component
+ * @phozart/workspace — ResponsivePreview Component
  *
  * A device-preview simulator that constrains slotted content
  * to Desktop (1200px), Tablet (768px), or Mobile (375px) widths.

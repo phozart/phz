@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Query Coordinator (K.6)
+ * @phozart/workspace — Query Coordinator (K.6)
  *
  * Batches concurrent widget data queries with concurrency control,
  * deduplication, and cancellation via AbortController.

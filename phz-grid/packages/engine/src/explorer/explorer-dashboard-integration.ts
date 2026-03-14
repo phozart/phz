@@ -1,14 +1,14 @@
 /**
- * @phozart/phz-engine/explorer — Explorer <-> Dashboard Integration
+ * @phozart/engine/explorer — Explorer <-> Dashboard Integration
  *
  * Filter promotion: explore filters -> DashboardFilterDef
  * Drill-through pre-population: dimension values -> FilterValue[]
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 
 import type { ExploreFilterSlot } from './explore-types.js';
-import type { DashboardFilterDef, FilterUIType, FilterValue } from '@phozart/phz-shared/coordination';
+import type { DashboardFilterDef, FilterUIType, FilterValue } from '@phozart/shared/coordination';
 
 // ========================================================================
 // ID generation

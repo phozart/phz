@@ -6,8 +6,8 @@ import {
   createDefaultGracePeriodConfig,
   isGracePeriodValid,
   clampGracePeriod,
-} from '@phozart/phz-shared/types';
-import type { AlertGracePeriodConfig } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { AlertGracePeriodConfig } from '@phozart/shared/types';
 
 const SYSTEM_MAX = 24 * 60 * 60 * 1000; // 24 hours
 const MIN_GRACE = 1000; // 1 second

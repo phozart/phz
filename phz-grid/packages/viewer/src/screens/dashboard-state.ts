@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-viewer — Dashboard View State
+ * @phozart/viewer — Dashboard View State
  *
  * Headless state machine for viewing a dashboard. Manages active
  * dashboard metadata, widget positions, cross-filter state,
  * and widget-level loading/error tracking.
  */
 
-import type { FilterContextManager, CrossFilterEntry } from '@phozart/phz-shared/coordination';
-import type { WidgetPosition } from '@phozart/phz-shared/types';
+import type { FilterContextManager, CrossFilterEntry } from '@phozart/shared/coordination';
+import type { WidgetPosition } from '@phozart/shared/types';
 
 // ========================================================================
 // Dashboard widget metadata (read-only view)

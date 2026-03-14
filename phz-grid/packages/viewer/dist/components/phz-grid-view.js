@@ -147,6 +147,7 @@ let PhzGridView = class PhzGridView extends LitElement {
           .columns=${this._resolvedColumns}
           density=${this.density}
           theme=${this.theme}
+          grid-height="100%"
         ></phz-grid>
       </div>
     `;

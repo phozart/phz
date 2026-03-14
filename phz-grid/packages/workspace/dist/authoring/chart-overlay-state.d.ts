@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — Chart Overlay Config Panel State Machine
+ * @phozart/workspace — Chart Overlay Config Panel State Machine
  *
  * Pure state machine for managing chart analytics overlays in the
  * dashboard editor config panel. Supports CRUD operations and an
  * edit-draft-commit flow for safe in-place editing.
  */
-import type { ChartOverlay } from '@phozart/phz-engine';
+import type { ChartOverlay } from '@phozart/engine';
 export interface ChartOverlayState {
     /** List of overlays applied to the current chart widget. */
     overlays: ChartOverlay[];

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { ViewsSummary } from '@phozart/phz-core';
+import type { ViewsSummary } from '@phozart/core';
 
 // Logic tests for the view switcher component data flow.
 // The actual rendering is tested in browser/e2e tests.

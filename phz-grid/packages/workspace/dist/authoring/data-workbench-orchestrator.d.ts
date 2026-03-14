@@ -14,9 +14,9 @@
  * The Lit component handles async DataAdapter calls and feeds
  * results into these state transitions.
  */
-import type { FieldMetadata, DataSourceMeta } from '@phozart/phz-shared';
-import type { DropZoneState, ZoneName } from '@phozart/phz-engine';
-import type { ExploreQuery } from '@phozart/phz-engine';
+import type { FieldMetadata, DataSourceMeta } from '@phozart/shared';
+import type { DropZoneState, ZoneName } from '@phozart/engine';
+import type { ExploreQuery } from '@phozart/engine';
 export interface DataSourceSchema {
     id: string;
     name: string;

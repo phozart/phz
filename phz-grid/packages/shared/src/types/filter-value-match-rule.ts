@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — FilterValueMatchRule (A-1.09)
+ * @phozart/shared — FilterValueMatchRule (A-1.09)
  *
  * Rules for matching and validating filter values, with support for
  * expression-based value transformations (UPPER, LOWER, TRIM, LEFT,

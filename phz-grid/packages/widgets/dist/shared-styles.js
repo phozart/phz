@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Shared Styles
+ * @phozart/widgets — Shared Styles
  *
  * Common CSS for all widget components. Uses phz-w- prefix.
  * Colors are exposed as CSS custom properties (--phz-w-*) for theming.

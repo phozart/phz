@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-filter-bar> Custom Element
+ * @phozart/viewer — <phz-filter-bar> Custom Element
  *
  * Filter bar for dashboards and reports. Shows active filters,
  * preset selection, and filter value editing.
@@ -7,8 +7,8 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { FilterPresetValue } from '@phozart/phz-shared/types';
-import type { DashboardFilterDef, FilterValue } from '@phozart/phz-shared/coordination';
+import type { FilterPresetValue } from '@phozart/shared/types';
+import type { DashboardFilterDef, FilterValue } from '@phozart/shared/coordination';
 import {
   type FilterBarState,
   createFilterBarState,

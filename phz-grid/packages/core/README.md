@@ -1,17 +1,17 @@
-# @phozart/phz-core
+# @phozart/core
 
 Headless grid engine for the phz-grid SDK. Provides the data model, state management, row model pipeline, events, and plugin system with zero DOM dependencies.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-core
+npm install @phozart/core
 ```
 
 ## Quick Start
 
 ```ts
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({
   columns: [
@@ -232,7 +232,7 @@ import {
   createDataSet,
   inferDataSetColumns,
   toColumnDefinitions,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 ```
 
 ### Type Guards
@@ -244,7 +244,7 @@ import {
   isLocalDataSource,
   isAsyncDataSource,
   isDuckDBDataSource,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 ```
 
 ## Column Types
@@ -252,7 +252,7 @@ import {
 Core column types: `'string'`, `'number'`, `'boolean'`, `'date'`, `'custom'`.
 
 ```ts
-import type { ColumnDefinition, ColumnType } from '@phozart/phz-core';
+import type { ColumnDefinition, ColumnType } from '@phozart/core';
 
 const column: ColumnDefinition = {
   field: 'price',

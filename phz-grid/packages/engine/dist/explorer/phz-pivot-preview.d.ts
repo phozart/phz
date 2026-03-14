@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-engine/explorer — Pivot Preview Controller
+ * @phozart/engine/explorer — Pivot Preview Controller
  *
  * Headless controller for preview mode (table/chart/sql).
  * Also converts DropZoneState -> ExploreQuery.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 import type { ExploreQuery } from './explore-types.js';
-import type { DataResult } from '@phozart/phz-shared/adapters';
+import type { DataResult } from '@phozart/shared/adapters';
 import type { DropZoneState } from './phz-drop-zones.js';
 export type PreviewMode = 'table' | 'chart' | 'sql';
 export interface QueryOptions {

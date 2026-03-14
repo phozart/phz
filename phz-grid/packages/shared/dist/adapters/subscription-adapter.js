@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — SubscriptionAdapter SPI
+ * @phozart/shared — SubscriptionAdapter SPI
  *
  * Contract for managing scheduled report subscriptions. Consumers
  * implement this to connect to their scheduling/delivery backend.

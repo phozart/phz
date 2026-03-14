@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Manager
+ * @phozart/criteria — Preset Manager
  *
  * List, save, load, delete, and set default presets.
  * Supports personal + shared scopes with owner-based editing.

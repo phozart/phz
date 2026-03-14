@@ -82,7 +82,7 @@ We will integrate **DuckDB-WASM + Apache Arrow** as the analytical data backbone
            (Apache Arrow IPC)
                     ↓
 ┌───────────────────────────────────────────────┐
-│  Main Thread (@phozart/phz-core)                  │
+│  Main Thread (@phozart/core)                  │
 │  ├─ Arrow Table → Row Data (lazy)            │
 │  ├─ Virtualization Pipeline                   │
 │  └─ Render Visible Rows                       │
@@ -92,7 +92,7 @@ We will integrate **DuckDB-WASM + Apache Arrow** as the analytical data backbone
 ### Implementation Details
 
 ```typescript
-// @phozart/phz-duckdb
+// @phozart/duckdb
 
 import * as duckdb from '@duckdb/duckdb-wasm';
 import { tableFromIPC } from 'apache-arrow';
@@ -160,8 +160,8 @@ export class DuckDBDataSource {
 ### Usage in Grid
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
-import { DuckDBDataSource } from '@phozart/phz-duckdb';
+import { createGrid } from '@phozart/core';
+import { DuckDBDataSource } from '@phozart/duckdb';
 
 // Initialize DuckDB data source
 const duckdb = new DuckDBDataSource();
@@ -264,7 +264,7 @@ for (let i = 0; i < arrowTable.numRows; i++) {
 
 ```typescript
 // Lazy-load DuckDB only when needed
-const duckdb = await import('@phozart/phz-duckdb');
+const duckdb = await import('@phozart/duckdb');
 ```
 
 ### CDN Hosting
@@ -272,7 +272,7 @@ const duckdb = await import('@phozart/phz-duckdb');
 ```html
 <!-- Load DuckDB WASM from CDN -->
 <script type="module">
-  import { DuckDBDataSource } from 'https://cdn.jsdelivr.net/npm/@phozart/phz-duckdb@1.0.0/+esm';
+  import { DuckDBDataSource } from 'https://cdn.jsdelivr.net/npm/@phozart/duckdb@1.0.0/+esm';
 </script>
 ```
 

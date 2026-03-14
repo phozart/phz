@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — KPI Designer
+ * @phozart/engine-admin — KPI Designer
  *
  * 6-step wizard: 3-column layout (step nav | content | live preview).
  * Embeddable component — drop into any admin page.
@@ -9,8 +9,8 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { BIEngine, KPIDefinition, KPIUnit, KPIDirection, KPIDeltaComparison, KPICardStyle } from '@phozart/phz-engine';
-import { kpiId, computeStatus, computeDelta, STATUS_COLORS } from '@phozart/phz-engine';
+import type { BIEngine, KPIDefinition, KPIUnit, KPIDirection, KPIDeltaComparison, KPICardStyle } from '@phozart/engine';
+import { kpiId, computeStatus, computeDelta, STATUS_COLORS } from '@phozart/engine';
 
 type Step = 1 | 2 | 3 | 4 | 5 | 6;
 const STEP_LABELS: Record<Step, string> = {

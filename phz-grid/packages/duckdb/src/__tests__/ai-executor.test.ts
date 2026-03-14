@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — AI Executor Tests (WI 26)
+ * @phozart/duckdb — AI Executor Tests (WI 26)
  *
  * Tests the AI query execution pipeline: AI generates SQL → DuckDB executes.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Natural Language Parser Tests
+ * @phozart/ai — Natural Language Parser Tests
  *
  * Tests for parsing KPI descriptions into structured components.
  */

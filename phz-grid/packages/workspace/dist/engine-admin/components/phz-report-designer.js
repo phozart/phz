@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Report Designer
+ * @phozart/engine-admin — Report Designer
  *
  * Stepped wizard: data product → columns → filters/sort → aggregation → drill-through → review.
  * Embeddable component.

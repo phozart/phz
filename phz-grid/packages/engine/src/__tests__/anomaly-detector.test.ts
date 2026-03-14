@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Anomaly Detector Tests (TDD: RED phase)
+ * @phozart/engine — Anomaly Detector Tests (TDD: RED phase)
  */
 import { describe, it, expect } from 'vitest';
 import {

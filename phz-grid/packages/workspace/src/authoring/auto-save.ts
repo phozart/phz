@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Auto-Save Controller
+ * @phozart/workspace — Auto-Save Controller
  *
  * Debounced auto-save with status tracking.
  * Usable for both report and dashboard editors.

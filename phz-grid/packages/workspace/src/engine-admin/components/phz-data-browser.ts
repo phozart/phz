@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Product Browser
+ * @phozart/engine-admin — Data Product Browser
  *
  * Two-panel: searchable product list (left) + schema inspector (right).
  * Embeddable component.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { DataProductDef, DataProductField } from '@phozart/phz-engine';
+import type { DataProductDef, DataProductField } from '@phozart/engine';
 
 @safeCustomElement('phz-data-browser')
 export class PhzDataBrowser extends LitElement {

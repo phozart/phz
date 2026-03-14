@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — AsyncReportRequest / AsyncReportStatus (A-1.14)
+ * @phozart/shared — AsyncReportRequest / AsyncReportStatus (A-1.14)
  *
  * Types for asynchronous report generation and retrieval.
  * Long-running queries are submitted via executeQueryAsync() and

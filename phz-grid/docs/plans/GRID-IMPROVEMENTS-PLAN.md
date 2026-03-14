@@ -23,13 +23,13 @@ Five interconnected improvements that take phz-grid from "developer configures e
 
 | Package | Description | Dependencies |
 |---------|-------------|-------------|
-| `@phozart/phz-definitions` | Serializable grid blueprints, stores, converters, validation | `phz-core`, `zod`, `phz-engine` (optional peer) |
-| `@phozart/phz-grid-creator` | Stepped wizard for creating new grids/reports | `phz-definitions`, `phz-grid-admin`, `phz-criteria` |
+| `@phozart/definitions` | Serializable grid blueprints, stores, converters, validation | `phz-core`, `zod`, `phz-engine` (optional peer) |
+| `@phozart/grid-creator` | Stepped wizard for creating new grids/reports | `phz-definitions`, `phz-grid-admin`, `phz-criteria` |
 
 ### Dependency Graph (After All Changes)
 
 ```
-@phozart/phz-core  (foundation — no deps)
+@phozart/core  (foundation — no deps)
        |
        +------------------+------------------+
        |                  |                  |
@@ -108,7 +108,7 @@ Five interconnected improvements that take phz-grid from "developer configures e
 
 ---
 
-## Work Item 2: `@phozart/phz-definitions` Package
+## Work Item 2: `@phozart/definitions` Package
 
 **Goal**: Serializable, persistable "blueprint" that fully describes a grid instance. Separate from rendering (phz-grid) and the headless engine (phz-core).
 
@@ -211,14 +211,14 @@ Built-in implementations: `createInMemoryStore()`, `createLocalStorageStore(opti
 ```json
 {
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
+    "@phozart/core": "^0.1.0",
     "zod": "^3.22.0"
   },
   "peerDependencies": {
-    "@phozart/phz-engine": "^0.1.0"
+    "@phozart/engine": "^0.1.0"
   },
   "peerDependenciesMeta": {
-    "@phozart/phz-engine": { "optional": true }
+    "@phozart/engine": { "optional": true }
   }
 }
 ```
@@ -344,7 +344,7 @@ Plus new: `phz-definition-panel.ts` — composition component hosting both
 ### Criteria Migration
 
 `PhzAdminCriteria` is **deprecated** with `console.warn` (same pattern as existing `PhzAdminOptions`).
-Replacement: `PhzFilterConfigurator` from `@phozart/phz-criteria` — already exists with richer capabilities (drag reorder, per-binding overrides, visibility toggles, data column mapping).
+Replacement: `PhzFilterConfigurator` from `@phozart/criteria` — already exists with richer capabilities (drag reorder, per-binding overrides, visibility toggles, data column mapping).
 
 ### Tests Moving
 
@@ -360,11 +360,11 @@ Replacement: `PhzFilterConfigurator` from `@phozart/phz-criteria` — already ex
 
 **Phase 2 — Update facade**: Remove report/data-source/criteria tabs from modal. Bump to major version.
 
-**Phase 3 — Cleanup**: Remove old files, deprecated re-exports. Extract `shared-styles.ts` to shared `@phozart/phz-admin-styles` package.
+**Phase 3 — Cleanup**: Remove old files, deprecated re-exports. Extract `shared-styles.ts` to shared `@phozart/admin-styles` package.
 
 ---
 
-## Work Item 5: Creation Wizard (`@phozart/phz-grid-creator`)
+## Work Item 5: Creation Wizard (`@phozart/grid-creator`)
 
 **Goal**: Guided step-by-step flow for creating a new grid/report. Replaces `mode='create'` in grid-admin.
 
@@ -409,10 +409,10 @@ packages/grid-creator/
 ```json
 {
   "dependencies": {
-    "@phozart/phz-definitions": "^0.1.0",
-    "@phozart/phz-grid-admin": "^0.1.0",
-    "@phozart/phz-criteria": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0"
+    "@phozart/definitions": "^0.1.0",
+    "@phozart/grid-admin": "^0.1.0",
+    "@phozart/criteria": "^0.1.0",
+    "@phozart/engine": "^0.1.0"
   }
 }
 ```
@@ -475,7 +475,7 @@ After: 17 packages (+`phz-definitions`, +`phz-grid-creator`)
 ## Cross-Cutting Concerns
 
 ### Shared Styles
-Both `phz-grid-admin`, `phz-definitions` (UI), and `phz-grid-creator` share the same admin design language (`adminBaseStyles`). Short-term: copy `shared-styles.ts`. Long-term: extract to `@phozart/phz-admin-styles` package.
+Both `phz-grid-admin`, `phz-definitions` (UI), and `phz-grid-creator` share the same admin design language (`adminBaseStyles`). Short-term: copy `shared-styles.ts`. Long-term: extract to `@phozart/admin-styles` package.
 
 ### Custom Element Tag Names
 Custom element names are globally registered. Moved components get new tags (`phz-definition-report`, `phz-definition-data-source`) to avoid collisions during migration. Old tags are deprecated, not removed, until next major version.
@@ -484,7 +484,7 @@ Custom element names are globally registered. Moved components get new tags (`ph
 `PhzAdminCriteria` (simplified) and `PhzFilterConfigurator` (full-featured) both exist. The plan deprecates the former in favor of the latter. An adapter mapping `CriteriaBindingItem` -> `FilterBinding` should be documented for migrating stored data.
 
 ### No Engine Dependency for Definitions Core
-`@phozart/phz-definitions` depends only on `phz-core` + `zod`. Engine is an optional peer (only needed for `DefinitionFormatting.tableSettings`). This keeps definitions usable in the MIT community tier without the enterprise BI engine.
+`@phozart/definitions` depends only on `phz-core` + `zod`. Engine is an optional peer (only needed for `DefinitionFormatting.tableSettings`). This keeps definitions usable in the MIT community tier without the enterprise BI engine.
 
 ### Accessibility
 - All new UI components (view-switcher, wizard) follow existing a11y patterns: ARIA roles, keyboard navigation, Forced Colors Mode support, 44px touch targets

@@ -7,13 +7,13 @@ import {
   getAlertTokens,
   degradeAlertMode,
   createDefaultAlertConfig,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 import type {
   SingleValueAlertConfig,
   AlertVisualMode,
   WidgetAlertSeverity,
   AlertContainerSize,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // resolveAlertVisualState

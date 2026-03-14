@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-context-menu>
+ * @phozart/grid — <phz-context-menu>
  *
  * A reusable context menu component with Phz Console styling,
  * keyboard navigation, smart viewport positioning, and ARIA support.

@@ -15,7 +15,7 @@ import type {
   CalculatedFieldDef,
   MetricDef,
   KPIDefinition,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 /** The full set of properties the sidebar component accepts. */
 export interface SidebarProps {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Explore to Artifact Conversion (P.4)
+ * @phozart/workspace — Explore to Artifact Conversion (P.4)
  *
  * Pure functions to convert ExploreQuery into report or dashboard widget
  * artifact configs. These are workspace-local types, not engine types —

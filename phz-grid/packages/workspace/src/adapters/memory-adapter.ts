@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-workspace — MemoryWorkspaceAdapter
+ * @phozart/workspace — MemoryWorkspaceAdapter
  *
  * In-memory implementation of WorkspaceAdapter for testing and ephemeral usage.
  */
 
-import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/phz-engine';
-import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/phz-engine';
-import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/phz-shared/definitions';
-import { createDefinitionId } from '@phozart/phz-shared/definitions';
+import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/engine';
+import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/engine';
+import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/shared/definitions';
+import { createDefinitionId } from '@phozart/shared/definitions';
 import type { WorkspaceAdapter, ArtifactHistoryExtension, VersionSummary } from '../workspace-adapter.js';
 import type { PlacementRecord } from '../placement.js';
 import type {

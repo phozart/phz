@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — DataSet Utilities
+ * @phozart/core — DataSet Utilities
  *
  * Conversion and factory functions for the DataSet container.
  */

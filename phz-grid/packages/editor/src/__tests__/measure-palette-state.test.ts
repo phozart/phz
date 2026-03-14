@@ -10,7 +10,7 @@ import {
   deselectPaletteItem,
   refreshPaletteData,
 } from '../authoring/measure-palette-state.js';
-import type { MeasureDefinition, KPIDefinition } from '@phozart/phz-shared/adapters';
+import type { MeasureDefinition, KPIDefinition } from '@phozart/shared/adapters';
 
 const MEASURES: MeasureDefinition[] = [
   { id: 'm1', name: 'Revenue', expression: 'SUM(amount)', dataType: 'currency', dataSourceId: 'ds1', tags: ['finance'], createdAt: 1000, updatedAt: 1000 },

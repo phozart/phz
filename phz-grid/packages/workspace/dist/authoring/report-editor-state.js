@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Editor State
+ * @phozart/workspace — Report Editor State
  *
  * Pure functions for configuring a report (a configured <phz-grid>).
  * Manages columns, filters, sorting, grouping, conditional formatting, and density.

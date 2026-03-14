@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — DataAdapter Interface & Related Types
+ * @phozart/workspace — DataAdapter Interface & Related Types
  *
  * Defines the contract for data sources, queries, aggregations,
  * time intelligence, data quality, and query coordination.
@@ -29,10 +29,10 @@ export function hasArrowBuffer(result) {
 // QueryCoordinator — batches concurrent widget data queries
 // ========================================================================
 /**
- * @deprecated Import CoordinatorQuery from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import CoordinatorQuery from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export { defaultQueryCoordinatorConfig, isQueryCoordinatorConfig, } from '@phozart/phz-shared/coordination';
+export { defaultQueryCoordinatorConfig, isQueryCoordinatorConfig, } from '@phozart/shared/coordination';
 // --- helpers ---
 function startOfDay(d) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());

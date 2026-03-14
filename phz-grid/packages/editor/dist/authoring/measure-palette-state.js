@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Measure Palette State (B-2.07)
+ * @phozart/editor — Measure Palette State (B-2.07)
  *
  * State machine for the measure registry palette. Authors browse
  * and search measures and KPIs from the registry, then drag them

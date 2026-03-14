@@ -2,7 +2,7 @@
  * Convert a GridDefinition to a GridConfig for createGrid().
  */
 
-import type { GridConfig, ColumnDefinition } from '@phozart/phz-core';
+import type { GridConfig, ColumnDefinition } from '@phozart/core';
 import type { GridDefinition } from '../types/grid-definition.js';
 import type { DefinitionColumnSpec } from '../types/column.js';
 
@@ -33,7 +33,7 @@ export function definitionToGridConfig(def: GridDefinition, options?: ToGridConf
   const config: GridConfig = {
     data: def.dataSource.type === 'local' ? def.dataSource.data : [],
     columns,
-    userRole: options?.userRole as import('@phozart/phz-core').UserRole | undefined,
+    userRole: options?.userRole as import('@phozart/core').UserRole | undefined,
   };
 
   if (def.defaults?.sort) {

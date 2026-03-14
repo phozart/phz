@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Multi-Page State
+ * @phozart/workspace — Dashboard Multi-Page State
  *
  * Pure functions for managing multi-page dashboards. Each dashboard contains
  * one or more pages, each with its own layout, widgets, and optional filters.

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createFilterRuleEngine, evaluateRule, previewRule } from '../criteria/filter-rules.js';
-import type { FilterRule, SelectionFieldOption, TreeNode, RuleEvaluationContext } from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+import type { FilterRule, SelectionFieldOption, TreeNode, RuleEvaluationContext } from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 
 const REGION_ID = filterDefinitionId('region');
 

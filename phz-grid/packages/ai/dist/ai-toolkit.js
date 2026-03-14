@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — AI Toolkit Implementation
+ * @phozart/ai — AI Toolkit Implementation
  *
  * Schema-as-contract AI toolkit. Uses an AI provider (OpenAI, Anthropic, Google)
  * to provide schema inference, NL queries, anomaly detection, and insights.
@@ -29,12 +29,12 @@ class AIToolkitImpl {
     constructor(config) {
         this.config = config;
         if (!config.redactFields?.length) {
-            console.warn('@phozart/phz-ai: No redactFields configured. Data samples sent to AI providers will include all field values. Set config.redactFields to protect sensitive data.');
+            console.warn('@phozart/ai: No redactFields configured. Data samples sent to AI providers will include all field values. Set config.redactFields to protect sensitive data.');
         }
     }
     getStructuredSchema() {
         if (!this.grid)
-            throw new Error('@phozart/phz-ai: Not attached to grid');
+            throw new Error('@phozart/ai: Not attached to grid');
         const state = this.grid.getState();
         const columns = state.columns.order;
         const properties = {};

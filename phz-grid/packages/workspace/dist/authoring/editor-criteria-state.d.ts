@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Editor Criteria State
+ * @phozart/workspace — Editor Criteria State
  *
  * Pure functions for managing criteria bar integration in editors.
  * Controls criteria visibility, configuration, and active filters

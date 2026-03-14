@@ -5,8 +5,8 @@ import type {
   ExcludePatternConfig, IncludePatternConfig,
   ValueSetConfig, TreeGroupCompareConfig, CustomRuleConfig,
   CrossFilterConfig, CrossFilterCondition, CrossFilterAction,
-} from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 
 // -- Test helpers for rule editor modal logic --
 

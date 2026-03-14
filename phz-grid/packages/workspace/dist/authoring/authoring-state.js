@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Authoring State Machine
+ * @phozart/workspace — Authoring State Machine
  *
  * Top-level state machine driving all authoring flows.
  * Pure immutable transitions — no side effects.

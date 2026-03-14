@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Placement Model
+ * @phozart/workspace — Placement Model
  */
 import type { PlacementId, ArtifactType } from './types.js';
 import { placementId } from './types.js';

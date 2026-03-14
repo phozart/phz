@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-measure-palette> (B-2.07)
+ * @phozart/editor — <phz-measure-palette> (B-2.07)
  *
  * Measure registry palette component. Displays measures and KPIs
  * with search, category filtering, and drag-to-widget support.
@@ -7,7 +7,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { MeasureDefinition, KPIDefinition } from '@phozart/phz-shared/adapters';
+import type { MeasureDefinition, KPIDefinition } from '@phozart/shared/adapters';
 import type { MeasurePaletteState } from '../authoring/measure-palette-state.js';
 import {
   createMeasurePaletteState,

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-criteria — Chip Select
+ * @phozart/criteria — Chip Select
  *
  * Multi-select pill-based selector. Each option renders as a toggleable chip.
  */
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { SelectionFieldOption, CriteriaSelectionMode } from '@phozart/phz-core';
+import type { SelectionFieldOption, CriteriaSelectionMode } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 @customElement('phz-chip-select')

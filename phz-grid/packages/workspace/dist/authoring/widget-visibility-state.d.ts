@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-workspace — Widget Visibility State
+ * @phozart/workspace — Widget Visibility State
  *
  * Pure functions for conditional widget visibility: types, CRUD, evaluation.
  * Widgets can be shown/hidden based on filter state or data result values.
  */
-import type { WidgetVisibilityCondition, VisibilityExpression, VisibilityOperator } from '@phozart/phz-engine';
+import type { WidgetVisibilityCondition, VisibilityExpression, VisibilityOperator } from '@phozart/engine';
 export type { WidgetVisibilityCondition, VisibilityExpression, VisibilityOperator };
 export interface WidgetVisibilityState {
     conditions: Record<string, WidgetVisibilityCondition>;

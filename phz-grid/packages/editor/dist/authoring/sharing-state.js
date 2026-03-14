@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Sharing Flow State (B-2.11)
+ * @phozart/editor — Sharing Flow State (B-2.11)
  *
  * State machine for the sharing workflow. Authors manage artifact
  * visibility (personal/shared/published) and select share targets

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Filter Preset Manager
+ * @phozart/grid-admin — Filter Preset Manager
  *
  * Manage filter presets: create, apply, duplicate, delete.
  * Embeddable component.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Criteria Output
+ * @phozart/engine — Criteria Output
  *
  * Structured ArtefactCriteria with typed operators and a debounced
  * subscription model.

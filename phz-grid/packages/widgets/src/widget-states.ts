@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Widget State Utilities
+ * @phozart/widgets — Widget State Utilities
  *
  * Pure functions for resolving widget display states (loading, error, empty, ready).
  * Used by all widget components to render consistent state UI with proper accessibility.

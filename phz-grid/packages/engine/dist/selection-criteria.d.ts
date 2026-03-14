@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Selection Criteria Logic
+ * @phozart/engine — Selection Criteria Logic
  *
  * Pure headless functions for criteria resolution, validation,
  * dependency management, export metadata, and URL serialization.
  */
-import type { SelectionContext, SelectionFieldDef, SelectionFieldType, SelectionValidationResult, CriteriaConfig, CriteriaExportMetadata, DateRangeValue, DynamicDatePreset, TreeNode, SelectionFieldOption, BuiltinDatePresetId, DatePresetDef, DatePresetGroup, DateRangeFieldConfig, ComparisonType, WeekStartDay, ColumnType, PresenceState, OptionsSource, DataSet } from '@phozart/phz-core';
+import type { SelectionContext, SelectionFieldDef, SelectionFieldType, SelectionValidationResult, CriteriaConfig, CriteriaExportMetadata, DateRangeValue, DynamicDatePreset, TreeNode, SelectionFieldOption, BuiltinDatePresetId, DatePresetDef, DatePresetGroup, DateRangeFieldConfig, ComparisonType, WeekStartDay, ColumnType, PresenceState, OptionsSource, DataSet } from '@phozart/core';
 /** Resolve a single dynamic date preset to a concrete DateRangeValue */
 export declare function resolveDynamicPreset(preset: DynamicDatePreset, now?: Date): DateRangeValue;
 /** All built-in preset definitions grouped by category */

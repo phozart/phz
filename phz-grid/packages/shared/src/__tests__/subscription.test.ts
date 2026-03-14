@@ -5,8 +5,8 @@ import {
   createSubscription,
   describeSchedule,
   buildSubscriptionDeepLink,
-} from '@phozart/phz-shared/types';
-import type { SubscriptionSchedule } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { SubscriptionSchedule } from '@phozart/shared/types';
 
 // ========================================================================
 // createSubscription

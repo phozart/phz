@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Field
+ * @phozart/criteria — Criteria Field
  *
  * Individual criterion renderer. Switch-renders based on fieldDef.type.
  */

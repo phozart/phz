@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Tree Select
+ * @phozart/criteria — Tree Select
  *
  * Dropdown trigger with chip display + tree panel with custom checkboxes,
  * expand/collapse, search filter, Select All / Clear All.

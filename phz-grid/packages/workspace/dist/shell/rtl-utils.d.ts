@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — RTL Utilities (L.18)
+ * @phozart/workspace — RTL Utilities (L.18)
  *
  * Pure functions for RTL layout support.
  * Maps physical CSS properties to logical properties and

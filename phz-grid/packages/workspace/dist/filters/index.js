@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filters Module (O.7)
+ * @phozart/workspace — Filters Module (O.7)
  */
 // Filter context (O.1 + O.1a + O.6)
 export { createFilterContext, createDebouncedFilterDispatch, } from './filter-context.js';
@@ -27,4 +27,6 @@ export { resolveFiltersFromContract, prunePresetValues, applySecurityRestriction
 export * from './filter-admin-state.js';
 // FilterValueAdmin (B-3.07)
 export * from './filter-value-admin-state.js';
+// FilterRecommendation (UX-018)
+export { createFilterRecommendationState, computeFilterRecommendations, applyRecommendation, dismissRecommendation, undoDismiss, getActiveRecommendations, getRecommendationById, } from './filter-recommendation-state.js';
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Area Chart Pure Logic Tests
+ * @phozart/widgets — Area Chart Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

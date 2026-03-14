@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-engine",
+  "name": "@phozart/engine",
   "version": "0.1.0",
   "description": "Headless BI computation engine — KPIs, metrics, dashboards, reports",
   "type": "module",
@@ -60,8 +60,8 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/engine#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-shared": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/shared": "^0.1.0",
     "lit": "^3.2.0"
   }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { splitPinnedColumns, computePinnedOffsets, getPinnedStyle } from '../utils/column-pinning.js';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 function col(field: string, frozen?: 'left' | 'right' | null, width?: number): ColumnDefinition {
   return { field, header: field, frozen, width, hidden: false } as ColumnDefinition;

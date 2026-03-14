@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { createFilterAdminService, FULL_ADMIN_PERMISSIONS, READONLY_PERMISSIONS } from '../criteria/filter-admin.js';
 import { createFilterRegistry } from '../criteria/filter-registry.js';
 import { createFilterBindingStore } from '../criteria/filter-bindings.js';
-import type { FilterDefinition, AdminPermissions, FilterDefinitionPreset } from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import type { FilterDefinition, AdminPermissions, FilterDefinitionPreset } from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 
 const ART_A = artefactId('report-1');
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Widget Export Pure Logic Tests
+ * @phozart/widgets -- Widget Export Pure Logic Tests
  *
  * Tests for CSV generation, clipboard formatting, and CSV field escaping.
  * These are pure functions with no DOM dependencies.

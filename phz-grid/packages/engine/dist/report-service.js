@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Report Service
+ * @phozart/engine — Report Service
  *
  * Per-route runtime orchestrator that connects a report's filter definitions
  * to the criteria engine, manages filter state, and produces grid-ready

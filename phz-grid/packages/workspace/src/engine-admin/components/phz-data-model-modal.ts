@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Model Modal
+ * @phozart/engine-admin — Data Model Modal
  *
  * Centered 720px modal workspace for creating/editing data model entities.
  * Replaces the narrow 380px slide-over with guidance header, existing items
@@ -12,8 +12,8 @@ import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
 import type {
   DataModelField, ParameterDef, CalculatedFieldDef,
-} from '@phozart/phz-engine';
-import type { MetricDef, KPIDefinition, BIEngine } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { MetricDef, KPIDefinition, BIEngine } from '@phozart/engine';
 
 import './phz-parameter-form.js';
 import './phz-calculated-field-form.js';

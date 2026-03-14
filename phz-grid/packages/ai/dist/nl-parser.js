@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Natural Language KPI Parser
+ * @phozart/ai — Natural Language KPI Parser
  *
  * Tokenizes and extracts structured KPI components from natural language descriptions.
  * Uses pattern matching — no LLM calls.

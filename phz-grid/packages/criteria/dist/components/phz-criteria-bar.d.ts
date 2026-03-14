@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Bar
+ * @phozart/criteria — Criteria Bar
  *
  * Compact horizontal bar showing: "Filters" button with count badge,
  * pinned filter tags, active filter summary tags, and "Clear all".
@@ -17,7 +17,7 @@
  * - buttonOnly: hide the container, show only the button
  */
 import { LitElement } from 'lit';
-import type { CriteriaConfig, SelectionContext, FilterBarLayout } from '@phozart/phz-core';
+import type { CriteriaConfig, SelectionContext, FilterBarLayout } from '@phozart/core';
 export declare class PhzCriteriaBar extends LitElement {
     static styles: import("lit").CSSResult[];
     config: CriteriaConfig;

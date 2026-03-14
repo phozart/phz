@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createFilterRegistry, detectDependencyCycles, topologicalSortFilters } from '../criteria/filter-registry.js';
-import type { FilterDefinition, FilterDefinitionId } from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterDefinitionId } from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 
 function makeDef(id: string, overrides?: Partial<FilterDefinition>): FilterDefinition {
   return {

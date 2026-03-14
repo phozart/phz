@@ -1,11 +1,8 @@
 # phz-grid v15 API Reference
 
-> **New packages**: `@phozart/phz-shared`, `@phozart/phz-viewer`, `@phozart/phz-editor`
+> **New packages**: `@phozart/shared`, `@phozart/viewer`, `@phozart/editor`
 > **New engine subsystems**: alerts, subscriptions, analytics, API, attention
 > **Spec amendments**: A (alert-aware KPIs), B (micro-widget cells), C (impact chains), D (faceted attention)
-
-For v14 types (design system, enterprise data/filter architecture, navigation,
-local playground), see [API-REFERENCE-V14.md](./API-REFERENCE-V14.md).
 
 For core workspace types (DataAdapter, widgets, layout, templates, alerts,
 filters, explorer, interaction, time intelligence, formatting, quality,
@@ -16,14 +13,14 @@ history, i18n, viewer context, connectors, adapters, coordination), see
 
 ## Table of Contents
 
-1. [@phozart/phz-shared](#1-phozartphz-shared)
+1. [@phozart/shared](#1-phozartphz-shared)
    - [1.1 Adapters](#11-adapters)
    - [1.2 Types](#12-types)
    - [1.3 Design System](#13-design-system)
    - [1.4 Artifacts](#14-artifacts)
    - [1.5 Coordination](#15-coordination)
-2. [@phozart/phz-viewer](#2-phozartphz-viewer)
-3. [@phozart/phz-editor](#3-phozartphz-editor)
+2. [@phozart/viewer](#2-phozartphz-viewer)
+3. [@phozart/editor](#3-phozartphz-editor)
 4. [New Engine Exports](#4-new-engine-exports)
    - [4.1 Explorer](#41-explorer)
    - [4.2 Personal Alert Engine](#42-personal-alert-engine)
@@ -39,7 +36,7 @@ history, i18n, viewer context, connectors, adapters, coordination), see
 
 ---
 
-## 1. @phozart/phz-shared
+## 1. @phozart/shared
 
 **Source**: `packages/shared/src/`
 
@@ -48,34 +45,45 @@ system, artifact metadata, and runtime coordination used by all three shells.
 
 ### 1.1 Adapters
 
-**Import**: `@phozart/phz-shared/adapters`
+**Import**: `@phozart/shared/adapters`
 
 Re-exports from individual adapter modules:
 
-| Module | Key exports |
-|--------|------------|
-| `data-adapter` | `DataAdapter`, `DataQuery`, `DataResult`, `DataSourceSchema`, `DataSourceSummary`, `ColumnDescriptor`, `FieldMetadata`, `SemanticHint`, `UnitSpec`, `DataQualityInfo`, `QueryStrategy`, `AggregationSpec`, `WindowSpec`, `FieldReference`, `ViewerContext` |
-| `persistence-adapter` | `WorkspaceAdapter`, `EngineStorageAdapter`, `AsyncDefinitionStore`, persistence method types |
-| `measure-registry-adapter` | `MeasureRegistryAdapter` |
-| `alert-channel-adapter` | `AlertChannelAdapter`, `BreachRecord`, `AlertSubscription` |
-| `help-config` | `HelpConfig` |
-| `attention-adapter` | `AttentionAdapter`, `AttentionItem` |
-| `usage-analytics-adapter` | `UsageAnalyticsAdapter` |
-| `subscription-adapter` | `SubscriptionAdapter` |
+| Module                     | Key exports                                                                                                                                                                                                                                                |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-adapter`             | `DataAdapter`, `DataQuery`, `DataResult`, `DataSourceSchema`, `DataSourceSummary`, `ColumnDescriptor`, `FieldMetadata`, `SemanticHint`, `UnitSpec`, `DataQualityInfo`, `QueryStrategy`, `AggregationSpec`, `WindowSpec`, `FieldReference`, `ViewerContext` |
+| `persistence-adapter`      | `WorkspaceAdapter`, `EngineStorageAdapter`, `AsyncDefinitionStore`, persistence method types                                                                                                                                                               |
+| `measure-registry-adapter` | `MeasureRegistryAdapter`                                                                                                                                                                                                                                   |
+| `alert-channel-adapter`    | `AlertChannelAdapter`, `BreachRecord`, `AlertSubscription`                                                                                                                                                                                                 |
+| `help-config`              | `HelpConfig`                                                                                                                                                                                                                                               |
+| `attention-adapter`        | `AttentionAdapter`, `AttentionItem`                                                                                                                                                                                                                        |
+| `usage-analytics-adapter`  | `UsageAnalyticsAdapter`                                                                                                                                                                                                                                    |
+| `subscription-adapter`     | `SubscriptionAdapter`                                                                                                                                                                                                                                      |
 
 ### 1.2 Types
 
-**Import**: `@phozart/phz-shared/types`
+**Import**: `@phozart/shared/types`
 
 #### ShareTarget
 
 ```typescript
 type ShareTarget = ShareTargetUser | ShareTargetRole | ShareTargetTeam | ShareTargetEveryone;
 
-interface ShareTargetUser { type: 'user'; userId: string }
-interface ShareTargetRole { type: 'role'; roleId: string }
-interface ShareTargetTeam { type: 'team'; teamId: string }
-interface ShareTargetEveryone { type: 'everyone' }
+interface ShareTargetUser {
+  type: 'user';
+  userId: string;
+}
+interface ShareTargetRole {
+  type: 'role';
+  roleId: string;
+}
+interface ShareTargetTeam {
+  type: 'team';
+  teamId: string;
+}
+interface ShareTargetEveryone {
+  type: 'everyone';
+}
 
 function isUserTarget(t: ShareTarget): t is ShareTargetUser;
 function isRoleTarget(t: ShareTarget): t is ShareTargetRole;
@@ -99,18 +107,34 @@ interface EnrichedFieldMetadata extends FieldMetadata {
   enrichment?: FieldEnrichment;
 }
 
-function createFieldEnrichment(fieldName: string, overrides?: Partial<FieldEnrichment>): FieldEnrichment;
-function mergeFieldMetadata(field: FieldMetadata, enrichment?: FieldEnrichment): EnrichedFieldMetadata;
+function createFieldEnrichment(
+  fieldName: string,
+  overrides?: Partial<FieldEnrichment>,
+): FieldEnrichment;
+function mergeFieldMetadata(
+  field: FieldMetadata,
+  enrichment?: FieldEnrichment,
+): EnrichedFieldMetadata;
 ```
 
 #### FilterValueHandling
 
 ```typescript
-type FilterValueSource = { type: 'data-source'; dataSourceId: string; field: string } | { type: 'lookup-table'; entries: Array<{ value: unknown; label: string }> } | { type: 'static'; values: unknown[] };
+type FilterValueSource =
+  | { type: 'data-source'; dataSourceId: string; field: string }
+  | { type: 'lookup-table'; entries: Array<{ value: unknown; label: string }> }
+  | { type: 'static'; values: unknown[] };
 
-type FilterValueTransform = { type: 'lookup' } | { type: 'expression'; expression: string } | { type: 'granularity-shift'; from: string; to: string };
+type FilterValueTransform =
+  | { type: 'lookup' }
+  | { type: 'expression'; expression: string }
+  | { type: 'granularity-shift'; from: string; to: string };
 
-type FilterDefault = { type: 'static'; value: unknown } | { type: 'relative-date'; offset: number; unit: string } | { type: 'viewer-attribute'; attribute: string } | { type: 'expression'; expression: string };
+type FilterDefault =
+  | { type: 'static'; value: unknown }
+  | { type: 'relative-date'; offset: number; unit: string }
+  | { type: 'viewer-attribute'; attribute: string }
+  | { type: 'expression'; expression: string };
 
 interface FilterValueHandling {
   valueSource: FilterValueSource;
@@ -271,9 +295,15 @@ interface AlertTokenSet {
   border?: string;
 }
 
-function resolveAlertVisualState(config: SingleValueAlertConfig, alertEvents: Map<string, WidgetAlertSeverity>): AlertVisualState;
+function resolveAlertVisualState(
+  config: SingleValueAlertConfig,
+  alertEvents: Map<string, WidgetAlertSeverity>,
+): AlertVisualState;
 function getAlertTokens(severity: WidgetAlertSeverity, mode: AlertVisualMode): AlertTokenSet;
-function degradeAlertMode(mode: AlertVisualMode, containerSize: AlertContainerSize): DegradedAlertParams;
+function degradeAlertMode(
+  mode: AlertVisualMode,
+  containerSize: AlertContainerSize,
+): DegradedAlertParams;
 function createDefaultAlertConfig(): SingleValueAlertConfig;
 ```
 
@@ -297,7 +327,12 @@ interface MicroWidgetRenderResult {
 }
 
 interface MicroWidgetRenderer {
-  render(config: MicroWidgetCellConfig, value: unknown, width: number, height: number): MicroWidgetRenderResult;
+  render(
+    config: MicroWidgetCellConfig,
+    value: unknown,
+    width: number,
+    height: number,
+  ): MicroWidgetRenderResult;
   canRender(config: MicroWidgetCellConfig, columnWidth: number): boolean;
 }
 
@@ -353,8 +388,17 @@ interface DecisionTreeVariantConfig {
 type AttentionPriority = 'critical' | 'warning' | 'info';
 type AttentionSource = 'alert' | 'system' | 'external' | 'stale' | 'review' | 'broken-query';
 
-interface AttentionFacetValue { value: string; count: number; color?: string }
-interface AttentionFacet { field: string; label: string; values: AttentionFacetValue[]; multiSelect: boolean }
+interface AttentionFacetValue {
+  value: string;
+  count: number;
+  color?: string;
+}
+interface AttentionFacet {
+  field: string;
+  label: string;
+  values: AttentionFacetValue[];
+  multiSelect: boolean;
+}
 
 interface AttentionFilterState {
   priority?: AttentionPriority[];
@@ -373,8 +417,14 @@ interface FilterableAttentionItem {
   timestamp: number;
 }
 
-function filterAttentionItems(items: FilterableAttentionItem[], filter: AttentionFilterState): FilterableAttentionItem[];
-function computeAttentionFacets(items: FilterableAttentionItem[], activeFilter?: AttentionFilterState): AttentionFacet[];
+function filterAttentionItems(
+  items: FilterableAttentionItem[],
+  filter: AttentionFilterState,
+): FilterableAttentionItem[];
+function computeAttentionFacets(
+  items: FilterableAttentionItem[],
+  activeFilter?: AttentionFilterState,
+): AttentionFacet[];
 ```
 
 #### Additional Types
@@ -388,9 +438,10 @@ function computeAttentionFacets(items: FilterableAttentionItem[], activeFilter?:
 
 ### 1.3 Design System
 
-**Import**: `@phozart/phz-shared/design-system`
+**Import**: `@phozart/shared/design-system`
 
 Re-exports from:
+
 - `design-tokens.ts` — `DESIGN_TOKENS` (19 colors, spacing 4px grid, typography, radii, shadows)
 - `responsive.ts` — breakpoint utilities (desktop, laptop, tablet, mobile)
 - `container-queries.ts` — per-widget-type container query thresholds
@@ -403,52 +454,75 @@ Re-exports from:
 
 ### 1.4 Artifacts
 
-**Import**: `@phozart/phz-shared/artifacts`
+**Import**: `@phozart/shared/artifacts`
 
 ```typescript
 // Visibility
 type ArtifactVisibility = 'personal' | 'shared' | 'published';
 
 interface VisibilityMeta {
-  id: string; type: ArtifactType; name: string;
-  visibility: ArtifactVisibility; ownerId: string;
-  sharedWith: string[]; description?: string;
+  id: string;
+  type: ArtifactType;
+  name: string;
+  visibility: ArtifactVisibility;
+  ownerId: string;
+  sharedWith: string[];
+  description?: string;
 }
 
 function isVisibleToViewer(meta: VisibilityMeta, context: ViewerContext): boolean;
 function groupByVisibility(metas: VisibilityMeta[]): Map<ArtifactVisibility, VisibilityMeta[]>;
 function canTransition(from: ArtifactVisibility, to: ArtifactVisibility): boolean;
-function transitionVisibility(meta: VisibilityMeta, to: ArtifactVisibility, sharedWith?: string[]): VisibilityMeta;
+function transitionVisibility(
+  meta: VisibilityMeta,
+  to: ArtifactVisibility,
+  sharedWith?: string[],
+): VisibilityMeta;
 function duplicateWithVisibility(meta: VisibilityMeta, newOwnerId: string): VisibilityMeta;
 
 // Default presentation
 interface DefaultPresentation {
-  density?: string; theme?: string;
-  columnOrder?: string[]; columnWidths?: Record<string, number>;
-  hiddenColumns?: string[]; frozenColumns?: number;
+  density?: string;
+  theme?: string;
+  columnOrder?: string[];
+  columnWidths?: Record<string, number>;
+  hiddenColumns?: string[];
+  frozenColumns?: number;
   sortState?: Array<{ field: string; direction: 'asc' | 'desc' }>;
 }
 
 function createDefaultPresentation(overrides?: Partial<DefaultPresentation>): DefaultPresentation;
-function mergePresentation(base: DefaultPresentation, overlay?: Partial<DefaultPresentation>): DefaultPresentation;
+function mergePresentation(
+  base: DefaultPresentation,
+  overlay?: Partial<DefaultPresentation>,
+): DefaultPresentation;
 
 // Personal view
 interface PersonalView {
-  userId: string; artifactId: string;
+  userId: string;
+  artifactId: string;
   presentation: Partial<DefaultPresentation>;
   savedAt: number;
 }
 
-function createPersonalView(userId: string, artifactId: string, presentation: Partial<DefaultPresentation>): PersonalView;
+function createPersonalView(
+  userId: string,
+  artifactId: string,
+  presentation: Partial<DefaultPresentation>,
+): PersonalView;
 function applyPersonalView(base: DefaultPresentation, personal?: PersonalView): DefaultPresentation;
 
 // Grid artifact
 interface GridArtifact {
-  id: string; type: 'grid-definition';
-  dataSourceId: string; columns: GridColumnConfig[];
+  id: string;
+  type: 'grid-definition';
+  dataSourceId: string;
+  columns: GridColumnConfig[];
   defaultSort?: { field: string; direction: 'asc' | 'desc' };
-  defaultFilters?: unknown; density?: string;
-  enableGrouping?: boolean; enableExport?: boolean;
+  defaultFilters?: unknown;
+  density?: string;
+  enableGrouping?: boolean;
+  enableExport?: boolean;
 }
 
 function isGridArtifact(meta: ArtifactMeta): boolean;
@@ -458,35 +532,35 @@ function gridArtifactToMeta(artifact: GridArtifact): ArtifactMeta;
 
 ### 1.5 Coordination
 
-**Import**: `@phozart/phz-shared/coordination`
+**Import**: `@phozart/shared/coordination`
 
 Major state machines and coordination types. All are pure functions with
 immutable state transitions.
 
-| Module | Key exports |
-|--------|------------|
-| `filter-context` | `FilterContextManager`, `createFilterContext()`, `DashboardFilterDef`, `FieldMapping`, `resolveFieldForSource()`, `createDebouncedFilterDispatch()` |
-| `dashboard-data-pipeline` | `DashboardLoadingState`, `PreloadConfig`, `FullLoadConfig`, `DetailSourceConfig`, `DashboardDataConfig`, `DashboardDataPipeline`, `DataSourceConfig`, `migrateLegacyDataConfig()` |
-| `query-coordinator` | `QueryCoordinatorConfig`, `defaultQueryCoordinatorConfig()`, `CoordinatorQuery`, `CoordinatorResult`, `QueryCoordinatorInstance` |
-| `interaction-bus` | `WidgetEvent`, `InteractionBus`, `createInteractionBus()` |
-| `navigation-events` | `NavigationFilterMapping`, `NavigationFilter`, `NavigationEvent`, `resolveNavigationFilters()`, `buildNavigationEvent()`, `emitNavigationEvent()` |
-| `loading-state` | `LoadingPhase`, `LoadingState`, `createInitialLoadingState()`, `updateLoadingProgress()`, `isLoadingComplete()`, `MultiSourceLoadingState`, `createMultiSourceLoadingState()`, `updateSourceProgress()`, `computeOverallProgress()` |
-| `execution-strategy` | `ExecutionEngine`, `ExecutionStrategyConfig`, `ExecutionContext`, `createDefaultExecutionStrategy()`, `selectExecutionEngine()`, `selectEngineForFeature()` |
-| `server-mode` | `ServerGridConfig`, `createDefaultServerGridConfig()`, `isServerMode()`, `hasServerCapability()` |
-| `export-config` | `GridExportConfig`, `createDefaultExportConfig()`, `shouldUseAsyncExport()`, `isFormatEnabled()` |
-| `filter-auto-save` | `FilterAutoSaveConfig`, `FilterStateSnapshot`, `createDefaultAutoSaveConfig()`, `createFilterSnapshot()`, `shouldAutoSave()`, `pruneHistory()` |
-| `async-report-ui-state` | `AsyncReportUIState`, `createAsyncReportUIState()`, `addJob()`, `updateJobStatus()`, `removeJob()`, `getCompletedJobs()`, `getActiveJobs()` |
-| `exports-tab-state` | `ExportEntry`, `ExportsTabState`, `createExportsTabState()`, `addExport()`, `updateExport()`, `removeExport()`, `setSort()`, `setFilterStatus()`, `getVisibleExports()` |
-| `subscriptions-tab-state` | `SubscriptionsTabState`, `createSubscriptionsTabState()`, `setSubscriptions()`, `setActiveTab()`, `setSearchQuery()`, `getFilteredSubscriptions()`, `countByStatus()` |
-| `expression-builder-state` | `ExpressionNode`, `ExpressionBuilderState`, `createExpressionBuilderState()`, `addNode()`, `removeNode()`, `updateNode()`, `buildExpression()`, `validateExpression()` |
-| `preview-context-state` | `PreviewContextState`, `createPreviewContextState()`, `enablePreview()`, `disablePreview()`, `selectRole()`, `setCustomUserId()`, `getEffectiveContext()` |
-| `attention-faceted-state` | `AttentionFacetedState`, `initialAttentionFacetedState()`, `toggleFacetValue()`, `clearFacet()`, `clearAllFilters()`, `acknowledgeItem()`, `acknowledgeAllVisible()`, `setAttentionSort()`, `loadMore()`, `getVisibleItems()` |
+| Module                     | Key exports                                                                                                                                                                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filter-context`           | `FilterContextManager`, `createFilterContext()`, `DashboardFilterDef`, `FieldMapping`, `resolveFieldForSource()`, `createDebouncedFilterDispatch()`                                                                                 |
+| `dashboard-data-pipeline`  | `DashboardLoadingState`, `PreloadConfig`, `FullLoadConfig`, `DetailSourceConfig`, `DashboardDataConfig`, `DashboardDataPipeline`, `DataSourceConfig`, `migrateLegacyDataConfig()`                                                   |
+| `query-coordinator`        | `QueryCoordinatorConfig`, `defaultQueryCoordinatorConfig()`, `CoordinatorQuery`, `CoordinatorResult`, `QueryCoordinatorInstance`                                                                                                    |
+| `interaction-bus`          | `WidgetEvent`, `InteractionBus`, `createInteractionBus()`                                                                                                                                                                           |
+| `navigation-events`        | `NavigationFilterMapping`, `NavigationFilter`, `NavigationEvent`, `resolveNavigationFilters()`, `buildNavigationEvent()`, `emitNavigationEvent()`                                                                                   |
+| `loading-state`            | `LoadingPhase`, `LoadingState`, `createInitialLoadingState()`, `updateLoadingProgress()`, `isLoadingComplete()`, `MultiSourceLoadingState`, `createMultiSourceLoadingState()`, `updateSourceProgress()`, `computeOverallProgress()` |
+| `execution-strategy`       | `ExecutionEngine`, `ExecutionStrategyConfig`, `ExecutionContext`, `createDefaultExecutionStrategy()`, `selectExecutionEngine()`, `selectEngineForFeature()`                                                                         |
+| `server-mode`              | `ServerGridConfig`, `createDefaultServerGridConfig()`, `isServerMode()`, `hasServerCapability()`                                                                                                                                    |
+| `export-config`            | `GridExportConfig`, `createDefaultExportConfig()`, `shouldUseAsyncExport()`, `isFormatEnabled()`                                                                                                                                    |
+| `filter-auto-save`         | `FilterAutoSaveConfig`, `FilterStateSnapshot`, `createDefaultAutoSaveConfig()`, `createFilterSnapshot()`, `shouldAutoSave()`, `pruneHistory()`                                                                                      |
+| `async-report-ui-state`    | `AsyncReportUIState`, `createAsyncReportUIState()`, `addJob()`, `updateJobStatus()`, `removeJob()`, `getCompletedJobs()`, `getActiveJobs()`                                                                                         |
+| `exports-tab-state`        | `ExportEntry`, `ExportsTabState`, `createExportsTabState()`, `addExport()`, `updateExport()`, `removeExport()`, `setSort()`, `setFilterStatus()`, `getVisibleExports()`                                                             |
+| `subscriptions-tab-state`  | `SubscriptionsTabState`, `createSubscriptionsTabState()`, `setSubscriptions()`, `setActiveTab()`, `setSearchQuery()`, `getFilteredSubscriptions()`, `countByStatus()`                                                               |
+| `expression-builder-state` | `ExpressionNode`, `ExpressionBuilderState`, `createExpressionBuilderState()`, `addNode()`, `removeNode()`, `updateNode()`, `buildExpression()`, `validateExpression()`                                                              |
+| `preview-context-state`    | `PreviewContextState`, `createPreviewContextState()`, `enablePreview()`, `disablePreview()`, `selectRole()`, `setCustomUserId()`, `getEffectiveContext()`                                                                           |
+| `attention-faceted-state`  | `AttentionFacetedState`, `initialAttentionFacetedState()`, `toggleFacetValue()`, `clearFacet()`, `clearAllFilters()`, `acknowledgeItem()`, `acknowledgeAllVisible()`, `setAttentionSort()`, `loadMore()`, `getVisibleItems()`       |
 
 ---
 
-## 2. @phozart/phz-viewer
+## 2. @phozart/viewer
 
-**Import**: `@phozart/phz-viewer`
+**Import**: `@phozart/viewer`
 **Source**: `packages/viewer/src/`
 
 ### Shell State
@@ -508,7 +582,11 @@ interface ViewerShellState {
 }
 
 function createViewerShellState(overrides?: Partial<ViewerShellState>): ViewerShellState;
-function navigateTo(state: ViewerShellState, screen: ViewerScreen, params?: Record<string, string>): ViewerShellState;
+function navigateTo(
+  state: ViewerShellState,
+  screen: ViewerScreen,
+  params?: Record<string, string>,
+): ViewerShellState;
 function navigateBack(state: ViewerShellState): ViewerShellState;
 function navigateForward(state: ViewerShellState): ViewerShellState;
 function canGoBack(state: ViewerShellState): boolean;
@@ -523,7 +601,10 @@ function setMobileLayout(state: ViewerShellState, mobile: boolean): ViewerShellS
 ### Navigation
 
 ```typescript
-interface ViewerRoute { screen: ViewerScreen; params: Record<string, string> }
+interface ViewerRoute {
+  screen: ViewerScreen;
+  params: Record<string, string>;
+}
 
 function parseRoute(path: string): ViewerRoute;
 function buildRoutePath(route: ViewerRoute): string;
@@ -571,23 +652,23 @@ function createDefaultFeatureFlags(): ViewerFeatureFlags;
 
 ### Components
 
-| Tag | Class | Purpose |
-|-----|-------|---------|
-| `<phz-viewer-shell>` | `PhzViewerShell` | Top-level viewer container |
-| `<phz-viewer-catalog>` | `PhzViewerCatalog` | Card-based artifact catalog |
-| `<phz-viewer-dashboard>` | `PhzViewerDashboard` | Dashboard viewer with cross-filter |
-| `<phz-viewer-report>` | `PhzViewerReport` | Report viewer with sort/pagination |
-| `<phz-viewer-explorer>` | `PhzViewerExplorer` | Ad-hoc data exploration |
-| `<phz-attention-dropdown>` | `PhzAttentionDropdown` | Notification bell dropdown |
-| `<phz-filter-bar>` | `PhzFilterBar` | Dashboard filter bar |
-| `<phz-viewer-error>` | `PhzViewerError` | Error state display |
-| `<phz-viewer-empty>` | `PhzViewerEmpty` | Empty state display |
+| Tag                        | Class                  | Purpose                            |
+| -------------------------- | ---------------------- | ---------------------------------- |
+| `<phz-viewer-shell>`       | `PhzViewerShell`       | Top-level viewer container         |
+| `<phz-viewer-catalog>`     | `PhzViewerCatalog`     | Card-based artifact catalog        |
+| `<phz-viewer-dashboard>`   | `PhzViewerDashboard`   | Dashboard viewer with cross-filter |
+| `<phz-viewer-report>`      | `PhzViewerReport`      | Report viewer with sort/pagination |
+| `<phz-viewer-explorer>`    | `PhzViewerExplorer`    | Ad-hoc data exploration            |
+| `<phz-attention-dropdown>` | `PhzAttentionDropdown` | Notification bell dropdown         |
+| `<phz-filter-bar>`         | `PhzFilterBar`         | Dashboard filter bar               |
+| `<phz-viewer-error>`       | `PhzViewerError`       | Error state display                |
+| `<phz-viewer-empty>`       | `PhzViewerEmpty`       | Empty state display                |
 
 ---
 
-## 3. @phozart/phz-editor
+## 3. @phozart/editor
 
-**Import**: `@phozart/phz-editor`
+**Import**: `@phozart/editor`
 **Source**: `packages/editor/src/`
 
 ### Shell State
@@ -611,7 +692,11 @@ interface EditorShellState {
 }
 
 function createEditorShellState(overrides?: Partial<EditorShellState>): EditorShellState;
-function navigateTo(state: EditorShellState, screen: EditorScreen, params?: Record<string, string>): EditorShellState;
+function navigateTo(
+  state: EditorShellState,
+  screen: EditorScreen,
+  params?: Record<string, string>,
+): EditorShellState;
 function toggleEditMode(state: EditorShellState): EditorShellState;
 function markUnsavedChanges(state: EditorShellState): EditorShellState;
 function markSaved(state: EditorShellState): EditorShellState;
@@ -626,8 +711,15 @@ function toggleAutoSave(state: EditorShellState): EditorShellState;
 ### Navigation
 
 ```typescript
-interface EditorRoute { screen: EditorScreen; params: Record<string, string> }
-interface Breadcrumb { label: string; screen: EditorScreen; params?: Record<string, string> }
+interface EditorRoute {
+  screen: EditorScreen;
+  params: Record<string, string>;
+}
+interface Breadcrumb {
+  label: string;
+  screen: EditorScreen;
+  params?: Record<string, string>;
+}
 
 function parseRoute(path: string): EditorRoute;
 function buildRoutePath(route: EditorRoute): string;
@@ -682,45 +774,45 @@ function validateEditorConfig(config: EditorShellConfig): ConfigValidationResult
 
 ### Components
 
-| Tag | Class | Purpose |
-|-----|-------|---------|
-| `<phz-editor-shell>` | `PhzEditorShell` | Top-level editor container |
-| `<phz-editor-catalog>` | `PhzEditorCatalog` | Artifact catalog with create dialog |
-| `<phz-editor-dashboard>` | `PhzEditorDashboard` | Dashboard view/edit |
-| `<phz-editor-report>` | `PhzEditorReport` | Report view/edit |
-| `<phz-editor-explorer>` | `PhzEditorExplorer` | Data exploration |
-| `<phz-measure-palette>` | `PhzMeasurePalette` | Drag source for measures |
-| `<phz-config-panel>` | `PhzConfigPanel` | Widget configuration panel |
-| `<phz-sharing-flow>` | `PhzSharingFlow` | Artifact sharing dialog |
-| `<phz-alert-subscription>` | `PhzAlertSubscription` | Alert & subscription management |
+| Tag                        | Class                  | Purpose                             |
+| -------------------------- | ---------------------- | ----------------------------------- |
+| `<phz-editor-shell>`       | `PhzEditorShell`       | Top-level editor container          |
+| `<phz-editor-catalog>`     | `PhzEditorCatalog`     | Artifact catalog with create dialog |
+| `<phz-editor-dashboard>`   | `PhzEditorDashboard`   | Dashboard view/edit                 |
+| `<phz-editor-report>`      | `PhzEditorReport`      | Report view/edit                    |
+| `<phz-editor-explorer>`    | `PhzEditorExplorer`    | Data exploration                    |
+| `<phz-measure-palette>`    | `PhzMeasurePalette`    | Drag source for measures            |
+| `<phz-config-panel>`       | `PhzConfigPanel`       | Widget configuration panel          |
+| `<phz-sharing-flow>`       | `PhzSharingFlow`       | Artifact sharing dialog             |
+| `<phz-alert-subscription>` | `PhzAlertSubscription` | Alert & subscription management     |
 
 ---
 
 ## 4. New Engine Exports
 
-**Import**: `@phozart/phz-engine`
+**Import**: `@phozart/engine`
 **Source**: `packages/engine/src/`
 
 ### 4.1 Explorer
 
-Moved from `@phozart/phz-workspace/explore` to `@phozart/phz-engine/explorer`.
+Moved from `@phozart/workspace/explore` to `@phozart/engine/explorer`.
 
 ```typescript
 // Sub-path import
-import { createFieldPalette, suggestChartType } from '@phozart/phz-engine/explorer';
+import { createFieldPalette, suggestChartType } from '@phozart/engine/explorer';
 ```
 
-| Export | Purpose |
-|--------|---------|
-| `exploreToDataQuery()` | Convert `ExploreQuery` to `DataQuery` |
-| `validateAggregation()` | Check field/aggregation compatibility |
-| `createFieldPalette()`, `groupFieldsByType()`, `searchFields()`, `autoPlaceField()` | Field palette management |
-| `createDropZoneState()`, `addFieldToZone()`, `removeFieldFromZone()`, `moveFieldBetweenZones()` | Drop zone state |
-| `createPreviewController()`, `toExploreQuery()` | Pivot preview |
-| `suggestChartType()` | Chart type suggestion from field profile |
-| `exploreToReport()`, `exploreToDashboardWidget()` | Artifact conversion |
-| `createDataExplorer()` | Full explorer state machine |
-| `promoteFilterToDashboard()`, `buildDrillThroughPrePopulation()` | Dashboard integration |
+| Export                                                                                          | Purpose                                  |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `exploreToDataQuery()`                                                                          | Convert `ExploreQuery` to `DataQuery`    |
+| `validateAggregation()`                                                                         | Check field/aggregation compatibility    |
+| `createFieldPalette()`, `groupFieldsByType()`, `searchFields()`, `autoPlaceField()`             | Field palette management                 |
+| `createDropZoneState()`, `addFieldToZone()`, `removeFieldFromZone()`, `moveFieldBetweenZones()` | Drop zone state                          |
+| `createPreviewController()`, `toExploreQuery()`                                                 | Pivot preview                            |
+| `suggestChartType()`                                                                            | Chart type suggestion from field profile |
+| `exploreToReport()`, `exploreToDashboardWidget()`                                               | Artifact conversion                      |
+| `createDataExplorer()`                                                                          | Full explorer state machine              |
+| `promoteFilterToDashboard()`, `buildDrillThroughPrePopulation()`                                | Dashboard integration                    |
 
 ### 4.2 Personal Alert Engine
 
@@ -753,8 +845,13 @@ interface SubscriptionEngineState {
   processing: boolean;
 }
 
-function createSubscriptionEngineState(overrides?: Partial<SubscriptionEngineState>): SubscriptionEngineState;
-function addSubscription(state: SubscriptionEngineState, sub: Subscription): SubscriptionEngineState;
+function createSubscriptionEngineState(
+  overrides?: Partial<SubscriptionEngineState>,
+): SubscriptionEngineState;
+function addSubscription(
+  state: SubscriptionEngineState,
+  sub: Subscription,
+): SubscriptionEngineState;
 // Also: removeSubscription, setActiveSubscription, startProcessing, stopProcessing,
 //       isReadyForExecution, getNextExecutionTime
 ```
@@ -762,7 +859,11 @@ function addSubscription(state: SubscriptionEngineState, sub: Subscription): Sub
 ### 4.4 Usage Analytics
 
 ```typescript
-interface BufferedEvent { type: string; timestamp: number; data: Record<string, unknown> }
+interface BufferedEvent {
+  type: string;
+  timestamp: number;
+  data: Record<string, unknown>;
+}
 
 interface UsageCollectorState {
   buffer: BufferedEvent[];
@@ -771,7 +872,10 @@ interface UsageCollectorState {
   collecting: boolean;
 }
 
-interface UsageCollectorConfig { bufferSize?: number; flushIntervalMs?: number }
+interface UsageCollectorConfig {
+  bufferSize?: number;
+  flushIntervalMs?: number;
+}
 
 function createUsageCollector(config?: UsageCollectorConfig): UsageCollectorState;
 // Also: trackEvent, flush, shouldFlush, pauseCollection, resumeCollection
@@ -802,7 +906,9 @@ interface AttentionSystemState {
   categories: string[];
 }
 
-function createAttentionSystemState(overrides?: Partial<AttentionSystemState>): AttentionSystemState;
+function createAttentionSystemState(
+  overrides?: Partial<AttentionSystemState>,
+): AttentionSystemState;
 // Also: addItems, markAsRead, dismissItem, clearAll,
 //       getUnreadCount, getItemsByCategory, setFetchInterval
 ```
@@ -811,7 +917,7 @@ function createAttentionSystemState(overrides?: Partial<AttentionSystemState>): 
 
 ## 5. New Workspace Exports
 
-**Import**: `@phozart/phz-workspace`
+**Import**: `@phozart/workspace`
 **Source**: `packages/workspace/src/`
 
 ### 5.1 Command Palette
@@ -859,7 +965,13 @@ function initialCommandPaletteState(actions?: CommandAction[]): CommandPaletteSt
 **Source**: `packages/workspace/src/shell/keyboard-shortcuts-state.ts`
 
 ```typescript
-type ShortcutContext = 'global' | 'catalog' | 'report-editor' | 'dashboard-editor' | 'settings' | 'command-palette';
+type ShortcutContext =
+  | 'global'
+  | 'catalog'
+  | 'report-editor'
+  | 'dashboard-editor'
+  | 'settings'
+  | 'command-palette';
 
 interface ContextualShortcut extends ShortcutEntry {
   context: ShortcutContext;
@@ -890,20 +1002,29 @@ const DEFAULT_CONTEXTUAL_SHORTCUTS: ContextualShortcut[];
 type ThemeMode = 'light' | 'dark' | 'auto';
 
 interface BrandingConfig {
-  logoUrl?: string; primaryColor: string;
-  accentColor: string; appName: string; faviconUrl?: string;
+  logoUrl?: string;
+  primaryColor: string;
+  accentColor: string;
+  appName: string;
+  faviconUrl?: string;
 }
 
 interface DefaultSettings {
   density: 'compact' | 'dense' | 'comfortable';
-  pageSize: number; defaultView: 'card' | 'table';
-  locale: string; timezone: string;
-  dateFormat: string; numberFormat: 'us' | 'eu';
+  pageSize: number;
+  defaultView: 'card' | 'table';
+  locale: string;
+  timezone: string;
+  dateFormat: string;
+  numberFormat: 'us' | 'eu';
 }
 
 interface FeatureFlag {
-  id: string; name: string; description: string;
-  enabled: boolean; category: string;
+  id: string;
+  name: string;
+  description: string;
+  enabled: boolean;
+  category: string;
 }
 
 interface SettingsState {
@@ -929,10 +1050,16 @@ const BUILT_IN_FLAGS: FeatureFlag[];
 type ApiKeyStatus = 'active' | 'revoked' | 'expired';
 
 interface ApiKey {
-  id: string; name: string; prefix: string;
-  createdAt: number; expiresAt?: number; lastUsedAt?: number;
-  status: ApiKeyStatus; scopes: string[];
-  rateLimit: RateLimitConfig; createdBy: string;
+  id: string;
+  name: string;
+  prefix: string;
+  createdAt: number;
+  expiresAt?: number;
+  lastUsedAt?: number;
+  status: ApiKeyStatus;
+  scopes: string[];
+  rateLimit: RateLimitConfig;
+  createdBy: string;
 }
 
 interface RateLimitConfig {
@@ -942,19 +1069,33 @@ interface RateLimitConfig {
 }
 
 interface ApiRole {
-  id: string; name: string; description: string;
-  scopes: string[]; isBuiltIn: boolean;
+  id: string;
+  name: string;
+  description: string;
+  scopes: string[];
+  isBuiltIn: boolean;
 }
 
 interface ApiAccessState {
-  keys: ApiKey[]; roles: ApiRole[];
-  selectedKeyId?: string; editingKey?: Partial<ApiKey>;
-  search: string; statusFilter?: ApiKeyStatus;
+  keys: ApiKey[];
+  roles: ApiRole[];
+  selectedKeyId?: string;
+  editingKey?: Partial<ApiKey>;
+  search: string;
+  statusFilter?: ApiKeyStatus;
   openApiSpec?: string;
 }
 
 const API_SCOPES: readonly string[];
-type ApiScope = 'read:artifacts' | 'write:artifacts' | 'read:data' | 'write:data' | 'admin:settings' | 'admin:users' | 'export:reports' | 'execute:queries';
+type ApiScope =
+  | 'read:artifacts'
+  | 'write:artifacts'
+  | 'read:data'
+  | 'write:data'
+  | 'admin:settings'
+  | 'admin:users'
+  | 'export:reports'
+  | 'execute:queries';
 
 const BUILT_IN_ROLES: ApiRole[];
 

@@ -1,14 +1,14 @@
 /**
- * @phozart/phz-workspace — Core Types
+ * @phozart/workspace — Core Types
  */
 import type { LayoutNode } from './schema/config-layers.js';
 import type { DataQuery } from './data-adapter.js';
 import type { ArtifactEndorsement } from './govern/certification-state.js';
-import type { FieldMappingEntry as _FieldMappingEntry, DetailTrigger as _DetailTrigger, FieldMapping as _FieldMapping } from '@phozart/phz-shared/coordination';
-import type { FilterDefault as _FilterDefault, FilterValueTransform as _FilterValueTransform } from '@phozart/phz-shared/types';
-export type { KPIId, MetricId, ReportId, DashboardId, WidgetId, DataProductId, } from '@phozart/phz-engine';
-export { kpiId, metricId, reportId, dashboardId, widgetId, dataProductId, } from '@phozart/phz-engine';
-export type { DefinitionId } from '@phozart/phz-shared/definitions';
+import type { FieldMappingEntry as _FieldMappingEntry, DetailTrigger as _DetailTrigger, FieldMapping as _FieldMapping } from '@phozart/shared/coordination';
+import type { FilterDefault as _FilterDefault, FilterValueTransform as _FilterValueTransform } from '@phozart/shared/types';
+export type { KPIId, MetricId, ReportId, DashboardId, WidgetId, DataProductId, } from '@phozart/engine';
+export { kpiId, metricId, reportId, dashboardId, widgetId, dataProductId, } from '@phozart/engine';
+export type { DefinitionId } from '@phozart/shared/definitions';
 export type PlacementId = string & {
     readonly __brand: 'PlacementId';
 };
@@ -117,10 +117,10 @@ export interface FieldMappingSchema {
     }>;
 }
 /**
- * @deprecated Import FieldMapping from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FieldMapping from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export { type FieldMapping, resolveFieldForSource } from '@phozart/phz-shared/coordination';
+export { type FieldMapping, resolveFieldForSource } from '@phozart/shared/coordination';
 export declare function autoSuggestMappings(schemas: FieldMappingSchema[]): _FieldMapping[];
 export type AlertRuleId = string & {
     readonly __brand: 'AlertRuleId';
@@ -188,11 +188,11 @@ export interface ActiveBreach {
     rule: AlertRule;
 }
 /**
- * @deprecated Import FilterOperator from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FilterOperator from '@phozart/shared/coordination' instead.
  * These re-exports will be removed in v16.
  */
-export { type FilterOperator, type FilterValue, type CrossFilterEntry, type FilterContextState, type FilterUIType, type DashboardFilterDef, } from '@phozart/phz-shared/coordination';
-import type { DashboardFilterDef as _DashboardFilterDef } from '@phozart/phz-shared/coordination';
+export { type FilterOperator, type FilterValue, type CrossFilterEntry, type FilterContextState, type FilterUIType, type DashboardFilterDef, } from '@phozart/shared/coordination';
+import type { DashboardFilterDef as _DashboardFilterDef } from '@phozart/shared/coordination';
 export interface FilterDependency {
     parentFilterId: string;
     childFilterId: string;
@@ -241,10 +241,10 @@ export interface TemplateDefinition {
     builtIn: boolean;
 }
 /**
- * @deprecated Import FieldMappingEntry from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FieldMappingEntry from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { FieldMappingEntry } from '@phozart/phz-shared/coordination';
+export type { FieldMappingEntry } from '@phozart/shared/coordination';
 export interface PreloadConfig {
     query: DataQuery;
     usePersonalView?: boolean;
@@ -255,10 +255,10 @@ export interface FullLoadConfig {
     maxRows?: number;
 }
 /**
- * @deprecated Import DetailTrigger from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import DetailTrigger from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { DetailTrigger } from '@phozart/phz-shared/coordination';
+export type { DetailTrigger } from '@phozart/shared/coordination';
 export interface DetailSourceConfig {
     id: string;
     name: string;
@@ -278,23 +278,23 @@ export interface DashboardDataConfig {
     transition?: 'seamless' | 'fade' | 'replace';
 }
 /**
- * @deprecated Import DashboardLoadingState from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import DashboardLoadingState from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { DashboardLoadingState } from '@phozart/phz-shared/coordination';
+export type { DashboardLoadingState } from '@phozart/shared/coordination';
 export declare function isDashboardDataConfig(obj: unknown): obj is DashboardDataConfig;
 export declare function isDetailSourceConfig(obj: unknown): obj is DetailSourceConfig;
 export declare function validateDashboardDataConfig(config: DashboardDataConfig): boolean;
 /**
- * @deprecated Import ViewerContext from '@phozart/phz-shared/adapters' instead.
+ * @deprecated Import ViewerContext from '@phozart/shared/adapters' instead.
  * This re-export will be removed in v16.
  */
-export type { ViewerContext } from '@phozart/phz-shared/adapters';
+export type { ViewerContext } from '@phozart/shared/adapters';
 /**
- * @deprecated Import from '@phozart/phz-shared/types' instead.
+ * @deprecated Import from '@phozart/shared/types' instead.
  * These re-exports will be removed in v16.
  */
-export { type FilterValueSource, type FilterValueTransform, type FilterDefault, } from '@phozart/phz-shared/types';
+export { type FilterValueSource, type FilterValueTransform, type FilterDefault, } from '@phozart/shared/types';
 export interface DashboardFilterRef {
     filterDefinitionId: string;
     overrides?: {
@@ -313,8 +313,8 @@ export interface ArtifactFilterContract {
     defaults?: Record<string, _FilterDefault>;
 }
 /**
- * @deprecated Import from '@phozart/phz-shared/types' instead.
+ * @deprecated Import from '@phozart/shared/types' instead.
  * These re-exports will be removed in v16.
  */
-export { type JoinType, type SourceJoinKey, type SourceRelationship, } from '@phozart/phz-shared/types';
+export { type JoinType, type SourceJoinKey, type SourceRelationship, } from '@phozart/shared/types';
 //# sourceMappingURL=types.d.ts.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Table Settings Component
+ * @phozart/grid-admin — Table Settings Component
  *
  * 6 collapsible sections to configure all aspects of the grid's appearance
  * and behavior. Emits `table-settings-change` events with { section, key, value }.
@@ -14,7 +14,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import { adminBaseStyles } from './shared-styles.js';
-import { DEFAULT_TABLE_SETTINGS } from '@phozart/phz-engine';
+import { DEFAULT_TABLE_SETTINGS } from '@phozart/engine';
 export { DEFAULT_TABLE_SETTINGS };
 const FONT_OPTIONS = [
     { value: 'inherit', label: 'System Default' },

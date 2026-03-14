@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-criteria",
+  "name": "@phozart/criteria",
   "version": "0.1.0",
   "description": "Selection Criteria panel — date ranges, tree selects, presets, admin",
   "type": "module",
@@ -15,7 +15,33 @@
       "import": "./dist/shared-styles.js"
     }
   },
-  "sideEffects": ["dist/**/*.js"],
+  "sideEffects": [
+    "dist/components/phz-criteria-panel.js",
+    "dist/components/phz-criteria-field.js",
+    "dist/components/phz-criteria-summary.js",
+    "dist/components/phz-criteria-bar.js",
+    "dist/components/phz-filter-drawer.js",
+    "dist/components/phz-filter-section.js",
+    "dist/components/phz-expanded-modal.js",
+    "dist/components/phz-preset-manager.js",
+    "dist/components/phz-preset-sidebar.js",
+    "dist/components/phz-selection-criteria.js",
+    "dist/components/phz-filter-configurator.js",
+    "dist/components/phz-filter-designer.js",
+    "dist/components/phz-filter-definition-admin.js",
+    "dist/components/phz-criteria-admin.js",
+    "dist/components/phz-preset-admin.js",
+    "dist/components/phz-rule-admin.js",
+    "dist/components/phz-rule-editor-modal.js",
+    "dist/components/fields/phz-date-range-picker.js",
+    "dist/components/fields/phz-numeric-range-input.js",
+    "dist/components/fields/phz-tree-select.js",
+    "dist/components/fields/phz-searchable-dropdown.js",
+    "dist/components/fields/phz-field-presence-filter.js",
+    "dist/components/fields/phz-chip-select.js",
+    "dist/components/fields/phz-match-filter-pill.js",
+    "dist/components/fields/phz-combobox.js"
+  ],
   "files": [
     "dist"
   ],
@@ -27,9 +53,20 @@
   },
   "author": "phozart",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=20" },
-  "keywords": ["selection-criteria", "filters", "date-range", "tree-select", "web-components", "lit"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "selection-criteria",
+    "filters",
+    "date-range",
+    "tree-select",
+    "web-components",
+    "lit"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phozart/phz-grid.git",
@@ -40,15 +77,15 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/criteria#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
     "lit": "^3.2.0"
   },
   "peerDependencies": {
-    "@phozart/phz-workspace": "^0.1.0"
+    "@phozart/workspace": "^0.1.0"
   },
   "peerDependenciesMeta": {
-    "@phozart/phz-workspace": {
+    "@phozart/workspace": {
       "optional": true
     }
   }

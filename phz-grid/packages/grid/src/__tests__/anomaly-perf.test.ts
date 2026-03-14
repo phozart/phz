@@ -8,7 +8,7 @@ import {
   detectAllAnomalies,
   buildAnomalyLookup,
 } from '../features/anomaly-detector.js';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 
 describe('Perf 3: Anomaly detection Map lookup', () => {
   const rows: RowData[] = [

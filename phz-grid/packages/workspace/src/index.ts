@@ -1,14 +1,14 @@
 /**
- * @phozart/phz-workspace — Unified Workspace for Admin & Authoring
+ * @phozart/workspace — Unified Workspace for Admin & Authoring
  *
  * UI sub-modules (grid-admin, engine-admin, grid-creator, criteria-admin,
  * definition-ui) register custom elements as side effects and must be
  * imported via sub-path exports:
- *   import '@phozart/phz-workspace/grid-admin';
- *   import '@phozart/phz-workspace/engine-admin';
- *   import '@phozart/phz-workspace/grid-creator';
- *   import '@phozart/phz-workspace/criteria-admin';
- *   import '@phozart/phz-workspace/definition-ui';
+ *   import '@phozart/workspace/grid-admin';
+ *   import '@phozart/workspace/engine-admin';
+ *   import '@phozart/workspace/grid-creator';
+ *   import '@phozart/workspace/criteria-admin';
+ *   import '@phozart/workspace/definition-ui';
  */
 
 // Types & placement

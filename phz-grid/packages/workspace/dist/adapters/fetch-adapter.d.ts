@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — FetchWorkspaceAdapter
+ * @phozart/workspace — FetchWorkspaceAdapter
  *
  * REST client implementing WorkspaceAdapter that delegates to a server.
  */
-import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/phz-engine';
-import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/phz-engine';
-import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/phz-shared/definitions';
+import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/engine';
+import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/engine';
+import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/shared/definitions';
 import type { WorkspaceAdapter } from '../workspace-adapter.js';
 import type { PlacementRecord } from '../placement.js';
 import type { PlacementId, ArtifactMeta, ArtifactFilter, PlacementFilter, AlertRule, AlertRuleId, BreachRecord, BreachId, AlertSubscription, TemplateDefinition, TemplateId } from '../types.js';

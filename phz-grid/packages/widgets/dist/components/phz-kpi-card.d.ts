@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-widgets — KPI Card
+ * @phozart/widgets — KPI Card
  *
  * Single KPI display with value, status badge, delta, and optional sparkline.
  */
 import { LitElement } from 'lit';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import type { SelectionContext } from '@phozart/phz-core';
+import type { KPIDefinition } from '@phozart/engine';
+import type { SelectionContext } from '@phozart/core';
 export declare class PhzKPICard extends LitElement {
     static styles: import("lit").CSSResult[];
     kpiDefinition?: KPIDefinition;

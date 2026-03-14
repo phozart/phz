@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-alert-subscription> (B-2.12)
+ * @phozart/editor — <phz-alert-subscription> (B-2.12)
  *
  * Alert and subscription management component. Users create,
  * edit, and manage personal alerts and report subscriptions.
@@ -7,8 +7,8 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { PersonalAlert } from '@phozart/phz-shared/types';
-import type { Subscription } from '@phozart/phz-shared/types';
+import type { PersonalAlert } from '@phozart/shared/types';
+import type { Subscription } from '@phozart/shared/types';
 import type { AlertSubscriptionState } from '../authoring/alert-subscription-state.js';
 import {
   createAlertSubscriptionState,

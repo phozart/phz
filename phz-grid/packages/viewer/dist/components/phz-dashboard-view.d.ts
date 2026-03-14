@@ -6,7 +6,7 @@
  * Supports auto-grid and fixed grid layouts with configurable column count.
  */
 import { LitElement } from 'lit';
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
 export interface DashboardViewConfig {
     id: string;
     title: string;

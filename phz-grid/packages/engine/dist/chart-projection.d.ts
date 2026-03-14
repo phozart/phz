@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-engine — Chart Data Projection
+ * @phozart/engine — Chart Data Projection
  *
  * Projects row data into chart-ready data series.
  */
-import type { ChartConfig } from '@phozart/phz-core';
+import type { ChartConfig } from '@phozart/core';
 export interface ChartDataPoint {
     x: string | number;
     y: number;

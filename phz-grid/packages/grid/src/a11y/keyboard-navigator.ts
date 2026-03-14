@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — KeyboardNavigator
+ * @phozart/grid — KeyboardNavigator
  *
  * Handles keyboard navigation within the grid using a roving tabindex
  * pattern (WCAG 2.1.1 compliant). Arrow keys navigate cells, Tab exits
  * the grid — avoiding the keyboard trap that affects competitors.
  */
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 
 export interface GridCellPosition {
   rowIndex: number;

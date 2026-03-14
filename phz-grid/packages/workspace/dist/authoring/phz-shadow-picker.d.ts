@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Shadow Picker Micro-Component
+ * @phozart/workspace — Shadow Picker Micro-Component
  *
  * 4-option visual selector (none/sm/md/lg) showing card previews.
  * Fires 'shadow-changed' event with { detail: { shadow: string } }.

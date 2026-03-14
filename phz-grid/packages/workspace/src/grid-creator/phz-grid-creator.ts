@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-creator — <phz-grid-creator>
+ * @phozart/grid-creator — <phz-grid-creator>
  *
  * Main wizard modal for creating new grids/reports.
  * 5 steps: Report Identity -> Data Source -> Column Selection -> Configuration -> Review & Create

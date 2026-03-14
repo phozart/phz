@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid-admin — Conditional Formatting Rule Builder
+ * @phozart/grid-admin — Conditional Formatting Rule Builder
  *
  * Rule list with inline condition builder, style editor, and live preview.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { ConditionalFormattingRule } from '@phozart/phz-core';
+import type { ConditionalFormattingRule } from '@phozart/core';
 export declare class PhzAdminFormatting extends LitElement {
     static styles: import("lit").CSSResult[];
     rules: ConditionalFormattingRule[];

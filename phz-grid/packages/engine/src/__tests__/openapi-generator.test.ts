@@ -7,7 +7,7 @@ import {
   endpointToOperation,
   generatePathItem,
 } from '../api/openapi-generator.js';
-import type { ApiEndpoint, APISpecConfig } from '@phozart/phz-shared/types';
+import type { ApiEndpoint, APISpecConfig } from '@phozart/shared/types';
 
 // --- Test helpers ---
 

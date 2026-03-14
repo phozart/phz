@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Parquet Loader
+ * @phozart/duckdb — Parquet Loader
  *
  * Smart Parquet loading with projection pushdown, predicate pushdown,
  * and schema inspection.

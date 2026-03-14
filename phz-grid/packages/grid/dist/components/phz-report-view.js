@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-report-view> Orchestrator
+ * @phozart/grid — <phz-report-view> Orchestrator
  *
  * Bundles criteria-bar + grid + admin panel into one cohesive view.
  * Handles data-source selection → column auto-population,
@@ -17,7 +17,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { DEFAULT_TABLE_SETTINGS } from '@phozart/phz-engine';
+import { DEFAULT_TABLE_SETTINGS } from '@phozart/engine';
 import './phz-grid.js';
 let PhzReportView = class PhzReportView extends LitElement {
     constructor() {

@@ -1,3 +1,4 @@
+const DEFAULT_DURATION = 2500;
 export class ToastController {
     constructor(host) {
         this.timer = null;
@@ -7,18 +8,29 @@ export class ToastController {
     }
     hostConnected() { }
     hostDisconnected() {
-        if (this.timer)
-            clearTimeout(this.timer);
+        this.clearTimer();
+        this.toast = null;
     }
-    show(message, type = 'info') {
-        if (this.timer)
-            clearTimeout(this.timer);
-        this.toast = { message, type };
+    show(message, type = 'info', options) {
+        this.clearTimer();
+        this.toast = { message, type, ...options };
+        const duration = options?.duration ?? DEFAULT_DURATION;
         this.timer = setTimeout(() => {
             this.toast = null;
             this.host.requestUpdate();
-        }, 2500);
+        }, duration);
         this.host.requestUpdate();
+    }
+    dismiss() {
+        this.clearTimer();
+        this.toast = null;
+        this.host.requestUpdate();
+    }
+    clearTimer() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
     }
 }
 //# sourceMappingURL=toast.controller.js.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Configurator
+ * @phozart/criteria — Filter Configurator
  *
  * Configure which filter definitions appear on a specific report/dashboard,
  * assign data columns, set per-binding overrides. Single-view (no tabs).
@@ -26,11 +26,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 // Ensure sub-components are registered (side-effect imports)
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
 /** Filter types that support a selectionMode override */
 const HAS_SELECTION_MODE = ['single_select', 'multi_select', 'chip_group', 'tree_select', 'search'];
 /** Drag-handle grip icon (3-line) */

@@ -20,28 +20,28 @@ import { describe, it, expect } from 'vitest';
 // Barrel imports — using `import *` to detect duplicate/ambiguous exports
 // ========================================================================
 
-import * as SharedRoot from '@phozart/phz-shared';
-import * as SharedTypes from '@phozart/phz-shared/types';
-import * as SharedAdapters from '@phozart/phz-shared/adapters';
-import * as SharedDesignSystem from '@phozart/phz-shared/design-system';
-import * as SharedArtifacts from '@phozart/phz-shared/artifacts';
-import * as SharedCoordination from '@phozart/phz-shared/coordination';
-import * as Viewer from '@phozart/phz-viewer';
-import * as Editor from '@phozart/phz-editor';
-import * as Engine from '@phozart/phz-engine';
-import * as Widgets from '@phozart/phz-widgets';
-import * as Grid from '@phozart/phz-grid';
+import * as SharedRoot from '@phozart/shared';
+import * as SharedTypes from '@phozart/shared/types';
+import * as SharedAdapters from '@phozart/shared/adapters';
+import * as SharedDesignSystem from '@phozart/shared/design-system';
+import * as SharedArtifacts from '@phozart/shared/artifacts';
+import * as SharedCoordination from '@phozart/shared/coordination';
+import * as Viewer from '@phozart/viewer';
+import * as Editor from '@phozart/editor';
+import * as Engine from '@phozart/engine';
+import * as Widgets from '@phozart/widgets';
+import * as Grid from '@phozart/grid';
 
 // Note: workspace barrel is large and uses `export *` from many modules.
 // It historically has had TS2308 issues. Test it separately.
-import * as Workspace from '@phozart/phz-workspace';
+import * as Workspace from '@phozart/workspace';
 
 // ========================================================================
 // Tests
 // ========================================================================
 
 describe('v15 Barrel Export Audit', () => {
-  describe('@phozart/phz-shared (root)', () => {
+  describe('@phozart/shared (root)', () => {
     it('exports key functions without ambiguity', () => {
       // Adapter re-exports
       expect(SharedRoot.createFilterContext).toBeTypeOf('function');
@@ -88,7 +88,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-shared/types', () => {
+  describe('@phozart/shared/types', () => {
     it('exports all type module functions', () => {
       expect(SharedTypes.isUserTarget).toBeTypeOf('function');
       expect(SharedTypes.createFieldEnrichment).toBeTypeOf('function');
@@ -111,7 +111,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-shared/adapters', () => {
+  describe('@phozart/shared/adapters', () => {
     it('barrel import succeeds (type-only module)', () => {
       // Adapters is primarily type-only; verify the module loaded
       expect(SharedAdapters).toBeDefined();
@@ -119,7 +119,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-shared/design-system', () => {
+  describe('@phozart/shared/design-system', () => {
     it('exports all design system tokens and helpers', () => {
       expect(SharedDesignSystem.DESIGN_TOKENS).toBeDefined();
       expect(SharedDesignSystem.BREAKPOINT_VALUES).toBeDefined();
@@ -133,7 +133,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-shared/artifacts', () => {
+  describe('@phozart/shared/artifacts', () => {
     it('exports all artifact functions', () => {
       expect(SharedArtifacts.isVisibleToViewer).toBeTypeOf('function');
       expect(SharedArtifacts.groupByVisibility).toBeTypeOf('function');
@@ -149,7 +149,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-shared/coordination', () => {
+  describe('@phozart/shared/coordination', () => {
     it('exports all coordination state machines and utilities', () => {
       expect(SharedCoordination.createFilterContext).toBeTypeOf('function');
       expect(SharedCoordination.createInteractionBus).toBeTypeOf('function');
@@ -167,7 +167,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-viewer', () => {
+  describe('@phozart/viewer', () => {
     it('exports shell state machine and screen states', () => {
       expect(Viewer.createViewerShellState).toBeTypeOf('function');
       expect(Viewer.createViewerShellConfig).toBeTypeOf('function');
@@ -193,7 +193,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-editor', () => {
+  describe('@phozart/editor', () => {
     it('exports shell state machine and screen states', () => {
       expect(Editor.createEditorShellState).toBeTypeOf('function');
       expect(Editor.createEditorShellConfig).toBeTypeOf('function');
@@ -225,7 +225,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-engine', () => {
+  describe('@phozart/engine', () => {
     it('exports core engine functionality', () => {
       expect(Engine.createKPIRegistry).toBeTypeOf('function');
       expect(Engine.computeStatus).toBeTypeOf('function');
@@ -262,7 +262,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-widgets', () => {
+  describe('@phozart/widgets', () => {
     it('exports core widget components and state', () => {
       expect(Widgets.PhzKPICard).toBeDefined();
       expect(Widgets.PhzBarChart).toBeDefined();
@@ -301,7 +301,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-grid', () => {
+  describe('@phozart/grid', () => {
     it('exports grid component and controllers', () => {
       expect(Grid.PhzGrid).toBeDefined();
       expect(Grid.PhzColumn).toBeDefined();
@@ -327,7 +327,7 @@ describe('v15 Barrel Export Audit', () => {
     });
   });
 
-  describe('@phozart/phz-workspace', () => {
+  describe('@phozart/workspace', () => {
     it('barrel import succeeds without TS2308 errors', () => {
       // The workspace barrel uses many `export *` statements.
       // If there were duplicate exports, the import would fail.

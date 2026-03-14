@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — View Group State
+ * @phozart/widgets — View Group State
  *
  * Headless state machine for widget view groups.
  * Manages active group, active view, and switching mode resolution.
@@ -9,7 +9,7 @@ import type {
   WidgetViewGroup,
   WidgetView,
   ViewSwitchingMode,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 /** Immutable state for widget view group management. */
 export interface ViewGroupState {

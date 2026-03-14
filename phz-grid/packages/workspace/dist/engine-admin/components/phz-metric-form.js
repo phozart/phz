@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Metric Form
+ * @phozart/engine-admin — Metric Form
  *
  * Slide-over form for creating/editing metrics.
  * Two tabs: Simple (field + aggregation) and Composite (expression builder).
@@ -14,7 +14,7 @@ import { LitElement, html, css } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { metricId } from '@phozart/phz-engine';
+import { metricId } from '@phozart/engine';
 import './phz-expression-builder.js';
 const AGGREGATIONS = ['sum', 'avg', 'count', 'min', 'max', 'first', 'last'];
 let PhzMetricForm = class PhzMetricForm extends LitElement {

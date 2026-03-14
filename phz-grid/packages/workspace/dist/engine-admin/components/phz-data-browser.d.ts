@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — Data Product Browser
+ * @phozart/engine-admin — Data Product Browser
  *
  * Two-panel: searchable product list (left) + schema inspector (right).
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { DataProductDef } from '@phozart/phz-engine';
+import type { DataProductDef } from '@phozart/engine';
 export declare class PhzDataBrowser extends LitElement {
     static styles: import("lit").CSSResult[];
     products: DataProductDef[];

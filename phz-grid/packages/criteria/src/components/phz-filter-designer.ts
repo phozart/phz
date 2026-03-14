@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Designer
+ * @phozart/criteria — Filter Designer
  *
  * Single place for creating and managing reusable filter definitions,
  * filter rules, and shared presets. Three tabs: Definitions, Rules, Presets.
@@ -32,8 +32,8 @@ import type {
   SelectionPreset, SelectionFieldType, SessionBehavior,
   FilterDataSource, ValueSourceConfig, OptionsSource,
   FilterDefinitionPreset,
-} from '@phozart/phz-core';
-import { filterDefinitionId, resolveLabelTemplate } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId, resolveLabelTemplate } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 // Ensure sub-components are registered (side-effect imports)
@@ -1490,7 +1490,7 @@ export class PhzFilterDesigner extends LitElement {
   private async _checkStudio() {
     try {
       // @ts-ignore — optional side-effect import for feature detection
-      await import('@phozart/phz-workspace/engine-admin');
+      await import('@phozart/workspace/engine-admin');
       this._hasStudio = true;
     } catch {
       this._hasStudio = false;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Dashboard Data Pipeline types (A-1.05)
+ * @phozart/shared — Dashboard Data Pipeline types (A-1.05)
  *
  * Preload/full-load parallel data architecture types.
  * Pure types only — no DataAdapter dependency.

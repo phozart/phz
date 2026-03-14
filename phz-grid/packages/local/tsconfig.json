@@ -8,7 +8,7 @@
     "noUnusedParameters": false,
     "lib": ["ES2022"],
     "paths": {
-      "@phozart/phz-shared/definitions": ["../shared/src/definitions/index.ts"]
+      "@phozart/shared/definitions": ["../shared/src/definitions/index.ts"]
     }
   },
   "include": ["src"],

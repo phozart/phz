@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria - Rule Editor Modal
+ * @phozart/criteria - Rule Editor Modal
  *
  * Modal dialog for creating, editing, and copying filter rules.
  * Shows type-specific form fields with guidance for each rule type.
@@ -11,7 +11,7 @@
  * - rule-editor-delete: { ruleId: string }
  */
 import { LitElement, nothing } from 'lit';
-import type { FilterRule, FilterDefinition } from '@phozart/phz-core';
+import type { FilterRule, FilterDefinition } from '@phozart/core';
 import './fields/phz-combobox.js';
 export type RuleEditorMode = 'add' | 'edit' | 'copy';
 export declare class PhzRuleEditorModal extends LitElement {

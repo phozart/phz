@@ -5,10 +5,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-explorer> Custom Element
+ * @phozart/viewer — <phz-viewer-explorer> Custom Element
  *
  * Explorer screen for self-service data exploration.
- * Delegates to @phozart/phz-engine/explorer for the core logic.
+ * Delegates to @phozart/engine/explorer for the core logic.
  */
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — AI Security Tests
+ * @phozart/ai — AI Security Tests
  *
  * Tests for SQL injection prevention, prompt injection sanitization,
  * header-based API keys, and data leakage warnings.

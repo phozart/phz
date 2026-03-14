@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine/explorer — Widget Suggestion for Dashboard Field Drops
+ * @phozart/engine/explorer — Widget Suggestion for Dashboard Field Drops
  *
  * Pure function: given a dropped field, existing widgets, and available fields,
  * suggests the best widget type and encoding for a new dashboard widget.
  * Internally delegates to suggestChartType() for chart-type selection.
  */
 
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 import { suggestChartType } from './chart-suggest.js';
 import type { ExploreQuery } from './explore-types.js';
 

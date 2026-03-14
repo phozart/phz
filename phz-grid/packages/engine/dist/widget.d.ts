@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — Widget Configuration Types
+ * @phozart/engine — Widget Configuration Types
  *
  * 10 widget types for dashboards: KPI cards, scorecards, charts, tables, and more.
  */
 import type { WidgetId, KPIId, ReportId, DataProductId, ValidationResult } from './types.js';
 import type { ChartOverlay } from './chart-overlays.js';
 import type { ChartTooltipConfig } from './chart-tooltip.js';
-export type WidgetType = 'kpi-card' | 'kpi-scorecard' | 'bar-chart' | 'trend-line' | 'bottom-n' | 'pivot-table' | 'data-table' | 'status-table' | 'drill-link' | 'custom';
+export type WidgetType = 'kpi-card' | 'kpi-scorecard' | 'bar-chart' | 'trend-line' | 'bottom-n' | 'pivot-table' | 'data-table' | 'status-table' | 'drill-link' | 'slicer' | 'custom';
 export interface WidgetPosition {
     row: number;
     col: number;
@@ -100,11 +100,19 @@ export interface DrillLinkWidgetConfig extends BaseWidgetConfig {
     targetReportId: ReportId;
     filters?: Record<string, string>;
 }
+export interface SlicerWidgetConfig extends BaseWidgetConfig {
+    type: 'slicer';
+    field: string;
+    mode?: 'multi' | 'single' | 'range';
+    showSearch?: boolean;
+    showCounts?: boolean;
+    layout?: 'vertical' | 'horizontal' | 'chips';
+}
 export interface CustomWidgetConfig extends BaseWidgetConfig {
     type: 'custom';
     renderer: string;
 }
-export type WidgetConfig = KPICardWidgetConfig | ScorecardWidgetConfig | BarChartWidgetConfig | TrendLineWidgetConfig | BottomNWidgetConfig | PivotTableWidgetConfig | DataTableWidgetConfig | StatusTableWidgetConfig | DrillLinkWidgetConfig | CustomWidgetConfig;
+export type WidgetConfig = KPICardWidgetConfig | ScorecardWidgetConfig | BarChartWidgetConfig | TrendLineWidgetConfig | BottomNWidgetConfig | PivotTableWidgetConfig | DataTableWidgetConfig | StatusTableWidgetConfig | DrillLinkWidgetConfig | SlicerWidgetConfig | CustomWidgetConfig;
 export interface WidgetPlacement {
     id: WidgetId;
     widgetType: WidgetType;

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import type { DashboardConfig } from '@phozart/phz-engine';
-import { dashboardId, widgetId } from '@phozart/phz-engine';
+import type { DashboardConfig } from '@phozart/engine';
+import { dashboardId, widgetId } from '@phozart/engine';
 
 describe('Dashboard Renderer logic', () => {
   it('computes grid styles from layout config', () => {

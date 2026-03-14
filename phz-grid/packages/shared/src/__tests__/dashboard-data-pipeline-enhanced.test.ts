@@ -8,13 +8,13 @@ import {
   migrateLegacyDataConfig,
   isDashboardDataConfig,
   isDetailSourceConfig,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 import type {
   DashboardDataConfig,
   DataSourceConfig,
   PreloadConfig,
   FullLoadConfig,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // migrateLegacyDataConfig

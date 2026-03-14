@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ClipboardController, type ClipboardHost } from '../controllers/clipboard.controller.js';
 import * as copyEngine from '../clipboard/copy-engine.js';
-import type { RowData, ColumnDefinition, RowId } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition, RowId } from '@phozart/core';
 
 vi.mock('../clipboard/copy-engine.js', () => ({
   formatCellForCopy: vi.fn(() => 'formatted-value'),
@@ -64,7 +64,7 @@ describe('ClipboardController', () => {
         undefined,
       );
       expect(copyEngine.copyToClipboard).toHaveBeenCalledWith('formatted-value');
-      expect(host.toast.show).toHaveBeenCalledWith('Cell copied', 'success');
+      expect(host.toast.show).toHaveBeenCalledWith('Cell copied', 'success', { icon: 'copy' });
     });
 
     it('does nothing when row not found', () => {
@@ -88,7 +88,7 @@ describe('ClipboardController', () => {
         { includeHeaders: true, formatted: false, dateFormats: {} },
       );
       expect(copyEngine.copyToClipboard).toHaveBeenCalledWith('copy-text');
-      expect(host.toast.show).toHaveBeenCalledWith('Row copied', 'success');
+      expect(host.toast.show).toHaveBeenCalledWith('Row copied', 'success', { icon: 'copy' });
     });
 
     it('excludes fields listed in excludeFieldsFromCopy', () => {
@@ -118,7 +118,7 @@ describe('ClipboardController', () => {
         expect.arrayContaining([expect.objectContaining({ field: 'name' })]),
         { includeHeaders: true, formatted: false, dateFormats: {} },
       );
-      expect(host.toast.show).toHaveBeenCalledWith('4 cells copied', 'success');
+      expect(host.toast.show).toHaveBeenCalledWith('4 cells copied', 'success', { icon: 'copy' });
     });
 
     it('does nothing when no range is selected', () => {
@@ -144,7 +144,7 @@ describe('ClipboardController', () => {
         host.columnDefs,
         { includeHeaders: false, formatted: false, dateFormats: {} },
       );
-      expect(host.toast.show).toHaveBeenCalledWith('2 rows copied', 'success');
+      expect(host.toast.show).toHaveBeenCalledWith('2 rows copied', 'success', { icon: 'copy' });
     });
 
     it('rejects when exceeding maxCopyRows', () => {
@@ -156,7 +156,7 @@ describe('ClipboardController', () => {
       ctrl.copySelectedRows(false);
 
       expect(copyEngine.copyToClipboard).not.toHaveBeenCalled();
-      expect(host.toast.show).toHaveBeenCalledWith('Cannot copy more than 2 rows', 'error');
+      expect(host.toast.show).toHaveBeenCalledWith('Cannot copy more than 2 rows', 'error', { icon: 'error' });
     });
   });
 });

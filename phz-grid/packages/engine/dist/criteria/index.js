@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/criteria — Filter & Criteria Subsystem
+ * @phozart/engine/criteria — Filter & Criteria Subsystem
  *
  * Barrel re-export for the criteria subdirectory.
  */

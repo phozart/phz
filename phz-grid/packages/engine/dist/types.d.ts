@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Base Types
+ * @phozart/engine — Base Types
  *
  * Branded ID types, config layers, and shared types for the BI engine.
  */
@@ -37,7 +37,7 @@ export interface ValidationError {
     message: string;
 }
 export type StatusLevel = 'ok' | 'warn' | 'crit' | 'unknown';
-import type { ArtefactId } from '@phozart/phz-core';
+import type { ArtefactId } from '@phozart/core';
 export declare function reportArtefactId(id: ReportId): ArtefactId;
 export declare function dashboardArtefactId(id: DashboardId): ArtefactId;
 export declare function widgetArtefactId(id: WidgetId): ArtefactId;

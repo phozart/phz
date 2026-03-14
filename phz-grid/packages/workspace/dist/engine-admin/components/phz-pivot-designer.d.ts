@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — Pivot Designer
+ * @phozart/engine-admin — Pivot Designer
  *
  * Single-page configurator: data product → row/column/value fields → preview.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { BIEngine } from '@phozart/phz-engine';
+import type { BIEngine } from '@phozart/engine';
 export declare class PhzPivotDesigner extends LitElement {
     static styles: import("lit").CSSResult[];
     engine?: BIEngine;

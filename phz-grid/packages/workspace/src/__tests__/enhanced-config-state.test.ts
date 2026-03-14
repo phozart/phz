@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Enhanced Config Panel State Tests
+ * @phozart/workspace — Enhanced Config Panel State Tests
  *
  * ~45 tests covering factory, section navigation, appearance updates,
  * behaviour, accordion, formatting rules, overlays, thresholds,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Editor Component
+ * @phozart/workspace — Dashboard Editor Component
  *
  * Field palette (left 260px) + Canvas (center CSS grid) + Config panel (right 360px).
  * Floating toolbar on selected widget: Morph | Configure | Duplicate | Delete.

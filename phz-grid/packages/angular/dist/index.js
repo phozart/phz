@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-angular — Angular Wrapper for phz-grid
+ * @phozart/angular — Angular Wrapper for phz-grid
  *
  * Provides type definitions and a factory for creating an Angular standalone
  * component and RxJS-based services. Since Angular has its own build system,

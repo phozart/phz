@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Studio
+ * @phozart/engine-admin — Dashboard Studio
  *
  * MicroStrategy-inspired integrated dashboard editor.
  * Single view: toolbar + global filters + left data panel + live canvas + right config panel.
@@ -15,8 +15,8 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { widgetId, dashboardId, resolveDashboardWidgets, createDefaultScoreProvider, SMART_DEFAULTS, isEnhancedDashboard, serializeDashboard, DEFAULT_DASHBOARD_THEME, } from '@phozart/phz-engine';
-import { createDashboardDataModelStore, parameterId, calculatedFieldId } from '@phozart/phz-engine';
+import { widgetId, dashboardId, resolveDashboardWidgets, createDefaultScoreProvider, SMART_DEFAULTS, isEnhancedDashboard, serializeDashboard, DEFAULT_DASHBOARD_THEME, } from '@phozart/engine';
+import { createDashboardDataModelStore, parameterId, calculatedFieldId } from '@phozart/engine';
 // Import sub-components for side-effect registration
 import './phz-widget-config-panel.js';
 import './phz-global-filter-bar.js';
@@ -72,6 +72,10 @@ const DEFAULT_CONFIGS = {
     'drill-link': (id) => ({
         id: widgetId(id), type: 'drill-link', label: 'View Details', targetReportId: '',
         position: { row: 0, col: 0 }, size: { rowSpan: 1, colSpan: 1 },
+    }),
+    'slicer': (id) => ({
+        id: widgetId(id), type: 'slicer', field: '',
+        position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },
     }),
     'custom': (id) => ({
         id: widgetId(id), type: 'custom', renderer: '',

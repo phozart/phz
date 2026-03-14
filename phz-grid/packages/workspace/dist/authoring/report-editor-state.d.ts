@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-workspace — Report Editor State
+ * @phozart/workspace — Report Editor State
  *
  * Pure functions for configuring a report (a configured <phz-grid>).
  * Manages columns, filters, sorting, grouping, conditional formatting, and density.
  */
 import type { FilterValue } from '../types.js';
 import type { ReportChartState } from './report-chart-state.js';
-import type { JoinType } from '@phozart/phz-shared/types';
+import type { JoinType } from '@phozart/shared/types';
 export interface ReportColumnConfig {
     field: string;
     label: string;

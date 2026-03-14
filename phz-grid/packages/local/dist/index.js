@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-local — Lightweight Local Server
+ * @phozart/local — Lightweight Local Server
  *
  * Node.js server with native DuckDB and filesystem persistence
  * for the phz-grid workspace.

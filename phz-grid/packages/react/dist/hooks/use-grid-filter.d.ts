@@ -1,5 +1,5 @@
 import { type RefObject } from 'react';
-import type { GridApi, FilterState, FilterOperator } from '@phozart/phz-core';
+import type { GridApi, FilterState, FilterOperator } from '@phozart/core';
 export declare function useGridFilter(gridRef: RefObject<GridApi | null>): {
     filterState: FilterState | null;
     addFilter: (field: string, operator: FilterOperator, value: unknown) => void | undefined;

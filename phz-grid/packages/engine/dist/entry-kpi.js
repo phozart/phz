@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/kpi — KPI-focused entry point
+ * @phozart/engine/kpi — KPI-focused entry point
  *
  * KPI definitions, status computation, score providers, and scorecard utilities.
  */

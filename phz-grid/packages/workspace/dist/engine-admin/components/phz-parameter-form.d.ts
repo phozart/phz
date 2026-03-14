@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine-admin — Parameter Form
+ * @phozart/engine-admin — Parameter Form
  *
  * Slide-over form for creating/editing dashboard parameters.
  */
 import { LitElement } from 'lit';
-import type { ParameterDef } from '@phozart/phz-engine';
+import type { ParameterDef } from '@phozart/engine';
 export declare class PhzParameterForm extends LitElement {
     static styles: import("lit").CSSResult[];
     parameter?: ParameterDef;

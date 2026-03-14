@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Expanded Modal
+ * @phozart/criteria — Expanded Modal
  *
  * Near-full-screen modal with backdrop. Two-column layout:
  * sidebar (240px, for presets) | main content (tree/filter).

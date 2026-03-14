@@ -1,6 +1,6 @@
 /**
  * Grid definition types, stores, converters, migration, and validation.
- * Migrated from @phozart/phz-definitions.
+ * Migrated from @phozart/definitions.
  */
 // Types
 export * from './types/index.js';

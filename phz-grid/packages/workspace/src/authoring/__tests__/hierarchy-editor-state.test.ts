@@ -9,8 +9,8 @@ import {
   autoDetectDateHierarchy,
 } from '../hierarchy-editor-state.js';
 import type { HierarchyEditorState } from '../hierarchy-editor-state.js';
-import { createCustomHierarchy, generateDateHierarchy } from '@phozart/phz-engine';
-import type { FieldMetadata } from '@phozart/phz-shared/adapters';
+import { createCustomHierarchy, generateDateHierarchy } from '@phozart/engine';
+import type { FieldMetadata } from '@phozart/shared/adapters';
 
 describe('initialHierarchyEditorState', () => {
   it('creates empty state', () => {

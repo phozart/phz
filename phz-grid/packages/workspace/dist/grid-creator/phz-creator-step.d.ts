@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-creator — <phz-creator-step>
+ * @phozart/grid-creator — <phz-creator-step>
  *
  * Step indicator with horizontal numbered circles and connectors.
  * Highlights current, completed, and upcoming steps.

@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Selection Bar
+ * @phozart/widgets — Selection Bar
  *
  * Global filter bar that scopes all widgets. Renders selection fields as dropdowns, chips, etc.
  */
 import { LitElement, nothing } from 'lit';
-import type { SelectionContext, SelectionFieldDef } from '@phozart/phz-core';
+import type { SelectionContext, SelectionFieldDef } from '@phozart/core';
 export declare class PhzSelectionBar extends LitElement {
     static styles: import("lit").CSSResult[];
     fields: SelectionFieldDef[];

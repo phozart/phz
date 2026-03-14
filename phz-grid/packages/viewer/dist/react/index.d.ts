@@ -13,11 +13,11 @@ import type { ViewerShellConfig } from '../viewer-config.js';
 import type { ViewerNavigateEventDetail } from '../components/phz-viewer-shell.js';
 import type { CatalogSelectEventDetail } from '../components/phz-viewer-catalog.js';
 import type { ReportExportEventDetail, ReportPageEventDetail } from '../components/phz-viewer-report.js';
-import type { ViewerContext, AttentionItem, DataSourceMeta, ExportFormat } from '@phozart/phz-shared/adapters';
-import type { DataExplorer } from '@phozart/phz-engine/explorer';
-import type { DashboardFilterDef, FilterValue } from '@phozart/phz-shared/coordination';
-import type { FilterPresetValue, ErrorState, EmptyScenario, ErrorScenario, ErrorStateConfig, EmptyStateConfig } from '@phozart/phz-shared/types';
-import type { VisibilityMeta } from '@phozart/phz-shared/artifacts';
+import type { ViewerContext, AttentionItem, DataSourceMeta, ExportFormat } from '@phozart/shared/adapters';
+import type { DataExplorer } from '@phozart/engine/explorer';
+import type { DashboardFilterDef, FilterValue } from '@phozart/shared/coordination';
+import type { FilterPresetValue, ErrorState, EmptyScenario, ErrorScenario, ErrorStateConfig, EmptyStateConfig } from '@phozart/shared/types';
+import type { VisibilityMeta } from '@phozart/shared/artifacts';
 import type { DashboardWidgetView, ReportColumnView } from '../index.js';
 export declare const ViewerShellReact: import("@lit/react").ReactWebComponent<PhzViewerShell, {
     onViewerNavigate: EventName<CustomEvent<ViewerNavigateEventDetail>>;

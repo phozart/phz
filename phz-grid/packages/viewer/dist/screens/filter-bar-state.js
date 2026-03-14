@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Filter Bar State
+ * @phozart/viewer — Filter Bar State
  *
  * Headless state for the filter bar with value handling.
  * Manages active filters, presets, and value-handling configuration.

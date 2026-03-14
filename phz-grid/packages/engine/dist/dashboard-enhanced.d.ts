@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Enhanced Dashboard Configuration Types
+ * @phozart/engine — Enhanced Dashboard Configuration Types
  *
  * Extends existing DashboardConfig with global filters, themes,
  * and full serialization format.

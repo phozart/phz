@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — State Management
+ * @phozart/core — State Management
  *
  * Immutable state tree with subscriber notifications.
  */
@@ -40,6 +40,7 @@ export function createInitialState<TData = any>(
       order: columns.map((c) => c.field),
       widths: Object.fromEntries(columns.map((c) => [c.field, c.width ?? 150])),
       visibility,
+      pinOverrides: {},
     },
     viewport: {
       scrollTop: 0,
@@ -98,6 +99,67 @@ export function createInitialState<TData = any>(
   };
 }
 
+// --- Column Pinning ---
+
+/**
+ * Pin a column to the left or right edge at runtime.
+ * Returns a new state with the pin override applied (immutable).
+ */
+export function pinColumn<TData = any>(
+  state: GridState<TData>,
+  field: string,
+  side: 'left' | 'right',
+): GridState<TData> {
+  return {
+    ...state,
+    columns: {
+      ...state.columns,
+      pinOverrides: {
+        ...state.columns.pinOverrides,
+        [field]: side,
+      },
+    },
+  };
+}
+
+/**
+ * Remove a runtime pin override for a column.
+ * Sets the override to `null` so that it explicitly overrides any static
+ * `col.frozen` value. Returns a new state (immutable).
+ * Safe to call on a column that has no override.
+ */
+export function unpinColumn<TData = any>(
+  state: GridState<TData>,
+  field: string,
+): GridState<TData> {
+  return {
+    ...state,
+    columns: {
+      ...state.columns,
+      pinOverrides: {
+        ...state.columns.pinOverrides,
+        [field]: null,
+      },
+    },
+  };
+}
+
+/**
+ * Get the effective pin state for a column.
+ * Checks `pinOverrides` first, then falls back to `col.frozen`.
+ * Returns `null` when the column is not pinned.
+ */
+export function getEffectivePinState<TData = any>(
+  state: GridState<TData>,
+  col: ColumnDefinition,
+): 'left' | 'right' | null {
+  const override = state.columns.pinOverrides[col.field];
+  if (override !== undefined) {
+    return override;
+  }
+  return col.frozen ?? null;
+}
+
 interface SelectorSub<TData, T> {
   selector: (state: GridState<TData>) => T;
   callback: (selected: T, prev: T) => void;
@@ -114,6 +176,9 @@ export class StateManager<TData = any> {
   private batching = false;
   private _undoStack: SerializedGridState[] = [];
   private _redoStack: SerializedGridState[] = [];
+  private _undoLabels: (string | undefined)[] = [];
+  private _redoLabels: (string | undefined)[] = [];
+  private _lastActionLabel?: string;
   private _pendingPriorities = new Set<StatePriority>();
   private _backgroundTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -184,31 +249,51 @@ export class StateManager<TData = any> {
     };
   }
 
-  pushUndo(): void {
+  pushUndo(label?: string): void {
     this._undoStack.push(this.exportState());
+    this._undoLabels.push(label);
     if (this._undoStack.length > UNDO_MAX) {
       this._undoStack.shift();
+      this._undoLabels.shift();
     }
     this._redoStack.length = 0;
+    this._redoLabels.length = 0;
+    this._lastActionLabel = label;
     this.updateHistory();
   }
 
   undo(): boolean {
     const snapshot = this._undoStack.pop();
+    const _label = this._undoLabels.pop();
     if (!snapshot) return false;
     this._redoStack.push(this.exportState());
+    this._redoLabels.push(this._lastActionLabel);
     this.importState(snapshot);
+    this._lastActionLabel = this._undoLabels[this._undoLabels.length - 1];
     this.updateHistory();
     return true;
   }
 
   redo(): boolean {
     const snapshot = this._redoStack.pop();
+    const label = this._redoLabels.pop();
     if (!snapshot) return false;
     this._undoStack.push(this.exportState());
+    this._undoLabels.push(this._lastActionLabel);
     this.importState(snapshot);
+    this._lastActionLabel = label;
     this.updateHistory();
     return true;
+  }
+
+  /** Execute a state mutation with automatic undo snapshot */
+  performAction(label: string, fn: () => void): void {
+    this.pushUndo(label);
+    fn();
+  }
+
+  getLastActionLabel(): string | undefined {
+    return this._lastActionLabel;
   }
 
   canUndo(): boolean {
@@ -226,6 +311,7 @@ export class StateManager<TData = any> {
         canRedo: this._redoStack.length > 0,
         undoStack: this._undoStack.length,
         redoStack: this._redoStack.length,
+        lastActionLabel: this._lastActionLabel,
       },
     });
   }

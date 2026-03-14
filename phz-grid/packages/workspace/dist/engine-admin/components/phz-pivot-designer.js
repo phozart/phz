@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Pivot Designer
+ * @phozart/engine-admin — Pivot Designer
  *
  * Single-page configurator: data product → row/column/value fields → preview.
  * Embeddable component.

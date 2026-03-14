@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Filter Expression Evaluator (Item 6.9)
+ * @phozart/core — Filter Expression Evaluator (Item 6.9)
  *
  * Evaluates a FilterExpression AST against a row of data.
  * Also provides backward-compat helpers to convert legacy FilterState.filters

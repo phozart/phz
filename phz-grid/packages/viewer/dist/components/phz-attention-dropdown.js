@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-attention-dropdown> Custom Element
+ * @phozart/viewer — <phz-attention-dropdown> Custom Element
  *
  * Dropdown panel for attention items (alerts, notifications).
  * Delegates to the headless attention-state functions.

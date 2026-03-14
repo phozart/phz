@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Chart Overlay State Machine Tests
+ * @phozart/workspace — Chart Overlay State Machine Tests
  *
  * TDD: Red → Green → Refactor
  * Tests for CRUD operations and edit flow on chart overlays.
@@ -17,7 +17,7 @@ import {
   cancelEditOverlay,
   reorderOverlays,
 } from '../chart-overlay-state.js';
-import type { ChartOverlay, ReferenceLine, ChartThresholdBand } from '@phozart/phz-engine';
+import type { ChartOverlay, ReferenceLine, ChartThresholdBand } from '@phozart/engine';
 
 // ========================================================================
 // initialChartOverlayState

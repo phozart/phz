@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Rich Text State Tests
+ * @phozart/widgets — Rich Text State Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

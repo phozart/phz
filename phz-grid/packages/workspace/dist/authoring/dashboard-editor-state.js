@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Editor State
+ * @phozart/workspace — Dashboard Editor State
  *
  * Pure functions for canvas-based dashboard building with widget placement,
  * morph groups, and config panels.

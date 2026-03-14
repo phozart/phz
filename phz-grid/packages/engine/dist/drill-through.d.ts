@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-engine — Drill-Through Resolution
+ * @phozart/engine — Drill-Through Resolution
  *
  * Two-table pattern: aggregate → detail with selection context passthrough.
  */
-import type { FilterState, SelectionContext } from '@phozart/phz-core';
+import type { FilterState, SelectionContext } from '@phozart/core';
 import type { ReportId, KPIId } from './types.js';
 import type { ReportConfigStore } from './report.js';
 export interface DrillThroughAction {

@@ -6,8 +6,8 @@ import {
   type VersionSummary,
 } from '../workspace-adapter.js';
 import type { WorkspaceAdapter } from '../workspace-adapter.js';
-import { reportId } from '@phozart/phz-engine';
-import type { ReportConfig } from '@phozart/phz-engine';
+import { reportId } from '@phozart/engine';
+import type { ReportConfig } from '@phozart/engine';
 
 function makeReport(id: string, name: string): ReportConfig {
   return { id: reportId(id), name } as ReportConfig;

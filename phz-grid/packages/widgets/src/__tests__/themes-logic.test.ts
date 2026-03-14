@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Themes Pure Logic Tests
+ * @phozart/widgets -- Themes Pure Logic Tests
  *
  * Tests for theme resolution, system theme detection, and theme application.
  */

@@ -18,10 +18,53 @@
 
 ## Changes
 
+### Phase A — WI 8: Column Pinning Runtime Wiring
+
+- **Phase**: Phase A
+- **Issues resolved**: WI-008
+- **Files modified**: `packages/grid/src/utils/column-pinning.ts`, `packages/grid/src/components/phz-grid.ts`
+- **Files created**: None (tests added to existing file)
+- **Tests added**: 5 (`packages/grid/src/__tests__/column-pinning.test.ts`)
+- **Tests total after**: 11,464
+- **Build status**: PASS
+- **Verification**: `splitPinnedColumns()` now accepts optional `pinOverrides` parameter. Both call sites in `phz-grid.ts` (`_renderHeader` and `_renderRow`) pass `pinOverrides` from grid state. Runtime pin/unpin via `pinColumn()`/`unpinColumn()` now has visible effect.
+
+### Phase A — WI 7: Sort Debouncing
+
+- **Phase**: Phase A
+- **Issues resolved**: WI-007
+- **Files modified**: `packages/grid/src/controllers/sort.controller.ts`, `packages/grid/src/components/phz-grid.ts`
+- **Files created**: `packages/grid/src/__tests__/sort-controller.test.ts`
+- **Tests added**: 6
+- **Tests total after**: 11,464
+- **Build status**: PASS
+- **Verification**: `SortController` now supports debouncing via `sortDebounceMs` on `SortHost` interface. Sort action + ARIA announcement extracted to `executeSortAction()`. Timer cleared on `hostDisconnected()`. New `sort-debounce-ms` attribute on `<phz-grid>`.
+
+### Phase A — WI 9: DuckDB Parameterized Queries (Fallback Path)
+
+- **Phase**: Phase A
+- **Issues resolved**: WI-009.3
+- **Files modified**: `packages/duckdb/src/duckdb-data-source.ts`, `packages/duckdb/src/__tests__/duckdb-data-source-bugs.test.ts`
+- **Tests added**: 4 new + 3 updated
+- **Tests total after**: 11,464
+- **Build status**: PASS
+- **Verification**: `fromArrowTable()` fallback path now uses `?` placeholders with params array instead of `sanitizeStringLiteral()` string interpolation. SQL injection vector eliminated. Existing Task #8 tests updated to assert params array contents.
+
+### Phase A — WI 6: Default Sort Validation
+
+- **Phase**: Phase A
+- **Issues resolved**: WI-006
+- **Files modified**: `packages/grid/src/controllers/grid-core.controller.ts`, `packages/grid/src/__tests__/grid-core-controller.test.ts`
+- **Tests added**: 2
+- **Tests total after**: 11,464
+- **Build status**: PASS
+- **Verification**: `defaultSortField` now validated against `_columnDefs` before applying sort. Invalid field names produce `console.warn()` instead of silent failure.
+
 ### Archive shim packages — grid-admin, engine-admin, grid-creator
+
 - **Phase**: Post-release cleanup
 - **Issues resolved**: N/A (maintenance)
-- **Rationale**: After workspace consolidation (Sprints A-G), these 3 packages became one-line re-export shims (`export * from '@phozart/phz-workspace/<sub-path>'`). All actual code lives in `packages/workspace/src/{grid-admin,engine-admin,grid-creator}/`. Archiving removes them from the active build/test graph while preserving them for reference.
+- **Rationale**: After workspace consolidation (Sprints A-G), these 3 packages became one-line re-export shims (`export * from '@phozart/workspace/<sub-path>'`). All actual code lives in `packages/workspace/src/{grid-admin,engine-admin,grid-creator}/`. Archiving removes them from the active build/test graph while preserving them for reference.
 - **Files moved to `archive/`**:
   - `packages/grid-admin/` → `archive/grid-admin/`
   - `packages/engine-admin/` → `archive/engine-admin/`
@@ -32,10 +75,10 @@
   - `vitest.config.ts` — added clarifying comments (aliases already pointed to workspace)
   - `vitest.integration.config.ts` — redirected 3 aliases from `archive/*/dist/` to `workspace/src/`
   - `packages/react/tsconfig.json` — removed `../grid-admin` reference
-  - `packages/react/package.json` — removed `@phozart/phz-grid-admin` peer dependency (workspace covers it)
-  - `packages/criteria/package.json` — changed peer dep from `@phozart/phz-engine-admin` to `@phozart/phz-workspace`
-  - `packages/criteria/src/components/phz-filter-designer.ts` — import `@phozart/phz-workspace/engine-admin`
-  - `packages/criteria/src/components/phz-filter-configurator.ts` — import `@phozart/phz-workspace/engine-admin`
+  - `packages/react/package.json` — removed `@phozart/grid-admin` peer dependency (workspace covers it)
+  - `packages/criteria/package.json` — changed peer dep from `@phozart/engine-admin` to `@phozart/workspace`
+  - `packages/criteria/src/components/phz-filter-designer.ts` — import `@phozart/workspace/engine-admin`
+  - `packages/criteria/src/components/phz-filter-configurator.ts` — import `@phozart/workspace/engine-admin`
   - `packages/grid/vite.cdn-all.config.ts` — added clarifying comments
   - `packages/grid/vite.cdn-iife.config.ts` — added clarifying comments
 - **Package count**: 22 → 19 active (3 archived)
@@ -43,6 +86,7 @@
 - **Build status**: PASS
 
 ### Tasks 1.1 + 1.4 — Wire data source panel into report editor + field→column binding
+
 - **Phase**: P1
 - **Issues resolved**: WB-002, WB-003
 - **Files modified**: `packages/workspace/src/authoring/phz-report-editor.ts`
@@ -53,6 +97,7 @@
 - **Verification**: Report editor renders `<phz-data-source-panel>` when `adapter` prop is set, with field-add/field-remove event handlers that call `handleFieldAdd`/`handleFieldRemove` pure functions to add/remove columns from ReportEditorState.
 
 ### Tasks 1.2 + 1.5 — Wire data source panel into dashboard editor + field→widget binding
+
 - **Phase**: P1
 - **Issues resolved**: WB-004
 - **Files modified**: `packages/workspace/src/authoring/phz-dashboard-editor.ts`
@@ -63,6 +108,7 @@
 - **Verification**: Dashboard editor field palette renders `<phz-data-source-panel>` when `adapter` prop is set (falls back to static schema list otherwise). `_onFieldAdd` auto-creates a widget (kpi-card for numbers, data-table for strings) when no widget is selected, then routes field to selected widget's dimensions/measures via `handleDashboardFieldAdd`.
 
 ### Task 1.6 — DataAdapter propagation through workspace shell
+
 - **Phase**: P1
 - **Issues resolved**: WB-001
 - **Files modified**: `packages/workspace/src/phz-workspace.ts`
@@ -73,6 +119,7 @@
 - **Verification**: PhzWorkspace creates panel elements with `document.createElement(tag)`, caches them in `_panelCache`, and forwards `dataAdapter`/`workspaceAdapter` via `forwardAdaptersToElement()`. Panel lookup tables (`PANELS_NEEDING_DATA_ADAPTER`, `PANELS_NEEDING_WORKSPACE_ADAPTER`) determine which adapters each panel receives.
 
 ### Task 1.3 — Connect `<phz-data-model-sidebar>` to DataAdapter
+
 - **Phase**: P1
 - **Issues resolved**: WB-005
 - **Files created**: `packages/workspace/src/engine-admin/data-model-sidebar-wiring.ts`
@@ -82,6 +129,7 @@
 - **Verification**: `fieldsFromSchema()` maps `FieldMetadata.dataType` → `DataModelField.type` and `label ?? name` → `label`. `buildSidebarProps()` assembles all 5 sidebar arrays, with fields from DataAdapter schema and parameters/calculatedFields/metrics/kpis passed through from engine artifacts.
 
 ### Task 2.1 — Filter-to-Query Bridge
+
 - **Phase**: P2
 - **Issues resolved**: WB-006, WB-026
 - **Files created**: `packages/workspace/src/filters/filter-query-bridge.ts`
@@ -89,6 +137,7 @@
 - **Verification**: `filterValuesToQueryFilters()` converts FilterValue[] → DataQueryFilter[]. Handles operator mapping (before→lessThan, after→greaterThan), temporal resolution (lastN→between with date range), null-value skipping. `injectFiltersIntoQuery()` merges filters into DataQuery without mutation.
 
 ### Tasks 2.2 — Filter-aware Dashboard Data Pipeline
+
 - **Phase**: P2
 - **Issues resolved**: WB-007
 - **Files created**: `packages/workspace/src/coordination/pipeline-filter-wiring.ts`
@@ -96,6 +145,7 @@
 - **Verification**: `createFilterAwarePipeline()` injects filter context into preload/full-load queries, subscribes to filter changes with debounce, re-executes queries on filter change, cleans up on destroy.
 
 ### Tasks 2.3 + 2.4 — FilterRuleEngine activation + Cross-filter wiring
+
 - **Phase**: P2
 - **Issues resolved**: WB-008, WB-009
 - **Files created**: `packages/workspace/src/filters/filter-rule-wiring.ts`
@@ -103,6 +153,7 @@
 - **Verification**: `filterValuesToStateRecord()` bridges FilterValue[] → Record<string, unknown> for rule engine. `evaluateRulesFromContext()` combines context + rule evaluation. `collectRuleActions()` groups actions by target filter. `applyCrossFilterFromWidget()` applies cross-filters that exclude source widget.
 
 ### Tasks 2.5 + 2.6 + 2.7 — Filter cascade, URL sync, admin persistence
+
 - **Phase**: P2
 - **Issues resolved**: WB-010, WB-011, WB-012
 - **Files created**: `packages/workspace/src/filters/filter-lifecycle-wiring.ts`
@@ -110,6 +161,7 @@
 - **Verification**: `createUrlFilterSync()` serializes filter state on change, restores from URL. `createCascadeWiring()` subscribes to parent filter changes, calls DataAdapter.getDistinctValues() for child values. `createFilterAdminPersistence()` wraps WorkspaceAdapter for FilterDefinition CRUD.
 
 ### Tasks 3.1-3.6 — Widget Data Wiring (Visualizations with Live Data)
+
 - **Phase**: P3
 - **Issues resolved**: WB-013, WB-014, WB-015, WB-016, WB-017, WB-027
 - **Files created**: `packages/workspace/src/coordination/widget-data-wiring.ts`
@@ -117,6 +169,7 @@
 - **Verification**: `buildWidgetQuery()` converts widget data config (dimensions/measures/filters) → DataQuery. `fetchWidgetData()` calls DataAdapter.execute() with error handling. `resolveWidgetLoadingState()` maps loading/error/empty/ready states. `resolveKPIWithRealData()` computes delta from actual current/previous values (replaces synthetic `previousValue = value * 0.95`).
 
 ### Tasks 4.1-4.5 — Explorer Wiring (Interactive Aggregation)
+
 - **Phase**: P4
 - **Issues resolved**: WB-018, WB-019, WB-020, WB-029, WB-030
 - **Files created**: `packages/workspace/src/coordination/explorer-wiring.ts`
@@ -124,6 +177,7 @@
 - **Verification**: `exploreQueryToDataQuery()` converts ExploreQuery → DataQuery (maps explorer operators to DataAdapter operators). `fetchExplorerPreview()` executes explorer query via DataAdapter with error handling. `saveExplorerAsReport()` persists via adapter.saveReport(). `buildDrillThroughQuery()` creates pre-populated ExploreQuery from widget context (dimension + measures + filter).
 
 ### Tasks 5.1-5.5 — Persistence Wiring (Edit Options)
+
 - **Phase**: P5
 - **Issues resolved**: WB-021, WB-022, WB-023, WB-024, WB-025, WB-028
 - **Files created**: `packages/workspace/src/coordination/persistence-wiring.ts`

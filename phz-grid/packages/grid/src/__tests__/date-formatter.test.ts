@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Date Formatter Tests
+ * @phozart/grid — Date Formatter Tests
  */
 import { describe, it, expect } from 'vitest';
 import { formatDate, DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT, DATE_FORMAT_PRESETS } from '../formatters/date-formatter.js';

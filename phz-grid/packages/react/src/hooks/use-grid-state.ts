@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, type RefObject } from 'react';
-import type { GridApi, GridState, SerializedGridState } from '@phozart/phz-core';
+import type { GridApi, GridState, SerializedGridState } from '@phozart/core';
 
 export function useGridState(gridRef: RefObject<GridApi | null>) {
   const [state, setState] = useState<GridState | null>(null);

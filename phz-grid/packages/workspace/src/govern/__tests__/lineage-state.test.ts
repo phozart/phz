@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — Govern > Lineage State Tests
+ * @phozart/workspace — Govern > Lineage State Tests
  *
  * TDD: Tests written FIRST, then implementation.
  */
 
 import { describe, it, expect } from 'vitest';
-import type { ArtifactType } from '@phozart/phz-shared/artifacts';
+import type { ArtifactType } from '@phozart/shared/artifacts';
 import type { ArtifactMeta } from '../../types.js';
 import {
   buildLineageGraph,

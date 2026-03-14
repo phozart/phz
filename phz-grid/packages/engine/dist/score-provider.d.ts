@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Default Score Provider
+ * @phozart/engine — Default Score Provider
  *
  * Built-in KPIScoreProvider that computes KPI values from raw data.
  * Supports real historical data for previousValue, trend, and breakdowns.

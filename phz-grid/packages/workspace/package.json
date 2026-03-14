@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-workspace",
+  "name": "@phozart/workspace",
   "version": "0.1.0",
   "description": "Unified workspace for admin, authoring, and configuration components",
   "type": "module",
@@ -36,10 +36,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
-    "@phozart/phz-criteria": "^0.1.0",
-    "@phozart/phz-shared": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
+    "@phozart/criteria": "^0.1.0",
+    "@phozart/shared": "^0.1.0",
     "lit": "^3.2.0"
   },
   "author": "phozart",

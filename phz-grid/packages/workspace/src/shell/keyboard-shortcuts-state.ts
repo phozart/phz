@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Keyboard Shortcuts State (B-3.12)
+ * @phozart/workspace — Keyboard Shortcuts State (B-3.12)
  *
  * Pure functions for an enhanced shortcut system with context-aware shortcuts,
  * customizable bindings, and help overlay support.

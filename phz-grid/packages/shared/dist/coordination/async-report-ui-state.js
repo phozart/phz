@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Async Report UI State (C-2.01)
+ * @phozart/shared — Async Report UI State (C-2.01)
  *
  * State management for async report jobs: polling, progress tracking, download.
  * Pure functions only — no side effects, no DOM.

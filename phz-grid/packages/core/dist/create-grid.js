@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — createGrid Factory
+ * @phozart/core — createGrid Factory
  *
  * Main entry point. Creates a headless grid instance with full API.
  */
@@ -1062,6 +1062,7 @@ export function activateGrid(prepared) {
                     order: columns.map((c) => c.field),
                     widths: Object.fromEntries(columns.map((c) => [c.field, c.width ?? 150])),
                     visibility: Object.fromEntries(columns.map((c) => [c.field, !restrictedFields.has(c.field)])),
+                    pinOverrides: {},
                 },
             });
         },
@@ -1377,6 +1378,35 @@ export function activateGrid(prepared) {
     });
     return api;
 }
+/**
+ * Create a headless grid instance with the full {@link GridApi}.
+ *
+ * This is the primary entry point for `@phozart/core`. It parses the
+ * supplied data, builds the initial row model, and returns a stateful API
+ * object that can be used directly or wired to a rendering layer (e.g. the
+ * `<phz-grid>` Web Component or a React/Vue/Angular wrapper).
+ *
+ * @param config - Grid configuration: data, columns, features, plugins, etc.
+ * @returns A fully initialized {@link GridApi} instance.
+ *
+ * @example
+ * ```ts
+ * import { createGrid } from '@phozart/core';
+ *
+ * const grid = createGrid({
+ *   data: salesRows,
+ *   columns: [
+ *     { field: 'product', header: 'Product', type: 'string' },
+ *     { field: 'revenue', header: 'Revenue', type: 'number' },
+ *   ],
+ *   enableSorting: true,
+ *   enableFiltering: true,
+ * });
+ *
+ * grid.sort('revenue', 'desc');
+ * console.log(grid.getData().length);
+ * ```
+ */
 export function createGrid(config) {
     return activateGrid(prepareGrid(config));
 }

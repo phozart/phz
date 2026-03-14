@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-widgets — Decision Tree Variants Tests (7A-C)
+ * @phozart/widgets — Decision Tree Variants Tests (7A-C)
  */
 import { describe, it, expect } from 'vitest';
 import { DECISION_TREE_VARIANTS } from '../decision-tree-variants.js';
-import type { DecisionTreeRenderVariant } from '@phozart/phz-shared/types';
+import type { DecisionTreeRenderVariant } from '@phozart/shared/types';
 
 describe('DECISION_TREE_VARIANTS', () => {
   it('contains exactly 2 variants', () => {

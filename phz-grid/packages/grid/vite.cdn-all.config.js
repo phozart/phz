@@ -29,12 +29,12 @@ export default defineConfig({
             { find: /^@phozart\/phz-grid-admin\/(.*)/, replacement: resolve(__dirname, '../grid-admin/src/$1') },
             { find: /^@phozart\/phz-engine-admin\/(.*)/, replacement: resolve(__dirname, '../engine-admin/src/$1') },
             // Package root aliases
-            { find: '@phozart/phz-core', replacement: resolve(__dirname, '../core/src/index.ts') },
-            { find: '@phozart/phz-engine', replacement: resolve(__dirname, '../engine/src/index.ts') },
-            { find: '@phozart/phz-criteria', replacement: resolve(__dirname, '../criteria/src/index.ts') },
-            { find: '@phozart/phz-widgets', replacement: resolve(__dirname, '../widgets/src/index.ts') },
-            { find: '@phozart/phz-grid-admin', replacement: resolve(__dirname, '../grid-admin/src/index.ts') },
-            { find: '@phozart/phz-engine-admin', replacement: resolve(__dirname, '../engine-admin/src/index.ts') },
+            { find: '@phozart/core', replacement: resolve(__dirname, '../core/src/index.ts') },
+            { find: '@phozart/engine', replacement: resolve(__dirname, '../engine/src/index.ts') },
+            { find: '@phozart/criteria', replacement: resolve(__dirname, '../criteria/src/index.ts') },
+            { find: '@phozart/widgets', replacement: resolve(__dirname, '../widgets/src/index.ts') },
+            { find: '@phozart/grid-admin', replacement: resolve(__dirname, '../grid-admin/src/index.ts') },
+            { find: '@phozart/engine-admin', replacement: resolve(__dirname, '../engine-admin/src/index.ts') },
         ],
     },
 });

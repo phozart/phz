@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createFilterContext } from '../filters/filter-context.js';
 import type { FilterValue, FieldMapping } from '../types.js';
-import type { SourceRelationship } from '@phozart/phz-shared/types';
+import type { SourceRelationship } from '@phozart/shared/types';
 
 describe('Multi-source filter resolution (O.1a)', () => {
   const mappings: FieldMapping[] = [

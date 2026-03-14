@@ -1,52 +1,67 @@
-# @phozart/phz-vue
+# @phozart/vue
 
-Vue 3 wrapper for the phz-grid Web Component. Uses a factory pattern to avoid hard Vue build dependencies, providing a component and composables with idiomatic Vue APIs.
+Vue 3 adapter for the phz-grid Web Component library. Uses a **factory pattern** -- you pass Vue runtime utilities into factory functions that return components and composables. This avoids a hard build-time dependency on Vue, so the package works across Vue 3.x versions and build systems.
+
+> **Status:** Functional but not battle-tested in production. The API surface is complete and the factories compile clean, but real-world usage has been limited to internal testing.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-vue @phozart/phz-grid @phozart/phz-core
+npm install @phozart/vue @phozart/grid @phozart/core
 ```
 
 **Peer dependency:** `vue ^3.0.0`
+
+## API
+
+### `createPhzGridComponent(vue)`
+
+Factory that returns a Vue component wrapping `<phz-grid>`.
+
+### `createUseGrid(vue)`
+
+Factory that returns a `useGrid()` composable for state export/import.
+
+### `createUseGridSelection(vue)`
+
+Factory that returns a `useGridSelection(gridRef)` composable for reactive selection state.
+
+### `createUseGridSort(vue)`
+
+Factory that returns a `useGridSort(gridRef)` composable for reactive sort state.
+
+### `createUseGridFilter(vue)`
+
+Factory that returns a `useGridFilter(gridRef)` composable for reactive filter state.
+
+### `createUseGridEdit(vue)`
+
+Factory that returns a `useGridEdit(gridRef)` composable for reactive edit state.
+
+All factories accept a `VueRuntime` object: `{ defineComponent, h, ref, watch, onMounted, onUnmounted }`.
 
 ## Quick Start
 
 ```ts
 // grid-plugin.ts — create instances with your Vue runtime
-import { ref, watch, onMounted, onUnmounted } from 'vue';
-import {
-  createPhzGridComponent,
-  createUseGrid,
-  createUseGridSelection,
-  createUseGridSort,
-  createUseGridFilter,
-  createUseGridEdit,
-} from '@phozart/phz-vue';
+import { defineComponent, h, ref, watch, onMounted, onUnmounted } from 'vue';
+import { createPhzGridComponent, createUseGridSelection } from '@phozart/vue';
 
-export const PhzGrid = createPhzGridComponent({ ref, watch, onMounted, onUnmounted });
-export const useGrid = createUseGrid({ ref, watch, onMounted, onUnmounted });
-export const useGridSelection = createUseGridSelection({ ref, watch });
-export const useGridSort = createUseGridSort({ ref, watch });
-export const useGridFilter = createUseGridFilter({ ref, watch });
-export const useGridEdit = createUseGridEdit({ ref, watch });
+const vue = { defineComponent, h, ref, watch, onMounted, onUnmounted };
+
+export const PhzGrid = createPhzGridComponent(vue);
+export const useGridSelection = createUseGridSelection(vue);
 ```
 
 ```vue
 <template>
-  <PhzGrid
-    :data="data"
-    :columns="columns"
-    selection-mode="multi"
-    @grid-ready="onGridReady"
-    @selection-change="onSelectionChange"
-  />
+  <PhzGrid :data="data" :columns="columns" selection-mode="multi" @grid-ready="onGridReady" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { PhzGrid } from './grid-plugin';
-import type { ColumnDefinition, GridApi } from '@phozart/phz-vue';
+import type { GridApi, ColumnDefinition } from '@phozart/core';
 
 const columns: ColumnDefinition[] = [
   { field: 'name', header: 'Name', type: 'string' },
@@ -61,52 +76,20 @@ const data = ref([
 function onGridReady(api: GridApi) {
   console.log('Grid ready', api);
 }
-
-function onSelectionChange(event: any) {
-  console.log('Selected:', event.selectedRows);
-}
 </script>
 ```
 
-## Factory Pattern
+## Three-Shell Architecture
 
-This package uses factory functions that accept Vue runtime utilities (`ref`, `watch`, `onMounted`, `onUnmounted`) as arguments. This avoids a hard build-time dependency on Vue, enabling the package to be used across different Vue versions and build systems.
+phz-grid uses a three-shell model. The Vue adapter wraps the grid component itself. The shells determine the surrounding context:
 
-## Composables
+| Shell         | Package              | Purpose                                                   |
+| ------------- | -------------------- | --------------------------------------------------------- |
+| **Workspace** | `@phozart/workspace` | Admin/authoring: build dashboards, configure data sources |
+| **Editor**    | `@phozart/editor`    | BI authoring: create reports, alerts, sharing             |
+| **Viewer**    | `@phozart/viewer`    | Read-only consumption: dashboards, reports, explorer      |
 
-### `useGrid(api)`
-
-```ts
-const { state, subscribe } = useGrid(gridApi);
-```
-
-### `useGridSelection(api)`
-
-```ts
-const { selectedRows, select, deselect, selectAll, deselectAll } = useGridSelection(gridApi);
-```
-
-### `useGridSort(api)`
-
-```ts
-const { sortState, sort, multiSort, clearSort } = useGridSort(gridApi);
-```
-
-### `useGridFilter(api)`
-
-```ts
-const { filterState, filter, addFilter, removeFilter, clearFilters } = useGridFilter(gridApi);
-```
-
-### `useGridEdit(api)`
-
-```ts
-const { editState, startEdit, commitEdit, cancelEdit, isDirty } = useGridEdit(gridApi);
-```
-
-## Re-exports
-
-This package re-exports all types from `@phozart/phz-core` for convenience.
+The Vue adapter gives you `<phz-grid>` in any shell context. Import types from `@phozart/core` directly -- this package does not re-export them.
 
 ## License
 

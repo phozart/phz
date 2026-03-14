@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Immutable Utility Functions
+ * @phozart/core — Immutable Utility Functions
  */
 export function immutableUpdate(obj, updates) {
     return { ...obj, ...updates };

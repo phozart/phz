@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Dashboard View State
+ * @phozart/viewer — Dashboard View State
  *
  * Headless state machine for viewing a dashboard. Manages active
  * dashboard metadata, widget positions, cross-filter state,

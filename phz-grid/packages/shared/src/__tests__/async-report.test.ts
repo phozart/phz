@@ -6,8 +6,8 @@ import {
   createAsyncReportJob,
   isAsyncReportExpired,
   hasAsyncSupport,
-} from '@phozart/phz-shared/types';
-import type { AsyncReportStatus, AsyncReportJob } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { AsyncReportStatus, AsyncReportJob } from '@phozart/shared/types';
 
 // ========================================================================
 // isTerminalStatus

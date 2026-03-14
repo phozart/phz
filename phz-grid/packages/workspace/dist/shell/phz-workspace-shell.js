@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — WorkspaceShell
+ * @phozart/workspace — WorkspaceShell
  *
  * Root shell component: dark header bar, sidebar with SVG icons and section headers,
  * content area with slot-based panel routing. Role-aware navigation.

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { createBIEngine } from '../engine.js';
 import { reportId, dashboardId, dataProductId } from '../types.js';
 import { createReportService, createDashboardService } from '../report-service.js';
-import type { CriteriaConfig } from '@phozart/phz-core';
+import type { CriteriaConfig } from '@phozart/core';
 
 function makeCriteriaConfig(): CriteriaConfig {
   return {

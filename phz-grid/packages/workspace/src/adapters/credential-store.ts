@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Credential Store (Q.3)
+ * @phozart/workspace — Credential Store (Q.3)
  *
  * Interface for storing connection credentials securely.
  * In-memory implementation for Node/test environments.

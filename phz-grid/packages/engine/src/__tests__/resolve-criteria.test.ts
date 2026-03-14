@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createBIEngine } from '../engine.js';
 import { reportId, dashboardId, dataProductId } from '../types.js';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 import { reportArtefactId, dashboardArtefactId } from '../types.js';
 import { resolveReportCriteria, resolveDashboardCriteria } from '../criteria/resolve-criteria.js';
 import type { DivergenceInfo } from '../criteria/resolve-criteria.js';
-import type { CriteriaConfig } from '@phozart/phz-core';
+import type { CriteriaConfig } from '@phozart/core';
 
 function makeCriteriaConfig(): CriteriaConfig {
   return {

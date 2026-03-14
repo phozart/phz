@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-workspace — Explore Types
+ * @phozart/workspace — Explore Types
  *
- * @deprecated Import from '@phozart/phz-engine/explorer' instead.
+ * @deprecated Import from '@phozart/engine/explorer' instead.
  * These types and functions have been moved to the engine package in v15 (A-2.01).
  * These re-exports will be removed in v16.
  *

@@ -9,7 +9,7 @@ import {
   type WidgetSuggestion,
   type ExistingWidgetInfo,
 } from '../explorer/widget-suggestion.js';
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 
 // ---- Helpers ----
 

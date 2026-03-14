@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Phz Console Design Tokens (Three-Layer System)
+ * @phozart/grid — Phz Console Design Tokens (Three-Layer System)
  *
  * Layer 1: Brand Tokens (primitives — warm neutrals, dual typography, status colors)
  * Layer 2: Semantic Tokens (theme — purpose-based references)

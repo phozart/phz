@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Criteria Resolution for Reports & Dashboards
+ * @phozart/engine — Criteria Resolution for Reports & Dashboards
  *
  * Auto-hydrates inline CriteriaConfig into the registry when no bindings
  * exist, then resolves filter fields. Implements divergence detection
  * when both inline config and registry bindings coexist.
  */
-import { filterDefinitionId } from '@phozart/phz-core';
+import { filterDefinitionId } from '@phozart/core';
 import { reportArtefactId, dashboardArtefactId } from '../types.js';
 // --- Public Utility: Hydrate CriteriaConfig into registry + bindings ---
 /**

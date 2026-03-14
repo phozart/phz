@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — Enhanced Widget Configuration Types
+ * @phozart/engine — Enhanced Widget Configuration Types
  *
  * Rich per-widget configuration: data bindings, appearance, behaviour.
  * These extend the existing WidgetConfig types without breaking them.
  */
 import type { WidgetId, KPIId } from './types.js';
 import type { WidgetType } from './widget.js';
-import type { AggregationFunction } from '@phozart/phz-core';
+import type { AggregationFunction } from '@phozart/core';
 export interface FieldRef {
     fieldKey: string;
     label?: string;
@@ -65,7 +65,12 @@ export interface DrillLinkBinding {
     label: string;
     passFilters?: Record<string, string>;
 }
-export type DataBinding = ChartBinding | KpiBinding | ScorecardBinding | StatusTableBinding | DataTableBinding | DrillLinkBinding;
+export interface SlicerBinding {
+    type: 'slicer';
+    field: string;
+    mode?: 'multi' | 'single' | 'range';
+}
+export type DataBinding = ChartBinding | KpiBinding | ScorecardBinding | StatusTableBinding | DataTableBinding | DrillLinkBinding | SlicerBinding;
 export interface WidgetDataConfig {
     bindings: DataBinding;
     filters?: WidgetFilterRule[];

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — FilterDefinition (U.1)
+ * @phozart/workspace — FilterDefinition (U.1)
  *
  * Centrally managed filter definitions as catalog artifacts.
  * Each FilterDefinition describes a reusable filter: its value source,

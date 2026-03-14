@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — EngineMetrics Tests
+ * @phozart/engine — EngineMetrics Tests
  *
  * TDD: Tests written first, implementation to follow.
  */

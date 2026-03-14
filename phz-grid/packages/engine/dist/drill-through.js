@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Drill-Through Resolution
+ * @phozart/engine — Drill-Through Resolution
  *
  * Two-table pattern: aggregate → detail with selection context passthrough.
  */

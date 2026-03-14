@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-python",
+  "name": "@phozart/python",
   "version": "0.1.0",
   "description": "Python package (pip) — anywidget Jupyter widget + Panel/Streamlit adapters",
   "private": true,

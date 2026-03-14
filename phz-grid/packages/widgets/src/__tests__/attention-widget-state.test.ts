@@ -11,7 +11,7 @@ import {
   getTotalCount,
   getContainerVariant,
 } from '../attention-widget-state.js';
-import type { FilterableAttentionItem } from '@phozart/phz-shared/types';
+import type { FilterableAttentionItem } from '@phozart/shared/types';
 
 // ========================================================================
 // Test data factory

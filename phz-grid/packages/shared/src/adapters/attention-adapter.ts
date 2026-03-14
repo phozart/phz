@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — AttentionAdapter SPI
+ * @phozart/shared — AttentionAdapter SPI
  *
  * Contract for providing external attention items (notifications,
  * alerts, action items) that the shell displays in the attention

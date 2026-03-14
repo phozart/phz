@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Widget Configuration Panel
+ * @phozart/engine-admin — Widget Configuration Panel
  *
  * 3-tab panel: Data | Appearance | Behaviour
  * Per-widget-type controls for rich configuration.
@@ -14,7 +14,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { PALETTE_PRESETS } from '@phozart/phz-engine';
+import { PALETTE_PRESETS } from '@phozart/engine';
 const FILTER_OPERATORS = [
     { value: 'eq', label: '=' },
     { value: 'neq', label: '!=' },

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Section
+ * @phozart/criteria — Filter Section
  *
  * Collapsible section with chevron, count badge, required asterisk.
  * Lazy mount: slot content only rendered after first expand.

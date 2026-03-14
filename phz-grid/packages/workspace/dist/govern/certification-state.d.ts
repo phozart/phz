@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern > Certification State (WE-9)
+ * @phozart/workspace — Govern > Certification State (WE-9)
  *
  * Pure functions for artifact endorsement/certification badges.
  * Endorsement levels: none < verified < certified < promoted.

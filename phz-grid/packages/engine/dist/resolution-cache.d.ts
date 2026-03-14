@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Resolution Cache
+ * @phozart/engine — Resolution Cache
  *
  * Caches resolved widget props to avoid redundant computation.
  * Uses a compound key (widgetId + dataHash + filterHash) with TTL-based expiration.

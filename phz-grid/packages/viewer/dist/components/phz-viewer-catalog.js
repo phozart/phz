@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-catalog> Custom Element
+ * @phozart/viewer — <phz-viewer-catalog> Custom Element
  *
  * Catalog screen showing browsable artifacts (dashboards, reports, grids).
  * Delegates logic to the headless catalog-state functions.

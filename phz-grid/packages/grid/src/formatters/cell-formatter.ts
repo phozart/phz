@@ -1,4 +1,4 @@
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 import { formatDate, DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from './date-formatter.js';
 
 export interface CellFormatOptions {

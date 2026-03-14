@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Connection Editor Component (Q.5)
+ * @phozart/workspace — Connection Editor Component (Q.5)
  *
  * Lit component for configuring URL and API data source connections.
  * Provides forms for entering connection details with validation.

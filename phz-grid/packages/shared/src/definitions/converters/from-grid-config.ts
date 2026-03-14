@@ -2,7 +2,7 @@
  * Capture a GridConfig as a GridDefinition.
  */
 
-import type { GridConfig, ColumnDefinition } from '@phozart/phz-core';
+import type { GridConfig, ColumnDefinition } from '@phozart/core';
 import type { GridDefinition } from '../types/grid-definition.js';
 import type { DefinitionColumnSpec } from '../types/column.js';
 import { createDefinitionId } from '../types/identity.js';

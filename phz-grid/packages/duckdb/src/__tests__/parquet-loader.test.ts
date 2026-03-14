@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Parquet Loader Tests (WI 27)
+ * @phozart/duckdb — Parquet Loader Tests (WI 27)
  *
  * Tests for smart Parquet loading with projection and predicate pushdown.
  */
@@ -10,7 +10,7 @@ import {
   buildPredicatePushdownQuery,
   buildSchemaInspectionQuery,
 } from '../parquet-loader.js';
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 describe('parquet-loader', () => {
   describe('buildProjectionQuery', () => {

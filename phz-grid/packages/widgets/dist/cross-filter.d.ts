@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Cross-Filter Utilities
+ * @phozart/widgets — Cross-Filter Utilities
  *
  * Pure functions for cross-filtering between dashboard widgets.
  * No DOM dependencies — used by PhzDashboard to coordinate widget data.

@@ -9,12 +9,12 @@ import {
   resolveCellRenderer,
   getMicroWidgetFallbackText,
 } from '../formatters/micro-widget-cell.js';
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
+import { createCellRendererRegistry } from '@phozart/shared/types';
 import type {
   MicroWidgetCellConfig,
   MicroWidgetRenderer,
   CellRendererRegistry,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Helpers

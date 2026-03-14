@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-viewer — Explorer Screen State
+ * @phozart/viewer — Explorer Screen State
  *
- * Thin wrapper around @phozart/phz-engine/explorer DataExplorer.
+ * Thin wrapper around @phozart/engine/explorer DataExplorer.
  * Adds viewer-specific concerns: data source selection, preview
  * rendering mode, and chart type tracking.
  */

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-grid — <phz-view-switcher>
+ * @phozart/grid — <phz-view-switcher>
  *
  * Dropdown UI for switching between saved grid views.
  * Renders in the toolbar area. Shows active view name, dirty indicator,
  * and a dropdown list of available views.
  */
 import { LitElement } from 'lit';
-import type { ViewsSummary } from '@phozart/phz-core';
+import type { ViewsSummary } from '@phozart/core';
 export declare class PhzViewSwitcher extends LitElement {
     static styles: import("lit").CSSResult[];
     views: ViewsSummary[];

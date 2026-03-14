@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB Aggregation Tests (WI 24)
+ * @phozart/duckdb — DuckDB Aggregation Tests (WI 24)
  *
  * Tests SQL generation for aggregation queries.
  */

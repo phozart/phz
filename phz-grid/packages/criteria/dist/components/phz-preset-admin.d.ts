@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Admin
+ * @phozart/criteria — Preset Admin
  *
  * Admin UI for managing selection presets: admin preset CRUD,
  * user preset read-only view, scope badges. CSS prefix: phz-pa-
@@ -21,7 +21,7 @@
  * - filter-preset-contextmenu: { presetId, preset, x, y }
  */
 import { LitElement } from 'lit';
-import type { SelectionPreset, FilterDefinition, FilterDefinitionPreset, SelectionFieldDef, SelectionFieldType, FilterDataSource, SelectionFieldOption } from '@phozart/phz-core';
+import type { SelectionPreset, FilterDefinition, FilterDefinitionPreset, SelectionFieldDef, SelectionFieldType, FilterDataSource, SelectionFieldOption } from '@phozart/core';
 import './fields/phz-combobox.js';
 interface CtxMenuItem {
     id: string;

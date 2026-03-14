@@ -10,7 +10,7 @@ import {
   getCompletedJobs,
   getActiveJobs,
 } from '../coordination/async-report-ui-state.js';
-import type { AsyncReportJob } from '@phozart/phz-shared/types';
+import type { AsyncReportJob } from '@phozart/shared/types';
 
 // --- Test helpers ---
 

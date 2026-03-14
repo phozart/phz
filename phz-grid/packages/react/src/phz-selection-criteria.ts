@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzSelectionCriteria React Component
+ * @phozart/react — PhzSelectionCriteria React Component
  *
  * Wraps the <phz-selection-criteria> Web Component for React using @lit/react.
  * Provides a filter bar + drawer UI with presets, tree selects, date ranges, etc.
@@ -12,8 +12,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import type { CriteriaConfig, SelectionContext, SelectionPreset } from '@phozart/phz-core';
-import { PhzSelectionCriteria as PhzSelectionCriteriaElement } from '@phozart/phz-criteria';
+import type { CriteriaConfig, SelectionContext, SelectionPreset } from '@phozart/core';
+import { PhzSelectionCriteria as PhzSelectionCriteriaElement } from '@phozart/criteria';
 
 const PhzSelectionCriteriaLit = createComponent({
   tagName: 'phz-selection-criteria',

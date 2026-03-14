@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-workspace — composeWorkspaceAdapter
+ * @phozart/workspace — composeWorkspaceAdapter
  *
  * Composes existing EngineStorageAdapter + AsyncDefinitionStore instances
  * into a unified WorkspaceAdapter, adding placement/catalog methods
  * via in-memory defaults.
  */
-import type { EngineStorageAdapter } from '@phozart/phz-engine';
-import type { AsyncDefinitionStore } from '@phozart/phz-shared/definitions';
+import type { EngineStorageAdapter } from '@phozart/engine';
+import type { AsyncDefinitionStore } from '@phozart/shared/definitions';
 import type { WorkspaceAdapter } from '../workspace-adapter.js';
 export interface ComposeOptions {
     engine?: EngineStorageAdapter;

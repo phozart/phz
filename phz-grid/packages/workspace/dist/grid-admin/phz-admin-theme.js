@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Theme / Styling Editor
+ * @phozart/grid-admin — Theme / Styling Editor
  *
  * Color scheme toggle, token editors, density presets, preview.
  */

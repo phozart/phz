@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-explorer> (B-2.10)
+ * @phozart/editor — <phz-editor-explorer> (B-2.10)
  *
  * Visual query explorer component with save-to-artifact capability.
  * Users drag fields into dimension/measure/filter zones to build

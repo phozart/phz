@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Engine Admin Facade
+ * @phozart/engine-admin — Engine Admin Facade
  *
  * Admin shell: dark header, tab navigation for all builders.
  * Embeddable component — drop into any page.
  */
 import { LitElement } from 'lit';
-import type { BIEngine } from '@phozart/phz-engine';
-import type { SelectionFieldDef } from '@phozart/phz-core';
+import type { BIEngine } from '@phozart/engine';
+import type { SelectionFieldDef } from '@phozart/core';
 import './phz-kpi-designer.js';
 import './phz-dashboard-builder.js';
 import './phz-metric-builder.js';

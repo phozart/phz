@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Micro-Widget Cell Renderers (7A-B)
+ * @phozart/widgets — Micro-Widget Cell Renderers (7A-B)
  *
  * Pure functions that produce SVG/HTML strings for rendering micro-widgets
  * inside grid table cells. No DOM APIs, no Lit, no side effects.
  *
  * Each renderer must complete in under 2ms per call.
  */
-import type { MicroWidgetRenderer, CellRendererRegistry } from '@phozart/phz-shared/types';
+import type { MicroWidgetRenderer, CellRendererRegistry } from '@phozart/shared/types';
 /**
  * Formatted number + colored status dot.
  * Uses alert tokens from the design system for dot color.

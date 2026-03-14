@@ -8,25 +8,25 @@
 
 ## Table of Contents
 
-1. [@phozart/phz-core](#1-phozartcore) — MIT
-2. [@phozart/phz-grid](#2-phozartgrid) — MIT
-3. [@phozart/phz-react](#3-phozartreact) — MIT
-4. [@phozart/phz-vue](#4-phozartvue) — MIT
-5. [@phozart/phz-angular](#5-phozartangular) — MIT
-6. [@phozart/phz-duckdb](#6-phozartduckdb) — MIT
-7. [@phozart/phz-ai](#7-phozartai) — MIT
-8. [@phozart/phz-collab](#8-phozartcollab) — MIT
-9. [@phozart/phz-docs](#9-phozartdocs) — Internal (Documentation Site)
-10. [@phozart/phz-shared](#10-phozartphz-shared) — MIT (v15)
-11. [@phozart/phz-viewer](#11-phozartphz-viewer) — MIT (v15)
-12. [@phozart/phz-editor](#12-phozartphz-editor) — MIT (v15)
-13. [@phozart/phz-engine (v15 Additions)](#13-phozartphz-engine-v15-additions) — MIT
-14. [@phozart/phz-widgets (v15 Additions)](#14-phozartphz-widgets-v15-additions) — MIT
-15. [@phozart/phz-grid (v15 Additions)](#15-phozartphz-grid-v15-additions) — MIT
+1. [@phozart/core](#1-phozartcore) — MIT
+2. [@phozart/grid](#2-phozartgrid) — MIT
+3. [@phozart/react](#3-phozartreact) — MIT
+4. [@phozart/vue](#4-phozartvue) — MIT
+5. [@phozart/angular](#5-phozartangular) — MIT
+6. [@phozart/duckdb](#6-phozartduckdb) — MIT
+7. [@phozart/ai](#7-phozartai) — MIT
+8. [@phozart/collab](#8-phozartcollab) — MIT
+9. [@phozart/docs](#9-phozartdocs) — Internal (Documentation Site)
+10. [@phozart/shared](#10-phozartphz-shared) — MIT (v15)
+11. [@phozart/viewer](#11-phozartphz-viewer) — MIT (v15)
+12. [@phozart/editor](#12-phozartphz-editor) — MIT (v15)
+13. [@phozart/engine (v15 Additions)](#13-phozartphz-engine-v15-additions) — MIT
+14. [@phozart/widgets (v15 Additions)](#14-phozartphz-widgets-v15-additions) — MIT
+15. [@phozart/grid (v15 Additions)](#15-phozartphz-grid-v15-additions) — MIT
 
 ---
 
-## 1. @phozart/phz-core
+## 1. @phozart/core
 
 **Description**: Headless grid engine with zero DOM dependencies. Foundation for all rendering layers.
 **Dependencies**: None
@@ -586,7 +586,7 @@ export interface PluginHooks {
 ### Usage Example
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({
   data: [
@@ -613,10 +613,10 @@ localStorage.setItem('gridState', JSON.stringify(state));
 
 ---
 
-## 2. @phozart/phz-grid
+## 2. @phozart/grid
 
 **Description**: Lit Web Components rendering layer with DOM virtualization and accessibility.
-**Dependencies**: `@phozart/phz-core`, `lit@^5.0.0`
+**Dependencies**: `@phozart/core`, `lit@^5.0.0`
 
 ### Exports
 
@@ -862,8 +862,8 @@ export class ForcedColorsAdapter {
 ### Usage Example
 
 ```typescript
-import '@phozart/phz-grid';
-import type { SelectionChangeEvent } from '@phozart/phz-grid';
+import '@phozart/grid';
+import type { SelectionChangeEvent } from '@phozart/grid';
 
 // HTML
 <phz-grid
@@ -886,15 +886,15 @@ handleSelectionChange(event: CustomEvent<SelectionChangeEvent>) {
 
 ---
 
-## 3. @phozart/phz-react
+## 3. @phozart/react
 
 **Description**: React wrapper with hooks and idiomatic event handling.
-**Dependencies**: `@phozart/phz-core`, `@phozart/phz-grid`, `react@^18.0.0`
+**Dependencies**: `@phozart/core`, `@phozart/grid`, `react@^18.0.0`
 
 ### Exports
 
 ```typescript
-import type { GridInstance, ColumnDefinition, GridState } from '@phozart/phz-core';
+import type { GridInstance, ColumnDefinition, GridState } from '@phozart/core';
 import type { ReactNode, RefObject } from 'react';
 
 export interface PhzGridProps {
@@ -996,7 +996,7 @@ export function useGridData(gridRef: RefObject<GridInstance>): {
 ### Usage Example
 
 ```typescript
-import { PhzGrid, useGridSelection } from '@phozart/phz-react';
+import { PhzGrid, useGridSelection } from '@phozart/react';
 import { useRef } from 'react';
 
 function MyComponent() {
@@ -1020,15 +1020,15 @@ function MyComponent() {
 
 ---
 
-## 4. @phozart/phz-vue
+## 4. @phozart/vue
 
 **Description**: Vue 3 wrapper with Composition API composables and v-model support.
-**Dependencies**: `@phozart/phz-core`, `@phozart/phz-grid`, `vue@^3.0.0`
+**Dependencies**: `@phozart/core`, `@phozart/grid`, `vue@^3.0.0`
 
 ### Exports
 
 ```typescript
-import type { GridInstance, ColumnDefinition } from '@phozart/phz-core';
+import type { GridInstance, ColumnDefinition } from '@phozart/core';
 import type { Component, Ref } from 'vue';
 
 export interface PhzGridProps {
@@ -1129,7 +1129,7 @@ export function useGridEdit(gridInstance?: Ref<GridInstance | null>): {
 </template>
 
 <script setup lang="ts">
-import { PhzGrid, useGridSelection } from '@phozart/phz-vue';
+import { PhzGrid, useGridSelection } from '@phozart/vue';
 import { ref } from 'vue';
 
 const selectedRowIds = ref<string[]>([]);
@@ -1143,17 +1143,17 @@ function handleSelectionChange(event) {
 
 ---
 
-## 5. @phozart/phz-angular
+## 5. @phozart/angular
 
 **Description**: Angular standalone component with RxJS observables and dependency injection.
-**Dependencies**: `@phozart/phz-core`, `@phozart/phz-grid`, `@angular/core@^19.0.0`, `rxjs@^7.0.0`
+**Dependencies**: `@phozart/core`, `@phozart/grid`, `@angular/core@^19.0.0`, `rxjs@^7.0.0`
 
 ### Exports
 
 ```typescript
 import { Component, Input, Output, EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import type { GridInstance, ColumnDefinition, GridState } from '@phozart/phz-core';
+import type { GridInstance, ColumnDefinition, GridState } from '@phozart/core';
 
 @Component({
   selector: 'phz-grid',
@@ -1216,7 +1216,7 @@ export class PhzGridModule { }
 
 ```typescript
 import { Component } from '@angular/core';
-import { PhzGridComponent } from '@phozart/phz-angular';
+import { PhzGridComponent } from '@phozart/angular';
 
 @Component({
   selector: 'app-my-grid',
@@ -1251,15 +1251,15 @@ export class MyGridComponent {
 
 ---
 
-## 6. @phozart/phz-duckdb
+## 6. @phozart/duckdb
 
 **Description**: DuckDB-WASM data source adapter for in-browser SQL analytics on large files.
-**Dependencies**: `@phozart/phz-core`, `@duckdb/duckdb-wasm@^1.0.0`, `apache-arrow@^16.0.0`
+**Dependencies**: `@phozart/core`, `@duckdb/duckdb-wasm@^1.0.0`, `apache-arrow@^16.0.0`
 
 ### Exports
 
 ```typescript
-import type { GridInstance } from '@phozart/phz-core';
+import type { GridInstance } from '@phozart/core';
 import type { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm';
 import type { Table as ArrowTable } from 'apache-arrow';
 
@@ -1427,8 +1427,8 @@ export function getQueryPlan(dataSource: DuckDBDataSource, sql: string): Promise
 ### Usage Example
 
 ```typescript
-import { createDuckDBDataSource } from '@phozart/phz-duckdb';
-import { createGrid } from '@phozart/phz-core';
+import { createDuckDBDataSource } from '@phozart/duckdb';
+import { createGrid } from '@phozart/core';
 
 const dataSource = await createDuckDBDataSource({
   enableStreaming: true,
@@ -1460,15 +1460,15 @@ for await (const chunk of dataSource.queryStream('SELECT * FROM sales_data')) {
 
 ---
 
-## 7. @phozart/phz-ai
+## 7. @phozart/ai
 
 **Description**: AI toolkit for schema inference, natural language queries, and anomaly detection.
-**Dependencies**: `@phozart/phz-core`
+**Dependencies**: `@phozart/core`
 
 ### Exports
 
 ```typescript
-import type { GridInstance, ColumnDefinition } from '@phozart/phz-core';
+import type { GridInstance, ColumnDefinition } from '@phozart/core';
 import type { JSONSchema7 } from 'json-schema';
 
 export function createAIToolkit(config: AIConfig): AIToolkit;
@@ -1667,8 +1667,8 @@ export class GoogleProvider implements AIProvider {
 ### Usage Example
 
 ```typescript
-import { createAIToolkit, OpenAIProvider } from '@phozart/phz-ai';
-import { createGrid } from '@phozart/phz-core';
+import { createAIToolkit, OpenAIProvider } from '@phozart/ai';
+import { createGrid } from '@phozart/core';
 
 const aiToolkit = createAIToolkit({
   provider: new OpenAIProvider({ apiKey: process.env.OPENAI_API_KEY }),
@@ -1707,15 +1707,15 @@ const summary = await aiToolkit.summarize({
 
 ---
 
-## 8. @phozart/phz-collab
+## 8. @phozart/collab
 
 **Description**: Real-time collaboration with CRDTs (Yjs) and sync providers.
-**Dependencies**: `@phozart/phz-core`, `yjs@^13.0.0`
+**Dependencies**: `@phozart/core`, `yjs@^13.0.0`
 
 ### Exports
 
 ```typescript
-import type { GridInstance } from '@phozart/phz-core';
+import type { GridInstance } from '@phozart/core';
 import type { Doc as YDoc } from 'yjs';
 
 export function createCollabSession(config: CollabConfig): CollabSession;
@@ -1942,8 +1942,8 @@ export function getYGridDocument(doc: YDoc): YGridDocument;
 ### Usage Example
 
 ```typescript
-import { createCollabSession, WebSocketSyncProvider } from '@phozart/phz-collab';
-import { createGrid } from '@phozart/phz-core';
+import { createCollabSession, WebSocketSyncProvider } from '@phozart/collab';
+import { createGrid } from '@phozart/core';
 
 const collabSession = createCollabSession({
   userId: 'user-123',
@@ -1986,7 +1986,7 @@ collabSession.onConflict((conflict) => {
 
 ---
 
-## 9. @phozart/phz-docs
+## 9. @phozart/docs
 
 **Description**: Documentation site with live interactive examples, built with VitePress.
 **Dependencies**: `vitepress`, all `@phozart/*` packages
@@ -2029,7 +2029,7 @@ packages/docs/
 
 ---
 
-## 10. @phozart/phz-shared
+## 10. @phozart/shared
 
 **Description**: Shared infrastructure package. Contains adapter interfaces, type definitions, artifact metadata, design system tokens, and runtime coordination modules. This is the dependency foundation for all shells.
 **Dependencies**: None
@@ -2038,11 +2038,11 @@ packages/docs/
 
 | Sub-path | Purpose | Key Exports |
 |----------|---------|-------------|
-| `@phozart/phz-shared/adapters` | Consumer-implemented SPIs | `DataAdapter`, `PersistenceAdapter`, `MeasureRegistryAdapter`, `AlertChannelAdapter`, `AttentionAdapter`, `UsageAnalyticsAdapter`, `SubscriptionAdapter`, `HelpConfig` |
-| `@phozart/phz-shared/types` | Shared type definitions | `SingleValueAlertConfig`, `MicroWidgetCellConfig`, `ImpactChainNode`, `AttentionFilterState`, `AsyncReportRequest`, `Subscription`, `PersonalAlert`, `ErrorState`, `EmptyState`, `DecisionTreeNode`, `ApiSpec` |
-| `@phozart/phz-shared/design-system` | Design tokens and responsive utilities | `ALERT_WIDGET_TOKENS`, `IMPACT_CHAIN_TOKENS`, `generateAlertTokenCSS`, `generateChainTokenCSS`, responsive breakpoints, container queries, component patterns, shell layout, mobile utilities, icons |
-| `@phozart/phz-shared/artifacts` | Artifact lifecycle metadata | `ArtifactVisibility`, `VisibilityMeta`, `DefaultPresentation`, `PersonalView`, `GridArtifact`, `ArtifactMeta`, visibility transition functions |
-| `@phozart/phz-shared/coordination` | Runtime state coordination | `FilterContextManager`, `DashboardDataPipeline`, `QueryCoordinatorInstance`, `InteractionBus`, `LoadingState`, `AsyncReportUIState`, `ExportsTabState`, `SubscriptionsTabState`, `ExpressionBuilderState`, `PreviewContextState`, `AttentionFacetedState` |
+| `@phozart/shared/adapters` | Consumer-implemented SPIs | `DataAdapter`, `PersistenceAdapter`, `MeasureRegistryAdapter`, `AlertChannelAdapter`, `AttentionAdapter`, `UsageAnalyticsAdapter`, `SubscriptionAdapter`, `HelpConfig` |
+| `@phozart/shared/types` | Shared type definitions | `SingleValueAlertConfig`, `MicroWidgetCellConfig`, `ImpactChainNode`, `AttentionFilterState`, `AsyncReportRequest`, `Subscription`, `PersonalAlert`, `ErrorState`, `EmptyState`, `DecisionTreeNode`, `ApiSpec` |
+| `@phozart/shared/design-system` | Design tokens and responsive utilities | `ALERT_WIDGET_TOKENS`, `IMPACT_CHAIN_TOKENS`, `generateAlertTokenCSS`, `generateChainTokenCSS`, responsive breakpoints, container queries, component patterns, shell layout, mobile utilities, icons |
+| `@phozart/shared/artifacts` | Artifact lifecycle metadata | `ArtifactVisibility`, `VisibilityMeta`, `DefaultPresentation`, `PersonalView`, `GridArtifact`, `ArtifactMeta`, visibility transition functions |
+| `@phozart/shared/coordination` | Runtime state coordination | `FilterContextManager`, `DashboardDataPipeline`, `QueryCoordinatorInstance`, `InteractionBus`, `LoadingState`, `AsyncReportUIState`, `ExportsTabState`, `SubscriptionsTabState`, `ExpressionBuilderState`, `PreviewContextState`, `AttentionFacetedState` |
 
 ### Spec Amendment A: Alert-Aware Widget Types
 
@@ -2136,10 +2136,10 @@ export function getVisibleItems(state): FilterableAttentionItem[];
 
 ---
 
-## 11. @phozart/phz-viewer
+## 11. @phozart/viewer
 
 **Description**: Read-only consumption shell for the viewer persona. Headless state machines plus Lit Web Components. No workspace dependency.
-**Dependencies**: `@phozart/phz-shared`, `lit`
+**Dependencies**: `@phozart/shared`, `lit`
 
 ### Shell State Machine
 
@@ -2221,10 +2221,10 @@ export function createViewerShellConfig(overrides?): ViewerShellConfig;
 
 ---
 
-## 12. @phozart/phz-editor
+## 12. @phozart/editor
 
 **Description**: Authoring shell for the author persona. Constrained editing (measure palette, not raw fields), dashboard/report creation, sharing, alert management. Headless state machines plus Lit Web Components.
-**Dependencies**: `@phozart/phz-shared`, `lit`
+**Dependencies**: `@phozart/shared`, `lit`
 
 ### Shell State Machine
 
@@ -2318,7 +2318,7 @@ export function validateEditorConfig(config): ConfigValidationResult;
 
 ---
 
-## 13. @phozart/phz-engine (v15 Additions)
+## 13. @phozart/engine (v15 Additions)
 
 ### New Engine Subsystems
 
@@ -2400,7 +2400,7 @@ export function filterBySeverity(state, severity): AttentionItem[];
 
 ---
 
-## 14. @phozart/phz-widgets (v15 Additions)
+## 14. @phozart/widgets (v15 Additions)
 
 ### Alert-Aware Rendering (7A-A)
 
@@ -2457,7 +2457,7 @@ export function getTopItems(state, limit): FilterableAttentionItem[];
 
 ---
 
-## 15. @phozart/phz-grid (v15 Additions)
+## 15. @phozart/grid (v15 Additions)
 
 ### Micro-Widget Cell Resolver (7A-B)
 

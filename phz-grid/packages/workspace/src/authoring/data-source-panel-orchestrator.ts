@@ -8,7 +8,7 @@
  * The Lit component calls these functions, passing its setState callback.
  */
 
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 import {
   setSources,
   setSchema,

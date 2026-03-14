@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Status Table
+ * @phozart/widgets — Status Table
  *
  * Entity list with status indicators per KPI metric.
  */
 import { LitElement } from 'lit';
-import type { KPIDefinition } from '@phozart/phz-engine';
+import type { KPIDefinition } from '@phozart/engine';
 export declare class PhzStatusTable extends LitElement {
     static styles: import("lit").CSSResult[];
     data: Record<string, unknown>[];

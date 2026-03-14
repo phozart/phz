@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filters Module (O.7)
+ * @phozart/workspace — Filters Module (O.7)
  */
 
 // Filter context (O.1 + O.1a + O.6)
@@ -109,3 +109,18 @@ export * from './filter-admin-state.js';
 
 // FilterValueAdmin (B-3.07)
 export * from './filter-value-admin-state.js';
+
+// FilterRecommendation (UX-018)
+export {
+  createFilterRecommendationState,
+  computeFilterRecommendations,
+  applyRecommendation,
+  dismissRecommendation,
+  undoDismiss,
+  getActiveRecommendations,
+  getRecommendationById,
+  type RecommendedFilterType,
+  type FilterRecommendation,
+  type FilterFieldInput,
+  type FilterRecommendationState,
+} from './filter-recommendation-state.js';

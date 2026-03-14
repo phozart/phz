@@ -2,7 +2,7 @@
 
 **Generated:** 2026-02-24
 **Version:** 1.0
-**Package:** @phozart/phz-core
+**Package:** @phozart/core
 **Status:** Draft - Binding Contract
 
 ## Overview
@@ -14,7 +14,7 @@ The data model is designed for:
 - **Type Safety:** Strict TypeScript mode, no `any` types
 - **Performance:** Optimized for 1M+ rows with minimal re-renders
 - **Extensibility:** Plugin architecture with hook system
-- **Framework Agnostic:** Core state lives in headless @phozart/phz-core
+- **Framework Agnostic:** Core state lives in headless @phozart/core
 
 ---
 
@@ -41,9 +41,9 @@ The data model is designed for:
 19. [Event System](#19-event-system)
 20. [Row Model Pipeline](#20-row-model-pipeline)
 21. [Type Guards & Utilities](#21-type-guards--utilities)
-22. [Shared Infrastructure Types (`@phozart/phz-shared`)](#22-shared-infrastructure-types-phozartphz-shared)
-23. [Viewer State Model (`@phozart/phz-viewer`)](#23-viewer-state-model-phozartphz-viewer)
-24. [Editor State Model (`@phozart/phz-editor`)](#24-editor-state-model-phozartphz-editor)
+22. [Shared Infrastructure Types (`@phozart/shared`)](#22-shared-infrastructure-types-phozartphz-shared)
+23. [Viewer State Model (`@phozart/viewer`)](#23-viewer-state-model-phozartphz-viewer)
+24. [Editor State Model (`@phozart/editor`)](#24-editor-state-model-phozartphz-editor)
 25. [Shared Coordination State Machines](#25-shared-coordination-state-machines)
 26. [Relationship: Shared Types and Shell State Machines](#26-relationship-shared-types-and-shell-state-machines)
 
@@ -2806,12 +2806,12 @@ export interface SerializedGridState {
 
 ---
 
-## 22. Shared Infrastructure Types (`@phozart/phz-shared`)
+## 22. Shared Infrastructure Types (`@phozart/shared`)
 
 ### Overview
 
 v15 extracted shared types, adapters, artifacts, design system, and runtime
-coordination into a new `@phozart/phz-shared` package. This package is the
+coordination into a new `@phozart/shared` package. This package is the
 dependency foundation — all shells (workspace, viewer, editor) import from it.
 No shell imports another shell.
 
@@ -3047,7 +3047,7 @@ export function computeAttentionFacets(
 ### 22.5 Alert Design Tokens
 
 Alert widget tokens integrate with the three-layer CSS custom property system.
-Defined in `@phozart/phz-shared/design-system`.
+Defined in `@phozart/shared/design-system`.
 
 ```typescript
 export const ALERT_WIDGET_TOKENS = {
@@ -3144,7 +3144,7 @@ export interface Subscription {
 
 ---
 
-## 23. Viewer State Model (`@phozart/phz-viewer`)
+## 23. Viewer State Model (`@phozart/viewer`)
 
 ### ViewerShellState
 
@@ -3215,7 +3215,7 @@ export interface ViewerShellConfig {
 
 ---
 
-## 24. Editor State Model (`@phozart/phz-editor`)
+## 24. Editor State Model (`@phozart/editor`)
 
 ### EditorShellState
 
@@ -3295,7 +3295,7 @@ export interface EditorShellConfig {
 
 ## 25. Shared Coordination State Machines
 
-Runtime coordination modules in `@phozart/phz-shared/coordination` manage
+Runtime coordination modules in `@phozart/shared/coordination` manage
 cross-cutting state shared across shells.
 
 ### 25.1 AsyncReportUIState
@@ -3407,7 +3407,7 @@ export interface AttentionFacetedState {
 The three-shell architecture creates a clear dependency hierarchy:
 
 ```
-@phozart/phz-shared (foundation)
+@phozart/shared (foundation)
   ├── adapters/     → DataAdapter SPI, ViewerContext, MeasureDefinition
   ├── types/        → SingleValueAlertConfig, MicroWidgetCellConfig,
   │                   AttentionFilterState, ImpactChainNode, etc.
@@ -3416,17 +3416,17 @@ The three-shell architecture creates a clear dependency hierarchy:
   └── coordination/ → FilterContext, LoadingState, AsyncReportUIState,
                       ExportsTabState, ExpressionBuilderState, etc.
 
-@phozart/phz-viewer (read-only)
+@phozart/viewer (read-only)
   ├── imports from shared only
   ├── ViewerShellState → uses ErrorState, EmptyState, FilterContextManager
   └── Screen states   → use ViewerContext, DataResult from shared/adapters
 
-@phozart/phz-editor (authoring)
+@phozart/editor (authoring)
   ├── imports from shared only
   ├── EditorShellState → uses ViewerContext, MeasureDefinition
   └── Authoring states → use SingleValueAlertConfig, Subscription, etc.
 
-@phozart/phz-workspace (admin — full Lit components)
+@phozart/workspace (admin — full Lit components)
   ├── imports from shared only
   ├── 15 admin state machines (headless)
   └── Lit Web Components for admin UI
@@ -3448,7 +3448,7 @@ This data model defines the complete type-safe contract for phz-grid. Key design
 2. **Type Safety:** Strict TypeScript, no `any` except in generic contexts
 3. **Performance:** Optimized for 1M+ rows (ReadonlyMap, ReadonlySet for O(1) lookups)
 4. **Extensibility:** Plugin system with hooks
-5. **Framework Agnostic:** Core state in headless @phozart/phz-core
+5. **Framework Agnostic:** Core state in headless @phozart/core
 6. **Advanced Extensions:** DuckDB, AI, Collaboration, Analytics as optional state
 
 All implementation agents MUST follow these type definitions exactly.

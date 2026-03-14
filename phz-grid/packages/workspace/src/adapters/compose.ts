@@ -1,16 +1,16 @@
 /**
- * @phozart/phz-workspace — composeWorkspaceAdapter
+ * @phozart/workspace — composeWorkspaceAdapter
  *
  * Composes existing EngineStorageAdapter + AsyncDefinitionStore instances
  * into a unified WorkspaceAdapter, adding placement/catalog methods
  * via in-memory defaults.
  */
 
-import type { EngineStorageAdapter, ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/phz-engine';
-import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/phz-engine';
-import { MemoryStorageAdapter } from '@phozart/phz-engine';
-import type { AsyncDefinitionStore } from '@phozart/phz-shared/definitions';
-import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/phz-shared/definitions';
+import type { EngineStorageAdapter, ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/engine';
+import type { ReportId, DashboardId, KPIId, MetricId } from '@phozart/engine';
+import { MemoryStorageAdapter } from '@phozart/engine';
+import type { AsyncDefinitionStore } from '@phozart/shared/definitions';
+import type { GridDefinition, DefinitionMeta, DefinitionId } from '@phozart/shared/definitions';
 import type { WorkspaceAdapter } from '../workspace-adapter.js';
 import type { PlacementRecord } from '../placement.js';
 import type { PlacementId, ArtifactMeta, ArtifactFilter, PlacementFilter } from '../types.js';

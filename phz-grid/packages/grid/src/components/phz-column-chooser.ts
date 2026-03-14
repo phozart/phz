@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-column-chooser>
+ * @phozart/grid — <phz-column-chooser>
  *
  * Column management panel: show/hide columns, drag-reorder,
  * save/load user profiles, add/edit computed columns.
@@ -13,7 +13,7 @@
  */
 import { LitElement, html, css, nothing, type TemplateResult, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { ColumnDefinition, ColumnState, UserRole } from '@phozart/phz-core';
+import type { ColumnDefinition, ColumnState, UserRole } from '@phozart/core';
 import { DATE_FORMAT_PRESETS } from '../formatters/date-formatter.js';
 
 export interface ColumnProfile {

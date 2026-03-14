@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — Built-in Cell Renderers
+ * @phozart/grid — Built-in Cell Renderers
  */
 import { html, css, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 import { PhzCellRenderer } from './base-renderer.js';
 import { formatDate, DEFAULT_DATE_FORMAT } from '../formatters/date-formatter.js';
 

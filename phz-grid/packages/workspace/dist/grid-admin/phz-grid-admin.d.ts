@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Grid Admin Facade
+ * @phozart/grid-admin — Grid Admin Facade
  *
  * Modal dialog with tabbed admin sections for grid visual configuration.
  * Tabs: Table Settings, Columns, Formatting, Filters, Export.
@@ -8,7 +8,7 @@
  * by phz-definitions and phz-criteria respectively.
  */
 import { LitElement } from 'lit';
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { ReportPresentation } from '@phozart/engine';
 import './phz-admin-table-settings.js';
 import './phz-admin-columns.js';
 import './phz-admin-formatting.js';

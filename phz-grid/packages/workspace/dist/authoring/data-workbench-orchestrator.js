@@ -14,11 +14,11 @@
  * The Lit component handles async DataAdapter calls and feeds
  * results into these state transitions.
  */
-import { groupFieldsByRole } from '@phozart/phz-shared';
-import { createDropZoneState, addFieldToZone, removeFieldFromZone, } from '@phozart/phz-engine';
-import { autoPlaceField } from '@phozart/phz-engine';
-import { suggestChartType } from '@phozart/phz-engine';
-import { toExploreQuery } from '@phozart/phz-engine';
+import { groupFieldsByRole } from '@phozart/shared';
+import { createDropZoneState, addFieldToZone, removeFieldFromZone, } from '@phozart/engine';
+import { autoPlaceField } from '@phozart/engine';
+import { suggestChartType } from '@phozart/engine';
+import { toExploreQuery } from '@phozart/engine';
 // ========================================================================
 // Aggregation cycle order
 // ========================================================================

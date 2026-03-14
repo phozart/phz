@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Type Guards
+ * @phozart/core — Type Guards
  */
 
 import type {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Definition Registry
+ * @phozart/engine — Filter Definition Registry
  *
  * Reusable, artefact-independent filter definitions with dependency
  * graph validation (cycle detection + topological sort).

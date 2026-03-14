@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-ai — Schema Analyzer
+ * @phozart/ai — Schema Analyzer
  *
  * Classifies data fields as measure/dimension/temporal/categorical/identifier
  * and suggests widgets and layout based on the analysis.
  */
-import type { WidgetType } from '@phozart/phz-engine';
+import type { WidgetType } from '@phozart/engine';
 export interface FieldInput {
     name: string;
     type: 'string' | 'number' | 'boolean' | 'date';

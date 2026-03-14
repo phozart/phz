@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-workspace — Explore Module (P.7)
+ * @phozart/workspace — Explore Module (P.7)
  *
- * @deprecated Import from '@phozart/phz-engine/explorer' instead.
+ * @deprecated Import from '@phozart/engine/explorer' instead.
  * These re-exports will be removed in v16.
  */
 export { createFieldPalette, groupFieldsByType, searchFields, autoPlaceField, type PaletteField, type FieldPalette, type DropZoneType, } from './phz-field-palette.js';
@@ -11,4 +11,5 @@ export { suggestChartType, type ChartSuggestOptions, } from './chart-suggest.js'
 export { exploreToReport, exploreToDashboardWidget, type ReportArtifact, type DashboardWidgetArtifact, } from './explore-to-artifact.js';
 export { createDataExplorer, type DataExplorer, type DataExplorerState, } from './phz-data-explorer.js';
 export { promoteFilterToDashboard, buildDrillThroughPrePopulation, } from './explorer-dashboard-integration.js';
+export { exploreQueryToPivot } from './explore-pivot.js';
 //# sourceMappingURL=index.d.ts.map

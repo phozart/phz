@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Admin
+ * @phozart/criteria — Preset Admin
  *
  * Admin UI for managing selection presets: admin preset CRUD,
  * user preset read-only view, scope badges. CSS prefix: phz-pa-
@@ -28,7 +28,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { resolveLabelTemplate } from '@phozart/phz-core';
+import { resolveLabelTemplate } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 // Ensure sub-components are registered
 import './fields/phz-combobox.js';

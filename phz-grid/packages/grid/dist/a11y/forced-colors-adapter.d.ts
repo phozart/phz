@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — ForcedColorsAdapter
+ * @phozart/grid — ForcedColorsAdapter
  *
  * Detects and adapts to Windows High Contrast / Forced Colors Mode.
  * Ensures the grid remains fully usable when system forced colors

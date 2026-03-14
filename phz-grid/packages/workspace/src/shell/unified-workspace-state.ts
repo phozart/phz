@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Unified Workspace State Machine
+ * @phozart/workspace — Unified Workspace State Machine
  *
  * Single-view workspace: one artifact at a time, with an artifact selector
  * bar, navigation history, and a context-sensitive data panel.

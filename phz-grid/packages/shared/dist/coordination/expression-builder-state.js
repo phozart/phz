@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Expression Builder State (C-2.10)
+ * @phozart/shared — Expression Builder State (C-2.10)
  *
  * Reusable expression builder for alert conditions, filter rules,
  * and calculated fields. Manages an expression tree with validation.

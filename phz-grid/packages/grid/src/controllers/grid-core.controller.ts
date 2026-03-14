@@ -16,7 +16,7 @@ import {
   type ProgressiveLoadConfig,
   type ProgressivePhase,
   getProgressMessage,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import { AriaManager } from '../a11y/aria-manager.js';
 
 export interface StateSyncPayload {
@@ -33,7 +33,7 @@ export interface GridCoreHost extends ReactiveControllerHost {
   columns: ColumnDefinition[];
   selectionMode: string;
   editMode: string;
-  ariaLabels: import('@phozart/phz-core').AriaLabels;
+  ariaLabels: import('@phozart/core').AriaLabels;
   defaultSortField: string;
   defaultSortDirection: 'asc' | 'desc';
   autoSizeColumns: boolean;
@@ -131,7 +131,14 @@ export class GridCoreController implements ReactiveController {
     this.unsubscribers.push(progressUnsub);
 
     if (this.host.defaultSortField) {
-      this.gridApi.sort(this.host.defaultSortField, this.host.defaultSortDirection);
+      const fieldExists = this._columnDefs.some(c => c.field === this.host.defaultSortField);
+      if (fieldExists) {
+        this.gridApi.sort(this.host.defaultSortField, this.host.defaultSortDirection);
+      } else {
+        console.warn(
+          `@phozart/grid: defaultSortField "${this.host.defaultSortField}" does not match any column.`,
+        );
+      }
     }
 
     // Perform initial state sync so visibleRows is populated immediately.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — KPI Card
+ * @phozart/widgets — KPI Card
  *
  * Single KPI display with value, status badge, delta, and optional sparkline.
  */
@@ -12,7 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { computeStatus, computeDelta } from '@phozart/phz-engine';
+import { computeStatus, computeDelta } from '@phozart/engine';
 import { resolveWidgetState } from '../widget-states.js';
 let PhzKPICard = class PhzKPICard extends LitElement {
     constructor() {

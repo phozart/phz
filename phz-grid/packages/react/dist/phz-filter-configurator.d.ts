@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzFilterConfigurator React Component
+ * @phozart/react — PhzFilterConfigurator React Component
  *
  * Wraps the <phz-filter-configurator> Web Component for React using @lit/react.
  * Configure which filter definitions appear on a specific report/dashboard,

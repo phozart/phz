@@ -9,7 +9,7 @@
  * The Lit component (or any UI) calls DataAdapter methods and feeds
  * results into these state transitions.
  */
-import type { DataSourceMeta, FieldMetadata, FieldStatsResult } from '@phozart/phz-shared';
+import type { DataSourceMeta, FieldMetadata, FieldStatsResult } from '@phozart/shared';
 export type { DataSourceMeta, FieldMetadata };
 export interface DataSourceSchema {
     id: string;

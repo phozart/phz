@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Data Source Types
+ * @phozart/core — Data Source Types
  */
 import type { ServerDataRequest, ServerDataResponse, ServerCapabilities } from './server.js';
 export type DataSource<TData = any> = LocalDataSource<TData> | AsyncDataSource<TData> | DuckDBDataSourceRef;

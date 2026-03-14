@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Filter Popover A11y Tests
+ * @phozart/grid — Filter Popover A11y Tests
  *
  * Tests for keyboard accessibility in the filter popover:
  * - ARIA roles on the popover container

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — ServerGroupManager
+ * @phozart/core — ServerGroupManager
  *
  * Manages server-side grouping state: expand/collapse tracking,
  * group row caching, and request building for lazy-expand grouping.

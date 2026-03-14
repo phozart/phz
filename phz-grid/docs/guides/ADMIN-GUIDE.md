@@ -939,7 +939,7 @@ If validation fails, the import is rejected with specific error messages.
 ### 7.3 Cross-Tier Compatibility
 
 Sessions exported from the browser can be imported into **phz-local**
-(`@phozart/phz-local`), and vice versa.
+(`@phozart/local`), and vice versa.
 
 The `source` field in the bundle identifies the origin (`'browser'` vs
 `'phz-local'`). The `serverConfig` field in local server bundles carries
@@ -1174,7 +1174,7 @@ skipped entirely — reports are configured after creation through the grid
 admin interface.
 
 The creation flow is driven by pure state functions exposed from
-`@phozart/phz-workspace/authoring`:
+`@phozart/workspace/authoring`:
 
 | Function | Effect |
 |----------|--------|
@@ -1676,7 +1676,7 @@ role-based scoping and rate limiting.
 - **Author** — read + write artifacts and data, export reports
 - **Admin** — all scopes
 
-The `generateOpenAPISpec()` function (from `@phozart/phz-engine`) produces a
+The `generateOpenAPISpec()` function (from `@phozart/engine`) produces a
 complete OpenAPI 3.1.0 document from the `ApiSpec` type, suitable for developer
 documentation and client SDK generation.
 

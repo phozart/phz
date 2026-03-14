@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Global Filter Bar
+ * @phozart/engine-admin — Global Filter Bar
  *
  * Horizontal bar with per-filter dropdowns, multi-selects, date ranges, and text searches.
  * Auto-populates filter options from unique data values.

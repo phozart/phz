@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — FilterContractResolver (U.3)
+ * @phozart/workspace — FilterContractResolver (U.3)
  *
  * Resolves an ArtifactFilterContract against available FilterDefinitions.
  * Validates filter values against the contract and produces pruned results.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Editor Shell Package
+ * @phozart/editor — Editor Shell Package
  *
  * BI authoring environment for creating dashboards, reports,
  * alerts, and sharing artifacts. Designed for the author persona.

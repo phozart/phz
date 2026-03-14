@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-duckdb — AI Query Executor
+ * @phozart/duckdb — AI Query Executor
  *
  * Wires AI toolkit's NL→SQL output to DuckDB execution.
  * Validates SQL is read-only before execution.
  */
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 import type { DuckDBDataSource } from './types.js';
 export interface AIToolkitLike {
     executeNaturalLanguageQuery(query: string, options?: {

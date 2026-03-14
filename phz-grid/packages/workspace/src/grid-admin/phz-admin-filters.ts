@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Filter Preset Manager
+ * @phozart/grid-admin — Filter Preset Manager
  *
  * Manage filter presets: create, apply, duplicate, delete.
  * Embeddable component.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import { adminBaseStyles } from './shared-styles.js';
-import type { FilterPreset } from '@phozart/phz-core';
+import type { FilterPreset } from '@phozart/core';
 
 @safeCustomElement('phz-admin-filters')
 export class PhzAdminFilters extends LitElement {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Catalog Dense Table View State (B-3.01)
+ * @phozart/workspace — Catalog Dense Table View State (B-3.01)
  *
  * Pure functions for managing a dense table view of the artifact catalog.
  * Supports multi-column sorting, bulk selection, and inline quick actions.

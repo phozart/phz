@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Widget Picker Utils (L.5)
+ * @phozart/workspace — Widget Picker Utils (L.5)
  *
  * Pure utility functions for filtering, grouping, and searching widget manifests.
  */

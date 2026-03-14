@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Waterfall Chart
+ * @phozart/widgets — Waterfall Chart
  *
  * SVG waterfall chart showing increases, decreases, and totals with
  * connecting lines, running totals, tooltips, and SR accessibility.

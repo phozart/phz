@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Formula Parser
+ * @phozart/engine — Formula Parser
  *
  * Recursive descent parser for formula text → ExpressionNode AST.
  * Also provides a formatter: ExpressionNode → formula text.

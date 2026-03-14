@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Immutable Utility Functions
+ * @phozart/core — Immutable Utility Functions
  */
 
 import type { TreeNode, TreeLevelConfig } from './types/selection-context.js';

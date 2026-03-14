@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-duckdb — SQL Builder
+ * @phozart/duckdb — SQL Builder
  *
  * Generates parameterized SQL from grid state (filters, sort, grouping, viewport).
  * Never interpolates values — all user data goes through params array.
  */
-import type { FilterOperator, SortDirection } from '@phozart/phz-core';
+import type { FilterOperator, SortDirection } from '@phozart/core';
 export interface FilterInput {
     field: string;
     operator: FilterOperator;

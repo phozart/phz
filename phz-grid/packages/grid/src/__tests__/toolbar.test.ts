@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Toolbar Tests
+ * @phozart/grid — Toolbar Tests
  *
  * Unit tests for the <phz-toolbar> component's logic, types, and exports.
  * DOM rendering tests would require a browser environment (Playwright).

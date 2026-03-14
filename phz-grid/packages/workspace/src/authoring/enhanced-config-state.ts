@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-workspace — Enhanced Config Panel State (Canvas Phase 2A)
+ * @phozart/workspace — Enhanced Config Panel State (Canvas Phase 2A)
  *
  * Rich widget appearance/format/behavior configuration state machine.
- * Wraps the types from @phozart/phz-engine/widget-config-enhanced
+ * Wraps the types from @phozart/engine/widget-config-enhanced
  * and provides pure state transition functions.
  */
 
@@ -15,7 +15,7 @@ import type {
   BottomNAppearance,
   WidgetBehaviourConfig,
   Threshold,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // ========================================================================
 // Types

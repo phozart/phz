@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Authoring Module
+ * @phozart/workspace — Authoring Module
  *
  * UX-first authoring flows for reports and dashboards.
  * All state management is pure functions; Lit components are thin view layers.
@@ -103,4 +103,10 @@ export { PhzSliderInput } from './phz-slider-input.js';
 export * from './canvas-toolbar-state.js';
 // Responsive fallback (Phase 4C)
 export * from './responsive-fallback.js';
+// UX-016 — Field-drop inference state machine
+export * from './field-drop-inference-state.js';
+// UX-017 — Live preview toggle state machine
+export * from './live-preview-state.js';
+// UX-019 — Report designer shortcut mode
+export * from './shortcut-mode-state.js';
 //# sourceMappingURL=index.js.map

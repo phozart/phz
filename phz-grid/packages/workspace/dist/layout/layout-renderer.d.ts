@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Layout Renderer (K.1 + K.5)
+ * @phozart/workspace — Layout Renderer (K.1 + K.5)
  *
  * Transforms a declarative LayoutNode tree into CSS and HTML strings.
  * Pure functions -- no DOM dependency, safe for workers/SSR.

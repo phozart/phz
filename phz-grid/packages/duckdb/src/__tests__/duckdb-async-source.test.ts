@@ -1,14 +1,14 @@
 /**
- * @phozart/phz-duckdb — DuckDB AsyncDataSource Tests
+ * @phozart/duckdb — DuckDB AsyncDataSource Tests
  *
  * Tests for the DuckDBAsyncSource adapter that implements AsyncDataSource
- * from @phozart/phz-core, converting DataFetchRequest into DuckDB SQL queries.
+ * from @phozart/core, converting DataFetchRequest into DuckDB SQL queries.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DuckDBAsyncSource } from '../duckdb-async-source.js';
 import type { DuckDBDataSource } from '../types.js';
-import type { DataFetchRequest } from '@phozart/phz-core';
+import type { DataFetchRequest } from '@phozart/core';
 
 function createMockDataSource(
   dataResult: unknown[] = [],

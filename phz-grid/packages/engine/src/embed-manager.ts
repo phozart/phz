@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Embed Manager
+ * @phozart/engine — Embed Manager
  *
  * Generates embed code and shareable config for dashboards.
  * Supports width/height, theme, hideControls, and filterDefaults options.

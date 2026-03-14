@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-explorer> Custom Element
+ * @phozart/viewer — <phz-viewer-explorer> Custom Element
  *
  * Explorer screen for self-service data exploration.
- * Delegates to @phozart/phz-engine/explorer for the core logic.
+ * Delegates to @phozart/engine/explorer for the core logic.
  */
 import { LitElement, type TemplateResult } from 'lit';
-import type { DataSourceMeta, FieldMetadata } from '@phozart/phz-shared/adapters';
-import type { DataExplorer } from '@phozart/phz-engine/explorer';
+import type { DataSourceMeta, FieldMetadata } from '@phozart/shared/adapters';
+import type { DataExplorer } from '@phozart/engine/explorer';
 import { type ExplorerScreenState } from '../screens/explorer-state.js';
 export declare class PhzViewerExplorer extends LitElement {
     static styles: import("lit").CSSResult;

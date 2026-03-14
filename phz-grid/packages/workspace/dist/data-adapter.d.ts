@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — DataAdapter Interface & Related Types
+ * @phozart/workspace — DataAdapter Interface & Related Types
  *
  * Defines the contract for data sources, queries, aggregations,
  * time intelligence, data quality, and query coordination.
@@ -139,13 +139,13 @@ export interface DataAdapter {
     }>;
 }
 /**
- * @deprecated Import CoordinatorQuery from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import CoordinatorQuery from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export { type CoordinatorQuery, type CoordinatorResult, type QueryCoordinatorConfig, defaultQueryCoordinatorConfig, isQueryCoordinatorConfig, } from '@phozart/phz-shared/coordination';
+export { type CoordinatorQuery, type CoordinatorResult, type QueryCoordinatorConfig, defaultQueryCoordinatorConfig, isQueryCoordinatorConfig, } from '@phozart/shared/coordination';
 /** Workspace-specific QueryCoordinator interface (uses workspace DataQuery). */
 export interface QueryCoordinator {
-    submit(widgetId: string, query: import('@phozart/phz-shared/coordination').CoordinatorQuery): Promise<import('@phozart/phz-shared/coordination').CoordinatorResult>;
+    submit(widgetId: string, query: import('@phozart/shared/coordination').CoordinatorQuery): Promise<import('@phozart/shared/coordination').CoordinatorResult>;
     flush(): Promise<void>;
     cancel(widgetId: string): void;
 }

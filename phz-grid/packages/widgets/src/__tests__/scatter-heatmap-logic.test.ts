@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Scatter Chart + Heatmap Pure Logic Tests
+ * @phozart/widgets — Scatter Chart + Heatmap Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

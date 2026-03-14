@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-criteria — Numeric Range Input
+ * @phozart/criteria — Numeric Range Input
  *
  * Min/Max inputs with optional dual-thumb slider and unit label.
  */
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { NumericRangeFieldConfig, NumericRangeValue } from '@phozart/phz-core';
+import type { NumericRangeFieldConfig, NumericRangeValue } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 @customElement('phz-numeric-range-input')

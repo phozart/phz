@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — SQL Builder
+ * @phozart/duckdb — SQL Builder
  *
  * Generates parameterized SQL from grid state (filters, sort, grouping, viewport).
  * Never interpolates values — all user data goes through params array.

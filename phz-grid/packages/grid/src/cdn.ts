@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — CDN Entry Point
+ * @phozart/grid — CDN Entry Point
  *
  * Single-file bundle for use via <script type="module"> in plain HTML.
  * Registers all custom elements and re-exports everything from the main entry.

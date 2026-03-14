@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Collaboration Session Implementation
+ * @phozart/collab — Collaboration Session Implementation
  *
  * Real-time collaboration using Yjs CRDTs. Manages presence,
  * change tracking, conflict resolution, and Yjs document mapping.

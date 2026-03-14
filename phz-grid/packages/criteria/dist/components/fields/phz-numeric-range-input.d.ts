@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-criteria — Numeric Range Input
+ * @phozart/criteria — Numeric Range Input
  *
  * Min/Max inputs with optional dual-thumb slider and unit label.
  */
 import { LitElement } from 'lit';
-import type { NumericRangeFieldConfig, NumericRangeValue } from '@phozart/phz-core';
+import type { NumericRangeFieldConfig, NumericRangeValue } from '@phozart/core';
 export declare class PhzNumericRangeInput extends LitElement {
     static styles: import("lit").CSSResult[];
     config: NumericRangeFieldConfig;

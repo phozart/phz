@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine-admin — Calculated Field Form
+ * @phozart/engine-admin — Calculated Field Form
  *
  * Slide-over form for creating/editing calculated fields with expression builder.
  */
 import { LitElement } from 'lit';
-import type { CalculatedFieldDef, DataModelField, ParameterDef } from '@phozart/phz-engine';
+import type { CalculatedFieldDef, DataModelField, ParameterDef } from '@phozart/engine';
 import './phz-expression-builder.js';
 export declare class PhzCalculatedFieldForm extends LitElement {
     static styles: import("lit").CSSResult[];

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — Subscription Engine (C-2.05)
+ * @phozart/engine — Subscription Engine (C-2.05)
  *
  * State management for report/dashboard subscriptions.
  * Includes schedule computation and execution readiness checks.
  *
  * Pure functions only — no side effects, no DOM.
  */
-import type { Subscription, SubscriptionSchedule } from '@phozart/phz-shared/types';
+import type { Subscription, SubscriptionSchedule } from '@phozart/shared/types';
 export interface SubscriptionEngineState {
     subscriptions: Subscription[];
     activeSubscriptionId: string | null;

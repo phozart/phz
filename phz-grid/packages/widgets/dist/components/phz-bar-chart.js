@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Bar Chart
+ * @phozart/widgets — Bar Chart
  *
  * Horizontal ranked bars with value labels and optional volume indicator.
  * Supports simple (single-series), stacked, and grouped modes.

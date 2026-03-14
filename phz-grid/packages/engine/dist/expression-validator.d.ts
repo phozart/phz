@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression Validator
+ * @phozart/engine — Expression Validator
  *
  * Static validation of ExpressionNode trees.
  * Checks reference resolution, type compatibility, and arity.

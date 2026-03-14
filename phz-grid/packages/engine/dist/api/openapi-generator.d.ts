@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — OpenAPI Spec Generator (C-2.09)
+ * @phozart/engine — OpenAPI Spec Generator (C-2.09)
  *
  * Generates an OpenAPI 3.1.0 document from the phz-grid API specification
- * types defined in @phozart/phz-shared/types.
+ * types defined in @phozart/shared/types.
  *
  * Pure functions only — no side effects, no DOM.
  */
-import type { ApiEndpoint, APISpecConfig } from '@phozart/phz-shared/types';
+import type { ApiEndpoint, APISpecConfig } from '@phozart/shared/types';
 export interface OpenAPIDocument {
     openapi: '3.1.0';
     info: {

@@ -1,17 +1,17 @@
-# @phozart/phz-engine
+# @phozart/engine
 
 Headless BI computation engine for phz-grid. Provides KPIs, metrics, aggregation, pivot tables, chart projections, dashboards, reports, selection criteria, expression evaluation, and drill-through with zero DOM dependencies.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-engine @phozart/phz-core
+npm install @phozart/engine @phozart/core
 ```
 
 ## Quick Start
 
 ```ts
-import { createBIEngine } from '@phozart/phz-engine';
+import { createBIEngine } from '@phozart/engine';
 
 const engine = createBIEngine({
   dataProducts: [...],
@@ -27,7 +27,7 @@ const engine = createBIEngine({
 Define your data sources with typed schemas:
 
 ```ts
-import { createDataProductRegistry } from '@phozart/phz-engine';
+import { createDataProductRegistry } from '@phozart/engine';
 
 const registry = createDataProductRegistry();
 registry.register({
@@ -44,7 +44,7 @@ registry.register({
 ### KPIs
 
 ```ts
-import { createKPIRegistry, computeStatus, computeDelta, classifyKPIScore } from '@phozart/phz-engine';
+import { createKPIRegistry, computeStatus, computeDelta, classifyKPIScore } from '@phozart/engine';
 
 const kpiRegistry = createKPIRegistry();
 kpiRegistry.register({
@@ -67,7 +67,7 @@ const delta = computeDelta(95, 85);
 ### Metrics
 
 ```ts
-import { createMetricCatalog } from '@phozart/phz-engine';
+import { createMetricCatalog } from '@phozart/engine';
 
 const catalog = createMetricCatalog();
 catalog.register({
@@ -81,7 +81,7 @@ catalog.register({
 ### Aggregation
 
 ```ts
-import { computeAggregation, computeGroupAggregations } from '@phozart/phz-engine';
+import { computeAggregation, computeGroupAggregations } from '@phozart/engine';
 
 const total = computeAggregation(data, 'revenue', 'sum');
 const grouped = computeGroupAggregations(data, 'region', [
@@ -93,7 +93,7 @@ const grouped = computeGroupAggregations(data, 'region', [
 ### Pivot Tables
 
 ```ts
-import { computePivot, pivotResultToFlatRows } from '@phozart/phz-engine';
+import { computePivot, pivotResultToFlatRows } from '@phozart/engine';
 
 const pivot = computePivot(data, {
   rowFields: ['region'],
@@ -108,7 +108,7 @@ const rows = pivotResultToFlatRows(pivot);
 ### Chart Projections
 
 ```ts
-import { projectChartData, projectPieData } from '@phozart/phz-engine';
+import { projectChartData, projectPieData } from '@phozart/engine';
 
 const barData = projectChartData(data, {
   categoryField: 'month',
@@ -124,7 +124,7 @@ const pieData = projectPieData(data, {
 ### Reports
 
 ```ts
-import { createReportConfigStore } from '@phozart/phz-engine';
+import { createReportConfigStore } from '@phozart/engine';
 
 const store = createReportConfigStore();
 store.register({
@@ -141,7 +141,7 @@ store.register({
 ### Dashboards
 
 ```ts
-import { createDashboardConfigStore } from '@phozart/phz-engine';
+import { createDashboardConfigStore } from '@phozart/engine';
 
 const dashStore = createDashboardConfigStore();
 dashStore.register({
@@ -166,7 +166,7 @@ import {
   applyCriteriaToData,
   serializeCriteria,
   deserializeCriteria,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 const presets = getAvailablePresets();
 const dateRange = resolveBuiltinPreset('last-30-days');
@@ -178,7 +178,7 @@ const filtered = applyCriteriaToData(data, criteria);
 Parse and evaluate formulas:
 
 ```ts
-import { parseFormula, evaluateRowExpression, validateExpression } from '@phozart/phz-engine';
+import { parseFormula, evaluateRowExpression, validateExpression } from '@phozart/engine';
 
 const ast = parseFormula('revenue * 0.1 + IF(region == "US", bonus, 0)');
 const errors = validateExpression(ast, context);
@@ -194,7 +194,7 @@ import {
   createFilterStateManager,
   createFilterRuleEngine,
   createCriteriaEngine,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // Unified criteria engine facade
 const criteriaEngine = createCriteriaEngine({
@@ -207,7 +207,7 @@ const criteriaEngine = createCriteriaEngine({
 ### Drill-Through
 
 ```ts
-import { resolveDrillFilter, resolveDrillAction } from '@phozart/phz-engine';
+import { resolveDrillFilter, resolveDrillAction } from '@phozart/engine';
 
 const filter = resolveDrillFilter({
   source: { type: 'chart', category: 'US', series: 'Q1' },
@@ -220,7 +220,7 @@ const filter = resolveDrillFilter({
 Runtime orchestrators for reports and dashboards:
 
 ```ts
-import { createReportService, createDashboardService } from '@phozart/phz-engine';
+import { createReportService, createDashboardService } from '@phozart/engine';
 
 const reportService = createReportService({ reportStore, criteriaEngine, dataProducts });
 const dashboardService = createDashboardService({ dashboardStore, criteriaEngine, dataProducts });
@@ -231,8 +231,8 @@ const dashboardService = createDashboardService({ dashboardStore, criteriaEngine
 The `createBIEngine` function provides a unified entry point:
 
 ```ts
-import { createBIEngine } from '@phozart/phz-engine';
-import type { BIEngine, BIEngineConfig } from '@phozart/phz-engine';
+import { createBIEngine } from '@phozart/engine';
+import type { BIEngine, BIEngineConfig } from '@phozart/engine';
 
 const engine = createBIEngine(config);
 ```

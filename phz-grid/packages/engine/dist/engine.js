@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — BI Engine Facade
+ * @phozart/engine — BI Engine Facade
  *
  * Single entry point that integrates all engine modules.
  */
@@ -19,7 +19,34 @@ import { mergeReportConfigs, mergeDashboardConfigs } from './config-merge.js';
 import { FormatRegistry } from './format-registry.js';
 import { createDashboardDataModelStore } from './dashboard-data-model.js';
 import { createJSComputeBackend } from './compute-backend.js';
+import { WorkerComputeBackend } from './workers/worker-compute-backend.js';
 import { EngineMetrics } from './engine-metrics.js';
+/**
+ * Create a new BI engine instance with the given configuration.
+ *
+ * The engine is the central facade for all analytical operations:
+ * aggregation, pivot, chart projection, drill-through, KPI scoring,
+ * report/dashboard management, and criteria resolution.
+ *
+ * @param config - Optional engine configuration. Omit for an empty engine.
+ * @returns A fully initialized {@link BIEngine} instance.
+ *
+ * @example
+ * ```ts
+ * import { createBIEngine } from '@phozart/engine';
+ *
+ * const engine = createBIEngine({
+ *   initialReports: [myReport],
+ *   enableMetrics: true,
+ * });
+ *
+ * const result = engine.aggregate(rows, {
+ *   fields: [{ field: 'revenue', functions: ['sum', 'avg'] }],
+ * });
+ *
+ * engine.destroy();
+ * ```
+ */
 export function createBIEngine(config) {
     const dataProducts = createDataProductRegistry();
     const kpis = createKPIRegistry(dataProducts);
@@ -29,7 +56,16 @@ export function createBIEngine(config) {
     const formats = new FormatRegistry();
     const criteria = createCriteriaEngine(config?.criteriaEngine);
     const dataModel = createDashboardDataModelStore(config?.initialDataModel?.fields);
-    const computeBackend = config?.computeBackend ?? createJSComputeBackend();
+    let computeBackend;
+    if (config?.computeBackend) {
+        computeBackend = config.computeBackend;
+    }
+    else if (config?.workerEnabled) {
+        computeBackend = new WorkerComputeBackend(config.workerUrl);
+    }
+    else {
+        computeBackend = createJSComputeBackend();
+    }
     const engineMetrics = config?.enableMetrics ? new EngineMetrics() : undefined;
     // Load data model if provided
     if (config?.initialDataModel) {

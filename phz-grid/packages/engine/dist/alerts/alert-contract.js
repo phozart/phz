@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Alert Evaluation Contract (C-2.04)
+ * @phozart/engine — Alert Evaluation Contract (C-2.04)
  *
  * Defines the contract between alert definitions and their evaluation.
  * This is an SPI that consumer applications implement to provide

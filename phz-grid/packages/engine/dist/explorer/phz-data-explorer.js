@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine/explorer — Data Explorer Orchestrator
+ * @phozart/engine/explorer — Data Explorer Orchestrator
  *
  * Main headless controller combining field palette, drop zones,
  * preview, chart suggest, and undo/redo.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 import { createDropZoneState, addFieldToZone, removeFieldFromZone } from './phz-drop-zones.js';
 import { autoPlaceField } from './phz-field-palette.js';

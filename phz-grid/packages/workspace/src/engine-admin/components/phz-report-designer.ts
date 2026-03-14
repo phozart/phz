@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Report Designer
+ * @phozart/engine-admin — Report Designer
  *
  * Stepped wizard: data product → columns → filters/sort → aggregation → drill-through → review.
  * Embeddable component.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { BIEngine } from '@phozart/phz-engine';
+import type { BIEngine } from '@phozart/engine';
 
 type ReportStep = 1 | 2 | 3 | 4 | 5 | 6;
 const STEP_LABELS: Record<ReportStep, string> = {

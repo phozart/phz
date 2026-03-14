@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Risk Summary Widget (N.3)
+ * @phozart/workspace — Risk Summary Widget (N.3)
  *
  * Pure functions for computing risk summaries from breaches
  * and generating visual breach indicator CSS.

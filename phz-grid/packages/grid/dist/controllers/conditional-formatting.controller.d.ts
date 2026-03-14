@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { RowData, RowId, ConditionalFormattingRule } from '@phozart/phz-core';
+import type { RowData, RowId, ConditionalFormattingRule } from '@phozart/core';
 import { type ConditionalFormattingEngine, type ComputedCellStyle } from '../features/conditional-formatting.js';
 import { type AnomalyResult } from '../features/anomaly-detector.js';
 export interface ConditionalFormattingHost extends ReactiveControllerHost {

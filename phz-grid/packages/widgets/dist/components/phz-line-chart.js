@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Line Chart
+ * @phozart/widgets — Line Chart
  *
  * SVG-based multi-series line chart with axes, gridlines, legend, and tooltips.
  * Supports time, linear, and category x-axis types.

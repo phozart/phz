@@ -1,15 +1,15 @@
 /**
- * @phozart/phz-engine — Report Configuration
+ * @phozart/engine — Report Configuration
  *
  * Reports define how data is displayed: columns, sorting, filtering,
  * aggregation, grouping, and conditional formatting.
  */
-import type { SortState, FilterState, AggregationConfig, ConditionalFormattingRule, PivotConfig } from '@phozart/phz-core';
-import type { JoinType } from '@phozart/phz-shared/types';
+import type { SortState, FilterState, AggregationConfig, ConditionalFormattingRule, PivotConfig } from '@phozart/core';
+import type { JoinType } from '@phozart/shared/types';
 import type { ReportId, DataProductId, ValidationResult } from './types.js';
 import type { ReportPresentation, GenerateDashboardConfig } from './report-presentation.js';
 import type { DrillThroughConfig } from './drill-through.js';
-import type { CriteriaConfig } from '@phozart/phz-core';
+import type { CriteriaConfig } from '@phozart/core';
 export interface ReportColumnConfig {
     field: string;
     header?: string;

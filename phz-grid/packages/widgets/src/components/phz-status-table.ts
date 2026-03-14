@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Status Table
+ * @phozart/widgets — Status Table
  *
  * Entity list with status indicators per KPI metric.
  */
@@ -7,8 +7,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import { computeStatus } from '@phozart/phz-engine';
+import type { KPIDefinition } from '@phozart/engine';
+import { computeStatus } from '@phozart/engine';
 import { resolveWidgetState } from '../widget-states.js';
 
 @customElement('phz-status-table')

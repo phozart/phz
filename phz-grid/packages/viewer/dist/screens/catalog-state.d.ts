@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-viewer — Catalog Screen State
+ * @phozart/viewer — Catalog Screen State
  *
  * Headless state machine for the artifact catalog. Manages search,
  * filtering by type, sorting, and paginated artifact listing.
  */
-import type { ArtifactType, VisibilityMeta } from '@phozart/phz-shared/artifacts';
+import type { ArtifactType, VisibilityMeta } from '@phozart/shared/artifacts';
 export type CatalogSortField = 'name' | 'type' | 'updatedAt' | 'visibility';
 export type CatalogSortDirection = 'asc' | 'desc';
 export interface CatalogSort {
@@ -32,6 +32,11 @@ export interface CatalogState {
     totalCount: number;
     /** Favorite artifact IDs. */
     favoriteIds: Set<string>;
+    /** Recently viewed artifact IDs with timestamps, max 10, newest first. */
+    recentItems: Array<{
+        id: string;
+        timestamp: number;
+    }>;
     /** Display mode for the catalog. */
     viewMode: 'grid' | 'list';
 }
@@ -77,4 +82,25 @@ export declare function getCurrentPage(state: CatalogState): VisibilityMeta[];
  * Get total number of pages.
  */
 export declare function getTotalPages(state: CatalogState): number;
+/**
+ * Add an artifact to the recent items list.
+ * Moves to front if already present. Caps at 10 items.
+ */
+export declare function addRecentItem(state: CatalogState, artifactId: string): CatalogState;
+/**
+ * Get recent artifacts resolved from the artifacts array.
+ * Returns artifacts matching recentItems IDs in recency order.
+ */
+export declare function getRecentArtifacts(state: CatalogState): VisibilityMeta[];
+/**
+ * Load persisted favorites from external storage.
+ */
+export declare function loadPersistedFavorites(state: CatalogState, ids: string[]): CatalogState;
+/**
+ * Load persisted recent items from external storage.
+ */
+export declare function loadPersistedRecents(state: CatalogState, items: Array<{
+    id: string;
+    timestamp: number;
+}>): CatalogState;
 //# sourceMappingURL=catalog-state.d.ts.map

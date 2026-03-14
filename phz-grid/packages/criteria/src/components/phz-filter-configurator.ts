@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Configurator
+ * @phozart/criteria — Filter Configurator
  *
  * Configure which filter definitions appear on a specific report/dashboard,
  * assign data columns, set per-binding overrides. Single-view (no tabs).
@@ -23,8 +23,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import type {
   FilterDefinition, FilterDefinitionId, FilterBinding, ArtefactId,
   FilterBarFieldConfig, CriteriaSelectionMode, SelectionFieldType,
-} from '@phozart/phz-core';
-import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 // Ensure sub-components are registered (side-effect imports)
@@ -614,7 +614,7 @@ export class PhzFilterConfigurator extends LitElement {
     if (!this._pickerChecked) {
       try {
         // @ts-ignore — optional side-effect import for feature detection
-        await import('@phozart/phz-workspace/engine-admin');
+        await import('@phozart/workspace/engine-admin');
         this._hasPicker = true;
       } catch {
         this._hasPicker = false;

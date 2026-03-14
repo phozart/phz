@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Base Types
+ * @phozart/engine — Base Types
  *
  * Branded ID types, config layers, and shared types for the BI engine.
  */
@@ -10,7 +10,7 @@ export function reportId(id) { return id; }
 export function dashboardId(id) { return id; }
 export function widgetId(id) { return id; }
 export function dataProductId(id) { return id; }
-import { artefactId } from '@phozart/phz-core';
+import { artefactId } from '@phozart/core';
 export function reportArtefactId(id) {
     return artefactId(`report:${id}`);
 }

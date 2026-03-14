@@ -11,7 +11,7 @@ import {
   getFilteredSubscriptions,
   countByStatus,
 } from '../coordination/subscriptions-tab-state.js';
-import type { Subscription } from '@phozart/phz-shared/types';
+import type { Subscription } from '@phozart/shared/types';
 
 // --- Test helpers ---
 

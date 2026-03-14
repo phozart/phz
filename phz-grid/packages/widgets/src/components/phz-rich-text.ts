@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Rich Text Widget
+ * @phozart/widgets — Rich Text Widget
  *
  * Displays formatted text content (plain, HTML, or Markdown).
  * Supports optional max height with truncation indicator.

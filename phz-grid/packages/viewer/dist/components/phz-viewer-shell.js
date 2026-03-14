@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-shell> Custom Element
+ * @phozart/viewer — <phz-viewer-shell> Custom Element
  *
  * Top-level shell component for the read-only viewer. Renders
  * a navigation bar, screen content area, and attention dropdown.

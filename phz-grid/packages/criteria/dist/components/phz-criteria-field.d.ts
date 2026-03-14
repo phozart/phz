@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-criteria — Criteria Field
+ * @phozart/criteria — Criteria Field
  *
  * Individual criterion renderer. Switch-renders based on fieldDef.type.
  */
 import { LitElement, nothing } from 'lit';
-import type { SelectionFieldDef, SelectionFieldOption } from '@phozart/phz-core';
+import type { SelectionFieldDef, SelectionFieldOption } from '@phozart/core';
 import './fields/phz-date-range-picker.js';
 import './fields/phz-numeric-range-input.js';
 import './fields/phz-tree-select.js';

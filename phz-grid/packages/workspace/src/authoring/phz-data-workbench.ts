@@ -28,8 +28,8 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import type { DataAdapter } from '../data-adapter.js';
-import type { FieldMetadata, DataSourceMeta } from '@phozart/phz-shared';
-import type { ZoneName } from '@phozart/phz-engine';
+import type { FieldMetadata, DataSourceMeta } from '@phozart/shared';
+import type { ZoneName } from '@phozart/engine';
 import { exploreQueryToDataQuery } from '../coordination/explorer-wiring.js';
 import {
   type WorkbenchState,

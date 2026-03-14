@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Extended State Types
+ * @phozart/core — Extended State Types
  *
  * DuckDB, AI, Collaboration, and Analytics state types.
  * Extracted from state.ts for modular imports.

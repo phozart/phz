@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-shell> (B-2.02)
+ * @phozart/editor — <phz-editor-shell> (B-2.02)
  *
  * Top-level Web Component for the editor shell. Manages screen
  * routing, toolbar, breadcrumbs, and delegates to child screen

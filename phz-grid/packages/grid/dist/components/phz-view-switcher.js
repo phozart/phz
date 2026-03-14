@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-view-switcher>
+ * @phozart/grid — <phz-view-switcher>
  *
  * Dropdown UI for switching between saved grid views.
  * Renders in the toolbar area. Shows active view name, dirty indicator,

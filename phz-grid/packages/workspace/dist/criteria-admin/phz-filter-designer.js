@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Designer
+ * @phozart/criteria — Filter Designer
  *
  * Single place for creating and managing reusable filter definitions,
  * filter rules, and shared presets. Three tabs: Definitions, Rules, Presets.
@@ -33,14 +33,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import { filterDefinitionId, resolveLabelTemplate } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+import { filterDefinitionId, resolveLabelTemplate } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 // Ensure sub-components are registered (side-effect imports)
 import './phz-rule-admin.js';
 import './phz-preset-admin.js';
 import { buildFilterPresetContextItems } from './phz-preset-admin.js';
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
 const FIELD_TYPES = [
     { value: 'single_select', label: 'Single Select', hint: 'Dropdown \u2014 users pick one option' },
     { value: 'multi_select', label: 'Multi Select', hint: 'Checkboxes \u2014 users pick multiple options' },

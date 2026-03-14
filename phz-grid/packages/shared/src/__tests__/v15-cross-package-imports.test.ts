@@ -8,7 +8,7 @@
 import { describe, it, expect } from 'vitest';
 
 // ========================================================================
-// 1. @phozart/phz-shared (root barrel)
+// 1. @phozart/shared (root barrel)
 // ========================================================================
 
 import {
@@ -130,10 +130,10 @@ import {
   clearFacet,
   acknowledgeItem,
   getVisibleItems,
-} from '@phozart/phz-shared';
+} from '@phozart/shared';
 
 // ========================================================================
-// 2. @phozart/phz-shared/types
+// 2. @phozart/shared/types
 // ========================================================================
 
 import {
@@ -194,10 +194,10 @@ import {
   type AttentionFacetValue,
   type AttentionFacet,
   type AttentionFilterState,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
-// 3. @phozart/phz-shared/adapters
+// 3. @phozart/shared/adapters
 // ========================================================================
 
 import {
@@ -213,10 +213,10 @@ import {
   type AttentionItem as AdapterAttentionItem,
   type UsageAnalyticsAdapter as AdapterUsageAnalyticsAdapter,
   type SubscriptionAdapter as AdapterSubscriptionAdapter,
-} from '@phozart/phz-shared/adapters';
+} from '@phozart/shared/adapters';
 
 // ========================================================================
-// 4. @phozart/phz-shared/design-system
+// 4. @phozart/shared/design-system
 // ========================================================================
 
 import {
@@ -229,10 +229,10 @@ import {
   generateAlertTokenCSS as DSGenerateAlertCSS,
   IMPACT_CHAIN_TOKENS as DSChainTokens,
   generateChainTokenCSS as DSGenerateChainCSS,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 // ========================================================================
-// 5. @phozart/phz-shared/artifacts
+// 5. @phozart/shared/artifacts
 // ========================================================================
 
 import {
@@ -247,10 +247,10 @@ import {
   type ArtifactMeta,
   type GridColumnConfig,
   gridArtifactToMeta,
-} from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/artifacts';
 
 // ========================================================================
-// 6. @phozart/phz-shared/coordination
+// 6. @phozart/shared/coordination
 // ========================================================================
 
 import {
@@ -325,7 +325,7 @@ import {
   loadMore,
   clearAllFilters as clearAllAttentionFilters,
   acknowledgeAllVisible,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // 7. Viewer state machines (barrel)
@@ -359,7 +359,7 @@ import {
   createAttentionDropdownState,
   type FilterBarState,
   createFilterBarState,
-} from '@phozart/phz-viewer';
+} from '@phozart/viewer';
 
 // ========================================================================
 // 8. Editor state machines (barrel)
@@ -404,7 +404,7 @@ import {
   createSharingFlowState,
   type AlertSubscriptionState,
   createAlertSubscriptionState,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 // ========================================================================
 // 9. Engine alert/subscription/analytics/api modules
@@ -439,7 +439,7 @@ import {
   markRead,
   markAllRead,
   getUnreadItems,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // ========================================================================
 // 10. Widget new modules (7A amendments)
@@ -480,14 +480,14 @@ import {
   // Decision tree variants
   DECISION_TREE_VARIANTS,
   type DecisionTreeVariantEntry,
-} from '@phozart/phz-widgets';
+} from '@phozart/widgets';
 
 // ========================================================================
 // Tests
 // ========================================================================
 
 describe('v15 Cross-Package Import Verification', () => {
-  describe('@phozart/phz-shared (root barrel)', () => {
+  describe('@phozart/shared (root barrel)', () => {
     it('exports adapter interfaces from root', () => {
       // Type-only imports do not have runtime values; verify function exports
       expect(createFilterContext).toBeDefined();
@@ -618,7 +618,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-shared/types', () => {
+  describe('@phozart/shared/types', () => {
     it('exports share-target utilities', () => {
       expect(isTeamTarget).toBeTypeOf('function');
       expect(isEveryoneTarget).toBeTypeOf('function');
@@ -667,7 +667,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-shared/adapters', () => {
+  describe('@phozart/shared/adapters', () => {
     it('all adapter modules are importable (type-only except functions)', () => {
       // These are all type-only imports; verifying they don't throw at import time
       // is sufficient. The import statement itself is the test.
@@ -675,7 +675,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-shared/design-system', () => {
+  describe('@phozart/shared/design-system', () => {
     it('exports design tokens', () => {
       expect(DESIGN_TOKENS).toBeDefined();
       expect(typeof DESIGN_TOKENS).toBe('object');
@@ -711,7 +711,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-shared/artifacts', () => {
+  describe('@phozart/shared/artifacts', () => {
     it('exports visibility functions', () => {
       expect(canTransition).toBeTypeOf('function');
       expect(duplicateWithVisibility).toBeTypeOf('function');
@@ -726,7 +726,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-shared/coordination', () => {
+  describe('@phozart/shared/coordination', () => {
     it('exports filter context utilities', () => {
       expect(resolveFieldForSource).toBeTypeOf('function');
       expect(createDebouncedFilterDispatch).toBeTypeOf('function');
@@ -828,7 +828,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-viewer (barrel)', () => {
+  describe('@phozart/viewer (barrel)', () => {
     it('exports shell state machine', () => {
       expect(createViewerShellState).toBeTypeOf('function');
       expect(viewerNavigateTo).toBeTypeOf('function');
@@ -874,7 +874,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-editor (barrel)', () => {
+  describe('@phozart/editor (barrel)', () => {
     it('exports shell state machine', () => {
       expect(createEditorShellState).toBeTypeOf('function');
       expect(editorNavigateTo).toBeTypeOf('function');
@@ -936,7 +936,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-engine alert/subscription/analytics/api modules', () => {
+  describe('@phozart/engine alert/subscription/analytics/api modules', () => {
     it('exports personal alert engine', () => {
       expect(evaluateAllAlerts).toBeTypeOf('function');
       expect(createInMemoryAlertContract).toBeTypeOf('function');
@@ -969,7 +969,7 @@ describe('v15 Cross-Package Import Verification', () => {
     });
   });
 
-  describe('@phozart/phz-widgets new modules (7A amendments)', () => {
+  describe('@phozart/widgets new modules (7A amendments)', () => {
     it('exports attention widget state (7A-D)', () => {
       expect(initialAttentionWidgetState).toBeTypeOf('function');
       expect(computePrioritySummary).toBeTypeOf('function');

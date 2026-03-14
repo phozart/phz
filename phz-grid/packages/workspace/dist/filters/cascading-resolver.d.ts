@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Cascading Filter Resolver (O.2)
+ * @phozart/workspace — Cascading Filter Resolver (O.2)
  *
  * Manages parent-child filter dependencies with topological ordering
  * and uses DataAdapter.getDistinctValues() for data-driven cascading.

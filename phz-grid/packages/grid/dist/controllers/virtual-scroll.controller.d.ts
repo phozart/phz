@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { RowData, AsyncDataSource, SortDirection } from '@phozart/phz-core';
+import type { RowData, AsyncDataSource, SortDirection } from '@phozart/core';
 import type { ScrollMode, Density } from '../types.js';
 export interface VirtualScrollHost extends ReactiveControllerHost, EventTarget {
     scrollMode: ScrollMode;

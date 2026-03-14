@@ -1,17 +1,17 @@
 # phz-grid API Reference
 
-Complete type reference for `@phozart/phz-workspace`. All types are sourced
+Complete type reference for `@phozart/workspace`. All types are sourced
 directly from the TypeScript source. Import paths are noted per section.
 
 > **v15 additions**: See [API-REFERENCE-V15.md](./API-REFERENCE-V15.md) for
-> new exports from `@phozart/phz-shared`, `@phozart/phz-viewer`,
-> `@phozart/phz-editor`, and new engine subsystems.
+> new exports from `@phozart/shared`, `@phozart/viewer`,
+> `@phozart/editor`, and new engine subsystems.
 
 ---
 
 ## 1. Data Layer
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### DataAdapter
 
@@ -178,7 +178,7 @@ interface FieldReference {
 
 ## 2. Widget System
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### WidgetManifest
 
@@ -325,7 +325,7 @@ interface RenderContext {
 
 ## 3. Layout
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### LayoutNode
 
@@ -393,7 +393,7 @@ Returns all `widgetId` strings referenced within a layout tree.
 
 ## 4. Templates
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### TemplateDefinition
 
@@ -470,7 +470,7 @@ function templateId(id: string): TemplateId;
 
 ## 5. Alerts
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### AlertRule
 
@@ -579,7 +579,7 @@ function breachId(id: string): BreachId;
 
 ## 6. Filters
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### FilterContextState
 
@@ -710,7 +710,7 @@ interface FilterContextManager {
 
 ## 7. Explorer
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### ExploreQuery
 
@@ -765,7 +765,7 @@ to a `DataAdapter`. Dimension fields become `groupBy`, measure fields become
 
 ## 8. Interaction
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### InteractionBus
 
@@ -816,7 +816,7 @@ interface RenderContext {
 
 ## 9. Time Intelligence
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### TimeIntelligenceConfig
 
@@ -877,7 +877,7 @@ Week calculations respect `weekStartDay`.
 
 ## 10. Formatting
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### UnitSpec
 
@@ -938,7 +938,7 @@ field), or a warning if the field is numeric but nullable.
 
 ## 11. Quality
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### DataQualityInfo
 
@@ -973,7 +973,7 @@ Returns `'unknown'` if `lastRefreshed` is not a valid date string.
 
 ## 12. History
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### ArtifactHistoryExtension
 
@@ -1021,7 +1021,7 @@ Compares two artifact objects by key. Returns:
 
 ## 13. I18n
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### I18nProvider
 
@@ -1067,7 +1067,7 @@ function generateRTLOverrides(): string;  // returns CSS string for :host([dir="
 
 ## 14. Viewer
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### ViewerContext
 
@@ -1086,7 +1086,7 @@ interface ViewerContext {
 
 ## 15. Connectors
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### RemoteDataConnector
 
@@ -1207,7 +1207,7 @@ function diagnoseCORSError(error: unknown, url: string): CORSDiagnosis;
 
 ## 16. Adapters
 
-**Import:** `@phozart/phz-workspace` (memory adapters) | `@phozart/phz-local` (fs adapter)
+**Import:** `@phozart/workspace` (memory adapters) | `@phozart/local` (fs adapter)
 
 ### WorkspaceAdapter
 
@@ -1254,7 +1254,7 @@ class MemoryWorkspaceAdapter implements WorkspaceAdapter, ArtifactHistoryExtensi
 
 **Usage:**
 ```typescript
-import { MemoryWorkspaceAdapter } from '@phozart/phz-workspace';
+import { MemoryWorkspaceAdapter } from '@phozart/workspace';
 const adapter = new MemoryWorkspaceAdapter();
 await adapter.initialize();
 ```
@@ -1280,7 +1280,7 @@ interface FetchAdapterOptions {
 Filesystem implementation for Node.js. Implements `WorkspaceAdapter` + `ArtifactHistoryExtension`.
 
 ```typescript
-import { FsWorkspaceAdapter } from '@phozart/phz-local';
+import { FsWorkspaceAdapter } from '@phozart/local';
 
 class FsWorkspaceAdapter implements WorkspaceAdapter, ArtifactHistoryExtension {
   constructor(dataDir: string);
@@ -1297,7 +1297,7 @@ In-memory `DataAdapter` for testing and small datasets. Supports filter, sort,
 groupBy, aggregations, and pagination over plain object arrays.
 
 ```typescript
-import { MemoryDataAdapter } from '@phozart/phz-workspace';
+import { MemoryDataAdapter } from '@phozart/workspace';
 
 class MemoryDataAdapter implements DataAdapter {
   addSource(id: string, data: Record<string, unknown>[]): void;
@@ -1317,7 +1317,7 @@ Cardinality thresholds: `distinctCount/total <= 0.5 = low`, `<= 0.75 = medium`,
 
 ## 17. Coordination
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### QueryCoordinator
 
@@ -1372,7 +1372,7 @@ interface CoordinatorResult {
 
 ## Artifact and Placement Types
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### ArtifactType
 
@@ -1445,7 +1445,7 @@ function createPlacement(input: CreatePlacementInput): PlacementRecord;
 
 ## Widget Registry
 
-**Import:** `@phozart/phz-workspace`
+**Import:** `@phozart/workspace`
 
 ### WidgetRegistry
 

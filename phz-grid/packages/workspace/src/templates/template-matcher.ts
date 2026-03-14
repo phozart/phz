@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Template Matcher
+ * @phozart/workspace — Template Matcher
  *
  * Scores TemplateDefinition objects against a FieldProfile by evaluating
  * match rules. Returns sorted ScoredTemplate[] (best match first).

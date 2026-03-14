@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — KPI Alerting Engine
+ * @phozart/engine — KPI Alerting Engine
  *
  * Register alert rules against KPIs and evaluate them against current + historical data.
  * Alert types: threshold_breach, anomaly_detected, trend_reversal, consecutive_decline.

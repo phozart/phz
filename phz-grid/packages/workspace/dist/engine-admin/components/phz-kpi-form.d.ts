@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — KPI Form
+ * @phozart/engine-admin — KPI Form
  *
  * Slide-over form for creating/editing KPIs.
  * Supports simple thresholds and custom threshold bands with dynamic sources.
  */
 import { LitElement } from 'lit';
-import type { ParameterDef } from '@phozart/phz-engine';
-import type { KPIDefinition, MetricDef } from '@phozart/phz-engine';
+import type { ParameterDef } from '@phozart/engine';
+import type { KPIDefinition, MetricDef } from '@phozart/engine';
 export declare class PhzKpiForm extends LitElement {
     static styles: import("lit").CSSResult[];
     kpi?: KPIDefinition;

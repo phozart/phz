@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — ArtifactVisibility lifecycle (A-1.04)
+ * @phozart/shared — ArtifactVisibility lifecycle (A-1.04)
  *
  * Manages personal/shared/published visibility states for artifacts.
  * Supports role-based sharing, ShareTarget-aware filtering, and ViewerContext.

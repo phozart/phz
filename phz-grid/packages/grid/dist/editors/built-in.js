@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-grid — Built-in Cell Editors
+ * @phozart/grid — Built-in Cell Editors
  */
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';

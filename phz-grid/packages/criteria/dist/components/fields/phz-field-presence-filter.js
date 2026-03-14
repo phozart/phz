@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Field Presence Filter
+ * @phozart/criteria — Field Presence Filter
  *
  * Compact pill-based filter for specifying whether fields must have a value,
  * must be empty, or should not be filtered. Each pill cycles through three states:

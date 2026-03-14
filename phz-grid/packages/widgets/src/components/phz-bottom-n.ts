@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Bottom-N
+ * @phozart/widgets — Bottom-N
  *
  * Worst/best performers ranked list with status badges.
  */
@@ -7,8 +7,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import { computeStatus, STATUS_COLORS } from '@phozart/phz-engine';
+import type { KPIDefinition } from '@phozart/engine';
+import { computeStatus, STATUS_COLORS } from '@phozart/engine';
 import { resolveWidgetState } from '../widget-states.js';
 
 @customElement('phz-bottom-n')

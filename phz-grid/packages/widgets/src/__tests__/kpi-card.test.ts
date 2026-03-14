@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import { kpiId, computeStatus, computeDelta } from '@phozart/phz-engine';
+import type { KPIDefinition } from '@phozart/engine';
+import { kpiId, computeStatus, computeDelta } from '@phozart/engine';
 
 // Test the logic used by the KPI card (no DOM in vitest)
 

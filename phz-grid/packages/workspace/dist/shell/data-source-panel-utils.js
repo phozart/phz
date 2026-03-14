@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Data Source Panel Utils (L.16)
+ * @phozart/workspace — Data Source Panel Utils (L.16)
  *
  * Types and utility functions for the data source panel UI.
  */

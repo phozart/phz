@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Headless BI Engine
+ * @phozart/engine — Headless BI Engine
  *
  * Pure computation: KPIs, metrics, dashboards, reports, aggregation, pivot, drill-through.
  * No DOM dependencies.
@@ -15,23 +15,29 @@ export { createMetricCatalog } from './metric.js';
 export type { MetricDef, MetricFormula, SimpleMetricFormula, ConditionalMetricFormula, CompositeMetricFormula, MetricFormat, MetricCatalog, } from './metric.js';
 export { computeAggregation, computeAggregations, computeGroupAggregations } from './aggregation.js';
 export type { AggregationResult } from './aggregation.js';
-export type { AggregationFunction, AggregationConfig, FilterOperator, PivotConfig } from '@phozart/phz-core';
+export { createIncrementalAggregator } from './incremental-aggregation.js';
+export type { IncrementalAggregator } from './incremental-aggregation.js';
+export type { AggregationFunction, AggregationConfig, FilterOperator, PivotConfig, PivotValueField, ShowValuesAs } from '@phozart/core';
 export { createReportConfigStore } from './report.js';
 export type { ReportConfig, ReportColumnConfig, ReportConfigStore, ReportAdditionalSource } from './report.js';
 export type { ReportPresentation, TableSettings, ColumnFormatting, ColumnColorThreshold, NumberFormat, ExportSettings as ReportExportSettings, GenerateDashboardConfig, } from './report-presentation.js';
 export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from './report-presentation.js';
 export { validateWidget } from './widget.js';
-export type { WidgetType, WidgetPosition, WidgetSize, BaseWidgetConfig, WidgetConfig, WidgetPlacement, KPICardWidgetConfig, ScorecardWidgetConfig, BarChartWidgetConfig, TrendLineWidgetConfig, BottomNWidgetConfig, PivotTableWidgetConfig, DataTableWidgetConfig, StatusTableWidgetConfig, DrillLinkWidgetConfig, CustomWidgetConfig, VisibilityOperator, VisibilityExpression, WidgetVisibilityCondition, } from './widget.js';
+export type { WidgetType, WidgetPosition, WidgetSize, BaseWidgetConfig, WidgetConfig, WidgetPlacement, KPICardWidgetConfig, ScorecardWidgetConfig, BarChartWidgetConfig, TrendLineWidgetConfig, BottomNWidgetConfig, PivotTableWidgetConfig, DataTableWidgetConfig, StatusTableWidgetConfig, DrillLinkWidgetConfig, SlicerWidgetConfig, CustomWidgetConfig, VisibilityOperator, VisibilityExpression, WidgetVisibilityCondition, } from './widget.js';
 export { resolveAutoTooltip, evaluateTooltipCondition, computeTooltipDelta } from './chart-tooltip.js';
 export type { ChartTooltipConfig, AutoTooltipConfig, TooltipField, TooltipCondition, TooltipDeltaResult, ChartEncodingInput, } from './chart-tooltip.js';
 export { createDashboardConfigStore, upgradeDashboardConfig } from './dashboard.js';
 export type { DashboardConfig, DashboardLayout, DashboardCrossFilterConfig, ResolvedLayout, DashboardConfigStore, } from './dashboard.js';
 export { deepMerge, mergeReportConfigs, mergeDashboardConfigs, createConfigLayerManager } from './config-merge.js';
 export type { UserViewConfig, ConfigLayerDef, ConfigLayerManager } from './config-merge.js';
-export { computePivot, pivotResultToFlatRows } from './pivot.js';
-export type { PivotResult } from './pivot.js';
+export { computePivot, pivotResultToFlatRows, applyShowValuesAs } from './pivot.js';
+export type { PivotResult, PivotSubtotal } from './pivot.js';
+export { groupDate, addDateBuckets, dateGroupingSQL } from './date-grouping.js';
+export type { DateGranularity } from './date-grouping.js';
 export { projectChartData, projectAggregatedChartData, projectPieData } from './chart-projection.js';
 export type { ChartDataSeries, ChartDataPoint, PieSlice } from './chart-projection.js';
+export { suggestChartFromData, gridDataToChart, pivotToChart, createQuickDashboard } from './grid-visualization.js';
+export type { SuggestedVisualization, GridVisualizationConfig, ChartVisualizationResult, QuickDashboardField, QuickDashboardOptions } from './grid-visualization.js';
 export { resolveDrillFilter, resolveDrillAction } from './drill-through.js';
 export type { DrillThroughAction, DrillThroughConfig, DrillContext, DrillSource, PivotDrillSource, ChartDrillSource, KPIDrillSource, ScorecardDrillSource, GridRowDrillSource, } from './drill-through.js';
 export { generateDateHierarchy, createCustomHierarchy, validateHierarchy } from './hierarchy.js';
@@ -43,7 +49,7 @@ export type { ResolvedWidgetProps, KPIScoreProvider, WidgetResolverContext } fro
 export { createDefaultScoreProvider } from './score-provider.js';
 export type { ScoreProviderConfig } from './score-provider.js';
 export { SMART_DEFAULTS } from './widget-config-enhanced.js';
-export type { EnhancedWidgetConfig, WidgetDataConfig, WidgetAppearanceConfig, WidgetBehaviourConfig, DataBinding, ChartBinding, KpiBinding, ScorecardBinding, StatusTableBinding, DataTableBinding, DrillLinkBinding, FieldRef, MeasureRef, FieldFormat, WidgetFilterRule, Threshold, ContainerAppearance, TitleBarAppearance, ChartAppearance, KpiAppearance, ScorecardAppearance, BottomNAppearance, ClickAction, FilterOperator as EnhancedFilterOperator, } from './widget-config-enhanced.js';
+export type { EnhancedWidgetConfig, WidgetDataConfig, WidgetAppearanceConfig, WidgetBehaviourConfig, DataBinding, ChartBinding, KpiBinding, ScorecardBinding, StatusTableBinding, DataTableBinding, DrillLinkBinding, SlicerBinding, FieldRef, MeasureRef, FieldFormat, WidgetFilterRule, Threshold, ContainerAppearance, TitleBarAppearance, ChartAppearance, KpiAppearance, ScorecardAppearance, BottomNAppearance, ClickAction, FilterOperator as EnhancedFilterOperator, } from './widget-config-enhanced.js';
 export { createEnhancedDashboardConfig, serializeDashboard, isEnhancedDashboard, DEFAULT_DASHBOARD_THEME } from './dashboard-enhanced.js';
 export type { EnhancedDashboardConfig, DashboardWidgetPlacement, GlobalFilter, GlobalFilterType, DashboardTheme, DashboardSerializationFormat, } from './dashboard-enhanced.js';
 export { processWidgetData } from './widget-data-processor.js';
@@ -85,6 +91,8 @@ export { validateExpression } from './expression-validator.js';
 export type { ExpressionError, ExpressionValidationContext } from './expression-validator.js';
 export { parseFormula, formatFormula } from './formula-parser.js';
 export type { ParseResult } from './formula-parser.js';
+export { expressionToSQL, FUNCTION_SQL_MAP } from './expression-sql-transpiler.js';
+export { PhzConfigError, PhzExpressionError } from './errors.js';
 export { createDashboardDataModelStore } from './dashboard-data-model.js';
 export type { DashboardDataModelStore } from './dashboard-data-model.js';
 export { resolveThresholdValue, computeStatusFromBands } from './status.js';
@@ -94,6 +102,8 @@ export { createFilterAdapter, applyArtefactCriteria, globalFiltersToCriteriaBind
 export type { FilterAdapter } from './filter-adapter.js';
 export { createJSComputeBackend, JSComputeBackend } from './compute-backend.js';
 export type { ComputeBackend, CalculatedFieldInput, ComputeFilterInput } from './compute-backend.js';
+export { WorkerComputeBackend } from './workers/worker-compute-backend.js';
+export type { WorkerRequest, WorkerResponse } from './workers/compute-worker-protocol.js';
 export { EngineMetrics } from './engine-metrics.js';
 export type { OperationCategory, OperationStats, MetricsSnapshot, TimerHandle } from './engine-metrics.js';
 export { MetricsController } from './metrics-controller.js';
@@ -118,4 +128,10 @@ export * from './api/index.js';
 export { computeLinearRegression, computeMovingAverage, computeExponentialRegression, resolveTargetForCategory, alertRuleToThresholdBands, } from './chart-overlays.js';
 export type { ChartOverlayType, DashStyle, ChartOverlay, ReferenceLine, TrendLine, ChartThresholdBand, AverageLine, TargetLine, LinearRegressionResult, ExponentialRegressionResult, } from './chart-overlays.js';
 export * from './attention/index.js';
+export { applyChartDefaults, validateChartSpec, CHART_SPEC_DEFAULTS } from './chart-spec.js';
+export type { ChartSpec, ChartDataSpec, ChartSeriesSpec, SeriesType, EncodingChannel, FieldDataType, EncodingAggregate, TimeUnit, ScaleOverride, BarMarkConfig, BarOrientation, LineMarkConfig, CurveType, PointMarkConfig, AreaMarkConfig, DataTransform, FilterTransform, SortTransform, AggregateTransform, StackTransform, BinTransform, TimeUnitTransform, NormalizeTransform, CalculateTransform, ChartAxisSpec, ChartAnnotationSpec, ReferenceLineAnnotation, ThresholdBandAnnotation, TargetLineAnnotation, TextAnnotation, AnnotationType, ChartLegendSpec, ChartTooltipSpec, TooltipMode, ChartInteractionSpec, BrushDirection, ChartAppearanceSpec, ChartRenderer as ChartRendererType, } from './chart-spec.js';
+export { applyTransforms } from './chart-transforms.js';
+export { applyFilter, applySort, applyAggregate, applyStack, applyTimeUnit, applyBin, applyNormalize, applyCalculate, } from './chart-transforms.js';
+export { recommendChartSpec } from './chart-recommend.js';
+export type { RecommendOptions } from './chart-recommend.js';
 //# sourceMappingURL=index.d.ts.map

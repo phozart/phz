@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-ai",
+  "name": "@phozart/ai",
   "version": "0.1.0",
   "description": "AI toolkit — schema-as-contract, NL query for phz-grid",
   "type": "module",
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/ai#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0"
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0"
   }
 }

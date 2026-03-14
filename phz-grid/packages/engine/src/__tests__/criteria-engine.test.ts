@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createCriteriaEngine, migrateFromCriteriaConfig } from '../criteria/criteria-engine.js';
 import { createMemoryStorageAdapter } from '../criteria/filter-state.js';
-import type { FilterDefinition, FilterBinding, CriteriaConfig, ArtefactCriteria } from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterBinding, CriteriaConfig, ArtefactCriteria } from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 
 const ART_A = artefactId('report-1');
 

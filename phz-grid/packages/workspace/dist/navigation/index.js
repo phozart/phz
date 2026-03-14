@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Navigation Module (V)
+ * @phozart/workspace — Navigation Module (V)
  */
 // NavigationLink (V.1)
 export { isNavigationLink, createNavigationLink, resolveNavigationFilters, detectCircularLinks, } from './navigation-link.js';

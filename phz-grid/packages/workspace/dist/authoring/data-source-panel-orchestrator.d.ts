@@ -7,7 +7,7 @@
  *
  * The Lit component calls these functions, passing its setState callback.
  */
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 import { type DataSourceState } from './data-source-state.js';
 export type { DataSourceState } from './data-source-state.js';
 type SetState = (updater: (state: DataSourceState) => DataSourceState) => void;

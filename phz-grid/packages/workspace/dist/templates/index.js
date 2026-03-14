@@ -6,4 +6,5 @@ export { buildSuggestionPipeline } from './phz-suggestion-flow.js';
 export { resolveBindings, autoBindFields } from './template-bindings.js';
 export { validateTemplate } from './template-validator.js';
 // ValidationResult re-exported from registry/config-schemas (same shape, single source of truth)
+export { createTemplateGalleryState, setSearchQuery, selectCategory, selectTemplate, toggleFavorite, getFilteredTemplates, getGroupedTemplates, } from './template-gallery-state.js';
 //# sourceMappingURL=index.js.map

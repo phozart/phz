@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-workspace — Hierarchy Editor State
+ * @phozart/workspace — Hierarchy Editor State
  *
  * CRUD state machine for hierarchy definitions in the authoring environment.
  * Includes auto-detection of date fields from data source schema.
  *
  * Pure functions only — no side effects, no DOM.
  */
-import { generateDateHierarchy } from '@phozart/phz-engine';
+import { generateDateHierarchy } from '@phozart/engine';
 // ========================================================================
 // Factory
 // ========================================================================

@@ -1,5 +1,5 @@
 import { type RefObject } from 'react';
-import type { GridApi, EditState, CellPosition, RowId } from '@phozart/phz-core';
+import type { GridApi, EditState, CellPosition, RowId } from '@phozart/core';
 export declare function useGridEdit(gridRef: RefObject<GridApi | null>): {
     editState: EditState | null;
     startEdit: (position: CellPosition) => void | undefined;

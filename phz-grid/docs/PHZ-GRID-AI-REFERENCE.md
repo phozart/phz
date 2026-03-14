@@ -1,6 +1,6 @@
 # phz-grid AI Reference
 
-Instructions for AI assistants building applications with @phozart/phz-grid packages.
+Instructions for AI assistants building applications with @phozart/grid packages.
 
 ## CRITICAL RULES
 
@@ -12,7 +12,7 @@ Instructions for AI assistants building applications with @phozart/phz-grid pack
 6. **`grid.getData().length`** for row count — `getRowCount()` does not exist.
 7. **Event handlers** receive unwrapped detail objects, NOT CustomEvent.
 8. **`<phz-grid-admin open>` renders NOTHING if `open` is falsy** — the entire component returns empty HTML when `open={false}` (the default). You MUST pass `open={true}` to see anything. This is silent — no error, no placeholder.
-9. **Side-effect imports register custom elements** — `import '@phozart/phz-workspace'` alone does NOT register any Lit components. You need sub-path imports: `import '@phozart/phz-workspace/grid-admin'`, `import '@phozart/phz-workspace/engine-admin'`, etc. The React wrappers handle this automatically.
+9. **Side-effect imports register custom elements** — `import '@phozart/workspace'` alone does NOT register any Lit components. You need sub-path imports: `import '@phozart/workspace/grid-admin'`, `import '@phozart/workspace/engine-admin'`, etc. The React wrappers handle this automatically.
 10. **Shell components use slots for content** — `<phz-workspace-shell>`, `<phz-viewer-shell>`, `<phz-editor-shell>` render navigation chrome only. You MUST provide children with `slot="panelName"` attributes. Without slotted children, the content area is empty.
 11. **Object props must be set imperatively** — React cannot pass JS objects as HTML attributes. Use refs or `useLayoutEffect` to set `adapter`, `engine`, `config`, `viewerContext`, etc.
 
@@ -20,40 +20,40 @@ Instructions for AI assistants building applications with @phozart/phz-grid pack
 
 ```typescript
 // React components + hooks (subpath exports)
-import { PhzGrid, useGridOrchestrator } from '@phozart/phz-react/grid';
-import { PhzSelectionCriteria } from '@phozart/phz-react/criteria';
-import { PhzGridAdmin } from '@phozart/phz-react/admin';
+import { PhzGrid, useGridOrchestrator } from '@phozart/react/grid';
+import { PhzSelectionCriteria } from '@phozart/react/criteria';
+import { PhzGridAdmin } from '@phozart/react/admin';
 
 // Types
-import type { ColumnDefinition, CriteriaConfig } from '@phozart/phz-core';
+import type { ColumnDefinition, CriteriaConfig } from '@phozart/core';
 
 // Headless grid (no UI)
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 // BI engine
-import { createBIEngine, computeAggregation, computeAggregations } from '@phozart/phz-engine';
+import { createBIEngine, computeAggregation, computeAggregations } from '@phozart/engine';
 
 // AI toolkit (no API key needed)
-import { analyzeSchema, suggestWidgets, suggestLayout, generateDashboardConfig } from '@phozart/phz-ai';
+import { analyzeSchema, suggestWidgets, suggestLayout, generateDashboardConfig } from '@phozart/ai';
 
 // Shared infrastructure (adapters, types, design system)
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
-import type { SingleValueAlertConfig, CellRendererRegistry } from '@phozart/phz-shared/types';
-import { DESIGN_TOKENS } from '@phozart/phz-shared/design-system';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
+import type { SingleValueAlertConfig, CellRendererRegistry } from '@phozart/shared/types';
+import { DESIGN_TOKENS } from '@phozart/shared/design-system';
 
 // Viewer shell (read-only)
-import { createViewerShellState, navigateTo } from '@phozart/phz-viewer';
+import { createViewerShellState, navigateTo } from '@phozart/viewer';
 
 // Editor shell (authoring)
-import { createEditorShellState, toggleEditMode } from '@phozart/phz-editor';
+import { createEditorShellState, toggleEditMode } from '@phozart/editor';
 
 // Web Components (side-effect imports to register custom elements)
-import '@phozart/phz-grid';
-import '@phozart/phz-widgets';
-import '@phozart/phz-criteria';
-import '@phozart/phz-grid-admin';
-import '@phozart/phz-viewer';
-import '@phozart/phz-editor';
+import '@phozart/grid';
+import '@phozart/widgets';
+import '@phozart/criteria';
+import '@phozart/grid-admin';
+import '@phozart/viewer';
+import '@phozart/editor';
 ```
 
 ## Next.js Config (next.config.ts)
@@ -74,7 +74,7 @@ For local monorepo development, add webpack aliases pointing to `dist/index.js` 
 ```typescript
 'use client';
 import dynamic from 'next/dynamic';
-const PhzGrid = dynamic(() => import('@phozart/phz-react/grid').then(m => m.PhzGrid), { ssr: false });
+const PhzGrid = dynamic(() => import('@phozart/react/grid').then(m => m.PhzGrid), { ssr: false });
 
 export default function Page() {
   const data = [{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }];
@@ -91,10 +91,10 @@ export default function Page() {
 ```typescript
 'use client';
 import { useState } from 'react';
-import { PhzGrid, useGridOrchestrator } from '@phozart/phz-react/grid';
-import { PhzSelectionCriteria } from '@phozart/phz-react/criteria';
-import { PhzGridAdmin } from '@phozart/phz-react/admin';
-import type { ColumnDefinition, CriteriaConfig } from '@phozart/phz-core';
+import { PhzGrid, useGridOrchestrator } from '@phozart/react/grid';
+import { PhzSelectionCriteria } from '@phozart/react/criteria';
+import { PhzGridAdmin } from '@phozart/react/admin';
+import type { ColumnDefinition, CriteriaConfig } from '@phozart/core';
 
 const COLUMNS: ColumnDefinition[] = [
   { field: 'id', header: 'ID', width: 60, type: 'number', sortable: true, filterable: true },
@@ -158,7 +158,7 @@ import dynamic from 'next/dynamic';
 
 function widgetFactory(tag: string): FC<Record<string, any>> {
   function Widget(props: Record<string, any>) {
-    useEffect(() => { import('@phozart/phz-widgets'); }, []);
+    useEffect(() => { import('@phozart/widgets'); }, []);
     return React.createElement(tag, props);
   }
   Widget.displayName = tag;
@@ -174,7 +174,7 @@ export const DynamicGauge    = dynamic(() => Promise.resolve(widgetFactory('phz-
 ## Headless Grid API (createGrid)
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({ data, columns });
 grid.getData()                       // All rows (with __id)
@@ -194,7 +194,7 @@ grid.on('sort:change', handler)      // Event listener
 ## BI Engine — Aggregation
 
 ```typescript
-import { computeAggregations } from '@phozart/phz-engine';
+import { computeAggregations } from '@phozart/engine';
 
 const result = computeAggregations(data, {
   fields: [{ field: 'revenue', functions: ['sum', 'avg', 'min', 'max'] }],
@@ -206,7 +206,7 @@ result.fieldResults.revenue.avg   // Average
 ## AI Toolkit — Schema Analysis
 
 ```typescript
-import { analyzeSchema, suggestWidgets, suggestLayout, generateDashboardConfig } from '@phozart/phz-ai';
+import { analyzeSchema, suggestWidgets, suggestLayout, generateDashboardConfig } from '@phozart/ai';
 
 const analysis = analyzeSchema([
   { name: 'salary', type: 'number' as const },
@@ -223,13 +223,13 @@ const dashboard = generateDashboardConfig({
 });
 ```
 
-## Shared Infrastructure (`@phozart/phz-shared`)
+## Shared Infrastructure (`@phozart/shared`)
 
 Foundation package with adapter interfaces, design system, artifact types, and runtime coordination. No Lit or DOM dependencies.
 
 ```typescript
 // Adapter SPI
-import type { DataAdapter, DataQuery, DataResult, ViewerContext } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, DataQuery, DataResult, ViewerContext } from '@phozart/shared/adapters';
 
 // Shared types (alerts, subscriptions, widgets, micro-widgets)
 import type {
@@ -238,27 +238,27 @@ import type {
   ImpactChainNode, ChainLayout, DecisionTreeVariantConfig,
   AttentionFacet, AttentionFilterState, FilterableAttentionItem,
   PersonalAlert, Subscription, MessagePool,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // Artifact metadata
-import type { ArtifactVisibility, DefaultPresentation, GridArtifact } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility, DefaultPresentation, GridArtifact } from '@phozart/shared/artifacts';
 
 // Design tokens
-import { DESIGN_TOKENS, ALERT_WIDGET_TOKENS, IMPACT_CHAIN_TOKENS } from '@phozart/phz-shared/design-system';
+import { DESIGN_TOKENS, ALERT_WIDGET_TOKENS, IMPACT_CHAIN_TOKENS } from '@phozart/shared/design-system';
 
 // Runtime coordination
-import { createFilterContext, createInteractionBus } from '@phozart/phz-shared/coordination';
-import type { FilterContextManager, InteractionBus, DashboardDataPipeline } from '@phozart/phz-shared/coordination';
+import { createFilterContext, createInteractionBus } from '@phozart/shared/coordination';
+import type { FilterContextManager, InteractionBus, DashboardDataPipeline } from '@phozart/shared/coordination';
 
 // CellRendererRegistry — register micro-widget renderers at mount time
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
+import { createCellRendererRegistry } from '@phozart/shared/types';
 const registry = createCellRendererRegistry();
 registry.register('trend-line', mySparklineRenderer);
 ```
 
-Sub-path imports (`@phozart/phz-shared/adapters`, `./types`, `./artifacts`, `./design-system`, `./coordination`) are preferred for tree-shaking. The barrel `@phozart/phz-shared` re-exports everything.
+Sub-path imports (`@phozart/shared/adapters`, `./types`, `./artifacts`, `./design-system`, `./coordination`) are preferred for tree-shaking. The barrel `@phozart/shared` re-exports everything.
 
-## Viewer Shell (`@phozart/phz-viewer`)
+## Viewer Shell (`@phozart/viewer`)
 
 Read-only consumption shell for analysts. Catalog, dashboards, reports, explorer, attention, filter bar.
 
@@ -266,19 +266,19 @@ Read-only consumption shell for analysts. Catalog, dashboards, reports, explorer
 import {
   createViewerShellState, createViewerShellConfig,
   navigateTo, setViewerContext, setMobileLayout,
-} from '@phozart/phz-viewer';
+} from '@phozart/viewer';
 
 // Screen state machines
-import { createCatalogState, createDashboardViewState, createReportViewState } from '@phozart/phz-viewer';
+import { createCatalogState, createDashboardViewState, createReportViewState } from '@phozart/viewer';
 
 // Lit components (side-effect import registers custom elements)
-import '@phozart/phz-viewer';
+import '@phozart/viewer';
 // <phz-viewer-shell>, <phz-viewer-catalog>, <phz-viewer-dashboard>,
 // <phz-viewer-report>, <phz-viewer-explorer>, <phz-attention-dropdown>,
 // <phz-filter-bar>, <phz-viewer-error>, <phz-viewer-empty>
 ```
 
-## Editor Shell (`@phozart/phz-editor`)
+## Editor Shell (`@phozart/editor`)
 
 Authoring shell for authors. Dashboard/report editing, explorer, measure palette, config panel, sharing, alerts.
 
@@ -286,7 +286,7 @@ Authoring shell for authors. Dashboard/report editing, explorer, measure palette
 import {
   createEditorShellState, createEditorShellConfig,
   navigateTo, toggleEditMode, markUnsavedChanges, pushUndo, undo, redo,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 // Screen and authoring state machines
 import {
@@ -295,10 +295,10 @@ import {
   createExplorerState, addDimension, addMeasure,
   createMeasurePaletteState, createConfigPanelState,
   createSharingFlowState, createAlertSubscriptionState,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 // Lit components
-import '@phozart/phz-editor';
+import '@phozart/editor';
 // <phz-editor-shell>, <phz-editor-catalog>, <phz-editor-dashboard>,
 // <phz-editor-report>, <phz-editor-explorer>, <phz-measure-palette>,
 // <phz-config-panel>, <phz-sharing-flow>, <phz-alert-subscription>
@@ -308,21 +308,21 @@ import '@phozart/phz-editor';
 
 ```typescript
 // Personal alert evaluation
-import { evaluateAlert, evaluateAlertBatch } from '@phozart/phz-engine';
-import { createInMemoryAlertContract } from '@phozart/phz-engine';
-import type { AlertEvaluationResult, AlertEvaluationContract } from '@phozart/phz-engine';
+import { evaluateAlert, evaluateAlertBatch } from '@phozart/engine';
+import { createInMemoryAlertContract } from '@phozart/engine';
+import type { AlertEvaluationResult, AlertEvaluationContract } from '@phozart/engine';
 
 // Subscription engine
-import { createSubscriptionEngineState, getNextScheduledRun, isDueForExecution } from '@phozart/phz-engine';
+import { createSubscriptionEngineState, getNextScheduledRun, isDueForExecution } from '@phozart/engine';
 
 // Usage analytics
-import { createUsageCollector, trackEvent, flush } from '@phozart/phz-engine';
+import { createUsageCollector, trackEvent, flush } from '@phozart/engine';
 
 // OpenAPI generator
-import { generateOpenAPISpec } from '@phozart/phz-engine';
+import { generateOpenAPISpec } from '@phozart/engine';
 
 // Attention system
-import { createAttentionSystemState, addItems, markRead, markAllRead } from '@phozart/phz-engine';
+import { createAttentionSystemState, addItems, markRead, markAllRead } from '@phozart/engine';
 ```
 
 ## Three-Shell Deployment Patterns
@@ -342,7 +342,7 @@ All three shells (`<phz-workspace>`, `<phz-viewer-shell>`, `<phz-editor-shell>`)
 
 ```typescript
 // 1. Import to register custom elements
-useEffect(() => { import('@phozart/phz-workspace/all'); }, []);
+useEffect(() => { import('@phozart/workspace/all'); }, []);
 
 // 2. Set complex props imperatively (React can't pass objects as attributes)
 useLayoutEffect(() => {
@@ -413,8 +413,8 @@ See INTEGRATION-GUIDE.md "Three-Shell Setup Guide" section for full working exam
 import { useState, useRef, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 
-const PhzGrid = dynamic(() => import('@phozart/phz-react/grid').then(m => m.PhzGrid), { ssr: false });
-const PhzGridAdmin = dynamic(() => import('@phozart/phz-react/admin').then(m => m.PhzGridAdmin), { ssr: false });
+const PhzGrid = dynamic(() => import('@phozart/react/grid').then(m => m.PhzGrid), { ssr: false });
+const PhzGridAdmin = dynamic(() => import('@phozart/react/admin').then(m => m.PhzGridAdmin), { ssr: false });
 
 const COLUMNS = [
   { field: 'id', header: 'ID', type: 'number' as const, width: 60, sortable: true },
@@ -464,13 +464,13 @@ export default function EngineAdminPage() {
 
   // 1. Register custom elements via side-effect import
   useEffect(() => {
-    import('@phozart/phz-workspace/engine-admin');
+    import('@phozart/workspace/engine-admin');
   }, []);
 
   // 2. Set object prop imperatively (React can't pass objects as attributes)
   useLayoutEffect(() => {
     if (!ref.current) return;
-    import('@phozart/phz-engine').then(({ createBIEngine }) => {
+    import('@phozart/engine').then(({ createBIEngine }) => {
       (ref.current as any).engine = createBIEngine();
     });
   }, []);
@@ -492,9 +492,9 @@ export default function WorkspacePage() {
 
   useEffect(() => {
     // MUST import sub-paths to register child custom elements
-    import('@phozart/phz-workspace/grid-admin');
-    import('@phozart/phz-workspace/engine-admin');
-    import('@phozart/phz-workspace/grid-creator');
+    import('@phozart/workspace/grid-admin');
+    import('@phozart/workspace/engine-admin');
+    import('@phozart/workspace/grid-creator');
   }, []);
 
   useLayoutEffect(() => {
@@ -520,7 +520,7 @@ export default function WorkspacePage() {
 | Symptom | Cause | Fix |
 |---------|-------|-----|
 | Empty admin panel | `open` is `false` or not set | Pass `open={true}` |
-| Element renders as blank `<div>` | Custom element not registered | Import sub-path: `import '@phozart/phz-workspace/grid-admin'` |
+| Element renders as blank `<div>` | Custom element not registered | Import sub-path: `import '@phozart/workspace/grid-admin'` |
 | Shell shows nav but no content | No slotted children provided | Add children with `slot="panelId"` attributes |
 | Engine admin tabs work but content empty | No `BIEngine` instance | Set `.engine` prop imperatively via ref |
 | Props ignored / no effect | React can't pass objects as attributes | Set object props via `useLayoutEffect` + ref |

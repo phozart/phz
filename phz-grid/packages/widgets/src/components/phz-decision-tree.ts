@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Decision Tree Widget
+ * @phozart/widgets — Decision Tree Widget
  *
  * Visualizes branching decision logic as an expandable/collapsible tree.
  * Nodes show conditions, statuses, and outcomes. Supports external
@@ -9,7 +9,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { DecisionTreeNode, NodeStatus } from '@phozart/phz-shared/types';
+import type { DecisionTreeNode, NodeStatus } from '@phozart/shared/types';
 import {
   createDecisionTreeState,
   toggleNode,

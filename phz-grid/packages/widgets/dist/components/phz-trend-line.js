@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Trend Line
+ * @phozart/widgets — Trend Line
  *
  * SVG line chart with optional target reference line and status zones.
  */

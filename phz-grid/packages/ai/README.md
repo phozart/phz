@@ -1,17 +1,17 @@
-# @phozart/phz-ai
+# @phozart/ai
 
 AI toolkit for phz-grid. Implements the schema-as-contract pattern for AI integration, providing natural language queries, schema inference, anomaly detection, and data insights with pluggable LLM providers.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-ai @phozart/phz-core
+npm install @phozart/ai @phozart/core
 ```
 
 ## Quick Start
 
 ```ts
-import { createAIToolkit, OpenAIProvider } from '@phozart/phz-ai';
+import { createAIToolkit, OpenAIProvider } from '@phozart/ai';
 
 const ai = createAIToolkit({
   provider: new OpenAIProvider({ apiKey: 'sk-...' }),
@@ -47,7 +47,7 @@ const insights = await ai.summarize(data, {
 Built-in LLM providers:
 
 ```ts
-import { OpenAIProvider, AnthropicProvider, GoogleProvider } from '@phozart/phz-ai';
+import { OpenAIProvider, AnthropicProvider, GoogleProvider } from '@phozart/ai';
 
 // OpenAI
 const openai = new OpenAIProvider({
@@ -73,7 +73,7 @@ const google = new GoogleProvider({
 Implement the `AIProvider` interface for any LLM:
 
 ```ts
-import type { AIProvider, CompletionOptions, CompletionResult } from '@phozart/phz-ai';
+import type { AIProvider, CompletionOptions, CompletionResult } from '@phozart/ai';
 
 class MyProvider implements AIProvider {
   async complete(prompt: string, options?: CompletionOptions): Promise<CompletionResult> {
@@ -117,12 +117,12 @@ import type {
   Insight,
   FilterSuggestion,
   JSONSchema7,
-} from '@phozart/phz-ai';
+} from '@phozart/ai';
 ```
 
 ## Re-exports
 
-This package re-exports all types from `@phozart/phz-core` for convenience.
+This package re-exports all types from `@phozart/core` for convenience.
 
 ## License
 

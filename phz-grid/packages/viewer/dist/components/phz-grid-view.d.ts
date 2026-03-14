@@ -7,8 +7,8 @@
  * automatically via the adapter's execute() method.
  */
 import { LitElement } from 'lit';
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
+import type { ColumnDefinition } from '@phozart/core';
 /**
  * Serializable column spec — JSON-safe subset of ColumnDefinition.
  * No functions (renderer, validator, etc.).

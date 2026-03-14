@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Lit Web Component Widgets
+ * @phozart/widgets — Lit Web Component Widgets
  *
  * KPI cards, scorecards, charts, dashboards, and more.
  * All components are framework-agnostic Web Components.
@@ -37,6 +37,8 @@ export { PhzWaterfallChart, computeWaterfallBars, computeWaterfallBounds, buildW
 export type { WaterfallDatum, WaterfallBar } from './components/phz-waterfall-chart.js';
 export { PhzFunnelChart, computeFunnelStages, computeOverallConversion, buildFunnelAccessibleDescription, FUNNEL_PALETTE } from './components/phz-funnel-chart.js';
 export type { FunnelDatum, FunnelStage } from './components/phz-funnel-chart.js';
+export { PhzSlicer, filterItems, toggleMultiValue, selectAll, selectNone, clampRange, buildRangeValues } from './components/phz-slicer.js';
+export type { SlicerItem, SlicerChangeDetail } from './components/phz-slicer.js';
 export { resolveBreakpoint, computeResponsiveColumns, clampColSpan, computeResponsiveLayout, generateContainerQueryCSS } from './responsive-layout.js';
 export { createCrossFilterEvent, applyCrossFilter, clearCrossFilter, isCrossFilterSource } from './cross-filter.js';
 export { exportToCSV, escapeCSVField, formatClipboardData, exportToClipboard, exportToImage } from './widget-export.js';
@@ -73,4 +75,6 @@ export { initialImpactChainState, computeChainLayout, getChainContainerVariant, 
 export type { ImpactChainState, NodePosition, ChainEdge, ComputedChainLayout, ChainContainerVariant, ChainSummary } from './impact-chain-state.js';
 export { DECISION_TREE_VARIANTS } from './decision-tree-variants.js';
 export type { DecisionTreeVariantEntry } from './decision-tree-variants.js';
+export { PhzChart } from './components/phz-chart.js';
+export * from './chart/index.js';
 //# sourceMappingURL=index.d.ts.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Bar
+ * @phozart/criteria — Criteria Bar
  *
  * Compact horizontal bar showing: "Filters" button with count badge,
  * pinned filter tags, active filter summary tags, and "Clear all".

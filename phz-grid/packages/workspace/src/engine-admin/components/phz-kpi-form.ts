@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — KPI Form
+ * @phozart/engine-admin — KPI Form
  *
  * Slide-over form for creating/editing KPIs.
  * Supports simple thresholds and custom threshold bands with dynamic sources.
@@ -11,10 +11,10 @@ import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
 import type {
   ParameterDef, ThresholdBand, ThresholdSource,
-} from '@phozart/phz-engine';
-import type { KPIDefinition, KPIDirection, MetricDef } from '@phozart/phz-engine';
-import { kpiId } from '@phozart/phz-engine';
-import type { MetricId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { KPIDefinition, KPIDirection, MetricDef } from '@phozart/engine';
+import { kpiId } from '@phozart/engine';
+import type { MetricId } from '@phozart/engine';
 
 type ThresholdMode = 'simple' | 'bands';
 

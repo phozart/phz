@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Chart Tooltip Configuration
+ * @phozart/engine — Chart Tooltip Configuration
  *
  * Types and pure functions for tooltip customization on chart widgets.
  * Supports auto-resolution from chart encoding channels and manual

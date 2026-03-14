@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Expression Builder
+ * @phozart/engine-admin — Expression Builder
  *
  * Dual-mode expression editor (Block mode + Formula mode).
  * Both modes edit the same ExpressionNode tree.
@@ -11,10 +11,10 @@ import { safeCustomElement } from '../../safe-custom-element.js';
 import type {
   ExpressionNode, DataModelField, ParameterDef, CalculatedFieldDef,
   BinaryOperator, BuiltinFunction,
-} from '@phozart/phz-engine';
-import { parseFormula, formatFormula, validateExpression } from '@phozart/phz-engine';
-import type { ExpressionError } from '@phozart/phz-engine';
-import type { MetricDef } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import { parseFormula, formatFormula, validateExpression } from '@phozart/engine';
+import type { ExpressionError } from '@phozart/engine';
+import type { MetricDef } from '@phozart/engine';
 
 type EditorMode = 'formula' | 'block';
 

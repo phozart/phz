@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/explorer — Aggregation Validation
+ * @phozart/engine/explorer — Aggregation Validation
  *
  * Validates aggregation compatibility with field data types.
  * Extracted from workspace format-value.ts in v15 (A-2.01).

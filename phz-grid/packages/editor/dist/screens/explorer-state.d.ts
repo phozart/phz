@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-editor — Explorer State (B-2.10)
+ * @phozart/editor — Explorer State (B-2.10)
  *
  * State machine for the editor explorer screen. Extends the engine
  * explorer with save-to-artifact capability, allowing users to
  * promote ad-hoc queries into saved reports or dashboard widgets.
  */
-import type { ExploreQuery, ExploreFieldSlot, ExploreValueSlot, ExploreFilterSlot } from '@phozart/phz-engine/explorer';
+import type { ExploreQuery, ExploreFieldSlot, ExploreValueSlot, ExploreFilterSlot } from '@phozart/engine/explorer';
 export type SaveTargetType = 'report' | 'dashboard-widget' | 'new-dashboard';
 export interface SaveTarget {
     type: SaveTargetType;

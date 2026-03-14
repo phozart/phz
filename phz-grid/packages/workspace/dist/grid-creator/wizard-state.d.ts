@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-creator — Wizard State Management
+ * @phozart/grid-creator — Wizard State Management
  *
  * Pure functions for wizard navigation, validation, and draft state.
  */

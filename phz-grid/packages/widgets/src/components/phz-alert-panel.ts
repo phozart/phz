@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- KPI Alert Notification UI
+ * @phozart/widgets -- KPI Alert Notification UI
  *
  * Alert panel and badge components for displaying KPI alert notifications.
  * Types align with engine's kpi-alerting.ts Alert/AlertSeverity/AlertRuleType.
@@ -8,7 +8,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { AlertRuleType, AlertSeverity } from '@phozart/phz-engine';
+import type { AlertRuleType, AlertSeverity } from '@phozart/engine';
 
 // -- Types --
 

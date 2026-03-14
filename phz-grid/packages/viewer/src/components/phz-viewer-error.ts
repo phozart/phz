@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-error> Custom Element
+ * @phozart/viewer — <phz-viewer-error> Custom Element
  *
  * Displays user-friendly error states with recovery actions.
  * Uses shared ErrorState and ErrorStateConfig types.
@@ -7,8 +7,8 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import type { ErrorState, ErrorScenario, ErrorStateConfig } from '@phozart/phz-shared/types';
-import { createDefaultErrorStateConfig } from '@phozart/phz-shared/types';
+import type { ErrorState, ErrorScenario, ErrorStateConfig } from '@phozart/shared/types';
+import { createDefaultErrorStateConfig } from '@phozart/shared/types';
 
 // ========================================================================
 // <phz-viewer-error>

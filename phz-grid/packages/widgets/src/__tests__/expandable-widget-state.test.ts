@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-widgets — Expandable Widget State Tests
+ * @phozart/widgets — Expandable Widget State Tests
  */
 import { describe, it, expect } from 'vitest';
-import { createDefaultExpandableConfig } from '@phozart/phz-shared/types';
+import { createDefaultExpandableConfig } from '@phozart/shared/types';
 import {
   createExpandableWidgetState,
   createDefaultExpandableWidgetState,

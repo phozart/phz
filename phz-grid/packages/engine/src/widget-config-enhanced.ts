@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Enhanced Widget Configuration Types
+ * @phozart/engine — Enhanced Widget Configuration Types
  *
  * Rich per-widget configuration: data bindings, appearance, behaviour.
  * These extend the existing WidgetConfig types without breaking them.
@@ -7,7 +7,7 @@
 
 import type { WidgetId, KPIId } from './types.js';
 import type { WidgetType } from './widget.js';
-import type { AggregationFunction } from '@phozart/phz-core';
+import type { AggregationFunction } from '@phozart/core';
 
 // --- Field References ---
 
@@ -90,13 +90,20 @@ export interface DrillLinkBinding {
   passFilters?: Record<string, string>;
 }
 
+export interface SlicerBinding {
+  type: 'slicer';
+  field: string;
+  mode?: 'multi' | 'single' | 'range';
+}
+
 export type DataBinding =
   | ChartBinding
   | KpiBinding
   | ScorecardBinding
   | StatusTableBinding
   | DataTableBinding
-  | DrillLinkBinding;
+  | DrillLinkBinding
+  | SlicerBinding;
 
 // --- Widget Data Config ---
 
@@ -364,6 +371,16 @@ export const SMART_DEFAULTS: Record<WidgetType, () => Omit<EnhancedWidgetConfig,
       titleBar: { show: false },
     },
     behaviour: { ...defaultBehaviour(), onClick: 'open-detail' },
+  }),
+  'slicer': () => ({
+    type: 'slicer',
+    name: 'Slicer',
+    data: { bindings: { type: 'slicer' as const, field: '', mode: 'multi' as const } },
+    appearance: {
+      container: defaultContainer(),
+      titleBar: defaultTitleBar('Slicer'),
+    },
+    behaviour: defaultBehaviour(),
   }),
   'custom': () => ({
     type: 'custom',

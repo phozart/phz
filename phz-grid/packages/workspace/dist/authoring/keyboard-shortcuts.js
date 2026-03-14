@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Keyboard Shortcuts
+ * @phozart/workspace — Keyboard Shortcuts
  *
  * Pure shortcut matching for the authoring environment.
  * Platform-aware: maps Cmd on macOS, Ctrl elsewhere.

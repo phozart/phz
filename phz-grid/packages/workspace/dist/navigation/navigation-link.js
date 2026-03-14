@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — NavigationLink (V.1)
+ * @phozart/workspace — NavigationLink (V.1)
  *
  * Defines cross-artifact drill-through navigation links.
  * A NavigationLink connects a source artifact (e.g. dashboard) to a

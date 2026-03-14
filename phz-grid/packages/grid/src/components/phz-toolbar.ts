@@ -19,7 +19,7 @@
  */
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 import type { Density, FilterInfo } from '../types.js';
 
 export interface ToolbarSearchEvent {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Scatter / Bubble Chart
+ * @phozart/widgets — Scatter / Bubble Chart
  *
  * SVG-based scatter plot with optional bubble mode (size mapped to third dimension).
  * Supports grid, axes, tooltips, keyboard navigation, and SR data table fallback.

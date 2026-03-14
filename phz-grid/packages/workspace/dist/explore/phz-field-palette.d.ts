@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Field Palette Logic (P.1)
+ * @phozart/workspace — Field Palette Logic (P.1)
  *
  * Headless logic for field palette: type icons, cardinality badges,
  * search/filter, group by type, and auto-placement.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Alert Binding Config Panel State (7A-A)
+ * @phozart/workspace — Alert Binding Config Panel State (7A-A)
  *
  * Pure state machine for the "Alert Binding" section in the widget config panel.
  * Manages the selection of alert rules, visual modes, and animation toggles
@@ -9,7 +9,7 @@
 import type {
   SingleValueAlertConfig,
   AlertVisualMode,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Alert Rule Reference (minimal)

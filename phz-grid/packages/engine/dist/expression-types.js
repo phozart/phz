@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression AST Types & Data Model
+ * @phozart/engine — Expression AST Types & Data Model
  *
  * All types for the 5-layer computation DAG:
  * Fields → Parameters → Calculated Fields → Metrics → KPIs

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Tree Select
+ * @phozart/criteria — Tree Select
  *
  * Dropdown trigger with chip display + tree panel with custom checkboxes,
  * expand/collapse, search filter, Select All / Clear All.
@@ -8,7 +8,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { TreeNode, CriteriaSelectionMode } from '@phozart/phz-core';
+import type { TreeNode, CriteriaSelectionMode } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 /* ── Inline SVG icons (Phosphor-style, 16×16) ── */

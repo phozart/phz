@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Token System Tests
+ * @phozart/grid — Token System Tests
  */
 import { describe, it, expect } from 'vitest';
 import { BrandTokens, SemanticTokens, ComponentTokens, generateTokenStyles } from '../tokens.js';

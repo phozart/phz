@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — I18n Provider (H.19)
+ * @phozart/workspace — I18n Provider (H.19)
  *
  * Lightweight i18n interface with a default English provider.
  * Consumers can supply their own I18nProvider (e.g. wrapping i18next)

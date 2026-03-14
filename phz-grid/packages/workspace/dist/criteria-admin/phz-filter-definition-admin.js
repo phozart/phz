@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Definition Admin
+ * @phozart/criteria — Filter Definition Admin
  *
  * Two-view admin component for managing artefact-independent filter definitions
  * and their bindings to artefacts. CSS prefix: phz-fda-
@@ -25,8 +25,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import { filterDefinitionId } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+import { filterDefinitionId } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 const FIELD_TYPES = [
     { value: 'single_select', label: 'Single Select' },
     { value: 'multi_select', label: 'Multi Select' },

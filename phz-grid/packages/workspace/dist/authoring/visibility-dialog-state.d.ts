@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — Visibility Dialog State
+ * @phozart/workspace — Visibility Dialog State
  *
  * Pure functions for managing the publish/share visibility dialog.
  * Handles visibility transitions (personal -> shared -> published),
  * share target management, and confirmation workflows.
  */
-import type { ArtifactVisibility } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility } from '@phozart/shared/artifacts';
 export interface VisibilityShareTarget {
     id: string;
     type: 'user' | 'role' | 'team';

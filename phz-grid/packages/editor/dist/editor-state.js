@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Editor Shell State Machine (B-2.02)
+ * @phozart/editor — Editor Shell State Machine (B-2.02)
  *
  * Headless state management for the editor shell. Manages screen navigation,
  * editing mode, unsaved changes tracking, auto-save debounce, undo/redo stack,

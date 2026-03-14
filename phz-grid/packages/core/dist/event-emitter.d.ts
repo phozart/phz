@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Typed Event Emitter
+ * @phozart/core — Typed Event Emitter
  *
  * High-performance event system with typed event maps, once support,
  * and proper cleanup via Unsubscribe functions.

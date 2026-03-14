@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — KPI Alerting Tests (TDD: RED phase)
+ * @phozart/engine — KPI Alerting Tests (TDD: RED phase)
  */
 import { describe, it, expect } from 'vitest';
 import {

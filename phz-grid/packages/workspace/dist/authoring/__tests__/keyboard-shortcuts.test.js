@@ -172,8 +172,8 @@ describe('keyboard-shortcuts', () => {
         });
     });
     describe('DEFAULT_AUTHORING_SHORTCUTS', () => {
-        it('has 9 bindings', () => {
-            expect(DEFAULT_AUTHORING_SHORTCUTS).toHaveLength(9);
+        it('has 20 bindings', () => {
+            expect(DEFAULT_AUTHORING_SHORTCUTS).toHaveLength(20);
         });
         it('every binding has required fields', () => {
             for (const binding of DEFAULT_AUTHORING_SHORTCUTS) {

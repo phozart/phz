@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-workspace — Cross-Filter Rule State
+ * @phozart/workspace — Cross-Filter Rule State
  *
  * Pure functions for managing cross-filter scoping rules in the
  * dashboard editor. Rules define which widgets can cross-filter
  * which targets and how fields are mapped between them.
  */
 
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 
 // ========================================================================
 // Types

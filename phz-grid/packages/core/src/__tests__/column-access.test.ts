@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Column Access Control Tests
+ * @phozart/core — Column Access Control Tests
  */
 import { describe, it, expect, vi } from 'vitest';
 import { createGrid } from '../create-grid.js';

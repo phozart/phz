@@ -1,7 +1,7 @@
 /**
- * Vite config for building the CDN/IIFE bundle of @phozart/phz-grid.
+ * Vite config for building the CDN/IIFE bundle of @phozart/grid.
  *
- * Produces a single self-contained ESM file that includes Lit, @phozart/phz-core,
+ * Produces a single self-contained ESM file that includes Lit, @phozart/core,
  * and all grid components. Users can load it via:
  *   <script type="module" src="phz-grid.js"></script>
  *
@@ -30,8 +30,8 @@ export default defineConfig({
     },
     resolve: {
         alias: [
-            { find: '@phozart/phz-core', replacement: resolve(__dirname, '../core/src/index.ts') },
-            { find: '@phozart/phz-engine', replacement: resolve(__dirname, '../engine/src/index.ts') },
+            { find: '@phozart/core', replacement: resolve(__dirname, '../core/src/index.ts') },
+            { find: '@phozart/engine', replacement: resolve(__dirname, '../engine/src/index.ts') },
         ],
     },
 });

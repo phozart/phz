@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Decision Tree Variant Entries (7A-C)
+ * @phozart/widgets — Decision Tree Variant Entries (7A-C)
  *
  * WidgetManifest variant definitions for the decision tree widget.
  * Each variant specifies a preset config that the authoring layer uses

@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-widgets — View Group State Tests
+ * @phozart/widgets — View Group State Tests
  */
 import { describe, it, expect } from 'vitest';
-import type { WidgetViewGroup } from '@phozart/phz-shared/types';
+import type { WidgetViewGroup } from '@phozart/shared/types';
 import {
   createViewGroupState,
   switchGroup,

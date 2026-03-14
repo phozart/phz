@@ -1,10 +1,10 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition } from '@phozart/core';
 
 export interface ColumnResizeHost extends ReactiveControllerHost {
   gridApi: GridApi | null;
   columnDefs: ColumnDefinition[];
-  visibleRows: import('@phozart/phz-core').RowData[];
+  visibleRows: import('@phozart/core').RowData[];
 }
 
 export class ColumnResizeController implements ReactiveController {

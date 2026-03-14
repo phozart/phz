@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — SQL Editor State Machine
+ * @phozart/workspace — SQL Editor State Machine
  *
  * Pure functions for managing a raw SQL editor embedded within dashboard pages.
  * Executes queries via the DataAdapter against DuckDB.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — ServerExportManager
+ * @phozart/core — ServerExportManager
  *
  * Orchestrates server-side export: sync (immediate URL) or async (poll for progress).
  */

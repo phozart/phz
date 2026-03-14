@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Selection Criteria (Bar + Drawer Orchestrator)
+ * @phozart/criteria — Selection Criteria (Bar + Drawer Orchestrator)
  *
  * Top-level component composing:
  *  - phz-criteria-bar (compact horizontal bar)
@@ -18,7 +18,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { resolveDynamicDefaults, validateCriteria, resolveFieldOptions, } from '@phozart/phz-engine';
+import { resolveDynamicDefaults, validateCriteria, resolveFieldOptions, } from '@phozart/engine';
 import { criteriaStyles } from '../shared-styles.js';
 // Import sub-components for side-effect registration
 import './phz-criteria-bar.js';

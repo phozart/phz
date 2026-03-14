@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Explorer State (B-2.10)
+ * @phozart/editor — Explorer State (B-2.10)
  *
  * State machine for the editor explorer screen. Extends the engine
  * explorer with save-to-artifact capability, allowing users to
@@ -11,7 +11,7 @@ import type {
   ExploreFieldSlot,
   ExploreValueSlot,
   ExploreFilterSlot,
-} from '@phozart/phz-engine/explorer';
+} from '@phozart/engine/explorer';
 
 // ========================================================================
 // SaveTarget — where to save an explorer query

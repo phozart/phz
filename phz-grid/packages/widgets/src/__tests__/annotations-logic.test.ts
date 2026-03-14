@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Annotations Pure Logic Tests
+ * @phozart/widgets -- Annotations Pure Logic Tests
  *
  * Tests for the annotation manager factory and SVG marker rendering.
  */

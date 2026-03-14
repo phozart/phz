@@ -1,15 +1,15 @@
 /**
- * @phozart/phz-workspace — Report Chart State
+ * @phozart/workspace — Report Chart State
  *
  * Pure functions for managing chart toggle, chart type selection, and
  * visual encoding channels in the report editor.
  *
- * Chart types align with the WidgetType union from @phozart/phz-engine/widget
- * and the suggestChartType output from @phozart/phz-engine/explorer/chart-suggest.
+ * Chart types align with the WidgetType union from @phozart/engine/widget
+ * and the suggestChartType output from @phozart/engine/explorer/chart-suggest.
  */
 
-import type { FieldMetadata } from '@phozart/phz-shared';
-import { resolveSemanticRole } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
+import { resolveSemanticRole } from '@phozart/shared';
 
 // ========================================================================
 // Types

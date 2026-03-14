@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — KPI Card
+ * @phozart/widgets — KPI Card
  *
  * Single KPI display with value, status badge, delta, and optional sparkline.
  */
@@ -7,9 +7,9 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { KPIDefinition, StatusResult, Delta } from '@phozart/phz-engine';
-import { computeStatus, computeDelta, STATUS_COLORS } from '@phozart/phz-engine';
-import type { SelectionContext } from '@phozart/phz-core';
+import type { KPIDefinition, StatusResult, Delta } from '@phozart/engine';
+import { computeStatus, computeDelta, STATUS_COLORS } from '@phozart/engine';
+import type { SelectionContext } from '@phozart/core';
 import { formatTooltipContent } from '../tooltip.js';
 import { resolveWidgetState } from '../widget-states.js';
 

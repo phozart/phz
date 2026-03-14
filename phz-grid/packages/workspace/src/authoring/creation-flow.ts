@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Creation Flow State Machine
+ * @phozart/workspace — Creation Flow State Machine
  *
  * Drives the 3-step creation wizard: choose-type → choose-source → choose-template → configure → done.
  */

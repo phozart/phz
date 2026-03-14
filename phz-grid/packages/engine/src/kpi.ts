@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — KPI Definitions & Registry
+ * @phozart/engine — KPI Definitions & Registry
  *
  * KPIs are first-class entities with targets, thresholds, status classification,
  * breakdowns, delta comparison, and visualization defaults.

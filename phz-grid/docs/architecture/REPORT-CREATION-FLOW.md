@@ -569,7 +569,7 @@ export class PhzReportView extends LitElement {
 | # | Task | File | Details |
 |---|------|------|---------|
 | 5.1 | Add admin-simulator example | `examples/report-admin.html` | Demo page: creates an engine with sample data products, renders `<phz-report-view>` with `isAdmin=true`, demonstrates full create-and-configure flow. |
-| 5.2 | Update package.json peer deps | `grid-admin/package.json` | Add `@phozart/phz-engine` if not already a peer. |
+| 5.2 | Update package.json peer deps | `grid-admin/package.json` | Add `@phozart/engine` if not already a peer. |
 | 5.3 | Update package READMEs | `grid-admin/README.md`, `grid/README.md` | Document new components and props. |
 
 ## 8. Test Specifications
@@ -830,7 +830,7 @@ on 1+2. Phase 5 depends on everything.
 ### 15.1 Async Report Generation
 
 v15 added asynchronous report generation for long-running queries. Types are
-defined in `@phozart/phz-shared/types`:
+defined in `@phozart/shared/types`:
 
 ```typescript
 interface AsyncReportRequest {
@@ -864,7 +864,7 @@ interface AsyncReportJob {
 ```
 
 The UI state is managed by `AsyncReportUIState` in
-`@phozart/phz-shared/coordination`:
+`@phozart/shared/coordination`:
 
 ```typescript
 interface AsyncReportUIState {
@@ -878,7 +878,7 @@ State transitions: `createAsyncReportUIState()`, `addJob()`,
 
 ### 15.2 Wide Report Editing
 
-The editor's `ReportEditState` (from `@phozart/phz-editor`) supports wide
+The editor's `ReportEditState` (from `@phozart/editor`) supports wide
 reports with 30+ columns through:
 
 - Column groups and reordering: `reorderReportColumns(state, fromIndex, toIndex)`
@@ -908,7 +908,7 @@ Four built-in renderers are available:
 ### 15.4 Export Tab State
 
 The exports tab tracks generated report files. Managed by `ExportsTabState` in
-`@phozart/phz-shared/coordination`:
+`@phozart/shared/coordination`:
 
 ```typescript
 interface ExportEntry {
@@ -944,4 +944,4 @@ in v15 to a 3-step flow:
 This replaces the previous 6-step wizard. The admin-in-grid panel (Section 3-4
 above) provides the detailed configuration after initial creation. The
 `openCreateDialog()` and `closeCreateDialog()` transitions in
-`@phozart/phz-editor/screens/catalog-state` control the wizard visibility.
+`@phozart/editor/screens/catalog-state` control the wizard visibility.

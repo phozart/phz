@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-workspace — Dashboard Editor State
+ * @phozart/workspace — Dashboard Editor State
  *
  * Pure functions for canvas-based dashboard building with widget placement,
  * morph groups, and config panels.
  */
-import type { SourceRelationship } from '@phozart/phz-shared/types';
+import type { SourceRelationship } from '@phozart/shared/types';
 import type { ExploreFieldSlot, ExploreValueSlot, ExploreFilterSlot } from '../explore-types.js';
 import type { LayoutNode } from '../schema/config-layers.js';
 import type { DashboardFilterBarConfig } from '../types.js';

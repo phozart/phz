@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Data Pipeline (T.4)
+ * @phozart/workspace — Dashboard Data Pipeline (T.4)
  *
  * Preload/full-load parallel data architecture:
  * - Fires preload query immediately for fast initial render.
@@ -9,7 +9,7 @@
  * - Multi-source mode: tracks per-source loading states and results
  *   when `config.sources` is present and non-empty.
  */
-import type { DashboardDataConfig, DashboardLoadingState } from '@phozart/phz-shared/coordination';
+import type { DashboardDataConfig, DashboardLoadingState } from '@phozart/shared/coordination';
 import type { DataAdapter, DataResult } from '../data-adapter.js';
 import type { FilterContextManager } from '../filters/filter-context.js';
 export interface DashboardDataPipeline {

@@ -21,7 +21,7 @@ import {
   setDashboardDescription,
   markDashboardSaved,
 } from '../screens/dashboard-edit-state.js';
-import type { DashboardWidget } from '@phozart/phz-shared/types';
+import type { DashboardWidget } from '@phozart/shared/types';
 
 const WIDGET: DashboardWidget = {
   id: 'w1',

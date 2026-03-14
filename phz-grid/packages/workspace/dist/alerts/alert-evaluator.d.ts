@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Alert Evaluator (N.1)
+ * @phozart/workspace — Alert Evaluator (N.1)
  *
  * Pure functions for evaluating alert rules against current metric values.
  * No DOM, no network, no side effects.

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import type { FilterDefinition, FilterRule, SelectionPreset, ValueSourceConfig, OptionsSource } from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterRule, SelectionPreset, ValueSourceConfig, OptionsSource } from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 import {
   HELP,
   buildDefContextItems,
@@ -9,7 +9,7 @@ import {
   buildBgContextItems,
 } from '../components/phz-filter-designer.js';
 import { buildFilterPresetContextItems } from '../components/phz-preset-admin.js';
-import type { FilterDefinitionPreset } from '@phozart/phz-core';
+import type { FilterDefinitionPreset } from '@phozart/core';
 
 function makeDef(id: string, overrides?: Partial<FilterDefinition>): FilterDefinition {
   return {

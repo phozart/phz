@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Drop Zones Logic (P.2 + P.2a)
+ * @phozart/workspace — Drop Zones Logic (P.2 + P.2a)
  *
  * 4 drop zones: Rows, Columns, Values, Filters
  * Aggregation defaults, cardinality warnings, validation.

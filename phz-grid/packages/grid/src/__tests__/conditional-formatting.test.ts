@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Conditional Formatting Engine Tests
+ * @phozart/grid — Conditional Formatting Engine Tests
  */
 import { describe, it, expect } from 'vitest';
 import {
@@ -9,7 +9,7 @@ import {
   createHighlightBelowTarget,
   createColorScaleRule,
 } from '../features/conditional-formatting.js';
-import type { ConditionalFormattingRule, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ConditionalFormattingRule, ColumnDefinition, RowData } from '@phozart/core';
 
 function makeRule(overrides: Partial<ConditionalFormattingRule> = {}): ConditionalFormattingRule {
   return {

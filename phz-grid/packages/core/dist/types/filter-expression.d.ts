@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Unified Filter Algebra (Item 6.9)
+ * @phozart/core — Unified Filter Algebra (Item 6.9)
  *
  * Canonical FilterExpression AST supporting recursive AND/OR/NOT composition.
  * Replaces the flat FilterState.filters array with a composable algebra.

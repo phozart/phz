@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Parameter Form
+ * @phozart/engine-admin — Parameter Form
  *
  * Slide-over form for creating/editing dashboard parameters.
  */
@@ -13,7 +13,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { parameterId } from '@phozart/phz-engine';
+import { parameterId } from '@phozart/engine';
 const PARAM_TYPES = [
     { value: 'number', label: 'Number' },
     { value: 'string', label: 'Text' },

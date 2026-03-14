@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Server-Side Grid Mode (A-2.07)
+ * @phozart/shared — Server-Side Grid Mode (A-2.07)
  *
  * Configuration for server-side data operations (sort, filter, group, page).
  * When enabled, the grid delegates these operations to the DataAdapter

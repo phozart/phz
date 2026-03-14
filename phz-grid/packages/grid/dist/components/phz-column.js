@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-grid — <phz-column> Custom Element
+ * @phozart/grid — <phz-column> Custom Element
  *
  * Declarative column definition element. Used as a child of <phz-grid>
  * to define columns via HTML attributes instead of JavaScript config.

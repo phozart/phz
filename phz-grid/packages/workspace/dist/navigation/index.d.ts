@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Navigation Module (V)
+ * @phozart/workspace — Navigation Module (V)
  */
 export { isNavigationLink, createNavigationLink, resolveNavigationFilters, detectCircularLinks, type NavigationLink, type NavigationSource, type NavigationFilterMapping, type NavigationOpenBehavior, } from './navigation-link.js';
 export { createNavigationEditorState, setTarget, addFilterMapping, removeFilterMapping, setOpenBehavior, getNavigationLink, validateNavigationEditorState, autoMapFilters, type NavigationEditorState, type NavigationValidationResult, } from './navigation-editor.js';

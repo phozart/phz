@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — PhzCellRenderer (Abstract Base)
+ * @phozart/grid — PhzCellRenderer (Abstract Base)
  *
  * All custom cell renderers extend this class.
  */
 import { LitElement, html, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 
 export abstract class PhzCellRenderer extends LitElement {
   @property({ attribute: false })

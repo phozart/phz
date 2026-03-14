@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Micro-Component Tests (Phase 2C + 2B)
+ * @phozart/workspace — Micro-Component Tests (Phase 2C + 2B)
  *
  * Tests for phz-color-picker, phz-shadow-picker, phz-slider-input,
  * and the enhanced config panel backward compatibility.

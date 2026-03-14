@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Configurator
+ * @phozart/criteria — Filter Configurator
  *
  * Configure which filter definitions appear on a specific report/dashboard,
  * assign data columns, set per-binding overrides. Single-view (no tabs).
@@ -24,13 +24,13 @@ import { safeCustomElement } from '../safe-custom-element.js';
 import type {
   FilterDefinition, FilterDefinitionId, FilterBinding, ArtefactId,
   FilterBarFieldConfig, CriteriaSelectionMode, SelectionFieldType,
-} from '@phozart/phz-core';
-import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+} from '@phozart/core';
+import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 
 // Ensure sub-components are registered (side-effect imports)
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
 
 /** Filter types that support a selectionMode override */
 const HAS_SELECTION_MODE: SelectionFieldType[] = ['single_select', 'multi_select', 'chip_group', 'tree_select', 'search'];

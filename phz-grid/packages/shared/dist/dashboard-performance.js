@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Dashboard Performance Estimation (WE-14)
+ * @phozart/shared — Dashboard Performance Estimation (WE-14)
  *
  * Heuristic performance estimation for dashboard authoring feedback.
  * All functions are pure — no side effects, no DOM access.

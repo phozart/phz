@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Metric Builder
+ * @phozart/engine-admin — Metric Builder
  *
  * Create/edit metric definitions: name, data product, formula, format.
  * Embeddable component.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { BIEngine, MetricDef, MetricFormula, AggregationFunction } from '@phozart/phz-engine';
+import type { BIEngine, MetricDef, MetricFormula, AggregationFunction } from '@phozart/engine';
 
 @safeCustomElement('phz-metric-builder')
 export class PhzMetricBuilder extends LitElement {

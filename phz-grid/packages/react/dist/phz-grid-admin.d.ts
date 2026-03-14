@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-react — PhzGridAdmin React Component
+ * @phozart/react — PhzGridAdmin React Component
  *
  * Wraps the <phz-grid-admin> Web Component for React using @lit/react.
  * Uses React's ref system to expose the GridAdminApi.
  * Supports a shared-ref pattern: pass gridRef to auto-populate columns/fields.
  */
 import React from 'react';
-import type { GridApi } from '@phozart/phz-core';
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { GridApi } from '@phozart/core';
+import type { ReportPresentation } from '@phozart/engine';
 /** Imperative API exposed via ref on the PhzGridAdmin component. */
 export interface GridAdminApi {
     /** Returns the current admin settings as a ReportPresentation bundle. */

@@ -10,9 +10,9 @@ import {
   exploreToDashboardWidget,
   promoteFilterToDashboard,
   buildDrillThroughPrePopulation,
-} from '@phozart/phz-workspace/explore';
+} from '@phozart/workspace/explore';
 
-import type { ExploreQuery } from '@phozart/phz-workspace/explore';
+import type { ExploreQuery } from '@phozart/workspace/explore';
 
 function makeExploreQuery(overrides?: Partial<ExploreQuery>): ExploreQuery {
   return {

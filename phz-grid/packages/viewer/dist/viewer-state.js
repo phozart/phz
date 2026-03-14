@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Viewer Shell State Machine
+ * @phozart/viewer — Viewer Shell State Machine
  *
  * Headless state management for the viewer shell. Pure functions
  * operating on immutable ViewerShellState. No DOM dependency.

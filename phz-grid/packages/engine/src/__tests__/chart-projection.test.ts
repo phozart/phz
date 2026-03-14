@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { projectChartData, projectAggregatedChartData, projectPieData } from '../chart-projection.js';
-import type { ChartConfig } from '@phozart/phz-core';
+import type { ChartConfig } from '@phozart/core';
 
 const timeSeriesData = [
   { month: 'Jan', sales: 100, costs: 80 },

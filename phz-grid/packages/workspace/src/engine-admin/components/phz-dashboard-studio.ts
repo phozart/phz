@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Studio
+ * @phozart/engine-admin — Dashboard Studio
  *
  * MicroStrategy-inspired integrated dashboard editor.
  * Single view: toolbar + global filters + left data panel + live canvas + right config panel.
@@ -17,20 +17,20 @@ import type {
   DrillLinkWidgetConfig, ResolvedWidgetProps, KPIScoreProvider,
   EnhancedWidgetConfig, EnhancedDashboardConfig, DashboardWidgetPlacement,
   GlobalFilter,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import {
   widgetId, dashboardId, resolveDashboardWidgets, createDefaultScoreProvider,
   SMART_DEFAULTS, processWidgetData, isEnhancedDashboard,
   createEnhancedDashboardConfig, serializeDashboard, DEFAULT_DASHBOARD_THEME,
-} from '@phozart/phz-engine';
-import type { KPIId, ReportId, DataProductId, WidgetId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { KPIId, ReportId, DataProductId, WidgetId } from '@phozart/engine';
 
 import type {
   DashboardDataModel, DataModelField, ParameterDef,
   CalculatedFieldDef, ParameterId, CalculatedFieldId,
-} from '@phozart/phz-engine';
-import { createDashboardDataModelStore, parameterId, calculatedFieldId } from '@phozart/phz-engine';
-import type { DashboardDataModelStore, MetricId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import { createDashboardDataModelStore, parameterId, calculatedFieldId } from '@phozart/engine';
+import type { DashboardDataModelStore, MetricId } from '@phozart/engine';
 
 // Import sub-components for side-effect registration
 import './phz-widget-config-panel.js';
@@ -95,6 +95,10 @@ const DEFAULT_CONFIGS: Record<WidgetType, (id: string) => WidgetConfig> = {
     id: widgetId(id), type: 'drill-link', label: 'View Details', targetReportId: '' as ReportId,
     position: { row: 0, col: 0 }, size: { rowSpan: 1, colSpan: 1 },
   } as DrillLinkWidgetConfig),
+  'slicer': (id) => ({
+    id: widgetId(id), type: 'slicer', field: '',
+    position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },
+  } as any),
   'custom': (id) => ({
     id: widgetId(id), type: 'custom', renderer: '',
     position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },

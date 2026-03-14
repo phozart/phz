@@ -14,7 +14,7 @@ import {
   type SourceRelationshipEditorState,
   type SourceSchemaInfo,
 } from '../source-relationship-state.js';
-import type { SourceRelationship } from '@phozart/phz-shared/types';
+import type { SourceRelationship } from '@phozart/shared/types';
 
 // ── Helpers ──────────────────────────────────────────────────────
 

@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [
-    ["@phozart/phz-core", "@phozart/phz-grid", "@phozart/phz-react", "@phozart/phz-vue", "@phozart/phz-angular"]
+    ["@phozart/core", "@phozart/grid", "@phozart/react", "@phozart/vue", "@phozart/angular"]
   ],
   "linked": [],
   "access": "public",

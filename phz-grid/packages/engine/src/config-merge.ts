@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Config Merge / Layering
+ * @phozart/engine — Config Merge / Layering
  *
  * 3-layer merge: Admin (L0) → Super User (L1) → Personal User View (L2).
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Enterprise State Types
+ * @phozart/core — Enterprise State Types
  *
  * DuckDB, AI, Collaboration, and Analytics state types.
  * Extracted from state.ts for modular imports.
@@ -180,13 +180,31 @@ export interface PivotConfig {
   rowFields: string[];
   columnFields: string[];
   valueFields: PivotValueField[];
+  /** Show a totals column on the right (sum across columns per row) */
+  showRowTotals?: boolean;
+  /** Show subtotal rows for each group level (requires rowFields.length > 1) */
+  showSubtotals?: boolean;
+  /** Show grand total row at bottom (default true for backward compat) */
+  showGrandTotals?: boolean;
 }
 
 export interface PivotValueField {
   field: string;
   aggregation: AggregationFunction;
   label?: string;
+  /** Post-process cell values: percentage, running total, rank, etc. */
+  showAs?: ShowValuesAs;
 }
+
+/** How to display aggregated pivot cell values */
+export type ShowValuesAs =
+  | 'value'                   // raw aggregated value (default)
+  | 'pct_of_grand'            // cell / grand total * 100
+  | 'pct_of_row'              // cell / row total * 100
+  | 'pct_of_column'           // cell / column total * 100
+  | 'running_total'           // cumulative sum across columns
+  | 'rank'                    // rank within column
+  | 'difference_from_previous'; // delta from previous row
 
 export interface AggregationConfig {
   fields: Array<{
@@ -195,7 +213,9 @@ export interface AggregationConfig {
   }>;
 }
 
-export type AggregationFunction = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'first' | 'last';
+export type AggregationFunction =
+  | 'sum' | 'avg' | 'min' | 'max' | 'count' | 'first' | 'last'
+  | 'countDistinct' | 'median' | 'stddev' | 'variance';
 
 export interface ConditionalFormattingRule {
   id: string;

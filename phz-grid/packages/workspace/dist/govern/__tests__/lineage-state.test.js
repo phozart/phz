@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern > Lineage State Tests
+ * @phozart/workspace — Govern > Lineage State Tests
  *
  * TDD: Tests written FIRST, then implementation.
  */

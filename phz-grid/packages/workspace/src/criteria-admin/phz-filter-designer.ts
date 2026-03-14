@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Designer
+ * @phozart/criteria — Filter Designer
  *
  * Single place for creating and managing reusable filter definitions,
  * filter rules, and shared presets. Three tabs: Definitions, Rules, Presets.
@@ -33,17 +33,17 @@ import type {
   SelectionPreset, SelectionFieldType, SessionBehavior,
   FilterDataSource, ValueSourceConfig, OptionsSource,
   FilterDefinitionPreset,
-} from '@phozart/phz-core';
-import { filterDefinitionId, resolveLabelTemplate } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+} from '@phozart/core';
+import { filterDefinitionId, resolveLabelTemplate } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 
 // Ensure sub-components are registered (side-effect imports)
 import './phz-rule-admin.js';
 import './phz-preset-admin.js';
 import { buildFilterPresetContextItems } from './phz-preset-admin.js';
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
-import type { ComboboxOption } from '@phozart/phz-criteria';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
+import type { ComboboxOption } from '@phozart/criteria';
 
 type DesignerTab = 'definitions' | 'rules' | 'presets';
 

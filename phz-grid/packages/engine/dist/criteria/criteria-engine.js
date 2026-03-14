@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Criteria Engine Facade
+ * @phozart/engine — Criteria Engine Facade
  *
  * Unified factory that wires all criteria engine layers together:
  * Registry → Bindings → State → Rules → Output → Admin

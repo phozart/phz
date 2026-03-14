@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — KPI Scorecard
+ * @phozart/widgets — KPI Scorecard
  *
  * Matrix: KPIs (rows) x breakdowns (columns) with status cells.
  */
 import { LitElement } from 'lit';
-import type { KPIDefinition, KPIScoreResponse } from '@phozart/phz-engine';
+import type { KPIDefinition, KPIScoreResponse } from '@phozart/engine';
 export declare class PhzKPIScorecard extends LitElement {
     static styles: import("lit").CSSResult[];
     kpiDefinitions: KPIDefinition[];

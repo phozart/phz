@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Report Service
+ * @phozart/engine — Report Service
  *
  * Per-route runtime orchestrator that connects a report's filter definitions
  * to the criteria engine, manages filter state, and produces grid-ready
@@ -15,8 +15,8 @@
 import type {
   SelectionContext, SelectionFieldDef, ArtefactId,
   FilterDefinitionId, ArtefactCriteria,
-} from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 import type { ReportId, DashboardId } from './types.js';
 import type { BIEngine } from './engine.js';
 import type { CriteriaResolutionResult, DivergenceInfo } from './criteria/resolve-criteria.js';

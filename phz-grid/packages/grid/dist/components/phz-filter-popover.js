@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var PhzFilterPopover_1;
 /**
- * @phozart/phz-grid — <phz-filter-popover>
+ * @phozart/grid — <phz-filter-popover>
  *
  * Excel-like filter popover with:
  *  - Value checklist with counts

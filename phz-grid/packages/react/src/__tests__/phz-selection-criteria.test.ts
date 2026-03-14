@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzSelectionCriteria Component Tests
+ * @phozart/react — PhzSelectionCriteria Component Tests
  *
  * Structural validation: exports, component shape, prop interface, imperative API.
  */
@@ -41,11 +41,11 @@ vi.mock('@lit/react', () => ({
   EventName: {},
 }));
 
-vi.mock('@phozart/phz-criteria', () => ({
+vi.mock('@phozart/criteria', () => ({
   PhzSelectionCriteria: class PhzSelectionCriteria {},
 }));
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 import { PhzSelectionCriteria, type PhzSelectionCriteriaProps, type CriteriaApi } from '../phz-selection-criteria.js';
 

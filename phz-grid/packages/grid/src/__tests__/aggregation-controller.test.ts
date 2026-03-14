@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AggregationController, type AggregationHost } from '../controllers/aggregation.controller.js';
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 
 function makeHost(overrides?: Partial<AggregationHost>): AggregationHost {
   return {

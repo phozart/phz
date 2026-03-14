@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Progressive Data Loading State Machine
+ * @phozart/core — Progressive Data Loading State Machine
  *
  * Pure functions, no side effects. The grid core orchestrates actual I/O
  * calls; this module manages the loading lifecycle state.

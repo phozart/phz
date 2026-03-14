@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Authoring
+ * @phozart/workspace — Filter Authoring
  *
  * Multi-entry-point filter creation. All entry points produce
  * the same FilterValue output regardless of how the user triggered it.

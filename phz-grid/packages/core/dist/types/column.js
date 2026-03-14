@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Column Types
+ * @phozart/core — Column Types
  */
 export {};
 //# sourceMappingURL=column.js.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Common Types
+ * @phozart/core — Common Types
  */
 
 export interface CSSProperties {

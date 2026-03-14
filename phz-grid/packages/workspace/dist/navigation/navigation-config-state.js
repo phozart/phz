@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Navigation Config State (B-3.14)
+ * @phozart/workspace — Navigation Config State (B-3.14)
  *
  * Pure functions for NavigationLink configuration UI.
  * Supports auto-mapping suggestions, circular navigation detection,

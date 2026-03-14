@@ -10,7 +10,7 @@
  *
  * Tasks: 4.1-4.5 (WB-018 through WB-020, WB-029, WB-030)
  */
-import { exploreToReport, exploreToDashboardWidget, } from '@phozart/phz-engine';
+import { exploreToReport, exploreToDashboardWidget, } from '@phozart/engine';
 // ========================================================================
 // Task 4.1: ExploreQuery → DataQuery
 // ========================================================================

@@ -9,8 +9,8 @@ import { createCriteriaEngine } from '../criteria/criteria-engine.js';
 import { createFilterAdapter, applyArtefactCriteria } from '../filter-adapter.js';
 import type { FilterAdapter } from '../filter-adapter.js';
 import { dashboardId, widgetId } from '../types.js';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
-import type { ArtefactCriteria, FilterCriterion, FilterDefinition, FilterBinding } from '@phozart/phz-core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
+import type { ArtefactCriteria, FilterCriterion, FilterDefinition, FilterBinding } from '@phozart/core';
 
 // --- Test Data ---
 

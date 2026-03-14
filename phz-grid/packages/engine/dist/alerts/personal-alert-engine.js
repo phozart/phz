@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Personal Alert Engine (C-2.03)
+ * @phozart/engine — Personal Alert Engine (C-2.03)
  *
  * Evaluates personal alert conditions against current data values.
  * Pure functions only — no side effects, no DOM.

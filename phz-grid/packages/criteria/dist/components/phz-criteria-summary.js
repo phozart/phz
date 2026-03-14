@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Summary (Standalone)
+ * @phozart/criteria — Criteria Summary (Standalone)
  *
  * A standalone summary strip that can be placed anywhere on screen.
  * The consumer controls the message content; admin controls the styling.

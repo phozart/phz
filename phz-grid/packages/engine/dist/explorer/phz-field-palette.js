@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine/explorer — Field Palette Logic
+ * @phozart/engine/explorer — Field Palette Logic
  *
  * Headless logic for field palette: type icons, cardinality badges,
  * search/filter, group by type, and auto-placement.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 // ========================================================================
 // createFieldPalette

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Data Source Picker Tab
+ * @phozart/grid-admin — Data Source Picker Tab
  *
  * Searchable list of DataProducts with schema preview.
  * Emits `data-source-change` when a data product is selected.

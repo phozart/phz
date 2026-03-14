@@ -35,7 +35,7 @@ import type {
   DateRangeValue,
   DateRangeFieldConfig,
   DataSet,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 // --- Test Data ---
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — FilterRuleEditor headless state (U.4)
+ * @phozart/workspace — FilterRuleEditor headless state (U.4)
  *
  * Pure state management for authoring conditional filter rules.
  * The Lit component (phz-filter-rule-editor) consumes this logic.

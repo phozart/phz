@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Combobox utility tests
+ * @phozart/criteria — Combobox utility tests
  *
  * Tests for the headless filterComboboxOptions and resolveComboboxLabel
  * functions exported from phz-combobox.ts.

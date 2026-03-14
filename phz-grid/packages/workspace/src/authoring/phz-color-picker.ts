@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Color Picker Micro-Component
+ * @phozart/workspace — Color Picker Micro-Component
  *
  * 19-color swatch grid from design tokens + custom hex input.
  * Fires 'color-changed' event with { detail: { color: string } }.

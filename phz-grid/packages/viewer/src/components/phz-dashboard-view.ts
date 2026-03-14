@@ -8,7 +8,7 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
 
 // ========================================================================
 // Configuration types

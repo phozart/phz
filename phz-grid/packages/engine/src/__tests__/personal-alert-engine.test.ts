@@ -8,7 +8,7 @@ import {
   shouldNotify,
   formatAlertMessage,
 } from '../alerts/personal-alert-engine.js';
-import type { PersonalAlert, PersonalAlertPreference } from '@phozart/phz-shared/types';
+import type { PersonalAlert, PersonalAlertPreference } from '@phozart/shared/types';
 
 // --- Test helpers ---
 

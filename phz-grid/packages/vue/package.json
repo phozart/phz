@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-vue",
+  "name": "@phozart/vue",
   "version": "0.1.0",
   "description": "Vue wrapper / adapter for phz-grid",
   "type": "module",
@@ -34,8 +34,8 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/vue#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-grid": "^0.1.0"
+    "@phozart/core": "^0.1.0",
+    "@phozart/grid": "^0.1.0"
   },
   "peerDependencies": {
     "vue": "^3.0.0"

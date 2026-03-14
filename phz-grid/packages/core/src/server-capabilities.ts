@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Server Capabilities
+ * @phozart/core — Server Capabilities
  *
  * Resolves and queries server capabilities for feature toggling.
  */

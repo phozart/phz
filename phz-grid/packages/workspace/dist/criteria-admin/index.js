@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/criteria-admin — Admin components for criteria configuration
+ * @phozart/workspace/criteria-admin — Admin components for criteria configuration
  */
 // Designer + Configurator (primary admin components)
 export { PhzFilterDesigner } from './phz-filter-designer.js';

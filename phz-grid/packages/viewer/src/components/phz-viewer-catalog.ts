@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-catalog> Custom Element
+ * @phozart/viewer — <phz-viewer-catalog> Custom Element
  *
  * Catalog screen showing browsable artifacts (dashboards, reports, grids).
  * Delegates logic to the headless catalog-state functions.
@@ -7,7 +7,7 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { ArtifactType, VisibilityMeta } from '@phozart/phz-shared/artifacts';
+import type { ArtifactType, VisibilityMeta } from '@phozart/shared/artifacts';
 import {
   type CatalogState,
   createCatalogState,

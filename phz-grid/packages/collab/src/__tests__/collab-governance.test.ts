@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Data Governance Tests
+ * @phozart/collab — Data Governance Tests
  *
  * Tests that syncGridToYjs respects grid's restricted field sets
  * and that collab session properly uses maskFields + grid API.
@@ -8,7 +8,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createCollabSession } from '../collab-session.js';
 import type { CollabConfig, YDoc, YMap, YArray } from '../types.js';
-import type { GridApi } from '@phozart/phz-core';
+import type { GridApi } from '@phozart/core';
 
 function createMockYMap(): YMap<unknown> {
   const store = new Map<string, unknown>();

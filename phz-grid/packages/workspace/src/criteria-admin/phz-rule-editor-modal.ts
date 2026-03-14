@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria - Rule Editor Modal
+ * @phozart/criteria - Rule Editor Modal
  *
  * Modal dialog for creating, editing, and copying filter rules.
  * Shows type-specific form fields with guidance for each rule type.
@@ -21,11 +21,11 @@ import type {
   ValueSetConfig, TreeGroupCompareConfig, CustomRuleConfig,
   CrossFilterConfig, CrossFilterCondition, CrossFilterAction,
   CrossFilterConditionOperator, CrossFilterActionType, CrossFilterElseActionType,
-} from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
+} from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
 
 export type RuleEditorMode = 'add' | 'edit' | 'copy';
 

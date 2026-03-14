@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-workspace — WorkspaceAdapter Interface
+ * @phozart/workspace — WorkspaceAdapter Interface
  *
  * Extends EngineStorageAdapter + AsyncDefinitionStore with placement and catalog methods.
  */
-import type { EngineStorageAdapter } from '@phozart/phz-engine';
-import type { AsyncDefinitionStore } from '@phozart/phz-shared/definitions';
+import type { EngineStorageAdapter } from '@phozart/engine';
+import type { AsyncDefinitionStore } from '@phozart/shared/definitions';
 import type { PlacementRecord } from './placement.js';
 import type { PlacementId, ArtifactMeta, ArtifactFilter, PlacementFilter, AlertRule, AlertRuleId, BreachRecord, BreachId, AlertSubscription, TemplateDefinition, TemplateId } from './types.js';
-import type { DashboardBookmark, DashboardInteractionState } from '@phozart/phz-shared';
+import type { DashboardBookmark, DashboardInteractionState } from '@phozart/shared';
 export interface WorkspaceAdapter extends EngineStorageAdapter, AsyncDefinitionStore {
     /** Persist a placement record */
     savePlacement(placement: PlacementRecord): Promise<PlacementRecord>;

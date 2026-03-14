@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-collab — Type Definitions
+ * @phozart/collab — Type Definitions
  *
  * Real-time collaboration types using Yjs CRDTs.
  */
-import type { GridApi, RowId, RowData, CellPosition, ColumnDefinition, GridState, Unsubscribe } from '@phozart/phz-core';
+import type { GridApi, RowId, RowData, CellPosition, ColumnDefinition, GridState, Unsubscribe } from '@phozart/core';
 export interface YDoc {
     getArray<T = unknown>(name: string): YArray<T>;
     getMap<T = unknown>(name: string): YMap<T>;

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ComputedColumnsController, type ComputedColumnsHost } from '../controllers/computed-columns.controller.js';
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 
 function makeHost(overrides?: Partial<ComputedColumnsHost>): ComputedColumnsHost {
   return {

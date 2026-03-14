@@ -1,5 +1,5 @@
 import { type RefObject } from 'react';
-import type { SelectionContext } from '@phozart/phz-core';
+import type { SelectionContext } from '@phozart/core';
 import type { CriteriaApi } from '../phz-selection-criteria.js';
 export interface CriteriaHookResult {
     /** Current selection context (updated when user calls getContext). */

@@ -111,6 +111,90 @@ describe('QueryPlanner', () => {
   });
 });
 
+describe('QueryPlanner — worker engine selection', () => {
+  const defaultCaps: PipelineCapabilities = {
+    hasAsyncDataSource: false,
+    hasDuckDB: false,
+    rowCount: 100,
+    enableWorkers: false,
+  };
+
+  it('selects worker engine when enableWorkers=true and rowCount >= workerThreshold', () => {
+    const planner = new QueryPlanner();
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: true,
+      rowCount: 5_000,
+    });
+    expect(plan.engine).toBe('worker');
+  });
+
+  it('falls through to JS when enableWorkers=false', () => {
+    const planner = new QueryPlanner();
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: false,
+      rowCount: 8_000,
+    });
+    expect(plan.engine).toBe('js');
+  });
+
+  it('prefers DuckDB over worker when hasDuckDB=true and above duckdb threshold', () => {
+    const planner = new QueryPlanner();
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: true,
+      hasDuckDB: true,
+      rowCount: 50_000,
+    });
+    expect(plan.engine).toBe('duckdb');
+  });
+
+  it('does not select worker when hasDuckDB=true (even below duckdb threshold)', () => {
+    const planner = new QueryPlanner();
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: true,
+      hasDuckDB: true,
+      rowCount: 6_000,
+    });
+    // hasDuckDB is true but below duckdbThreshold (10k), and worker check
+    // requires !hasDuckDB, so falls to JS
+    expect(plan.engine).toBe('js');
+  });
+
+  it('respects custom workerThreshold', () => {
+    const planner = new QueryPlanner({ workerThreshold: 1_000 });
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: true,
+      rowCount: 1_500,
+    });
+    expect(plan.engine).toBe('worker');
+  });
+
+  it('falls through to JS when below custom workerThreshold', () => {
+    const planner = new QueryPlanner({ workerThreshold: 10_000 });
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      enableWorkers: true,
+      rowCount: 5_000,
+    });
+    expect(plan.engine).toBe('js');
+  });
+
+  it('prefers server over worker when async data source is present', () => {
+    const planner = new QueryPlanner();
+    const plan = planner.createPlan({
+      ...defaultCaps,
+      hasAsyncDataSource: true,
+      enableWorkers: true,
+      rowCount: 8_000,
+    });
+    expect(plan.engine).toBe('server');
+  });
+});
+
 describe('QueryPlanner — plan execution contract', () => {
   it('createPlan returns a cancellable plan', () => {
     const planner = new QueryPlanner();

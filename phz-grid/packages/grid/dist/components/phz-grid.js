@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-grid — <phz-grid> Custom Element
+ * @phozart/grid — <phz-grid> Custom Element
  *
  * God Object refactored into Lit Reactive Controllers.
  * Rendering and public API live here; behaviour delegates to controllers.
@@ -18,7 +18,7 @@ import { ForcedColorsAdapter } from '../a11y/forced-colors-adapter.js';
 import { dispatchGridEvent } from '../events.js';
 import { formatCellValue } from '../formatters/cell-formatter.js';
 // Controllers
-import { ToastController, ColumnResizeController, EditController, SortController, SelectionController, FilterController, VirtualScrollController, ExportController, ContextMenuController, ClipboardController, ConditionalFormattingController, AggregationController, GroupController, ColumnChooserController, ComputedColumnsController, GridCoreController, } from '../controllers/index.js';
+import { ToastController, ColumnResizeController, EditController, SortController, SelectionController, FilterController, VirtualScrollController, ExportController, ContextMenuController, ClipboardController, ConditionalFormattingController, AggregationController, GroupController, ColumnChooserController, ComputedColumnsController, GridCoreController, TooltipController, } from '../controllers/index.js';
 // Styles & templates
 import { phzGridStyles } from './phz-grid.styles.js';
 import { renderTitleBar, renderPagination, renderGroupedRows, renderColumnGroupHeader } from './phz-grid.templates.js';
@@ -83,6 +83,7 @@ let PhzGrid = class PhzGrid extends LitElement {
         this.allowSorting = true;
         this.defaultSortField = '';
         this.defaultSortDirection = 'asc';
+        this.sortDebounceMs = 0;
         this.headerWrapping = false;
         this.autoSizeColumns = false;
         this.columnGroups = [];
@@ -120,7 +121,11 @@ let PhzGrid = class PhzGrid extends LitElement {
         this.footerBg = '#FAFAF9';
         this.footerText = '#78716C';
         this.aggregationPosition = 'bottom';
+        this.showSummary = false;
+        this.summaryFunction = 'sum';
         this.rowActions = [];
+        this.enableCellTooltips = true;
+        this.tooltipDelay = 300;
         // --- Internal state ---
         this.visibleRows = [];
         this.columnDefs = [];
@@ -161,6 +166,7 @@ let PhzGrid = class PhzGrid extends LitElement {
         this.columnChooser = new ColumnChooserController(this);
         this.computedColumnsCtrl = new ComputedColumnsController(this);
         this.gridCore = new GridCoreController(this);
+        this.tooltipCtrl = new TooltipController(this);
     }
     // DataSet-derived state (delegated to GridCoreController)
     get _dataSetMeta() { return this.gridCore._dataSetMeta; }
@@ -466,6 +472,7 @@ let PhzGrid = class PhzGrid extends LitElement {
             ${this._renderHeader()}
           </thead>
           <tbody class="phz-grid__body"
+                 tabindex="0"
                  @keydown=${this._handleBodyKeyDown}
                  @mouseup=${() => this.selection.handleCellMouseUp()}>
             ${this.isGrouped ? this._renderGroupedRows() : this._renderBodyRows(displayRows)}
@@ -536,9 +543,27 @@ let PhzGrid = class PhzGrid extends LitElement {
 
       ${this.toast.toast ? html `
         <div class="phz-toast phz-toast--${this.toast.toast.type}" role="alert" aria-live="assertive">
-          ${this.toast.toast.message}
+          ${this.toast.toast.icon ? html `<svg class="phz-toast__icon" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">${this._toastIconPath(this.toast.toast.icon)}</svg>` : html `<span class="phz-toast__dot"></span>`}
+          <span class="phz-toast__message">${this.toast.toast.message}</span>
+          ${this.toast.toast.dismissible ? html `<button class="phz-toast__close" aria-label="Dismiss" @click=${() => this.toast.dismiss()}>\u00D7</button>` : nothing}
         </div>` : nothing}
     `;
+    }
+    _toastIconPath(icon) {
+        switch (icon) {
+            case 'copy':
+                return html `<path d="M5 2H11C11.55 2 12 2.45 12 3V11C12 11.55 11.55 12 11 12H5C4.45 12 4 11.55 4 11V3C4 2.45 4.45 2 5 2Z" stroke="currentColor" stroke-width="1.5"/><path d="M8 5H14C14.55 5 15 5.45 15 6V14C15 14.55 14.55 15 14 15H8C7.45 15 7 14.55 7 14V6C7 5.45 7.45 5 8 5Z" stroke="currentColor" stroke-width="1.5" fill="var(--phz-toast-icon-fill, none)"/>`;
+            case 'export':
+                return html `<path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12V13C3 13.55 3.45 14 4 14H12C12.55 14 13 13.55 13 13V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`;
+            case 'check':
+                return html `<path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+            case 'error':
+                return html `<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r="0.75" fill="currentColor"/>`;
+            case 'info':
+                return html `<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 7V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>`;
+            default:
+                return html ``;
+        }
     }
     _renderTitleBar() {
         return renderTitleBar({
@@ -614,7 +639,8 @@ let PhzGrid = class PhzGrid extends LitElement {
     }
     _renderHeader() {
         const visibleCols = this.columnDefs.filter(c => !c.hidden);
-        const pinned = splitPinnedColumns(this.columnDefs);
+        const pinOverrides = this.gridApi?.getState()?.columns?.pinOverrides;
+        const pinned = splitPinnedColumns(this.columnDefs, pinOverrides);
         const leftOffsets = computePinnedOffsets(pinned.left, 'left');
         const rightOffsets = computePinnedOffsets(pinned.right, 'right');
         return html `
@@ -684,7 +710,8 @@ let PhzGrid = class PhzGrid extends LitElement {
         const isSelected = this.selectedRowIds.has(row.__id);
         const isFocused = this.focusedRowId === row.__id;
         const visibleCols = this.columnDefs.filter(c => !c.hidden);
-        const pinned = splitPinnedColumns(this.columnDefs);
+        const pinOverrides = this.gridApi?.getState()?.columns?.pinOverrides;
+        const pinned = splitPinnedColumns(this.columnDefs, pinOverrides);
         const leftOffsets = computePinnedOffsets(pinned.left, 'left');
         const rightOffsets = computePinnedOffsets(pinned.right, 'right');
         return html `
@@ -692,7 +719,7 @@ let PhzGrid = class PhzGrid extends LitElement {
           aria-selected=${isSelected}
           aria-rowindex=${rowIdx + 1}
           data-row-id=${row.__id}
-          @click=${(e) => this.selection.handleRowClick(e, row)}
+          @click=${(e) => { this.focusedRowId = row.__id; this.selection.handleRowClick(e, row); }}
           @dblclick=${(e) => { if (this.editMode === 'dblclick') {
             const td = e.target.closest('td[data-field]');
             const field = td?.getAttribute('data-field') ?? visibleCols[0]?.field ?? '';
@@ -748,7 +775,7 @@ let PhzGrid = class PhzGrid extends LitElement {
           data-col=${colIdx}
           data-field=${col.field}
           style="${pinStyle}${customStyle}${cfStyle.backgroundColor ? `background:${cfStyle.backgroundColor};` : ''}${cfStyle.color ? `color:${cfStyle.color};` : ''}"
-          @mousedown=${(e) => this.selection.handleCellMouseDown(e, rowIdx, colIdx)}
+          @mousedown=${(e) => { this.selection.handleCellMouseDown(e, rowIdx, colIdx); this._focusBody(); }}
           @mousemove=${(e) => this.selection.handleCellMouseMove(e, rowIdx, colIdx)}
           @click=${() => { if (this.editMode === 'click')
             this.edit.startInlineEdit(row, col.field); this._handleCellDrillThrough(row, col); }}>
@@ -817,11 +844,16 @@ let PhzGrid = class PhzGrid extends LitElement {
     _handleBodyKeyDown(e) {
         if (e.ctrlKey || e.metaKey) {
             if (e.key === 'c') {
+                e.preventDefault(); // Always prevent native copy inside grid body
                 if (this.selection.cellRangeAnchor && this.selection.cellRangeEnd) {
                     this.clipboard.copyCellRange(false);
                 }
                 else if (this.selectedRowIds.size > 0) {
                     this.clipboard.copySelectedRows(false);
+                }
+                else if (this.focusedRowId) {
+                    // Fallback: copy the focused/clicked row when no explicit selection
+                    this.clipboard.copyRow(this.focusedRowId);
                 }
                 return;
             }
@@ -832,6 +864,12 @@ let PhzGrid = class PhzGrid extends LitElement {
             }
         }
         this.keyboardNav?.handleKeyDown(e);
+    }
+    /** Focus the tbody so keyboard shortcuts (Ctrl+C, arrow keys, etc.) work. */
+    _focusBody() {
+        const body = this.renderRoot.querySelector('.phz-grid__body');
+        if (body && document.activeElement !== body)
+            body.focus({ preventScroll: true });
     }
     getVisibleRows() { return this.visibleRows; }
 };
@@ -1004,6 +1042,9 @@ __decorate([
     property({ type: String, attribute: 'default-sort-direction' })
 ], PhzGrid.prototype, "defaultSortDirection", void 0);
 __decorate([
+    property({ type: Number, attribute: 'sort-debounce-ms' })
+], PhzGrid.prototype, "sortDebounceMs", void 0);
+__decorate([
     property({ type: Boolean, attribute: 'header-wrapping' })
 ], PhzGrid.prototype, "headerWrapping", void 0);
 __decorate([
@@ -1118,6 +1159,12 @@ __decorate([
     property({ type: String, attribute: 'aggregation-position' })
 ], PhzGrid.prototype, "aggregationPosition", void 0);
 __decorate([
+    property({ type: Boolean, attribute: 'show-summary' })
+], PhzGrid.prototype, "showSummary", void 0);
+__decorate([
+    property({ type: String, attribute: 'summary-function' })
+], PhzGrid.prototype, "summaryFunction", void 0);
+__decorate([
     property({ attribute: false })
 ], PhzGrid.prototype, "rowActions", void 0);
 __decorate([
@@ -1138,6 +1185,12 @@ __decorate([
 __decorate([
     property({ attribute: false })
 ], PhzGrid.prototype, "progressiveLoad", void 0);
+__decorate([
+    property({ type: Boolean, attribute: 'enable-cell-tooltips' })
+], PhzGrid.prototype, "enableCellTooltips", void 0);
+__decorate([
+    property({ type: Number, attribute: 'tooltip-delay' })
+], PhzGrid.prototype, "tooltipDelay", void 0);
 __decorate([
     state()
 ], PhzGrid.prototype, "visibleRows", void 0);

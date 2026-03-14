@@ -1,5 +1,5 @@
 import { type RefObject } from 'react';
-import type { GridApi, RowData, RowId } from '@phozart/phz-core';
+import type { GridApi, RowData, RowId } from '@phozart/core';
 export declare function useGridData(gridRef: RefObject<GridApi | null>): {
     data: RowData<any>[];
     setData: (newData: unknown[]) => void | undefined;

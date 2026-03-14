@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Criteria Binding Tab
+ * @phozart/grid-admin — Criteria Binding Tab
  *
  * Two-panel interface: available filter definitions (left) and
  * bound filters (right). Admins add/remove/reorder/configure bindings.

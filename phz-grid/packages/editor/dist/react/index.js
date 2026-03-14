@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor/react — React wrappers for editor Web Components
+ * @phozart/editor/react — React wrappers for editor Web Components
  *
  * Provides React components that wrap the Lit-based editor components,
  * bridging properties and events. Uses @lit/react createComponent for

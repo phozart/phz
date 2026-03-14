@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-criteria — Criteria Panel
+ * @phozart/criteria — Criteria Panel
  *
  * Main facade. Renders header, fields grid, Apply/Reset bar, summary strip, preset manager.
  * Monochrome icons, Phz UI console mode.
  */
 import { LitElement, nothing } from 'lit';
-import type { CriteriaConfig, SelectionContext, SelectionPreset, SelectionFieldOption } from '@phozart/phz-core';
+import type { CriteriaConfig, SelectionContext, SelectionPreset, SelectionFieldOption } from '@phozart/core';
 import './phz-criteria-field.js';
 import './phz-criteria-summary.js';
 import './phz-preset-manager.js';

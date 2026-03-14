@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-config-panel> (B-2.08)
+ * @phozart/editor — <phz-editor-config-panel> (B-2.08)
  *
  * Constrained widget configuration panel. Authors configure
  * widgets by selecting from pre-approved measures and fields.

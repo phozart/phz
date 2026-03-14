@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-viewer — Filter Bar State
+ * @phozart/viewer — Filter Bar State
  *
  * Headless state for the filter bar with value handling.
  * Manages active filters, presets, and value-handling configuration.
  */
-import type { FilterValueHandling, FilterPresetValue } from '@phozart/phz-shared/types';
-import type { DashboardFilterDef, FilterValue } from '@phozart/phz-shared/coordination';
+import type { FilterValueHandling, FilterPresetValue } from '@phozart/shared/types';
+import type { DashboardFilterDef, FilterValue } from '@phozart/shared/coordination';
 export interface FilterBarState {
     /** Dashboard filter definitions. */
     filters: DashboardFilterDef[];

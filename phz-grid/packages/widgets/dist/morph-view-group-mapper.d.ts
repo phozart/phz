@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Morph Group / View Group Mapper
+ * @phozart/widgets — Morph Group / View Group Mapper
  *
  * Bridges the workspace MorphGroup system (category-chart, single-value,
  * tabular, text, navigation) with the new WidgetViewGroup model.
@@ -9,7 +9,7 @@
  * allowing a single dashboard slot to switch between multiple views
  * with configurable switching UI (tabs, dropdown, toggle).
  */
-import type { WidgetViewGroup } from '@phozart/phz-shared/types';
+import type { WidgetViewGroup } from '@phozart/shared/types';
 /**
  * MorphGroup — mirrors the workspace MorphGroup type.
  * Kept as a string literal union so this module has no runtime import

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — ViewsManager
+ * @phozart/core — ViewsManager
  *
  * Manages saved views as named snapshots of grid state.
  * Peer to StateManager — NOT nested inside GridState.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Parquet Loader
+ * @phozart/duckdb — Parquet Loader
  *
  * Smart Parquet loading with projection pushdown, predicate pushdown,
  * and schema inspection.
@@ -8,7 +8,7 @@ import { sanitizeIdentifier } from './sql-builder.js';
 const ALLOWED_URL_SCHEMES = /^(https?:\/\/|\/|\.\/|\.\.\/)/i;
 function validateUrl(url) {
     if (!ALLOWED_URL_SCHEMES.test(url)) {
-        throw new Error(`@phozart/phz-duckdb: Unsupported URL scheme in '${url.slice(0, 50)}'. ` +
+        throw new Error(`@phozart/duckdb: Unsupported URL scheme in '${url.slice(0, 50)}'. ` +
             `Only http://, https://, and relative paths are allowed.`);
     }
 }

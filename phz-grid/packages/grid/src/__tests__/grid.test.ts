@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Tests
+ * @phozart/grid — Tests
  *
  * Tests for the grid package's non-DOM exports (tokens, forced colors detection,
  * event helpers). Lit Web Component rendering tests require a browser or
@@ -160,7 +160,7 @@ describe('ForcedColorsAdapter', () => {
 
 // ─── Export Structure Tests ─────────────────────────────────
 describe('Package exports', () => {
-  it('does not re-export core (consumers import @phozart/phz-core directly)', async () => {
+  it('does not re-export core (consumers import @phozart/core directly)', async () => {
     const gridPkg = await import('../index.js');
     // Core symbols should NOT be re-exported — tree-shaking fix
     expect((gridPkg as any).createGrid).toBeUndefined();
@@ -199,7 +199,7 @@ describe('drill-through event types', () => {
   });
 
   it('DrillThroughConfig shape is valid via engine re-export', async () => {
-    const engine = await import('@phozart/phz-engine');
+    const engine = await import('@phozart/engine');
     // DrillThroughConfig is a type, but resolveDrillFilter exists
     expect(typeof engine.resolveDrillFilter).toBe('function');
     expect(typeof engine.resolveDrillAction).toBe('function');
@@ -213,7 +213,7 @@ describe('drill-through event types', () => {
   });
 
   it('grid-row source without isSummaryRow produces correct filters', async () => {
-    const engine = await import('@phozart/phz-engine');
+    const engine = await import('@phozart/engine');
     const result = engine.resolveDrillFilter({
       source: { type: 'grid-row', rowData: { dept: 'Sales', region: 'North' }, isSummaryRow: false },
       filterFields: ['dept', 'region'],

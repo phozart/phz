@@ -16,7 +16,7 @@ import {
   getActiveFilterCount,
   hasFilterValue,
 } from '../screens/filter-bar-state.js';
-import type { DashboardFilterDef, FilterValue } from '@phozart/phz-shared/coordination';
+import type { DashboardFilterDef, FilterValue } from '@phozart/shared/coordination';
 
 const sampleFilters: DashboardFilterDef[] = [
   { id: 'f1', field: 'region', dataSourceId: 'ds1', label: 'Region', filterType: 'select', required: false, appliesTo: ['w1'] },

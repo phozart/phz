@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Bindings
+ * @phozart/engine — Filter Bindings
  *
  * Associates filter definitions to artefacts (reports/dashboards)
  * with per-binding overrides. Includes migration from legacy CriteriaConfig.
@@ -8,8 +8,8 @@
 import type {
   FilterDefinition, FilterDefinitionId, FilterBinding, ArtefactId,
   SelectionFieldDef, CriteriaConfig, FilterBarFieldConfig,
-} from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 import { createFilterRegistry } from './filter-registry.js';
 import type { FilterRegistry } from './filter-registry.js';
 import { hydrateCriteriaConfig } from './resolve-criteria.js';

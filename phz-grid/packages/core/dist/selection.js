@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Selection Context Serialization
+ * @phozart/core — Selection Context Serialization
  *
  * URL-safe serialization, merge, and validation for SelectionContext.
  */

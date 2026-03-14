@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Selection Criteria (Bar + Drawer Orchestrator)
+ * @phozart/criteria — Selection Criteria (Bar + Drawer Orchestrator)
  *
  * Top-level component composing:
  *  - phz-criteria-bar (compact horizontal bar)
@@ -22,12 +22,12 @@ import type {
   FilterBarBehavior,
   PresenceState,
   DataSet,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import {
   resolveDynamicDefaults,
   validateCriteria,
   resolveFieldOptions,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import { criteriaStyles } from '../shared-styles.js';
 
 // Import sub-components for side-effect registration
@@ -59,19 +59,19 @@ export class PhzSelectionCriteria extends LitElement {
   @property({ type: Boolean }) registryMode = false;
 
   /** Filter registry instance (registryMode only) */
-  @property({ type: Object }) filterRegistry?: import('@phozart/phz-engine').FilterRegistry;
+  @property({ type: Object }) filterRegistry?: import('@phozart/engine').FilterRegistry;
 
   /** Filter binding store instance (registryMode only) */
-  @property({ type: Object }) filterBindings?: import('@phozart/phz-engine').FilterBindingStore;
+  @property({ type: Object }) filterBindings?: import('@phozart/engine').FilterBindingStore;
 
   /** Filter state manager instance (registryMode only) */
-  @property({ type: Object }) filterStateManager?: import('@phozart/phz-engine').FilterStateManager;
+  @property({ type: Object }) filterStateManager?: import('@phozart/engine').FilterStateManager;
 
   /** Filter rule engine instance (registryMode only) */
-  @property({ type: Object }) filterRuleEngine?: import('@phozart/phz-engine').FilterRuleEngine;
+  @property({ type: Object }) filterRuleEngine?: import('@phozart/engine').FilterRuleEngine;
 
   /** Criteria output manager instance (registryMode only) */
-  @property({ type: Object }) criteriaOutputManager?: import('@phozart/phz-engine').CriteriaOutputManager;
+  @property({ type: Object }) criteriaOutputManager?: import('@phozart/engine').CriteriaOutputManager;
 
   /** Artefact ID for registry mode */
   @property({ type: String }) artefactId?: string;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Subscription Manager (N.2)
+ * @phozart/workspace — Subscription Manager (N.2)
  *
  * Pure logic functions for creating and managing alert subscriptions.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Data Pipeline (T.4)
+ * @phozart/workspace — Dashboard Data Pipeline (T.4)
  *
  * Preload/full-load parallel data architecture:
  * - Fires preload query immediately for fast initial render.

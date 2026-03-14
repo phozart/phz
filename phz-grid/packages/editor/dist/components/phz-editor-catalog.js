@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-catalog> (B-2.04)
+ * @phozart/editor — <phz-editor-catalog> (B-2.04)
  *
  * Catalog screen component for the editor. Displays artifacts
  * with search, filtering, sorting, and creation actions.

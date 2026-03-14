@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Admin
+ * @phozart/criteria — Criteria Admin
  *
  * Narrow vertical admin panel (320px) with 3 tabs: Fields, Rules, Settings.
  * Designed for side-panel placement following BI tool patterns (MicroStrategy, Cognos).
@@ -47,9 +47,9 @@ import type {
   ArtefactId,
   SelectionPreset,
   FilterDataSource,
-} from '@phozart/phz-core';
-import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/phz-core';
-import { BUILTIN_DATE_PRESETS, DATE_PRESET_GROUP_LABELS, inferCriteriaType, deriveOptionsFromData, resolveOptionsSource } from '@phozart/phz-engine';
+} from '@phozart/core';
+import { filterDefinitionId, artefactId as toArtefactId } from '@phozart/core';
+import { BUILTIN_DATE_PRESETS, DATE_PRESET_GROUP_LABELS, inferCriteriaType, deriveOptionsFromData, resolveOptionsSource } from '@phozart/engine';
 import { criteriaStyles } from '../shared-styles.js';
 
 const ALL_GRANULARITIES: { value: DateGranularity; label: string }[] = [

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine — Filter Definition Registry
+ * @phozart/engine — Filter Definition Registry
  *
  * Reusable, artefact-independent filter definitions with dependency
  * graph validation (cycle detection + topological sort).
  */
 
-import type { FilterDefinition, FilterDefinitionId, SelectionFieldType } from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterDefinitionId, SelectionFieldType } from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 
 // --- Registry Interface ---
 

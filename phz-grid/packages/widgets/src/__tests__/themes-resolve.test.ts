@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Theme Resolution Tests
+ * @phozart/widgets — Theme Resolution Tests
  */
 import { describe, it, expect, vi } from 'vitest';
 import { resolveTheme, lightTheme, darkTheme, highContrastTheme } from '../themes.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Semantic Role Classification
+ * @phozart/shared — Semantic Role Classification
  *
  * Resolves field metadata into one of four semantic roles (dimension, measure,
  * time, identifier) using a three-tier precedence model:

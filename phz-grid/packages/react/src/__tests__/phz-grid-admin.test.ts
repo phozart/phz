@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzGridAdmin Component Tests
+ * @phozart/react — PhzGridAdmin Component Tests
  *
  * Tests for the PhzGridAdmin React component that wraps the <phz-grid-admin> Web Component.
  * Structural validation: exports, component shape, prop interface, imperative API shape.
@@ -50,11 +50,11 @@ vi.mock('@lit/react', () => ({
 }));
 
 // Mock side-effect imports
-vi.mock('@phozart/phz-grid-admin', () => ({
+vi.mock('@phozart/grid-admin', () => ({
   PhzGridAdmin: class PhzGridAdmin {},
 }));
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 import { PhzGridAdmin, type PhzGridAdminProps, type GridAdminApi } from '../phz-grid-admin.js';
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Cross-Filter Rule State
+ * @phozart/workspace — Cross-Filter Rule State
  *
  * Pure functions for managing cross-filter scoping rules in the
  * dashboard editor. Rules define which widgets can cross-filter

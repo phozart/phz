@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern > API Access State (B-3.15)
+ * @phozart/workspace — Govern > API Access State (B-3.15)
  *
  * Pure functions for API key management, role-based access configuration,
  * rate limit settings, and OpenAPI spec viewing.

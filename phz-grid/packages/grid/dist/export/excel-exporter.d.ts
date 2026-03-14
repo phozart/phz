@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-grid — Excel (XLSX) Exporter
+ * @phozart/grid — Excel (XLSX) Exporter
  *
  * Generates XLSX files using OpenXML format without external dependencies.
  * Preserves column types (numbers as numbers, dates as dates).
  */
-import type { GridApi, ColumnDefinition, CriteriaExportMetadata, DataSetMeta } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/core';
 import { type ExportGroupRow } from './csv-exporter.js';
 export interface CellFormatting {
     bgColor?: string;
@@ -64,6 +64,9 @@ export interface ExcelExportOptions {
     excludeFields?: Set<string>;
     /** Mask functions for sensitive columns — value is replaced with mask output. */
     maskFields?: Map<string, (value: unknown) => string>;
+    /** Pre-filtered rows to export (overrides gridApi.getSortedRowModel().rows).
+     *  Use when client-side search filter should be respected in exports. */
+    rows?: RowData[];
 }
 /** Evaluate whether a cell value matches a threshold condition */
 export declare function matchesThreshold(value: unknown, operator: string, threshold: unknown): boolean;

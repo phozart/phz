@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Selection Context Types
+ * @phozart/core — Selection Context Types
  *
  * App-level selection state that scopes all widgets and dashboards.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-report> Custom Element
+ * @phozart/viewer — <phz-viewer-report> Custom Element
  *
  * Report/grid view screen. Displays tabular data with pagination,
  * sort, and export. Delegates to phz-grid for rendering.
@@ -7,7 +7,7 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { ExportFormat } from '@phozart/phz-shared/adapters';
+import type { ExportFormat } from '@phozart/shared/adapters';
 import {
   type ReportViewState,
   type ReportColumnView,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Context Menu
+ * @phozart/workspace — Dashboard Context Menu
  *
  * Pure functions generating context menus for dashboard editing targets.
  */

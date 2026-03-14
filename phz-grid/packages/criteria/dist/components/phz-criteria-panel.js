@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Panel
+ * @phozart/criteria — Criteria Panel
  *
  * Main facade. Renders header, fields grid, Apply/Reset bar, summary strip, preset manager.
  * Monochrome icons, Phz UI console mode.
@@ -12,7 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { resolveDynamicDefaults, resolveDependencies, validateCriteria, } from '@phozart/phz-engine';
+import { resolveDynamicDefaults, resolveDependencies, validateCriteria, } from '@phozart/engine';
 import { criteriaStyles } from '../shared-styles.js';
 import './phz-criteria-field.js';
 import './phz-criteria-summary.js';

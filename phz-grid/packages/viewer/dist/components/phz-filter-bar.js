@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-filter-bar> Custom Element
+ * @phozart/viewer — <phz-filter-bar> Custom Element
  *
  * Filter bar for dashboards and reports. Shows active filters,
  * preset selection, and filter value editing.

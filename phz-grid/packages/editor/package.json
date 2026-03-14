@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-editor",
+  "name": "@phozart/editor",
   "version": "0.1.0",
   "description": "Editor shell — BI authoring environment for creating dashboards, reports, alerts, and sharing artifacts",
   "type": "module",
@@ -38,9 +38,9 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/editor#readme",
   "dependencies": {
-    "@phozart/phz-shared": "^0.1.0",
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/shared": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
     "lit": "^3.2.0"
   }
 }

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Adapter
+ * @phozart/engine — Filter Adapter
  *
  * Bridges CriteriaEngine output (ArtefactCriteria) to widget data filtering.
  * Provides:
@@ -7,7 +7,7 @@
  * - FilterAdapter: stateful adapter managing values, criteria, and subscriptions
  * - globalFiltersToCriteriaBindings(): converts GlobalFilter[] into CriteriaEngine registrations
  */
-import { filterDefinitionId } from '@phozart/phz-core';
+import { filterDefinitionId } from '@phozart/core';
 // --- Pure Filter Application ---
 /**
  * Apply ArtefactCriteria filters to a data array, returning matching rows.

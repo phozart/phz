@@ -1,11 +1,11 @@
-# @phozart/phz-duckdb
+# @phozart/duckdb
 
 DuckDB-WASM data source adapter for phz-grid. Enables large-scale in-browser analytics with SQL queries, Apache Arrow integration, and Parquet file support.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-duckdb @phozart/phz-core
+npm install @phozart/duckdb @phozart/core
 ```
 
 **Peer dependencies:** `@duckdb/duckdb-wasm ^1.0.0`, `apache-arrow ^16.0.0`
@@ -13,8 +13,8 @@ npm install @phozart/phz-duckdb @phozart/phz-core
 ## Quick Start
 
 ```ts
-import { createDuckDBDataSource } from '@phozart/phz-duckdb';
-import { createGrid } from '@phozart/phz-core';
+import { createDuckDBDataSource } from '@phozart/duckdb';
+import { createGrid } from '@phozart/core';
 
 // Initialize DuckDB-WASM data source
 const dataSource = await createDuckDBDataSource({
@@ -90,12 +90,12 @@ import type {
   QueryResult,
   QueryPlan,
   ParquetMetadata,
-} from '@phozart/phz-duckdb';
+} from '@phozart/duckdb';
 ```
 
 ## Re-exports
 
-This package re-exports all types from `@phozart/phz-core` for convenience.
+This package re-exports all types from `@phozart/core` for convenience.
 
 ## License
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Anomaly Detection
+ * @phozart/engine — Anomaly Detection
  *
  * Detect anomalies in time series data using statistical methods:
  * Z-score, IQR (interquartile range), and moving average deviation.

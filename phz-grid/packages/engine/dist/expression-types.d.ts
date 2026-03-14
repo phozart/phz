@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression AST Types & Data Model
+ * @phozart/engine — Expression AST Types & Data Model
  *
  * All types for the 5-layer computation DAG:
  * Fields → Parameters → Calculated Fields → Metrics → KPIs
@@ -18,7 +18,7 @@ export interface SourcePosition {
 }
 export type BinaryOperator = '+' | '-' | '*' | '/' | '%' | '^' | 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'and' | 'or' | 'concat';
 export type UnaryOperator = 'negate' | 'not';
-export type BuiltinFunction = 'ABS' | 'ROUND' | 'FLOOR' | 'CEIL' | 'UPPER' | 'LOWER' | 'TRIM' | 'LEN' | 'SUBSTR' | 'CONCAT' | 'YEAR' | 'MONTH' | 'DAY' | 'COALESCE' | 'IF' | 'CLAMP';
+export type BuiltinFunction = 'ABS' | 'ROUND' | 'FLOOR' | 'CEIL' | 'SQRT' | 'POWER' | 'MOD' | 'LOG' | 'EXP' | 'UPPER' | 'LOWER' | 'TRIM' | 'LEN' | 'SUBSTR' | 'CONCAT' | 'LEFT' | 'RIGHT' | 'REPLACE' | 'REPEAT' | 'YEAR' | 'MONTH' | 'DAY' | 'DATE_DIFF' | 'DATE_ADD' | 'FORMAT_DATE' | 'STDDEV' | 'VARIANCE' | 'PERCENTILE' | 'RANK' | 'DENSE_RANK' | 'LAG' | 'LEAD' | 'RUNNING_SUM' | 'NTILE' | 'COALESCE' | 'IF' | 'CLAMP';
 export interface FieldRefNode {
     kind: 'field_ref';
     fieldName: string;

@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Container Box State
+ * @phozart/widgets — Container Box State
  *
  * Headless state machine for the container box widget.
  * Manages collapse state and child widget membership.
  */
-import { createDefaultContainerBoxConfig } from '@phozart/phz-shared/types';
+import { createDefaultContainerBoxConfig } from '@phozart/shared/types';
 /**
  * Create initial container box state from a configuration.
  * Starts in the expanded (non-collapsed) state with no children.

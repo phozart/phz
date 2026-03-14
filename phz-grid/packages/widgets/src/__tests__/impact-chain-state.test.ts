@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Impact Chain State Tests (7A-C)
+ * @phozart/widgets — Impact Chain State Tests (7A-C)
  */
 import { describe, it, expect } from 'vitest';
 import type {
   ImpactChainNode,
   HypothesisState,
   ImpactNodeRole,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 import {
   initialImpactChainState,
   computeChainLayout,

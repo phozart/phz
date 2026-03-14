@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Context Menu Component
+ * @phozart/workspace — Context Menu Component
  *
  * Generic positioned overlay for context menus.
  * Receives ContextMenuItem[] and emits 'menu-action' with the selected action ID.

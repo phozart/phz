@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-collab — Sync Providers
+ * @phozart/collab — Sync Providers
  *
  * WebSocket and WebRTC sync provider implementations.
  * These connect Yjs documents to remote peers for real-time collaboration.
  */
-import type { Unsubscribe } from '@phozart/phz-core';
+import type { Unsubscribe } from '@phozart/core';
 import type { SyncProvider, ConnectionState, YDoc, WebSocketSyncConfig, WebRTCSyncConfig } from './types.js';
 export declare class WebSocketSyncProvider implements SyncProvider {
     readonly name = "websocket";

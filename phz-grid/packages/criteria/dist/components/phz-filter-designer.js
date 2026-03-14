@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Designer
+ * @phozart/criteria — Filter Designer
  *
  * Single place for creating and managing reusable filter definitions,
  * filter rules, and shared presets. Three tabs: Definitions, Rules, Presets.
@@ -32,7 +32,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { filterDefinitionId, resolveLabelTemplate } from '@phozart/phz-core';
+import { filterDefinitionId, resolveLabelTemplate } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 // Ensure sub-components are registered (side-effect imports)
 import './phz-rule-admin.js';
@@ -1409,7 +1409,7 @@ let PhzFilterDesigner = class PhzFilterDesigner extends LitElement {
     async _checkStudio() {
         try {
             // @ts-ignore — optional side-effect import for feature detection
-            await import('@phozart/phz-workspace/engine-admin');
+            await import('@phozart/workspace/engine-admin');
             this._hasStudio = true;
         }
         catch {

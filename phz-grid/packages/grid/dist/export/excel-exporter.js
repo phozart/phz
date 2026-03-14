@@ -483,8 +483,9 @@ export function exportToExcel(gridApi, columnDefs, options = {}) {
     if (options.excludeFields?.size) {
         cols = cols.filter(c => !options.excludeFields.has(c.field));
     }
-    // Use sorted row model for flat rows
-    const allRows = gridApi.getSortedRowModel().rows;
+    // Prefer pre-filtered rows (respects client-side search),
+    // fall back to sorted row model for full dataset export.
+    const allRows = options.rows ?? gridApi.getSortedRowModel().rows;
     let rows;
     if (selectedOnly) {
         const sel = gridApi.getSelection();

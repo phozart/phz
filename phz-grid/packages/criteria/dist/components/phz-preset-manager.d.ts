@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-criteria — Preset Manager
+ * @phozart/criteria — Preset Manager
  *
  * List, save, load, delete, and set default presets.
  * Supports personal + shared scopes with owner-based editing.
  */
 import { LitElement } from 'lit';
-import type { SelectionPreset } from '@phozart/phz-core';
+import type { SelectionPreset } from '@phozart/core';
 export declare class PhzPresetManager extends LitElement {
     static styles: import("lit").CSSResult[];
     presets: SelectionPreset[];

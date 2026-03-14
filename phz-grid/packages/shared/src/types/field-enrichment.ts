@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — FieldEnrichment (A-1.07)
+ * @phozart/shared — FieldEnrichment (A-1.07)
  *
  * Field metadata enrichment for data sources: semantic hints, formatting,
  * units, display labels, and descriptions. Enrichments overlay raw field

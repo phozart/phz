@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Empty States (L.14)
+ * @phozart/workspace — Empty States (L.14)
  *
  * Standardized empty state content for workspace panels.
  * Each state provides a title, message, icon, and primary action CTA.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Bar Config Builder (L.9)
+ * @phozart/workspace — Filter Bar Config Builder (L.9)
  *
  * Builds a DashboardFilterBarConfig from FieldMetadata[] using heuristics
  * to auto-select appropriate filter UI types.

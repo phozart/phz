@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern > Lineage State (WE-8)
+ * @phozart/workspace — Govern > Lineage State (WE-8)
  *
  * Pure functions for artifact lineage/dependency graph visualization.
  * Provides DAG layout, upstream/downstream traversal, impact analysis,

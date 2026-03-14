@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Data Product Registry
+ * @phozart/engine — Data Product Registry
  *
  * Data products are the foundational data entities in the BI engine.
  * Each data product has a schema describing its fields.
  */
 
-import type { ColumnType } from '@phozart/phz-core';
+import type { ColumnType } from '@phozart/core';
 import type { DataProductId, ValidationResult } from './types.js';
 import { dataProductId } from './types.js';
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Loading Indicator State (T.6)
+ * @phozart/workspace — Loading Indicator State (T.6)
  *
  * Manages loading progress bar state: phase transitions, messages,
  * progress percentage, and auto-dismiss after completion.

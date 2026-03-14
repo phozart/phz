@@ -12,7 +12,7 @@ import {
   evaluateVisibility,
   getVisibleWidgets,
 } from '../widget-visibility-state.js';
-import type { BaseWidgetConfig } from '@phozart/phz-engine';
+import type { BaseWidgetConfig } from '@phozart/engine';
 
 // --- Fixtures ---
 

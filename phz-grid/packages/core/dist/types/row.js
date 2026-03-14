@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Row Types
+ * @phozart/core — Row Types
  */
 export {};
 //# sourceMappingURL=row.js.map

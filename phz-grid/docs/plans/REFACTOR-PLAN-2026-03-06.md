@@ -76,7 +76,7 @@ The engine internals are solid (3,500+ tests, clean TS build, correct npm packag
 ### WP-3: Add side-effect-free subpath exports
 **Priority**: HIGH | **Effort**: Small | **Risk**: Low
 
-**Why**: Importing `@phozart/phz-grid` pulls in Lit custom element registrations, breaking Next.js SSR. Consumers need to import utilities (themes, tokens, types) without triggering registration.
+**Why**: Importing `@phozart/grid` pulls in Lit custom element registrations, breaking Next.js SSR. Consumers need to import utilities (themes, tokens, types) without triggering registration.
 
 **Tasks**:
 1. Create `packages/grid/src/themes-only.ts` — re-exports from themes.ts without importing any components
@@ -86,10 +86,10 @@ The engine internals are solid (3,500+ tests, clean TS build, correct npm packag
    "./themes": { "types": "./dist/themes-only.d.ts", "import": "./dist/themes-only.js" },
    "./tokens": { "types": "./dist/tokens-only.d.ts", "import": "./dist/tokens-only.js" }
    ```
-4. Update test app to use `import { applyGridTheme } from '@phozart/phz-grid/themes'`
+4. Update test app to use `import { applyGridTheme } from '@phozart/grid/themes'`
 5. Document the SSR-safe imports in README
 
-**Acceptance**: `import { applyGridTheme } from '@phozart/phz-grid/themes'` works in SSR without triggering Lit.
+**Acceptance**: `import { applyGridTheme } from '@phozart/grid/themes'` works in SSR without triggering Lit.
 
 **Files**:
 - packages/grid/src/themes-only.ts (new)
@@ -106,12 +106,12 @@ The engine internals are solid (3,500+ tests, clean TS build, correct npm packag
 **Tasks**:
 1. Audit each package for @customElement usage
 2. Update package.json sideEffects for:
-   - `@phozart/phz-widgets` — add `"sideEffects": ["dist/**/*.js"]` or specific component paths
-   - `@phozart/phz-criteria` — same
-   - `@phozart/phz-grid-admin` — same
-   - `@phozart/phz-engine-admin` — same
-   - `@phozart/phz-grid-creator` — check and fix if needed
-3. Verify `@phozart/phz-grid` existing sideEffects paths match actual dist structure
+   - `@phozart/widgets` — add `"sideEffects": ["dist/**/*.js"]` or specific component paths
+   - `@phozart/criteria` — same
+   - `@phozart/grid-admin` — same
+   - `@phozart/engine-admin` — same
+   - `@phozart/grid-creator` — check and fix if needed
+3. Verify `@phozart/grid` existing sideEffects paths match actual dist structure
 
 **Acceptance**: `npm pack` + tree-shaker simulation doesn't drop any component registrations.
 

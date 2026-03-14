@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine/explorer — Explorer <-> Dashboard Integration
+ * @phozart/engine/explorer — Explorer <-> Dashboard Integration
  *
  * Filter promotion: explore filters -> DashboardFilterDef
  * Drill-through pre-population: dimension values -> FilterValue[]
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 // ========================================================================
 // ID generation

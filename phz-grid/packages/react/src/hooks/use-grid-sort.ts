@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, type RefObject } from 'react';
-import type { GridApi, SortState } from '@phozart/phz-core';
+import type { GridApi, SortState } from '@phozart/core';
 
 export function useGridSort(gridRef: RefObject<GridApi | null>) {
   const [sortState, setSortState] = useState<SortState | null>(null);

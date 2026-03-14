@@ -8,7 +8,7 @@
  *
  * Task: 1.3 (WB-005)
  */
-import type { DataModelField, ParameterDef, CalculatedFieldDef, MetricDef, KPIDefinition } from '@phozart/phz-engine';
+import type { DataModelField, ParameterDef, CalculatedFieldDef, MetricDef, KPIDefinition } from '@phozart/engine';
 /** The full set of properties the sidebar component accepts. */
 export interface SidebarProps {
     fields: DataModelField[];

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard Editor Component
+ * @phozart/workspace — Dashboard Editor Component
  *
  * Field palette (left 260px) + Canvas (center CSS grid) + Config panel (right 360px).
  * Floating toolbar on selected widget: Morph | Configure | Duplicate | Delete.
@@ -8,7 +8,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 import type { DataSourceSchema } from '../data-adapter.js';
 import {
   type DashboardEditorState,
@@ -40,7 +40,7 @@ import {
   getActivePage,
 } from './dashboard-page-state.js';
 import { createDashboardUndoManager, type DashboardUndoManager } from './dashboard-undo.js';
-import type { WidgetSuggestion } from '@phozart/phz-engine';
+import type { WidgetSuggestion } from '@phozart/engine';
 import {
   handleDashboardFieldAdd,
   handleDashboardFieldRemove,
@@ -68,7 +68,7 @@ import {
   commitCondition,
   cancelEditCondition,
 } from './widget-visibility-state.js';
-import type { WidgetVisibilityCondition, VisibilityOperator } from '@phozart/phz-engine';
+import type { WidgetVisibilityCondition, VisibilityOperator } from '@phozart/engine';
 import {
   type WidgetPaletteState,
   initialWidgetPaletteState,

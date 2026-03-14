@@ -1,5 +1,5 @@
 export { ToastController } from './toast.controller.js';
-export type { ToastInfo } from './toast.controller.js';
+export type { ToastInfo, ToastOptions, ToastIcon } from './toast.controller.js';
 export { ColumnResizeController } from './column-resize.controller.js';
 export type { ColumnResizeHost } from './column-resize.controller.js';
 export { EditController } from './edit.controller.js';
@@ -30,3 +30,9 @@ export { ComputedColumnsController } from './computed-columns.controller.js';
 export type { ComputedColumnsHost } from './computed-columns.controller.js';
 export { GridCoreController } from './grid-core.controller.js';
 export type { GridCoreHost, StateSyncPayload } from './grid-core.controller.js';
+export { TooltipController } from './tooltip.controller.js';
+export type { TooltipHost, TooltipPosition } from './tooltip.controller.js';
+// UX-022 — Column quick toggle
+export * from './column-quick-toggle-state.js';
+// UX-025 — Export progress
+export * from './export-progress-state.js';

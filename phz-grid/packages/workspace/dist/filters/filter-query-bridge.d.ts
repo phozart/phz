@@ -12,7 +12,7 @@
  *
  * Tasks: 2.1 (WB-006, WB-026)
  */
-import type { FilterValue, FilterOperator } from '@phozart/phz-shared';
+import type { FilterValue, FilterOperator } from '@phozart/shared';
 import type { DataQuery } from '../data-adapter.js';
 /** Filter format compatible with DataQuery.filters (serializable). */
 export interface DataQueryFilter {

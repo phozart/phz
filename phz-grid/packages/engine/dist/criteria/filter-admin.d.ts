@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Filter Admin Service
+ * @phozart/engine — Filter Admin Service
  *
  * Administrative operations for filter definitions and bindings,
  * with permission checks, immutability enforcement, and audit logging.
  */
-import type { FilterDefinition, FilterDefinitionId, FilterBinding, ArtefactId, AdminPermissions, AuditLogEntry, FilterDefinitionPreset } from '@phozart/phz-core';
+import type { FilterDefinition, FilterDefinitionId, FilterBinding, ArtefactId, AdminPermissions, AuditLogEntry, FilterDefinitionPreset } from '@phozart/core';
 import type { FilterRegistry } from './filter-registry.js';
 import type { FilterBindingStore } from './filter-bindings.js';
 export interface FilterAdminService {

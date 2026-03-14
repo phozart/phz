@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine-admin — Selection Field Manager
+ * @phozart/engine-admin — Selection Field Manager
  *
  * CRUD for selection field definitions. Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { SelectionFieldDef } from '@phozart/phz-core';
+import type { SelectionFieldDef } from '@phozart/core';
 export declare class PhzSelectionFieldManager extends LitElement {
     static styles: import("lit").CSSResult[];
     fields: SelectionFieldDef[];

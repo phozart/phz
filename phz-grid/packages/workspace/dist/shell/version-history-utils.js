@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Version History Utils (L.17)
+ * @phozart/workspace — Version History Utils (L.17)
  *
  * Formatting and diff utilities for the version history panel.
  */

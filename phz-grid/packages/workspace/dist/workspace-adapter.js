@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — WorkspaceAdapter Interface
+ * @phozart/workspace — WorkspaceAdapter Interface
  *
  * Extends EngineStorageAdapter + AsyncDefinitionStore with placement and catalog methods.
  */

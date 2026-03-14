@@ -1,11 +1,11 @@
-# @phozart/phz-widgets
+# @phozart/widgets
 
 Lit Web Component widgets for the phz-grid SDK. Provides KPI cards, scorecards, bar charts, trend lines, status tables, dashboards, and more. All components are framework-agnostic custom elements.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-widgets @phozart/phz-engine @phozart/phz-core
+npm install @phozart/widgets @phozart/engine @phozart/core
 ```
 
 **Peer dependency:** `lit ^3.0.0`
@@ -13,7 +13,7 @@ npm install @phozart/phz-widgets @phozart/phz-engine @phozart/phz-core
 ## Quick Start
 
 ```ts
-import '@phozart/phz-widgets';
+import '@phozart/widgets';
 ```
 
 ```html
@@ -55,10 +55,10 @@ import '@phozart/phz-widgets';
 
 ## Usage with Engine
 
-Widgets are designed to work with the `@phozart/phz-engine` computation layer:
+Widgets are designed to work with the `@phozart/engine` computation layer:
 
 ```ts
-import { resolveWidgetProps, resolveDashboardWidgets } from '@phozart/phz-engine';
+import { resolveWidgetProps, resolveDashboardWidgets } from '@phozart/engine';
 
 // Resolve widget data from engine config
 const props = resolveWidgetProps(widgetConfig, data, scoreProvider);
@@ -70,7 +70,7 @@ const widgets = resolveDashboardWidgets(dashboardConfig, data, scoreProvider);
 ## Programmatic Usage
 
 ```ts
-import { PhzKPICard } from '@phozart/phz-widgets';
+import { PhzKPICard } from '@phozart/widgets';
 
 const card = document.createElement('phz-kpi-card') as PhzKPICard;
 card.title = 'Revenue';
@@ -83,7 +83,7 @@ document.body.appendChild(card);
 ## Shared Styles
 
 ```ts
-import { widgetBaseStyles } from '@phozart/phz-widgets';
+import { widgetBaseStyles } from '@phozart/widgets';
 ```
 
 The `widgetBaseStyles` export provides the base CSS for consistent styling across all widget components.

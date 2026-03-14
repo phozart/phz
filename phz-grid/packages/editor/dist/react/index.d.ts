@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor/react — React wrappers for editor Web Components
+ * @phozart/editor/react — React wrappers for editor Web Components
  *
  * Provides React components that wrap the Lit-based editor components,
  * bridging properties and events. Uses @lit/react createComponent for
@@ -8,12 +8,12 @@
  */
 import React, { type ReactNode } from 'react';
 import type { EditorScreen } from '../editor-state.js';
-import type { ArtifactVisibility } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility } from '@phozart/shared/artifacts';
 import type { CatalogItem } from '../screens/catalog-state.js';
-import type { DashboardWidget } from '@phozart/phz-shared/types';
-import type { MeasureDefinition, KPIDefinition } from '@phozart/phz-shared/adapters';
-import type { PersonalAlert } from '@phozart/phz-shared/types';
-import type { Subscription } from '@phozart/phz-shared/types';
+import type { DashboardWidget } from '@phozart/shared/types';
+import type { MeasureDefinition, KPIDefinition } from '@phozart/shared/adapters';
+import type { PersonalAlert } from '@phozart/shared/types';
+import type { Subscription } from '@phozart/shared/types';
 import type { FieldConstraint } from '../authoring/config-panel-state.js';
 export interface PhzEditorShellProps {
     theme?: string;

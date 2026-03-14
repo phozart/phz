@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Decision Tree Widget
+ * @phozart/widgets — Decision Tree Widget
  *
  * Visualizes branching decision logic as an expandable/collapsible tree.
  * Nodes show conditions, statuses, and outcomes. Supports external

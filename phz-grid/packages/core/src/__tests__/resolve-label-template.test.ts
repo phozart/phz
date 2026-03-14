@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — resolveLabelTemplate Tests
+ * @phozart/core — resolveLabelTemplate Tests
  */
 import { describe, it, expect } from 'vitest';
 import { resolveLabelTemplate } from '../utils.js';

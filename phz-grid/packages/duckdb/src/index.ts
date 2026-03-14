@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB-WASM Data Source Adapter
+ * @phozart/duckdb — DuckDB-WASM Data Source Adapter
  *
  * Provides a DuckDB-WASM-backed data source for large-scale
  * in-browser analytics with Apache Arrow integration.
@@ -67,7 +67,7 @@ export {
 } from './duckdb-aggregation.js';
 
 // DuckDB Pivot (WI 25)
-export { buildPivotQuery } from './duckdb-pivot.js';
+export { buildPivotQuery, type DateGranularity, type PivotQueryOptions } from './duckdb-pivot.js';
 
 // AI Executor (WI 26)
 export {
@@ -98,6 +98,7 @@ export {
 export {
   DuckDBComputeBackend,
   createDuckDBComputeBackend,
+  sanitizeExpression,
   type DuckDBQueryExecutor,
 } from './duckdb-compute-backend.js';
 
@@ -108,3 +109,10 @@ export type { DuckDBQueryBackendOptions } from './duckdb-query-backend.js';
 // Connection Pool
 export { createDuckDBPool } from './duckdb-pool.js';
 export type { DuckDBPool, DuckDBPoolTable } from './duckdb-pool.js';
+
+// DuckDB Export
+export { exportTable, exportFilteredTable, buildExportQuery } from './duckdb-export.js';
+export type { ExportFormat, ExportCompression, ExportOptions } from './duckdb-export.js';
+
+// Error Classes
+export { PhzConnectionError, PhzQueryError, type ConnectionPhase } from './errors.js';

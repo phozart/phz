@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — CSV Exporter Tests
+ * @phozart/grid — CSV Exporter Tests
  */
 import { describe, it, expect } from 'vitest';
 import { exportToCSV, type CsvExportOptions, type ExportGroupRow } from '../csv-exporter.js';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 
 // Mock GridApi
 function createMockGridApi(rows: RowData[]): GridApi {

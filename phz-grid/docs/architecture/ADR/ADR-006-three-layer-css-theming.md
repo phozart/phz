@@ -201,7 +201,7 @@ Component-specific tokens reference semantic tokens.
 ### Component Usage
 
 ```css
-/* @phozart/phz-grid component styles */
+/* @phozart/grid component styles */
 .phz-grid {
   background: var(--phz-grid-bg);
   border: var(--phz-grid-border-width) solid var(--phz-grid-border-color);
@@ -271,7 +271,7 @@ Component-specific tokens reference semantic tokens.
 ### TypeScript Theme Definition (Type-Safe Theming)
 
 ```typescript
-// @phozart/phz-core/themes.ts
+// @phozart/core/themes.ts
 
 export interface PhzTheme {
   // Primitive tokens
@@ -378,7 +378,7 @@ packages/theme-bootstrap/
 <!-- User's HTML -->
 <head>
   <!-- 1. Grid base styles (includes all three token layers) -->
-  <link rel="stylesheet" href="node_modules/@phozart/phz-grid/dist/phz-grid.css">
+  <link rel="stylesheet" href="node_modules/@phozart/grid/dist/phz-grid.css">
 
   <!-- 2. Theme overrides (optional) -->
   <link rel="stylesheet" href="node_modules/@phozart/theme-material/dist/material.css">

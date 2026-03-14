@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-angular — Type definitions
+ * @phozart/angular — Type definitions
  */
 import type {
   GridApi,
@@ -19,7 +19,7 @@ import type {
   CellClickEvent,
   ScrollEvent,
   StateChangeEvent,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 export interface PhzGridInputs {
   data: unknown[];

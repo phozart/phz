@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — ReportSubscription / SubscriptionSchedule (A-1.15)
+ * @phozart/shared — ReportSubscription / SubscriptionSchedule (A-1.15)
  *
  * Report/dashboard subscription for scheduled delivery.
  * Includes schedule description helpers and deep link generation.

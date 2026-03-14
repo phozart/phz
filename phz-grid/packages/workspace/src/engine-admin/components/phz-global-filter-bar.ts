@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Global Filter Bar
+ * @phozart/engine-admin — Global Filter Bar
  *
  * Horizontal bar with per-filter dropdowns, multi-selects, date ranges, and text searches.
  * Auto-populates filter options from unique data values.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { GlobalFilter, GlobalFilterType } from '@phozart/phz-engine';
+import type { GlobalFilter, GlobalFilterType } from '@phozart/engine';
 
 interface FieldInfo {
   name: string;

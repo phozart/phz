@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-criteria — Searchable Dropdown
+ * @phozart/criteria — Searchable Dropdown
  *
  * Text input + dropdown with type-ahead, debounced filtering.
  * WAI-ARIA combobox pattern.
  */
 import { LitElement } from 'lit';
-import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/phz-core';
+import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/core';
 /** Filter search options respecting matchMode and multiValue config. */
 export declare function filterSearchOptions(options: SelectionFieldOption[], query: string, config: SearchFieldConfig): SelectionFieldOption[];
 export declare class PhzSearchableDropdown extends LitElement {

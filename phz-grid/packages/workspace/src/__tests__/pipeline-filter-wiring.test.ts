@@ -10,7 +10,7 @@ import {
   buildFilteredPipelineQuery,
   createFilterAwarePipeline,
 } from '../coordination/pipeline-filter-wiring.js';
-import { createFilterContext } from '@phozart/phz-shared';
+import { createFilterContext } from '@phozart/shared';
 import type { DataQuery, DataResult } from '../data-adapter.js';
 
 describe('pipeline-filter-wiring', () => {

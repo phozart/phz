@@ -9,11 +9,11 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
+import type { ColumnDefinition } from '@phozart/core';
 
 // ========================================================================
-// Local definition types (mirrors @phozart/phz-definitions subset)
+// Local definition types (mirrors @phozart/definitions subset)
 // ========================================================================
 
 /**

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GroupController, type GroupHost } from '../controllers/group.controller.js';
-import type { GridApi, RowGroup } from '@phozart/phz-core';
+import type { GridApi, RowGroup } from '@phozart/core';
 
 function makeHost(overrides?: Partial<GroupHost>): GroupHost {
   const mockGroups: RowGroup[] = [

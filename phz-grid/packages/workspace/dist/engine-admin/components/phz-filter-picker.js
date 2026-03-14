@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Filter Picker (Artefact Binding Selector)
+ * @phozart/engine-admin — Filter Picker (Artefact Binding Selector)
  *
  * 2-panel component: Available Definitions (left) | Bound to Artefact (right).
  * Consumer owns persistence — component emits events, consumer passes updated bindings.
@@ -20,7 +20,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { artefactId as makeArtefactId } from '@phozart/phz-core';
+import { artefactId as makeArtefactId } from '@phozart/core';
 let PhzFilterPicker = class PhzFilterPicker extends LitElement {
     constructor() {
         super(...arguments);

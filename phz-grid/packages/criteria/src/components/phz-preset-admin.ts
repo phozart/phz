@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Admin
+ * @phozart/criteria — Preset Admin
  *
  * Admin UI for managing selection presets: admin preset CRUD,
  * user preset read-only view, scope badges. CSS prefix: phz-pa-
@@ -27,8 +27,8 @@ import type {
   SelectionPreset, PresetScope, FilterDefinition,
   FilterDefinitionPreset, SelectionFieldDef, SelectionFieldType,
   FilterDefinitionId, FilterDataSource, SelectionFieldOption,
-} from '@phozart/phz-core';
-import { resolveLabelTemplate } from '@phozart/phz-core';
+} from '@phozart/core';
+import { resolveLabelTemplate } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 // Ensure sub-components are registered

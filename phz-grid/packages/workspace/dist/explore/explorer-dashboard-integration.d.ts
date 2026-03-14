@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Explorer ↔ Dashboard Integration (P.6)
+ * @phozart/workspace — Explorer ↔ Dashboard Integration (P.6)
  *
  * Filter promotion: explore filters → DashboardFilterDef
  * Drill-through pre-population: dimension values → FilterValue[]

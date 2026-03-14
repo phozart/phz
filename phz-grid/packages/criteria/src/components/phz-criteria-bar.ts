@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Bar
+ * @phozart/criteria — Criteria Bar
  *
  * Compact horizontal bar showing: "Filters" button with count badge,
  * pinned filter tags, active filter summary tags, and "Clear all".
@@ -19,7 +19,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { CriteriaConfig, SelectionContext, SelectionFieldDef, FilterBarLayout, SummaryStripLayout } from '@phozart/phz-core';
+import type { CriteriaConfig, SelectionContext, SelectionFieldDef, FilterBarLayout, SummaryStripLayout } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 const iconFilter = html`<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.75 3h10.5M3.5 7h7M5.25 11h3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;

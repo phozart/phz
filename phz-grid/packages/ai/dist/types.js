@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Type Definitions
+ * @phozart/ai — Type Definitions
  *
  * AI toolkit types for schema inference, NL queries, anomaly detection,
  * and data insights.

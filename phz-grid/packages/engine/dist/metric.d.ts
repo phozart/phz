@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Metric Catalog
+ * @phozart/engine — Metric Catalog
  *
  * Metrics are computational definitions used by pivot tables and reports.
  * Distinct from KPIs which have targets/thresholds.
  */
-import type { AggregationFunction, FilterOperator } from '@phozart/phz-core';
+import type { AggregationFunction, FilterOperator } from '@phozart/core';
 import type { MetricId, DataProductId, ValidationResult } from './types.js';
 import type { DataProductRegistry } from './data-product.js';
 import type { ExpressionMetricFormula } from './expression-types.js';

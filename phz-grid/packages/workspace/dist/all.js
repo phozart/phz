@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace/all — Full workspace entry point
+ * @phozart/workspace/all — Full workspace entry point
  *
  * Import this single module to get the unified <phz-workspace> component
  * with all sub-components auto-registered.
  *
  * Usage:
- *   import { PhzWorkspace } from '@phozart/phz-workspace/all';
+ *   import { PhzWorkspace } from '@phozart/workspace/all';
  *
  *   <phz-workspace
  *     .adapter=${myAdapter}

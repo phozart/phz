@@ -1,14 +1,14 @@
 /**
  * React Dashboard Example
  *
- * Demonstrates integrating @phozart/phz-engine + @phozart/phz-widgets
+ * Demonstrates integrating @phozart/engine + @phozart/widgets
  * with a React application.
  *
  * Prerequisites (package.json):
  * {
  *   "dependencies": {
- *     "@phozart/phz-engine": "^0.1.0",
- *     "@phozart/phz-widgets": "^0.1.0",
+ *     "@phozart/engine": "^0.1.0",
+ *     "@phozart/widgets": "^0.1.0",
  *     "react": "^18.0.0",
  *     "react-dom": "^18.0.0"
  *   }
@@ -26,10 +26,10 @@ import {
   type KPIDefinition,
   type DashboardConfig,
   type WidgetPlacement,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // Import widgets to register custom elements (side-effect import)
-import '@phozart/phz-widgets';
+import '@phozart/widgets';
 
 // -- Data types --
 

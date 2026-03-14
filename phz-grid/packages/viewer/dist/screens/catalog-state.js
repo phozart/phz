@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Catalog Screen State
+ * @phozart/viewer — Catalog Screen State
  *
  * Headless state machine for the artifact catalog. Manages search,
  * filtering by type, sorting, and paginated artifact listing.
@@ -20,6 +20,7 @@ export function createCatalogState(overrides) {
         pageSize: overrides?.pageSize ?? 20,
         totalCount: overrides?.totalCount ?? artifacts.length,
         favoriteIds: overrides?.favoriteIds ?? new Set(),
+        recentItems: overrides?.recentItems ?? [],
         viewMode: overrides?.viewMode ?? 'grid',
     };
     return state;
@@ -126,5 +127,44 @@ export function getCurrentPage(state) {
  */
 export function getTotalPages(state) {
     return Math.max(1, Math.ceil(state.totalCount / state.pageSize));
+}
+// ========================================================================
+// Recent items
+// ========================================================================
+/**
+ * Add an artifact to the recent items list.
+ * Moves to front if already present. Caps at 10 items.
+ */
+export function addRecentItem(state, artifactId) {
+    const MAX_RECENT = 10;
+    const now = Date.now();
+    const filtered = state.recentItems.filter(r => r.id !== artifactId);
+    const recentItems = [{ id: artifactId, timestamp: now }, ...filtered].slice(0, MAX_RECENT);
+    return { ...state, recentItems };
+}
+/**
+ * Get recent artifacts resolved from the artifacts array.
+ * Returns artifacts matching recentItems IDs in recency order.
+ */
+export function getRecentArtifacts(state) {
+    const artifactMap = new Map(state.artifacts.map(a => [a.id, a]));
+    return state.recentItems
+        .map(r => artifactMap.get(r.id))
+        .filter((a) => a != null);
+}
+// ========================================================================
+// Persistence helpers
+// ========================================================================
+/**
+ * Load persisted favorites from external storage.
+ */
+export function loadPersistedFavorites(state, ids) {
+    return { ...state, favoriteIds: new Set(ids) };
+}
+/**
+ * Load persisted recent items from external storage.
+ */
+export function loadPersistedRecents(state, items) {
+    return { ...state, recentItems: items.slice(0, 10) };
 }
 //# sourceMappingURL=catalog-state.js.map

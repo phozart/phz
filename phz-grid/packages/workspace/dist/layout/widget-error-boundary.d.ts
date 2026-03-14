@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Widget Error Boundary (K.4)
+ * @phozart/workspace — Widget Error Boundary (K.4)
  *
  * Per-widget error isolation. Pure functions that create error state,
  * classify errors, and format user-friendly messages.

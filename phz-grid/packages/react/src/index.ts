@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — React Wrapper for phz-grid
+ * @phozart/react — React Wrapper for phz-grid
  */
 
 // Grid Components

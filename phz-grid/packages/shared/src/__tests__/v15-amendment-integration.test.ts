@@ -23,18 +23,18 @@ import {
   getAlertTokens,
   degradeAlertMode,
   createDefaultAlertConfig,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 import {
   ALERT_WIDGET_TOKENS,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 // --- Amendment B imports ---
 import {
   type CellRendererRegistry,
   createCellRendererRegistry,
   type MicroWidgetCellConfig,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 import {
   createValueOnlyRenderer,
@@ -42,12 +42,12 @@ import {
   createDeltaRenderer,
   createGaugeArcRenderer,
   registerAllMicroWidgetRenderers,
-} from '@phozart/phz-widgets';
+} from '@phozart/widgets';
 
 // --- Amendment C imports ---
 import type {
   ImpactChainNode,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 import {
   initialImpactChainState,
@@ -60,7 +60,7 @@ import {
   resolveConclusion,
   type ImpactChainState,
   type NodePosition,
-} from '@phozart/phz-widgets';
+} from '@phozart/widgets';
 
 // --- Amendment D imports ---
 import {
@@ -68,13 +68,13 @@ import {
   type AttentionFilterState,
   filterAttentionItems,
   computeAttentionFacets,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 import {
   initialAttentionFacetedState,
   toggleFacetValue,
   getVisibleItems,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // Helpers

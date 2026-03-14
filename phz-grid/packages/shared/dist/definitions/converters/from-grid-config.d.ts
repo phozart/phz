@@ -1,7 +1,7 @@
 /**
  * Capture a GridConfig as a GridDefinition.
  */
-import type { GridConfig } from '@phozart/phz-core';
+import type { GridConfig } from '@phozart/core';
 import type { GridDefinition } from '../types/grid-definition.js';
 export interface FromGridConfigMeta {
     name: string;

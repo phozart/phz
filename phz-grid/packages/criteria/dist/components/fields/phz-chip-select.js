@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Chip Select
+ * @phozart/criteria — Chip Select
  *
  * Multi-select pill-based selector. Each option renders as a toggleable chip.
  */

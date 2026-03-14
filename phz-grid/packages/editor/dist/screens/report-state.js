@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Report Editing State (B-2.09)
+ * @phozart/editor — Report Editing State (B-2.09)
  *
  * State machine for the report editing screen. Supports report
  * configuration (columns, filters, sorting), preview mode,

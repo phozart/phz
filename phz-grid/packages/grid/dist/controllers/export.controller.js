@@ -17,8 +17,11 @@ export class ExportController {
             ? this.buildExportGroupRows()
             : undefined;
         const columnTypes = Object.fromEntries(this.host.columnDefs.map(c => [c.field, c.type ?? 'string']));
+        // Pass search-filtered rows so export respects toolbar search query.
+        const filteredRows = this.host.filteredRows;
         downloadCSV(this.host.gridApi, this.host.columnDefs, {
             ...options,
+            rows: filteredRows,
             columnGroups: colGroups,
             groupRows,
             columnTypes,
@@ -27,7 +30,7 @@ export class ExportController {
             compactNumbers: this.host.compactNumbers || undefined,
             dataSetMeta: this.host._dataSetMeta,
         });
-        this.host.toast.show(`Exported ${options?.selectedOnly ? 'selected' : this.host.filteredRowCount} rows`, 'success');
+        this.host.toast.show(`Exported ${options?.selectedOnly ? 'selected' : filteredRows.length} rows`, 'success', { icon: 'export' });
     }
     exportExcel(options) {
         if (!this.host.gridApi)
@@ -37,8 +40,11 @@ export class ExportController {
             ? this.buildExportGroupRows()
             : undefined;
         const columnTypes = Object.fromEntries(this.host.columnDefs.map(c => [c.field, c.type ?? 'string']));
+        // Pass search-filtered rows so export respects toolbar search query.
+        const filteredRows = this.host.filteredRows;
         downloadExcel(this.host.gridApi, this.host.columnDefs, {
             ...options,
+            rows: filteredRows,
             columnGroups: colGroups,
             groupRows,
             columnTypes,
@@ -51,7 +57,7 @@ export class ExportController {
             compactNumbers: this.host.compactNumbers || undefined,
             dataSetMeta: this.host._dataSetMeta,
         });
-        this.host.toast.show('Exported to Excel', 'success');
+        this.host.toast.show('Exported to Excel', 'success', { icon: 'export' });
     }
     buildExportGroupRows() {
         const result = [];

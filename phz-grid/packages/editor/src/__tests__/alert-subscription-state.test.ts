@@ -25,8 +25,8 @@ import {
   setAlertSubLoading,
   setAlertSubError,
 } from '../authoring/alert-subscription-state.js';
-import type { PersonalAlert } from '@phozart/phz-shared/types';
-import type { Subscription } from '@phozart/phz-shared/types';
+import type { PersonalAlert } from '@phozart/shared/types';
+import type { Subscription } from '@phozart/shared/types';
 
 const ALERT: PersonalAlert = {
   id: 'al-1',

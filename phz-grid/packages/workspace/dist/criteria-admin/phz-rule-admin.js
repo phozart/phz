@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Rule Admin
+ * @phozart/criteria — Rule Admin
  *
  * Admin UI for managing filter rules: CRUD, priority reorder,
  * enable/disable toggle, preview panel, and rule editor modal.
@@ -22,7 +22,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 import './phz-rule-editor-modal.js';
 const RULE_TYPES = [
     { value: 'exclude_pattern', label: 'Exclude Pattern' },

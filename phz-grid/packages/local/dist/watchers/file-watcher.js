@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-local — File Watcher (R.4)
+ * @phozart/local — File Watcher (R.4)
  *
  * Watches a directory for CSV/Parquet/JSON files and auto-imports
  * them into DuckDB when they appear or change.

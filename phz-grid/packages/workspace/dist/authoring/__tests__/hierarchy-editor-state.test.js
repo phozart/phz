@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { initialHierarchyEditorState, addHierarchy, removeHierarchy, updateHierarchy, startEdit, commitEdit, autoDetectDateHierarchy, } from '../hierarchy-editor-state.js';
-import { createCustomHierarchy } from '@phozart/phz-engine';
+import { createCustomHierarchy } from '@phozart/engine';
 describe('initialHierarchyEditorState', () => {
     it('creates empty state', () => {
         const state = initialHierarchyEditorState();

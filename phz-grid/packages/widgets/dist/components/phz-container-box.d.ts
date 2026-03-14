@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Container Box Widget
+ * @phozart/widgets — Container Box Widget
  *
  * A visual container that groups child widgets with a configurable
  * appearance (background, border, shadow, padding) and optional
  * collapse/expand behavior.
  */
 import { LitElement } from 'lit';
-import type { ContainerBoxConfig } from '@phozart/phz-shared/types';
+import type { ContainerBoxConfig } from '@phozart/shared/types';
 export declare class PhzContainerBox extends LitElement {
     static styles: import("lit").CSSResult[];
     /** Container box configuration. */

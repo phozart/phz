@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-vue — Vue 3 Wrapper for phz-grid
+ * @phozart/vue — Vue 3 Wrapper for phz-grid
  *
  * Provides a Vue component and composables that wrap the <phz-grid>
  * Web Component with idiomatic Vue APIs. This package uses Vue's

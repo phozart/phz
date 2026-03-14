@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Message Pools (C-2.13)
+ * @phozart/shared — Message Pools (C-2.13)
  *
  * Pre-written message pools for error and empty state scenarios.
  * Each scenario has messages in three tones: friendly, technical, minimal.

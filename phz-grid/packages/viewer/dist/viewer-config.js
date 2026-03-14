@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — ViewerShellConfig
+ * @phozart/viewer — ViewerShellConfig
  *
  * Configuration type and factory for the viewer shell. Consumers
  * provide adapters (data, persistence, attention) and optional

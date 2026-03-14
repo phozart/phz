@@ -888,7 +888,7 @@ Key features:
 ### 10.2 Filter Value Admin (`FilterValueSource` Configuration)
 
 The `filter-value-admin` state machine manages how filter options are sourced.
-`FilterValueSource` (from `@phozart/phz-shared/types`) specifies:
+`FilterValueSource` (from `@phozart/shared/types`) specifies:
 
 ```typescript
 export interface FilterValueSource {
@@ -926,20 +926,20 @@ v15 added faceted filtering for the attention system. This is **separate from
 the criteria engine** — it is a lightweight in-memory faceted filter designed
 for attention items (alerts, notifications, stale data warnings, review requests).
 
-The faceted attention filter uses types from `@phozart/phz-shared/types`:
+The faceted attention filter uses types from `@phozart/shared/types`:
 - `AttentionFilterState` — active filter selections across facets
 - `FilterableAttentionItem` — normalized items suitable for faceted filtering
 - `filterAttentionItems()` — AND across facets, OR within a facet
 - `computeAttentionFacets()` — cross-facet counting for accurate facet counts
 
-State management lives in `@phozart/phz-shared/coordination`:
+State management lives in `@phozart/shared/coordination`:
 - `AttentionFacetedState` — complete faceted filter state with pagination
 - `toggleFacetValue()`, `clearFacet()`, `clearAllFilters()` — filter transitions
 - `acknowledgeItem()`, `acknowledgeAllVisible()` — mark items as handled
 - `getVisibleItems()` — compute the filtered, sorted, paginated result
 
 The viewer shell integrates this via `AttentionDropdownState` (from
-`@phozart/phz-viewer/screens/attention-state`), which wraps the faceted state
+`@phozart/viewer/screens/attention-state`), which wraps the faceted state
 with UI-specific concerns (dropdown open/close, type filter tabs).
 
 ### 10.4 Alert Rules Binding to Widgets via SingleValueAlertConfig

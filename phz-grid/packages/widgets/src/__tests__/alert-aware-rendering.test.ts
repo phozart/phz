@@ -8,7 +8,7 @@ import type {
   AlertVisualState,
   AlertContainerSize,
   WidgetAlertSeverity,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Helpers

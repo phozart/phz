@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Suggestion Flow
+ * @phozart/workspace — Suggestion Flow
  *
  * End-to-end pipeline: schema -> profile -> match -> ranked suggestions.
  */

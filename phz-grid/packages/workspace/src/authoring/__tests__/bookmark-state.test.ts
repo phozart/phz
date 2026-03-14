@@ -25,7 +25,7 @@ import {
   resolveInitialState,
   type BookmarkState,
 } from '../bookmark-state.js';
-import type { DashboardBookmark, DashboardInteractionState } from '@phozart/phz-shared';
+import type { DashboardBookmark, DashboardInteractionState } from '@phozart/shared';
 
 // ========================================================================
 // Helpers

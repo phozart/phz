@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — Filter Hooks + Component Tests
+ * @phozart/react — Filter Hooks + Component Tests
  *
  * Tests for useCriteria, useFilterDesigner, PhzPresetAdmin, PhzFilterConfigurator.
  */
@@ -33,12 +33,12 @@ vi.mock('react', () => {
 });
 
 // Provide stub element classes for createComponent()
-vi.mock('@phozart/phz-criteria', () => {
+vi.mock('@phozart/criteria', () => {
   class S {}
   return { PhzPresetAdmin: S, PhzFilterConfigurator: S, PhzSelectionCriteria: S, PhzFilterDesigner: S };
 });
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 vi.mock('@lit/react', () => ({
   createComponent: ({ react: R }: any) => (props: any) => R.createElement('div', props),
 }));

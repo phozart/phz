@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Searchable Dropdown
+ * @phozart/criteria — Searchable Dropdown
  *
  * Text input + dropdown with type-ahead, debounced filtering.
  * WAI-ARIA combobox pattern.

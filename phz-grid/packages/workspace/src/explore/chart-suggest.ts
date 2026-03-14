@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Chart Type Suggestion (P.3 sub-task)
+ * @phozart/workspace — Chart Type Suggestion (P.3 sub-task)
  *
  * Pure function: given an ExploreQuery, suggests the best chart type
  * based on dimension/measure count and field name heuristics.

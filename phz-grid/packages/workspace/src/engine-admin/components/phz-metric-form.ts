@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Metric Form
+ * @phozart/engine-admin — Metric Form
  *
  * Slide-over form for creating/editing metrics.
  * Two tabs: Simple (field + aggregation) and Composite (expression builder).
@@ -11,9 +11,9 @@ import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
 import type {
   DataModelField, ParameterDef, CalculatedFieldDef, ExpressionNode,
-} from '@phozart/phz-engine';
-import type { MetricDef, MetricFormat } from '@phozart/phz-engine';
-import { metricId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { MetricDef, MetricFormat } from '@phozart/engine';
+import { metricId } from '@phozart/engine';
 
 import './phz-expression-builder.js';
 

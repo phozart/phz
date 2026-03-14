@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Trend Line Pure Logic Tests
+ * @phozart/widgets -- Trend Line Pure Logic Tests
  *
  * Tests for the chartPoints getter on PhzTrendLine.
  */

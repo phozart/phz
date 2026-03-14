@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Builder
+ * @phozart/engine-admin — Dashboard Builder
  *
  * 3-panel: widget catalog (left) | canvas (center) | widget config (right).
  * Produces complete DashboardConfig with data bindings per widget type.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { BIEngine, DashboardConfig } from '@phozart/phz-engine';
+import type { BIEngine, DashboardConfig } from '@phozart/engine';
 export declare class PhzDashboardBuilder extends LitElement {
     static styles: import("lit").CSSResult[];
     engine?: BIEngine;

@@ -4,7 +4,7 @@
  * and return Lit TemplateResult.
  */
 import { type TemplateResult } from 'lit';
-import type { ColumnDefinition, RowData, RowGroup } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData, RowGroup } from '@phozart/core';
 import type { RowAction } from '../types.js';
 import type { AggregationController } from '../controllers/aggregation.controller.js';
 type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
@@ -53,5 +53,13 @@ export interface ColumnGroupHeaderOpts {
     columnDefs: ColumnDefinition[];
 }
 export declare function renderColumnGroupHeader(opts: ColumnGroupHeaderOpts): TemplateResult;
+/**
+ * Render the summary/totals footer row.
+ *
+ * IMPORTANT: The returned `<tfoot>` must be placed as a direct child of
+ * `<table>`, not nested inside `<tbody>`. Browsers will silently reposition
+ * a `<tfoot>` that appears inside `<tbody>`.
+ */
+export declare function renderSummaryRow(summaryData: Record<string, string>, columns: ColumnDefinition[], label: string): TemplateResult;
 export {};
 //# sourceMappingURL=phz-grid.templates.d.ts.map

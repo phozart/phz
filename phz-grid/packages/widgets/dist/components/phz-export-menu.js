@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Export Menu Component
+ * @phozart/widgets — Export Menu Component
  *
  * Dropdown menu for exporting widget data (CSV, clipboard, image).
  * Emits `widget-export` event with format and data.

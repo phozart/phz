@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/definition-ui — Definition UI components
+ * @phozart/workspace/definition-ui — Definition UI components
  */
 export { PhzDefinitionReport } from './phz-definition-report.js';
 export { PhzDefinitionDataSource } from './phz-definition-data-source.js';

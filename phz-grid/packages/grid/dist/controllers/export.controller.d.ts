@@ -1,9 +1,9 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition } from '@phozart/phz-core';
-import type { RowGroup } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
+import type { RowGroup } from '@phozart/core';
 import { type CellFormatting } from '../export/excel-exporter.js';
 import type { ToastController } from './toast.controller.js';
-import type { DataSetMeta } from '@phozart/phz-core';
+import type { DataSetMeta } from '@phozart/core';
 type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
 export interface ExportHost extends ReactiveControllerHost {
     gridApi: GridApi | null;
@@ -37,6 +37,8 @@ export interface ExportHost extends ReactiveControllerHost {
     toast: ToastController;
     _dataSetMeta?: DataSetMeta;
     filteredRowCount: number;
+    /** Client-side search-filtered rows (respects toolbar search query). */
+    filteredRows: RowData[];
 }
 export declare class ExportController implements ReactiveController {
     private host;

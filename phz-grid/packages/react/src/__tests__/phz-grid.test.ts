@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzGrid Component Tests
+ * @phozart/react — PhzGrid Component Tests
  *
  * Tests for the PhzGrid React component that wraps the <phz-grid> Web Component
  * via @lit/react's createComponent(). Since we cannot render React in Node,
@@ -47,8 +47,8 @@ vi.mock('@lit/react', () => ({
   },
 }));
 
-// Mock @phozart/phz-grid to provide a stub PhzGrid class
-vi.mock('@phozart/phz-grid', () => ({
+// Mock @phozart/grid to provide a stub PhzGrid class
+vi.mock('@phozart/grid', () => ({
   PhzGrid: class PhzGridStub {
     getGridApi() {
       return null;
@@ -56,8 +56,8 @@ vi.mock('@phozart/phz-grid', () => ({
   },
 }));
 
-// Mock @phozart/phz-core types
-vi.mock('@phozart/phz-core', () => ({}));
+// Mock @phozart/core types
+vi.mock('@phozart/core', () => ({}));
 
 import { PhzGrid, type PhzGridProps } from '../phz-grid.js';
 

@@ -21,7 +21,7 @@ const mockGridApi = {
   getDataVersion: vi.fn(() => _mockDataVersion),
 };
 
-vi.mock('@phozart/phz-core', () => ({
+vi.mock('@phozart/core', () => ({
   createGrid: vi.fn(() => mockGridApi),
   toColumnDefinitions: vi.fn((schema: any[]) =>
     schema.map((s: any) => ({ field: s.name, header: s.name, type: s.type })),
@@ -104,6 +104,26 @@ describe('GridCoreController', () => {
       ctrl.initializeGrid();
 
       expect(mockGridApi.sort).not.toHaveBeenCalled();
+    });
+
+    it('does not apply sort when defaultSortField does not match any column', () => {
+      const host = makeHost({ defaultSortField: 'nonexistent', defaultSortDirection: 'asc' });
+      const ctrl = new GridCoreController(host);
+      ctrl.initializeGrid();
+
+      expect(mockGridApi.sort).not.toHaveBeenCalled();
+    });
+
+    it('logs warning when defaultSortField is invalid', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const host = makeHost({ defaultSortField: 'nonexistent', defaultSortDirection: 'asc' });
+      const ctrl = new GridCoreController(host);
+      ctrl.initializeGrid();
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('nonexistent'),
+      );
+      warnSpy.mockRestore();
     });
 
     it('performs initial state sync so visibleRows is populated', () => {

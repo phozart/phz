@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-alert-subscription> (B-2.12)
+ * @phozart/editor — <phz-alert-subscription> (B-2.12)
  *
  * Alert and subscription management component. Users create,
  * edit, and manage personal alerts and report subscriptions.

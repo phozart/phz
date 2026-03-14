@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-editor — Sharing Flow State (B-2.11)
+ * @phozart/editor — Sharing Flow State (B-2.11)
  *
  * State machine for the sharing workflow. Authors manage artifact
  * visibility (personal/shared/published) and select share targets
  * (users, roles, teams).
  */
 
-import type { ShareTarget } from '@phozart/phz-shared/types';
-import type { ArtifactVisibility } from '@phozart/phz-shared/artifacts';
+import type { ShareTarget } from '@phozart/shared/types';
+import type { ArtifactVisibility } from '@phozart/shared/artifacts';
 
 // ========================================================================
 // SharingFlowState

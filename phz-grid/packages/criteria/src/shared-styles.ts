@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Shared Styles
+ * @phozart/criteria — Shared Styles
  *
  * Common CSS for selection criteria components. Uses phz-sc- prefix.
  * Console-mode Phz UI: warm neutrals, multi-layer shadows, 12-16px radii.

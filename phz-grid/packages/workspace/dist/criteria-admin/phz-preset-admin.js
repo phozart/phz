@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Admin
+ * @phozart/criteria — Preset Admin
  *
  * Admin UI for managing selection presets: admin preset CRUD,
  * user preset read-only view, scope badges. CSS prefix: phz-pa-
@@ -29,11 +29,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import { resolveLabelTemplate } from '@phozart/phz-core';
-import { criteriaStyles } from '@phozart/phz-criteria/shared-styles';
+import { resolveLabelTemplate } from '@phozart/core';
+import { criteriaStyles } from '@phozart/criteria/shared-styles';
 // Ensure sub-components are registered
-// Consumer component — registered via @phozart/phz-criteria
-import '@phozart/phz-criteria';
+// Consumer component — registered via @phozart/criteria
+import '@phozart/criteria';
 // --- Pure helper functions (exported for testing) ---
 /** Convert a FilterDefinition into the SelectionFieldDef shape that <phz-criteria-field> accepts */
 export function defToFieldDef(def) {

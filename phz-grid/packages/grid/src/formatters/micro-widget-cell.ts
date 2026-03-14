@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Micro-Widget Cell Resolver (7A-B)
+ * @phozart/grid — Micro-Widget Cell Resolver (7A-B)
  *
  * State machine for resolving micro-widget cell rendering.
  * Checks column width, registry availability, and falls back
@@ -12,7 +12,7 @@ import type {
   MicroWidgetCellConfig,
   MicroWidgetRenderResult,
   CellRendererRegistry,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Column-width thresholds (mirrors widget renderers)

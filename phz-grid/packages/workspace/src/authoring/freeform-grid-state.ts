@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Freeform Grid Dashboard State (B-3.04)
+ * @phozart/workspace — Freeform Grid Dashboard State (B-3.04)
  *
  * Pure functions for CSS Grid-based freeform layout in the dashboard editor.
  * Supports snap-to-grid positioning, widget resize handles, drag operations,

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { computePivot, pivotResultToFlatRows } from '../pivot.js';
-import type { PivotConfig } from '@phozart/phz-core';
+import type { PivotConfig } from '@phozart/core';
 
 const salesData = [
   { region: 'North', product: 'Widget', amount: 100 },

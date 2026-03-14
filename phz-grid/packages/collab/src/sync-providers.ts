@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-collab — Sync Providers
+ * @phozart/collab — Sync Providers
  *
  * WebSocket and WebRTC sync provider implementations.
  * These connect Yjs documents to remote peers for real-time collaboration.
  */
 
-import type { Unsubscribe } from '@phozart/phz-core';
+import type { Unsubscribe } from '@phozart/core';
 import type {
   SyncProvider,
   ConnectionState,
@@ -70,7 +70,7 @@ export class WebSocketSyncProvider implements SyncProvider {
 
         // Enforce wss:// when auth token is configured
         if (this.config.auth?.token && url.startsWith('ws://')) {
-          reject(new Error('@phozart/phz-collab: Auth token requires a secure connection (wss://). Refusing to send credentials over unencrypted ws://.'));
+          reject(new Error('@phozart/collab: Auth token requires a secure connection (wss://). Refusing to send credentials over unencrypted ws://.'));
           return;
         }
 
@@ -195,7 +195,7 @@ export class WebRTCSyncProvider implements SyncProvider {
       try {
         const VALID_SESSION_ID = /^[a-zA-Z0-9_-]{1,128}$/;
         if (!VALID_SESSION_ID.test(sessionId)) {
-          reject(new Error('@phozart/phz-collab: Invalid session ID format. Only alphanumeric, hyphen, and underscore allowed (max 128 chars).'));
+          reject(new Error('@phozart/collab: Invalid session ID format. Only alphanumeric, hyphen, and underscore allowed (max 128 chars).'));
           return;
         }
 

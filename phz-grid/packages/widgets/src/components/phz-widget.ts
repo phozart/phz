@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Standalone Widget Renderer
+ * @phozart/widgets — Standalone Widget Renderer
  *
  * Renders a single widget from an EnhancedWidgetConfig + raw data.
  * Processes data via the widget data processor, then renders the appropriate component.
@@ -12,12 +12,12 @@ import { widgetBaseStyles } from '../shared-styles.js';
 import type {
   EnhancedWidgetConfig, BIEngine, KPIScoreProvider,
   ResolvedWidgetProps, ChartDataSeries,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import {
   processWidgetData, computeAggregation,
   createDefaultScoreProvider,
-} from '@phozart/phz-engine';
-import type { KPIId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { KPIId } from '@phozart/engine';
 import { resolveWidgetState } from '../widget-states.js';
 
 import './phz-kpi-card.js';

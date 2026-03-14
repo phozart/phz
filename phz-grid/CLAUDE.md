@@ -67,42 +67,42 @@ archive/         — Archived shim packages (grid-admin, engine-admin, grid-crea
                    These were one-line re-exports from workspace; kept for reference only.
 ```
 
-### Workspace Architecture (`@phozart/phz-workspace`)
+### Workspace Architecture (`@phozart/workspace`)
 
 The workspace package is the BI authoring environment with these subsystems:
 
-| Subsystem | Sub-path export | Key modules |
-|-----------|----------------|-------------|
-| **DataAdapter** | (main) | `data-adapter.ts` — consumer-provided data backend SPI |
-| **Registry** | `./registry` | `widget-registry.ts` — ManifestRegistry with variants |
-| **Templates** | `./templates` | Schema analyzer, template matcher, auto-binding |
-| **Layout** | `./layout` | Composable LayoutNode tree → CSS Grid rendering |
-| **Filters** | `./filters` | 4-level filter hierarchy, cascading, URL sync |
-| **Alerts** | `./alerts` | Alert evaluator, compound conditions, breach detection |
-| **Explore** | `./explore` | Visual query explorer, chart suggest, artifact conversion |
-| **Connectors** | `./connectors` | Remote data connectors, CORS handling, credentials |
-| **Shell** | (main) | Navigation, breadcrumbs, auto-save, keyboard shortcuts |
-| **I18n** | (main) | I18nProvider with RTL support, zero-config English |
-| **Styles** | `./styles` | Design tokens (v14 Console mode), responsive breakpoints, container queries, component patterns |
-| **Navigation** | `./navigation` | NavigationLink drill-through, artifact visibility, DefaultPresentation, grid artifacts |
-| **Local** | `./local` | LocalDataStore (OPFS), FileUploadManager, session export/import, demo datasets |
-| **Coordination** | `./coordination` | DashboardDataPipeline (preload/full), DetailSourceLoader, loading progress |
-| **FilterRules** | `./filters` | FilterDefinition catalog, FilterRuleEngine, ArtifactFilterContract, SecurityBinding |
+| Subsystem        | Sub-path export  | Key modules                                                                                     |
+| ---------------- | ---------------- | ----------------------------------------------------------------------------------------------- |
+| **DataAdapter**  | (main)           | `data-adapter.ts` — consumer-provided data backend SPI                                          |
+| **Registry**     | `./registry`     | `widget-registry.ts` — ManifestRegistry with variants                                           |
+| **Templates**    | `./templates`    | Schema analyzer, template matcher, auto-binding                                                 |
+| **Layout**       | `./layout`       | Composable LayoutNode tree → CSS Grid rendering                                                 |
+| **Filters**      | `./filters`      | 4-level filter hierarchy, cascading, URL sync                                                   |
+| **Alerts**       | `./alerts`       | Alert evaluator, compound conditions, breach detection                                          |
+| **Explore**      | `./explore`      | Visual query explorer, chart suggest, artifact conversion                                       |
+| **Connectors**   | `./connectors`   | Remote data connectors, CORS handling, credentials                                              |
+| **Shell**        | (main)           | Navigation, breadcrumbs, auto-save, keyboard shortcuts                                          |
+| **I18n**         | (main)           | I18nProvider with RTL support, zero-config English                                              |
+| **Styles**       | `./styles`       | Design tokens (v14 Console mode), responsive breakpoints, container queries, component patterns |
+| **Navigation**   | `./navigation`   | NavigationLink drill-through, artifact visibility, DefaultPresentation, grid artifacts          |
+| **Local**        | `./local`        | LocalDataStore (OPFS), FileUploadManager, session export/import, demo datasets                  |
+| **Coordination** | `./coordination` | DashboardDataPipeline (preload/full), DetailSourceLoader, loading progress                      |
+| **FilterRules**  | `./filters`      | FilterDefinition catalog, FilterRuleEngine, ArtifactFilterContract, SecurityBinding             |
 
 ## Phase Tracking
 
-| Phase | Name | Status | Gate |
-|-------|------|--------|------|
-| 0 | Innovation & Discovery | **COMPLETE** | auto |
-| 1 | Business Analysis | **COMPLETE** | auto |
-| 2 | Architecture & Data Design | **COMPLETE** | auto |
-| 3 | UX/UI Design | **COMPLETE** | auto |
-| 4 | Requirements Engineering | **COMPLETE** | auto |
-| 5 | Contract Finalization | **COMPLETE** | auto |
-| 6 | Implementation | **COMPLETE** | auto |
-| 7 | Sprint Execution | **COMPLETE** | auto |
-| 8 | QA & Review | **COMPLETE** | auto |
-| 9 | Release | **CURRENT** | auto |
+| Phase | Name                       | Status       | Gate |
+| ----- | -------------------------- | ------------ | ---- |
+| 0     | Innovation & Discovery     | **COMPLETE** | auto |
+| 1     | Business Analysis          | **COMPLETE** | auto |
+| 2     | Architecture & Data Design | **COMPLETE** | auto |
+| 3     | UX/UI Design               | **COMPLETE** | auto |
+| 4     | Requirements Engineering   | **COMPLETE** | auto |
+| 5     | Contract Finalization      | **COMPLETE** | auto |
+| 6     | Implementation             | **COMPLETE** | auto |
+| 7     | Sprint Execution           | **COMPLETE** | auto |
+| 8     | QA & Review                | **COMPLETE** | auto |
+| 9     | Release                    | **CURRENT**  | auto |
 
 ### Optional Phases
 
@@ -114,30 +114,35 @@ The workspace package is the BI authoring environment with these subsystems:
 ```yaml
 current_phase: 9
 current_gate: gate_9
-last_updated: 2026-03-08
+last_updated: 2026-03-14
 blockers: []
 decisions:
-  - "Phase 0: PERSEVERE — a11y gap validated, technology stack mature, market timing optimal"
-  - "Phase 1: 5 personas defined, 65 user stories across 13 epics, marketing strategy with GTM entry points"
-  - "Phase 2: 8 ADRs, full system architecture, data model (22 sections), API contracts (10 packages incl Python/pip)"
-  - "Phase 2: Added @phozart/phz-python package for pip install via anywidget + Arrow IPC"
-  - "Phase 3: Design system (357 tokens), 20 component specs, accessibility spec (competitive moat), 16 interaction patterns"
-  - "Phase 4: 109 formal requirements (BRD), 127 traced requirements + 160 test cases (RTM), 100% coverage"
-  - "Phase 5: All contracts FINALIZED — TYPE-CONTRACTS (116+ types across 10 packages), validation PASSED (100% BRD coverage, 0 gaps), governance sealed with quality gates"
-  - "Phase 6: Implementation COMPLETE — 10 packages implemented, 140 tests passing (core:51, grid:21, duckdb:16, ai:19, collab:33), all TypeScript compiles clean"
-  - "Phase 7: Sprint Execution COMPLETE — all 5 sprints executed successfully"
-  - "Phase 8: QA COMPLETE — full build clean, 140/140 tests, TYPE-CONTRACTS compliance verified, cross-package consistency verified"
-  - "Post-QA: Expanded to 16 packages — added engine, widgets, criteria, grid-admin, engine-admin, definitions, grid-creator"
-  - "Post-QA: Filter-Report Integration (Option D — Pragmatic Hybrid) — resolve-criteria.ts, report-service.ts, FILTER-REPORT-INTEGRATION.md"
-  - "Post-QA: Project rename phozart-* → phz-* across all packages (Session 43) — 0 regressions"
-  - "Post-QA: Docs pruned for release — removed early-phase docs (discovery, innovation, requirements, design specs)"
-  - "Post-QA: Test suite expanded from 140 → 3508 tests across 224 files, all passing"
-  - "2026-02-28: Reconciled ad-hoc work — rename, filter-report integration, 5 new packages, docs cleanup, test expansion"
-  - "2026-03-05: Dependency audit — fixed 6 package.json files, removed enterprise tier distinction (all features MIT)"
-  - "2026-03-07: Workspace consolidation — 7 admin packages into @phozart/phz-workspace, BI authoring (Sprints H-R) COMPLETE"
-  - "2026-03-08: v13/v14 Workspace Enhancement Phase 2 (Sprints S-X) — visual design system, enterprise data/filter architecture, navigation, local playground"
-  - "2026-03-08: v15 Architecture refactoring — extracted @phozart/phz-shared (adapters, types, design system, coordination), added @phozart/phz-viewer (analyst shell), @phozart/phz-editor (author shell), three-shell architecture, 4 Wave 7A spec amendments (alert-aware widgets, micro-widget cells, impact chain, faceted attention), 5 new engine subsystems (PersonalAlertEngine, SubscriptionEngine, UsageCollector, OpenAPIGenerator, AttentionSystem), 15 new workspace Wave 5 state machines, 22 packages total, 8638 tests / 480 files"
-  - "2026-03-09: Archived 3 shim packages (grid-admin, engine-admin, grid-creator) to archive/ — all code lives in workspace, 19 active packages, 9605 tests / 526 files"
+  - 'Phase 0: PERSEVERE — a11y gap validated, technology stack mature, market timing optimal'
+  - 'Phase 1: 5 personas defined, 65 user stories across 13 epics, marketing strategy with GTM entry points'
+  - 'Phase 2: 8 ADRs, full system architecture, data model (22 sections), API contracts (10 packages incl Python/pip)'
+  - 'Phase 2: Added @phozart/python package for pip install via anywidget + Arrow IPC'
+  - 'Phase 3: Design system (357 tokens), 20 component specs, accessibility spec (competitive moat), 16 interaction patterns'
+  - 'Phase 4: 109 formal requirements (BRD), 127 traced requirements + 160 test cases (RTM), 100% coverage'
+  - 'Phase 5: All contracts FINALIZED — TYPE-CONTRACTS (116+ types across 10 packages), validation PASSED (100% BRD coverage, 0 gaps), governance sealed with quality gates'
+  - 'Phase 6: Implementation COMPLETE — 10 packages implemented, 140 tests passing (core:51, grid:21, duckdb:16, ai:19, collab:33), all TypeScript compiles clean'
+  - 'Phase 7: Sprint Execution COMPLETE — all 5 sprints executed successfully'
+  - 'Phase 8: QA COMPLETE — full build clean, 140/140 tests, TYPE-CONTRACTS compliance verified, cross-package consistency verified'
+  - 'Post-QA: Expanded to 16 packages — added engine, widgets, criteria, grid-admin, engine-admin, definitions, grid-creator'
+  - 'Post-QA: Filter-Report Integration (Option D — Pragmatic Hybrid) — resolve-criteria.ts, report-service.ts, FILTER-REPORT-INTEGRATION.md'
+  - 'Post-QA: Project rename phozart-* → phz-* across all packages (Session 43) — 0 regressions'
+  - 'Post-QA: Docs pruned for release — removed early-phase docs (discovery, innovation, requirements, design specs)'
+  - 'Post-QA: Test suite expanded from 140 → 3508 tests across 224 files, all passing'
+  - '2026-02-28: Reconciled ad-hoc work — rename, filter-report integration, 5 new packages, docs cleanup, test expansion'
+  - '2026-03-05: Dependency audit — fixed 6 package.json files, removed enterprise tier distinction (all features MIT)'
+  - '2026-03-07: Workspace consolidation — 7 admin packages into @phozart/workspace, BI authoring (Sprints H-R) COMPLETE'
+  - '2026-03-08: v13/v14 Workspace Enhancement Phase 2 (Sprints S-X) — visual design system, enterprise data/filter architecture, navigation, local playground'
+  - '2026-03-08: v15 Architecture refactoring — extracted @phozart/shared (adapters, types, design system, coordination), added @phozart/viewer (analyst shell), @phozart/editor (author shell), three-shell architecture, 4 Wave 7A spec amendments (alert-aware widgets, micro-widget cells, impact chain, faceted attention), 5 new engine subsystems (PersonalAlertEngine, SubscriptionEngine, UsageCollector, OpenAPIGenerator, AttentionSystem), 15 new workspace Wave 5 state machines, 22 packages total, 8638 tests / 480 files'
+  - '2026-03-09: Archived 3 shim packages (grid-admin, engine-admin, grid-creator) to archive/ — all code lives in workspace, 19 active packages, 9605 tests / 526 files'
+  - '2026-03-14: Package rename @phozart/phz-* → @phozart/* (drop phz- prefix). Custom element tags (phz-*) unchanged. 3,071 occurrences across 1,028 files. Build order fixed: core → shared (was shared → core). 11,464 tests passing, 0 regressions.'
+  - '2026-03-14: Playwright E2E infrastructure — 21 browser tests (grid rendering, keyboard nav, axe-core WCAG 2.2 AA audit). Uses Vite dev server + Chromium.'
+  - '2026-03-14: Grid→engine decoupling — DrillThroughConfig, GridRowDrillSource, GenerateDashboardConfig moved to @phozart/core. Engine is now optional peer dep of grid.'
+  - '2026-03-14: React wrapper type safety — eliminated all 16 any types in PhzGridProps with proper types from core/grid.'
+  - '2026-03-14: Product documentation — new README with Moog framing, Patch Book (composition guide), ACCESSIBILITY.md, shell READMEs (workspace/viewer/editor).'
 artifacts:
   - project.config.yaml
   - docs/architecture/SYSTEM-ARCHITECTURE.md
@@ -226,7 +231,7 @@ These patterns have caused real bugs. Watch for them:
 4. TDD: write failing test → implement → verify green → commit
 5. After each task: run `npm test -w packages/<pkg>` — must pass
 6. After each phase: run full `npm test` — 8816+ tests must still pass
-7. Never create new types without checking UPDATE73 specs first
+7. Never create new types without checking `docs/architecture/v15_PHZ-GRID-ARCHITECTURE-SPEC.md` first
 8. Never refactor existing patterns — wire what exists
 9. Comprehensive wiring reference: `docs/plans/WIRING-REFERENCE.md`
 10. Progress tracker: `docs/plans/WORKBENCH-PROGRESS.md`
@@ -265,9 +270,9 @@ npx next dev -p 3001
 
 Build in this order to satisfy inter-package dependencies:
 
-1. `shared` (no internal deps — adapters, types, design system, coordination)
-2. `definitions` (no internal deps)
-3. `core` (depends on shared, definitions)
+1. `core` (no internal deps — headless grid engine)
+2. `shared` (depends on core — adapters, types, design system, coordination)
+3. `definitions` (no internal deps)
 4. `duckdb` (depends on core)
 5. `engine` (depends on core, shared, definitions)
 6. `grid` (depends on core)

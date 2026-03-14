@@ -5,14 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-error> Custom Element
+ * @phozart/viewer — <phz-viewer-error> Custom Element
  *
  * Displays user-friendly error states with recovery actions.
  * Uses shared ErrorState and ErrorStateConfig types.
  */
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createDefaultErrorStateConfig } from '@phozart/phz-shared/types';
+import { createDefaultErrorStateConfig } from '@phozart/shared/types';
 // ========================================================================
 // <phz-viewer-error>
 // ========================================================================

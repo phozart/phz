@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Admin State (B-3.06)
+ * @phozart/workspace — Filter Admin State (B-3.06)
  *
  * Pure functions for a central filter definition registry.
  * Manages filter definitions, their bindings per data source,

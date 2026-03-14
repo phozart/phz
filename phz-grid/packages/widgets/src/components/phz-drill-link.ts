@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Drill Link
+ * @phozart/widgets — Drill Link
  *
  * Navigation button to a detail view.
  */
@@ -7,7 +7,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { ReportId } from '@phozart/phz-engine';
+import type { ReportId } from '@phozart/engine';
 
 @customElement('phz-drill-link')
 export class PhzDrillLink extends LitElement {

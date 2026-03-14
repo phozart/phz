@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — PersonalView (A-1.04)
+ * @phozart/shared — PersonalView (A-1.04)
  *
  * User personal views that override specific presentation settings
  * on top of admin-defined defaults.

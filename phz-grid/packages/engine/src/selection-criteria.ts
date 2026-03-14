@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Selection Criteria Logic
+ * @phozart/engine — Selection Criteria Logic
  *
  * Pure headless functions for criteria resolution, validation,
  * dependency management, export metadata, and URL serialization.
@@ -32,7 +32,7 @@ import type {
   CriteriaSelectionMode,
   OptionsSource,
   DataSet,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 // --- Dynamic Defaults ---
 

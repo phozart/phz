@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-local — DuckDB Native Adapter (R.3)
+ * @phozart/local — DuckDB Native Adapter (R.3)
  *
  * Implements DataAdapter wrapping native DuckDB Node.js bindings.
  * DuckDB is an optional dependency — this module gracefully handles
@@ -14,7 +14,7 @@ import type {
   DataSourceSummary,
   FieldMetadata,
   ColumnDescriptor,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 // --- DuckDB abstraction layer ---
 // This interface mirrors the subset of duckdb's Database/Connection API we use.

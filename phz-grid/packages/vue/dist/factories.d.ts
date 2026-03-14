@@ -1,15 +1,15 @@
 /**
- * @phozart/phz-vue — Factory functions
+ * @phozart/vue — Factory functions
  *
  * Creates Vue components and composables without a hard dependency on Vue.
  * Usage:
  *   import { ref, onMounted, onUnmounted, defineComponent, h } from 'vue';
- *   import { createPhzGridComponent } from '@phozart/phz-vue';
+ *   import { createPhzGridComponent } from '@phozart/vue';
  *   const PhzGrid = createPhzGridComponent({ defineComponent, h, ref, ... });
  */
-import type { GridApi } from '@phozart/phz-core';
+import type { GridApi } from '@phozart/core';
 import type { UseGridReturn, UseGridSelectionReturn, UseGridSortReturn, UseGridFilterReturn, UseGridEditReturn } from './types.js';
-import '@phozart/phz-grid';
+import '@phozart/grid';
 /**
  * Minimal Vue runtime interface needed by the factories.
  * This avoids importing Vue directly.

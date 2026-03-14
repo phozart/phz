@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/grid-admin — Embeddable Admin Components for Grid Configuration
+ * @phozart/workspace/grid-admin — Embeddable Admin Components for Grid Configuration
  *
  * All components are Lit Web Components that can be dropped into any page.
  */
@@ -24,5 +24,5 @@ export type { CriteriaDefinitionItem, CriteriaBindingItem } from './phz-admin-cr
 export type {
   ReportPresentation, TableSettings, ColumnFormatting, ColumnColorThreshold,
   NumberFormat, ReportExportSettings,
-} from '@phozart/phz-engine';
-export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from '@phozart/phz-engine';
+} from '@phozart/engine';
+export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from '@phozart/engine';

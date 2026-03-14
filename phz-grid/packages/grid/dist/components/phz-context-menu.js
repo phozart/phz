@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-grid — <phz-context-menu>
+ * @phozart/grid — <phz-context-menu>
  *
  * A reusable context menu component with Phz Console styling,
  * keyboard navigation, smart viewport positioning, and ARIA support.

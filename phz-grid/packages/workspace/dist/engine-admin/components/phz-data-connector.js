@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Connector
+ * @phozart/engine-admin — Data Connector
  *
  * "Get Data" wizard for connecting to data sources.
  * Supports JSON, CSV, REST API, and DuckDB table/file sources.

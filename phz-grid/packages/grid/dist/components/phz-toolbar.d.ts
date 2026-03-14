@@ -18,7 +18,7 @@
  *   toolbar-generate-dashboard → { dataMode: 'filtered' | 'full' }
  */
 import { LitElement, type TemplateResult } from 'lit';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 import type { Density, FilterInfo } from '../types.js';
 export interface ToolbarSearchEvent {
     query: string;

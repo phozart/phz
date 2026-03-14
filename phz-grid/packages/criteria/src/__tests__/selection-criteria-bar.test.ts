@@ -13,9 +13,9 @@ import type {
   FilterBinding,
   FilterDefinitionId,
   ArtefactId,
-} from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
-import { formatCriteriaValue, validateCriteria, resolveDynamicDefaults } from '@phozart/phz-engine';
+} from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
+import { formatCriteriaValue, validateCriteria, resolveDynamicDefaults } from '@phozart/engine';
 
 // --- Test helpers for bar logic (mirroring component logic) ---
 

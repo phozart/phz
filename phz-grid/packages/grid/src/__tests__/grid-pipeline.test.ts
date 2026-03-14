@@ -5,7 +5,7 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GridCoreController, type GridCoreHost } from '../controllers/grid-core.controller.js';
-import type { QueryBackend, LocalQuery, LocalQueryResult, QueryBackendCapabilities } from '@phozart/phz-core';
+import type { QueryBackend, LocalQuery, LocalQueryResult, QueryBackendCapabilities } from '@phozart/core';
 
 // --- Mock grid API with queryBackend support ---
 const mockGridApi = {
@@ -31,7 +31,7 @@ const mockGridApi = {
 
 let capturedConfig: any = null;
 
-vi.mock('@phozart/phz-core', () => ({
+vi.mock('@phozart/core', () => ({
   createGrid: vi.fn((config: any) => {
     capturedConfig = config;
     return mockGridApi;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Cell Display State Machine (7A-B)
+ * @phozart/workspace — Cell Display State Machine (7A-B)
  *
  * State management for the "Cell Display" section in column configuration.
  * Controls whether a column uses default text rendering or a micro-widget
@@ -7,7 +7,7 @@
  *
  * Pure functions only — no DOM, no Lit, no side effects.
  */
-import type { MicroWidgetDisplayMode, MicroWidgetType, MicroWidgetCellConfig } from '@phozart/phz-shared/types';
+import type { MicroWidgetDisplayMode, MicroWidgetType, MicroWidgetCellConfig } from '@phozart/shared/types';
 /**
  * State for the cell display configuration panel.
  */

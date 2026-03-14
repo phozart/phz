@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — NavigationEditor headless state (V.2)
+ * @phozart/workspace — NavigationEditor headless state (V.2)
  *
  * Pure state management for authoring navigation links.
  * Supports auto-mapping source fields to target filter definitions.

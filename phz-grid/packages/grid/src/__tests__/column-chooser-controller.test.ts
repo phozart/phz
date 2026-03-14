@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ColumnChooserController, type ColumnChooserHost } from '../controllers/column-chooser.controller.js';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 function makeHost(overrides?: Partial<ColumnChooserHost>): ColumnChooserHost {
   return {

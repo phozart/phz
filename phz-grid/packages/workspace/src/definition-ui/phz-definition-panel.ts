@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-definitions — <phz-definition-panel>
+ * @phozart/definitions — <phz-definition-panel>
  *
  * Composition component hosting report identity + data source picker.
  */

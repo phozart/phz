@@ -19,7 +19,7 @@ The challenge: How do we provide both flexibility (headless) and convenience (ba
 
 We will architect phz-grid as TWO separate layers:
 
-1. **`@phozart/phz-core`** — Headless grid engine
+1. **`@phozart/core`** — Headless grid engine
    - Zero dependencies (except TypeScript)
    - Zero DOM access (runs in Node.js, Web Workers, or browser)
    - Pure state management: data model, sorting, filtering, selection, virtualization calculations
@@ -27,8 +27,8 @@ We will architect phz-grid as TWO separate layers:
    - Hook registry for extensibility
    - Published as separate npm package
 
-2. **`@phozart/phz-grid`** — Lit Web Components rendering layer
-   - Depends on `@phozart/phz-core` and `lit@^5`
+2. **`@phozart/grid`** — Lit Web Components rendering layer
+   - Depends on `@phozart/core` and `lit@^5`
    - Provides default DOM rendering with virtualization
    - Implements accessibility features (ARIA, keyboard nav, semantic shadow)
    - Exports `<phz-grid>` custom element
@@ -37,7 +37,7 @@ We will architect phz-grid as TWO separate layers:
 ### API Boundaries
 
 ```typescript
-// @phozart/phz-core - Pure logic, no DOM
+// @phozart/core - Pure logic, no DOM
 export interface GridApi {
   // State accessors
   getState(): GridState;
@@ -57,7 +57,7 @@ export interface GridApi {
   unregisterHook(hookId: string): void;
 }
 
-// @phozart/phz-grid - Rendering implementation
+// @phozart/grid - Rendering implementation
 export class PhzGrid extends LitElement {
   @property() api: GridApi;
 
@@ -76,15 +76,15 @@ export class PhzGrid extends LitElement {
 
 **Pattern 1: Default Rendering (90% of users)**
 ```typescript
-import { PhzGrid } from '@phozart/phz-grid';
+import { PhzGrid } from '@phozart/grid';
 
 <phz-grid .data=${data} .columns=${columns}></phz-grid>
 ```
 
 **Pattern 2: Headless (Advanced users)**
 ```typescript
-import { createGrid } from '@phozart/phz-core';
-import { useGridState } from '@phozart/phz-react';
+import { createGrid } from '@phozart/core';
+import { useGridState } from '@phozart/react';
 
 function MyCustomGrid() {
   const grid = useGridState(createGrid({ data, columns }));
@@ -97,7 +97,7 @@ function MyCustomGrid() {
 
 **Pattern 3: Hybrid (Custom components, default virtualization)**
 ```typescript
-import { PhzGrid } from '@phozart/phz-grid';
+import { PhzGrid } from '@phozart/grid';
 
 <phz-grid .data=${data} .columns=${columns}>
   <template slot="cell-renderer-status">
@@ -117,7 +117,7 @@ import { PhzGrid } from '@phozart/phz-grid';
 5. **Bundle Size** — Headless users pay zero cost for Lit rendering
 6. **Flexibility** — TanStack-style full control for advanced users
 7. **Convention over Configuration** — Default rendering for quick starts
-8. **Upgrade Path** — Users can start with `@phozart/phz-grid`, drop down to `@phozart/phz-core` later
+8. **Upgrade Path** — Users can start with `@phozart/grid`, drop down to `@phozart/core` later
 
 ### Negative
 

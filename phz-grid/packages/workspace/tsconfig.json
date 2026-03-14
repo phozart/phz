@@ -12,13 +12,13 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      "@phozart/phz-shared": ["../shared/src/index.ts"],
-      "@phozart/phz-shared/adapters": ["../shared/src/adapters/index.ts"],
-      "@phozart/phz-shared/types": ["../shared/src/types/index.ts"],
-      "@phozart/phz-shared/design-system": ["../shared/src/design-system/index.ts"],
-      "@phozart/phz-shared/artifacts": ["../shared/src/artifacts/index.ts"],
-      "@phozart/phz-shared/coordination": ["../shared/src/coordination/index.ts"],
-      "@phozart/phz-shared/definitions": ["../shared/src/definitions/index.ts"]
+      "@phozart/shared": ["../shared/src/index.ts"],
+      "@phozart/shared/adapters": ["../shared/src/adapters/index.ts"],
+      "@phozart/shared/types": ["../shared/src/types/index.ts"],
+      "@phozart/shared/design-system": ["../shared/src/design-system/index.ts"],
+      "@phozart/shared/artifacts": ["../shared/src/artifacts/index.ts"],
+      "@phozart/shared/coordination": ["../shared/src/coordination/index.ts"],
+      "@phozart/shared/definitions": ["../shared/src/definitions/index.ts"]
     }
   },
   "include": ["src"],

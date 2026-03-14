@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/criteria — Criteria-focused entry point
+ * @phozart/engine/criteria — Criteria-focused entry point
  *
  * CriteriaEngine, FilterAdapter, filter registry, bindings, state, rules, and output.
  */

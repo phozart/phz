@@ -3,7 +3,7 @@
  */
 import {
   createDefaultFilterPresetValue,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 describe('createDefaultFilterPresetValue', () => {
   it('creates a default filter preset value with required fields', () => {

@@ -11,7 +11,7 @@ import {
   startEditField,
   commitField,
 } from '../chart-tooltip-state.js';
-import type { TooltipField } from '@phozart/phz-engine';
+import type { TooltipField } from '@phozart/engine';
 
 function makeField(overrides: Partial<TooltipField> & { field: string; order: number }): TooltipField {
   return { ...overrides };

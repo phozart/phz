@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Data Shelf State (Canvas Phase 3A)
+ * @phozart/workspace — Data Shelf State (Canvas Phase 3A)
  *
  * Bridges the engine's drop zone model (Rows/Columns/Values/Filters)
  * with the dashboard editor's widget data config (dimensions/measures/filters).

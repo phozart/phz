@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-grid — DOM Custom Event Map
+ * @phozart/grid — DOM Custom Event Map
  *
  * These are the CustomEvent types dispatched by the <phz-grid> element.
  * They bridge the internal EventEmitter (colon-separated names) to
  * standard DOM events (hyphen-separated names).
  */
-import type { GridApi, StateChangeEvent, CellClickEvent, CellDoubleClickEvent, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditStartEvent, CellEditCommitEvent, CellEditCancelEvent, ScrollEvent } from '@phozart/phz-core';
-import type { DrillThroughConfig, GridRowDrillSource } from '@phozart/phz-engine';
+import type { GridApi, StateChangeEvent, CellClickEvent, CellDoubleClickEvent, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditStartEvent, CellEditCommitEvent, CellEditCancelEvent, ScrollEvent } from '@phozart/core';
+import type { DrillThroughConfig, GridRowDrillSource } from '@phozart/core';
 export interface RowClickEventDetail {
     rowId: string | number;
     rowIndex: number;

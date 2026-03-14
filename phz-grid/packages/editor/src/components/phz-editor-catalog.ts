@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-catalog> (B-2.04)
+ * @phozart/editor — <phz-editor-catalog> (B-2.04)
  *
  * Catalog screen component for the editor. Displays artifacts
  * with search, filtering, sorting, and creation actions.
@@ -16,7 +16,7 @@ import {
   openCreateDialog,
   closeCreateDialog,
 } from '../screens/catalog-state.js';
-import type { ArtifactType } from '@phozart/phz-shared/artifacts';
+import type { ArtifactType } from '@phozart/shared/artifacts';
 
 @customElement('phz-editor-catalog')
 export class PhzEditorCatalog extends LitElement {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Export audit event tests
+ * @phozart/core — Export audit event tests
  */
 
 import { describe, it, expect, vi } from 'vitest';

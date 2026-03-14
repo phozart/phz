@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-vue — Type definitions
+ * @phozart/vue — Type definitions
  */
-import type { GridApi, ColumnDefinition, GridState, RowId, CellPosition, SortState, FilterState, FilterOperator, EditState, SerializedGridState, ConditionalFormattingRule, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditCommitEvent, CellClickEvent } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, GridState, RowId, CellPosition, SortState, FilterState, FilterOperator, EditState, SerializedGridState, ConditionalFormattingRule, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditCommitEvent, CellClickEvent } from '@phozart/core';
 export interface PhzGridProps {
     data: unknown[];
     columns: ColumnDefinition[];

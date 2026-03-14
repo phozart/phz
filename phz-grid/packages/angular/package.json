@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-angular",
+  "name": "@phozart/angular",
   "version": "0.1.0",
   "description": "Angular wrapper / adapter for phz-grid",
   "type": "module",
@@ -34,8 +34,8 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/angular#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-grid": "^0.1.0"
+    "@phozart/core": "^0.1.0",
+    "@phozart/grid": "^0.1.0"
   },
   "peerDependencies": {
     "@angular/core": "^19.0.0",

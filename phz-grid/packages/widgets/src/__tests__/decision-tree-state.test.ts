@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-widgets — Decision Tree State Tests
+ * @phozart/widgets — Decision Tree State Tests
  */
 import { describe, it, expect, vi } from 'vitest';
-import type { DecisionTreeNode, NodeStatus } from '@phozart/phz-shared/types';
+import type { DecisionTreeNode, NodeStatus } from '@phozart/shared/types';
 import {
   createDecisionTreeState,
   toggleNode,

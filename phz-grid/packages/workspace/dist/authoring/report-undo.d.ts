@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Undo Integration
+ * @phozart/workspace — Report Undo Integration
  *
  * Wraps UndoManager<ReportEditorState> with labeled actions for
  * human-readable undo/redo history.

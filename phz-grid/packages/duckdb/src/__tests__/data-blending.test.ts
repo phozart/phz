@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Data Blending Tests (WI 28)
+ * @phozart/duckdb — Data Blending Tests (WI 28)
  *
  * Tests JOIN query generation and blended view creation.
  */

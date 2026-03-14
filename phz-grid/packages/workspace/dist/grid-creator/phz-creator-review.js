@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-creator — <phz-creator-review>
+ * @phozart/grid-creator — <phz-creator-review>
  *
  * Review & Create summary panel. Shows draft state before committing.
  */

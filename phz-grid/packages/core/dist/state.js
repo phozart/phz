@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — State Management
+ * @phozart/core — State Management
  *
  * Immutable state tree with subscriber notifications.
  */
@@ -27,6 +27,7 @@ export function createInitialState(columns, userRole) {
             order: columns.map((c) => c.field),
             widths: Object.fromEntries(columns.map((c) => [c.field, c.width ?? 150])),
             visibility,
+            pinOverrides: {},
         },
         viewport: {
             scrollTop: 0,
@@ -84,6 +85,53 @@ export function createInitialState(columns, userRole) {
         },
     };
 }
+// --- Column Pinning ---
+/**
+ * Pin a column to the left or right edge at runtime.
+ * Returns a new state with the pin override applied (immutable).
+ */
+export function pinColumn(state, field, side) {
+    return {
+        ...state,
+        columns: {
+            ...state.columns,
+            pinOverrides: {
+                ...state.columns.pinOverrides,
+                [field]: side,
+            },
+        },
+    };
+}
+/**
+ * Remove a runtime pin override for a column.
+ * Sets the override to `null` so that it explicitly overrides any static
+ * `col.frozen` value. Returns a new state (immutable).
+ * Safe to call on a column that has no override.
+ */
+export function unpinColumn(state, field) {
+    return {
+        ...state,
+        columns: {
+            ...state.columns,
+            pinOverrides: {
+                ...state.columns.pinOverrides,
+                [field]: null,
+            },
+        },
+    };
+}
+/**
+ * Get the effective pin state for a column.
+ * Checks `pinOverrides` first, then falls back to `col.frozen`.
+ * Returns `null` when the column is not pinned.
+ */
+export function getEffectivePinState(state, col) {
+    const override = state.columns.pinOverrides[col.field];
+    if (override !== undefined) {
+        return override;
+    }
+    return col.frozen ?? null;
+}
 const UNDO_MAX = 50;
 export class StateManager {
     state;
@@ -92,6 +140,9 @@ export class StateManager {
     batching = false;
     _undoStack = [];
     _redoStack = [];
+    _undoLabels = [];
+    _redoLabels = [];
+    _lastActionLabel;
     _pendingPriorities = new Set();
     _backgroundTimer = null;
     constructor(initialState) {
@@ -150,31 +201,49 @@ export class StateManager {
             this.selectorSubs.delete(sub);
         };
     }
-    pushUndo() {
+    pushUndo(label) {
         this._undoStack.push(this.exportState());
+        this._undoLabels.push(label);
         if (this._undoStack.length > UNDO_MAX) {
             this._undoStack.shift();
+            this._undoLabels.shift();
         }
         this._redoStack.length = 0;
+        this._redoLabels.length = 0;
+        this._lastActionLabel = label;
         this.updateHistory();
     }
     undo() {
         const snapshot = this._undoStack.pop();
+        const _label = this._undoLabels.pop();
         if (!snapshot)
             return false;
         this._redoStack.push(this.exportState());
+        this._redoLabels.push(this._lastActionLabel);
         this.importState(snapshot);
+        this._lastActionLabel = this._undoLabels[this._undoLabels.length - 1];
         this.updateHistory();
         return true;
     }
     redo() {
         const snapshot = this._redoStack.pop();
+        const label = this._redoLabels.pop();
         if (!snapshot)
             return false;
         this._undoStack.push(this.exportState());
+        this._undoLabels.push(this._lastActionLabel);
         this.importState(snapshot);
+        this._lastActionLabel = label;
         this.updateHistory();
         return true;
+    }
+    /** Execute a state mutation with automatic undo snapshot */
+    performAction(label, fn) {
+        this.pushUndo(label);
+        fn();
+    }
+    getLastActionLabel() {
+        return this._lastActionLabel;
     }
     canUndo() {
         return this._undoStack.length > 0;
@@ -189,6 +258,7 @@ export class StateManager {
                 canRedo: this._redoStack.length > 0,
                 undoStack: this._undoStack.length,
                 redoStack: this._redoStack.length,
+                lastActionLabel: this._lastActionLabel,
             },
         });
     }

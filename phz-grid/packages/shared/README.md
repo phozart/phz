@@ -1,25 +1,25 @@
-# @phozart/phz-shared
+# @phozart/shared
 
 Shared infrastructure for the phz-grid ecosystem. Provides adapter interfaces (SPIs), design system tokens, artifact metadata types, and runtime coordination utilities used across all phz-grid packages.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-shared
+npm install @phozart/shared
 ```
 
-> **Note:** This is a foundation package. Other phz-grid packages depend on it. You typically consume it indirectly through higher-level packages like `@phozart/phz-viewer` or `@phozart/phz-editor`, but you can import directly when building custom integrations.
+> **Note:** This is a foundation package. Other phz-grid packages depend on it. You typically consume it indirectly through higher-level packages like `@phozart/viewer` or `@phozart/editor`, but you can import directly when building custom integrations.
 
 ## Sub-path Exports
 
 | Import path | Description |
 |-------------|-------------|
-| `@phozart/phz-shared` | Barrel re-export of all sub-paths |
-| `@phozart/phz-shared/adapters` | Data adapter SPI, persistence, measures, alerts, attention |
-| `@phozart/phz-shared/types` | Shared type definitions (filters, alerts, subscriptions, widgets, errors) |
-| `@phozart/phz-shared/design-system` | Design tokens, responsive utilities, container queries, component patterns |
-| `@phozart/phz-shared/artifacts` | Artifact visibility, default presentation, personal views, grid artifacts |
-| `@phozart/phz-shared/coordination` | Filter context, data pipeline, interaction bus, loading state, navigation |
+| `@phozart/shared` | Barrel re-export of all sub-paths |
+| `@phozart/shared/adapters` | Data adapter SPI, persistence, measures, alerts, attention |
+| `@phozart/shared/types` | Shared type definitions (filters, alerts, subscriptions, widgets, errors) |
+| `@phozart/shared/design-system` | Design tokens, responsive utilities, container queries, component patterns |
+| `@phozart/shared/artifacts` | Artifact visibility, default presentation, personal views, grid artifacts |
+| `@phozart/shared/coordination` | Filter context, data pipeline, interaction bus, loading state, navigation |
 
 ## Quick Start
 
@@ -28,7 +28,7 @@ npm install @phozart/phz-shared
 Implement `DataAdapter` to connect your data backend:
 
 ```ts
-import type { DataAdapter, DataQuery, DataResult } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, DataQuery, DataResult } from '@phozart/shared/adapters';
 
 const myAdapter: DataAdapter = {
   async execute(query: DataQuery): Promise<DataResult> {
@@ -48,7 +48,7 @@ const myAdapter: DataAdapter = {
 Access the design token constants for consistent styling:
 
 ```ts
-import { DESIGN_TOKENS, SPACING, BREAKPOINTS } from '@phozart/phz-shared/design-system';
+import { DESIGN_TOKENS, SPACING, BREAKPOINTS } from '@phozart/shared/design-system';
 
 console.log(DESIGN_TOKENS.primary500);  // '#3B82F6'
 console.log(SPACING.space4);            // '16px'
@@ -64,7 +64,7 @@ import {
   isVisibleToViewer,
   transitionVisibility,
   type VisibilityMeta,
-} from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/artifacts';
 
 const meta: VisibilityMeta = { visibility: 'shared', ownerId: 'user-1' };
 const canSee = isVisibleToViewer(meta, { userId: 'user-2', roles: ['viewer'] });
@@ -75,7 +75,7 @@ const canSee = isVisibleToViewer(meta, { userId: 'user-2', roles: ['viewer'] });
 Manage filter context across dashboards and widgets:
 
 ```ts
-import { createFilterContext, type FilterContextManager } from '@phozart/phz-shared/coordination';
+import { createFilterContext, type FilterContextManager } from '@phozart/shared/coordination';
 
 const ctx: FilterContextManager = createFilterContext({
   onFilterChange: (state) => console.log('Filters changed:', state),
@@ -92,7 +92,7 @@ import type {
   PersonalAlert,
   Subscription,
   FilterValueSource,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 ```
 
 ## Key Types

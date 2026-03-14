@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Type Definitions
+ * @phozart/collab — Type Definitions
  *
  * Real-time collaboration types using Yjs CRDTs.
  */

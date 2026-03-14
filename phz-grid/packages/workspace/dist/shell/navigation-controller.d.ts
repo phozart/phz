@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Navigation Controller (L.3)
+ * @phozart/workspace — Navigation Controller (L.3)
  *
  * Pure functions for workspace navigation state management.
  * Coordinates panel navigation with breadcrumb history.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — URL Filter Sync (O.3)
+ * @phozart/workspace — URL Filter Sync (O.3)
  *
  * Serializes/deserializes FilterContextState to URL query parameters.
  * Format: f.{field}={operator}:{value}

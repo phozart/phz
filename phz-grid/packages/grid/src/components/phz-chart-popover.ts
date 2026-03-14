@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-chart-popover>
+ * @phozart/grid — <phz-chart-popover>
  *
  * Floating chart popover that displays bar/line visualizations of column data.
  * SVG-based, zero external dependencies. Opens via right-click "Visualize".

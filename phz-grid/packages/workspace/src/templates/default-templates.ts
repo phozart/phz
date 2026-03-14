@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Default Templates
+ * @phozart/workspace — Default Templates
  *
  * 9 built-in dashboard templates covering common BI scenarios.
  */

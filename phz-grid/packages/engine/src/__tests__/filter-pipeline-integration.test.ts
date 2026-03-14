@@ -12,7 +12,7 @@ import { createFilterAdapter, applyArtefactCriteria, globalFiltersToCriteriaBind
 import { resolveDashboardWidgets } from '../widget-resolver.js';
 import type { KPIScoreProvider } from '../widget-resolver.js';
 import { kpiId, dashboardId, widgetId, dataProductId } from '../types.js';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 import type { KPIDefinition } from '../kpi.js';
 import type { DashboardConfig } from '../dashboard.js';
 import type { GlobalFilter } from '../dashboard-enhanced.js';

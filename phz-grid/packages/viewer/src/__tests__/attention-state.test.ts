@@ -14,7 +14,7 @@ import {
   setAttentionTypeFilter,
   getFilteredItems,
 } from '../screens/attention-state.js';
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 
 const makeItem = (id: string, type: AttentionItem['type'], read: boolean): AttentionItem => ({
   id,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Container Query Widget Adaptations Tests (C-1.08)
+ * @phozart/widgets — Container Query Widget Adaptations Tests (C-1.08)
  *
  * Tests the new container query helpers for decision tree,
  * container box, and rich text widgets.
@@ -10,7 +10,7 @@ import {
   getContainerBoxClass,
   shouldStackContainerChildren,
   getRichTextClass,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 describe('getDecisionTreeClass', () => {
   it('returns tree--full for wide containers', () => {

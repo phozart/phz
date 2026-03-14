@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Color Palettes
+ * @phozart/engine — Color Palettes
  *
  * 6 preset color palettes for chart widgets.
  * Each palette has 8 colors.

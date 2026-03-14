@@ -16,7 +16,7 @@ import {
   saveExplorerAsDashboardWidget,
   buildDrillThroughQuery,
 } from '../coordination/explorer-wiring.js';
-import type { ExploreQuery } from '@phozart/phz-engine';
+import type { ExploreQuery } from '@phozart/engine';
 
 describe('explorer-wiring', () => {
   const sampleExplore: ExploreQuery = {

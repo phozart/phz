@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Navigation Events (A-1.05)
+ * @phozart/shared — Navigation Events (A-1.05)
  *
  * Types and helpers for cross-artifact navigation events.
  * Bridges navigation links with the interaction bus.

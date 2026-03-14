@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-widgets — Container Box State Tests
+ * @phozart/widgets — Container Box State Tests
  */
 import { describe, it, expect } from 'vitest';
-import { createDefaultContainerBoxConfig } from '@phozart/phz-shared/types';
+import { createDefaultContainerBoxConfig } from '@phozart/shared/types';
 import {
   createContainerBoxState,
   createDefaultContainerBoxState,

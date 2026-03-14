@@ -44,7 +44,7 @@ import {
   createFilterSnapshot,
   shouldAutoSave,
   pruneHistory,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 import type {
   FilterValue,
   NavigationFilterMapping,
@@ -52,7 +52,7 @@ import type {
   ExecutionStrategyConfig,
   ExecutionContext,
   MultiSourceLoadingState,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // resolveFieldForSource
@@ -1041,7 +1041,7 @@ describe('isFormatEnabled', () => {
 describe('DataAdapter async methods (A-2.09 verification)', () => {
   it('verifies async method types are importable from adapters', async () => {
     // Dynamic import to verify the types exist at the module level
-    const adapters = await import('@phozart/phz-shared/adapters');
+    const adapters = await import('@phozart/shared/adapters');
     // The DataAdapter interface is a type, not a value, but we can verify
     // the associated types are exported as values/type guards
     expect(typeof adapters.hasArrowBuffer).toBe('function');

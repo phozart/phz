@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-ai — Dashboard Generator
+ * @phozart/ai — Dashboard Generator
  *
  * Generates dashboard configurations from data schema + natural language prompt.
  * Uses heuristic-based schema analysis (no LLM calls).
  */
-import type { WidgetType } from '@phozart/phz-engine';
+import type { WidgetType } from '@phozart/engine';
 import type { FieldInput } from './schema-analyzer.js';
 export interface DashboardGeneratorOptions {
     name?: string;

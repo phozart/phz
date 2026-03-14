@@ -1,7 +1,7 @@
 /**
  * Convert a GridDefinition to a GridConfig for createGrid().
  */
-import type { GridConfig } from '@phozart/phz-core';
+import type { GridConfig } from '@phozart/core';
 import type { GridDefinition } from '../types/grid-definition.js';
 export interface ToGridConfigOptions {
     userRole?: string;

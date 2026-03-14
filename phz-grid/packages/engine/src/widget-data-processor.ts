@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Widget Data Processor
+ * @phozart/engine — Widget Data Processor
  *
  * Pipeline: filter → group by category → aggregate measures → sort → limit (with "Others" grouping).
  * Pure functions, no DOM dependency.
  */
 
-import type { AggregationFunction } from '@phozart/phz-core';
+import type { AggregationFunction } from '@phozart/core';
 import type { WidgetDataConfig, WidgetFilterRule, FilterOperator, MeasureRef } from './widget-config-enhanced.js';
 import { computeAggregation } from './aggregation.js';
 

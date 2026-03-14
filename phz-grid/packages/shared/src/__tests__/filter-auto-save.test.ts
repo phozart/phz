@@ -9,11 +9,11 @@ import {
   createFilterSnapshot,
   shouldAutoSave,
   pruneHistory,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 import type {
   FilterAutoSaveConfig,
   FilterStateSnapshot,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // createDefaultAutoSaveConfig

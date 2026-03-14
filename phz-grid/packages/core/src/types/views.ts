@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Saved Views Types
+ * @phozart/core — Saved Views Types
  */
 
 import type { SerializedGridState } from './state.js';

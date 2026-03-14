@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Dashboard Themes
+ * @phozart/widgets -- Dashboard Themes
  *
  * Theme system with light, dark, and high-contrast built-in themes.
  * Applies CSS custom properties for surface, text, border, accent,

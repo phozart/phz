@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Rules Engine
+ * @phozart/engine — Filter Rules Engine
  *
  * 5 rule types that programmatically constrain filter options.
  * Rules are the highest priority in state resolution.

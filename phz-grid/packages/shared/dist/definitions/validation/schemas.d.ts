@@ -13,17 +13,17 @@ export declare const DefinitionIdentitySchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     name: string;
+    createdAt: string;
     updatedAt: string;
     schemaVersion: string;
-    createdAt: string;
     description?: string | undefined;
     createdBy?: string | undefined;
 }, {
     id: string;
     name: string;
+    createdAt: string;
     updatedAt: string;
     schemaVersion: string;
-    createdAt: string;
     description?: string | undefined;
     createdBy?: string | undefined;
 }>;
@@ -31,11 +31,11 @@ export declare const LocalDataSourceSchema: z.ZodObject<{
     type: z.ZodLiteral<"local">;
     data: z.ZodArray<z.ZodUnknown, "many">;
 }, "strip", z.ZodTypeAny, {
-    data: unknown[];
     type: "local";
+    data: unknown[];
 }, {
-    data: unknown[];
     type: "local";
+    data: unknown[];
 }>;
 export declare const UrlDataSourceSchema: z.ZodObject<{
     type: z.ZodLiteral<"url">;
@@ -44,14 +44,14 @@ export declare const UrlDataSourceSchema: z.ZodObject<{
     headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     dataPath: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    url: string;
     type: "url";
+    url: string;
     method?: "GET" | "POST" | undefined;
     headers?: Record<string, string> | undefined;
     dataPath?: string | undefined;
 }, {
-    url: string;
     type: "url";
+    url: string;
     method?: "GET" | "POST" | undefined;
     headers?: Record<string, string> | undefined;
     dataPath?: string | undefined;
@@ -89,11 +89,11 @@ export declare const DefinitionDataSourceSchema: z.ZodDiscriminatedUnion<"type",
     type: z.ZodLiteral<"local">;
     data: z.ZodArray<z.ZodUnknown, "many">;
 }, "strip", z.ZodTypeAny, {
-    data: unknown[];
     type: "local";
+    data: unknown[];
 }, {
-    data: unknown[];
     type: "local";
+    data: unknown[];
 }>, z.ZodObject<{
     type: z.ZodLiteral<"url">;
     url: z.ZodString;
@@ -101,14 +101,14 @@ export declare const DefinitionDataSourceSchema: z.ZodDiscriminatedUnion<"type",
     headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     dataPath: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    url: string;
     type: "url";
+    url: string;
     method?: "GET" | "POST" | undefined;
     headers?: Record<string, string> | undefined;
     dataPath?: string | undefined;
 }, {
-    url: string;
     type: "url";
+    url: string;
     method?: "GET" | "POST" | undefined;
     headers?: Record<string, string> | undefined;
     dataPath?: string | undefined;
@@ -156,7 +156,8 @@ export declare const DefinitionColumnSpecSchema: z.ZodObject<{
     visible: z.ZodOptional<z.ZodBoolean>;
 }, "strip", z.ZodTypeAny, {
     field: string;
-    type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+    type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+    priority?: 2 | 1 | 3 | undefined;
     header?: string | undefined;
     width?: number | undefined;
     minWidth?: number | undefined;
@@ -166,11 +167,11 @@ export declare const DefinitionColumnSpecSchema: z.ZodObject<{
     editable?: boolean | undefined;
     resizable?: boolean | undefined;
     frozen?: "left" | "right" | null | undefined;
-    priority?: 1 | 2 | 3 | undefined;
     visible?: boolean | undefined;
 }, {
     field: string;
-    type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+    type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+    priority?: 2 | 1 | 3 | undefined;
     header?: string | undefined;
     width?: number | undefined;
     minWidth?: number | undefined;
@@ -180,7 +181,6 @@ export declare const DefinitionColumnSpecSchema: z.ZodObject<{
     editable?: boolean | undefined;
     resizable?: boolean | undefined;
     frozen?: "left" | "right" | null | undefined;
-    priority?: 1 | 2 | 3 | undefined;
     visible?: boolean | undefined;
 }>;
 export declare const DefinitionDefaultsSchema: z.ZodOptional<z.ZodObject<{
@@ -216,29 +216,29 @@ export declare const DefinitionDefaultsSchema: z.ZodOptional<z.ZodObject<{
         field: string;
         direction: "asc" | "desc";
     } | undefined;
+    columnOrder?: string[] | undefined;
+    columnWidths?: Record<string, number> | undefined;
     filters?: {
         field: string;
         operator: string;
         value?: unknown;
     }[] | undefined;
     groupBy?: string[] | undefined;
-    columnOrder?: string[] | undefined;
     columnVisibility?: Record<string, boolean> | undefined;
-    columnWidths?: Record<string, number> | undefined;
 }, {
     sort?: {
         field: string;
         direction: "asc" | "desc";
     } | undefined;
+    columnOrder?: string[] | undefined;
+    columnWidths?: Record<string, number> | undefined;
     filters?: {
         field: string;
         operator: string;
         value?: unknown;
     }[] | undefined;
     groupBy?: string[] | undefined;
-    columnOrder?: string[] | undefined;
     columnVisibility?: Record<string, boolean> | undefined;
-    columnWidths?: Record<string, number> | undefined;
 }>>;
 export declare const DefinitionBehaviorSchema: z.ZodOptional<z.ZodObject<{
     density: z.ZodOptional<z.ZodEnum<["compact", "comfortable", "spacious"]>>;
@@ -252,27 +252,27 @@ export declare const DefinitionBehaviorSchema: z.ZodOptional<z.ZodObject<{
     showPagination: z.ZodOptional<z.ZodBoolean>;
     pageSize: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
-    enableVirtualization?: boolean | undefined;
     density?: "compact" | "comfortable" | "spacious" | undefined;
-    editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-    selectionMode?: "none" | "single" | "multi" | "range" | undefined;
     enableGrouping?: boolean | undefined;
+    pageSize?: number | undefined;
+    enableVirtualization?: boolean | undefined;
+    editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+    selectionMode?: "multi" | "none" | "single" | "range" | undefined;
     enableColumnResize?: boolean | undefined;
     enableColumnReorder?: boolean | undefined;
     showToolbar?: boolean | undefined;
     showPagination?: boolean | undefined;
-    pageSize?: number | undefined;
 }, {
-    enableVirtualization?: boolean | undefined;
     density?: "compact" | "comfortable" | "spacious" | undefined;
-    editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-    selectionMode?: "none" | "single" | "multi" | "range" | undefined;
     enableGrouping?: boolean | undefined;
+    pageSize?: number | undefined;
+    enableVirtualization?: boolean | undefined;
+    editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+    selectionMode?: "multi" | "none" | "single" | "range" | undefined;
     enableColumnResize?: boolean | undefined;
     enableColumnReorder?: boolean | undefined;
     showToolbar?: boolean | undefined;
     showPagination?: boolean | undefined;
-    pageSize?: number | undefined;
 }>>;
 export declare const DefinitionAccessSchema: z.ZodOptional<z.ZodObject<{
     visibility: z.ZodOptional<z.ZodEnum<["public", "private", "role-restricted"]>>;
@@ -300,11 +300,11 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         type: z.ZodLiteral<"local">;
         data: z.ZodArray<z.ZodUnknown, "many">;
     }, "strip", z.ZodTypeAny, {
-        data: unknown[];
         type: "local";
+        data: unknown[];
     }, {
-        data: unknown[];
         type: "local";
+        data: unknown[];
     }>, z.ZodObject<{
         type: z.ZodLiteral<"url">;
         url: z.ZodString;
@@ -312,14 +312,14 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         headers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         dataPath: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
-        url: string;
         type: "url";
+        url: string;
         method?: "GET" | "POST" | undefined;
         headers?: Record<string, string> | undefined;
         dataPath?: string | undefined;
     }, {
-        url: string;
         type: "url";
+        url: string;
         method?: "GET" | "POST" | undefined;
         headers?: Record<string, string> | undefined;
         dataPath?: string | undefined;
@@ -367,7 +367,8 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         visible: z.ZodOptional<z.ZodBoolean>;
     }, "strip", z.ZodTypeAny, {
         field: string;
-        type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+        type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+        priority?: 2 | 1 | 3 | undefined;
         header?: string | undefined;
         width?: number | undefined;
         minWidth?: number | undefined;
@@ -377,11 +378,11 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         editable?: boolean | undefined;
         resizable?: boolean | undefined;
         frozen?: "left" | "right" | null | undefined;
-        priority?: 1 | 2 | 3 | undefined;
         visible?: boolean | undefined;
     }, {
         field: string;
-        type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+        type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+        priority?: 2 | 1 | 3 | undefined;
         header?: string | undefined;
         width?: number | undefined;
         minWidth?: number | undefined;
@@ -391,7 +392,6 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         editable?: boolean | undefined;
         resizable?: boolean | undefined;
         frozen?: "left" | "right" | null | undefined;
-        priority?: 1 | 2 | 3 | undefined;
         visible?: boolean | undefined;
     }>, "many">;
     defaults: z.ZodOptional<z.ZodObject<{
@@ -427,29 +427,29 @@ export declare const GridDefinitionSchema: z.ZodObject<{
             field: string;
             direction: "asc" | "desc";
         } | undefined;
+        columnOrder?: string[] | undefined;
+        columnWidths?: Record<string, number> | undefined;
         filters?: {
             field: string;
             operator: string;
             value?: unknown;
         }[] | undefined;
         groupBy?: string[] | undefined;
-        columnOrder?: string[] | undefined;
         columnVisibility?: Record<string, boolean> | undefined;
-        columnWidths?: Record<string, number> | undefined;
     }, {
         sort?: {
             field: string;
             direction: "asc" | "desc";
         } | undefined;
+        columnOrder?: string[] | undefined;
+        columnWidths?: Record<string, number> | undefined;
         filters?: {
             field: string;
             operator: string;
             value?: unknown;
         }[] | undefined;
         groupBy?: string[] | undefined;
-        columnOrder?: string[] | undefined;
         columnVisibility?: Record<string, boolean> | undefined;
-        columnWidths?: Record<string, number> | undefined;
     }>>;
     formatting: z.ZodOptional<z.ZodObject<{
         conditionalRules: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -498,27 +498,27 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         showPagination: z.ZodOptional<z.ZodBoolean>;
         pageSize: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        enableVirtualization?: boolean | undefined;
         density?: "compact" | "comfortable" | "spacious" | undefined;
-        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-        selectionMode?: "none" | "single" | "multi" | "range" | undefined;
         enableGrouping?: boolean | undefined;
+        pageSize?: number | undefined;
+        enableVirtualization?: boolean | undefined;
+        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+        selectionMode?: "multi" | "none" | "single" | "range" | undefined;
         enableColumnResize?: boolean | undefined;
         enableColumnReorder?: boolean | undefined;
         showToolbar?: boolean | undefined;
         showPagination?: boolean | undefined;
-        pageSize?: number | undefined;
     }, {
-        enableVirtualization?: boolean | undefined;
         density?: "compact" | "comfortable" | "spacious" | undefined;
-        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-        selectionMode?: "none" | "single" | "multi" | "range" | undefined;
         enableGrouping?: boolean | undefined;
+        pageSize?: number | undefined;
+        enableVirtualization?: boolean | undefined;
+        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+        selectionMode?: "multi" | "none" | "single" | "range" | undefined;
         enableColumnResize?: boolean | undefined;
         enableColumnReorder?: boolean | undefined;
         showToolbar?: boolean | undefined;
         showPagination?: boolean | undefined;
-        pageSize?: number | undefined;
     }>>;
     views: z.ZodOptional<z.ZodObject<{
         views: z.ZodArray<z.ZodObject<{
@@ -531,15 +531,15 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }, {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }>, "many">;
@@ -548,8 +548,8 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         views: {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }[];
@@ -558,8 +558,8 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         views: {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }[];
@@ -582,10 +582,10 @@ export declare const GridDefinitionSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     name: string;
-    updatedAt: string;
     columns: {
         field: string;
-        type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+        type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+        priority?: 2 | 1 | 3 | undefined;
         header?: string | undefined;
         width?: number | undefined;
         minWidth?: number | undefined;
@@ -595,17 +595,17 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         editable?: boolean | undefined;
         resizable?: boolean | undefined;
         frozen?: "left" | "right" | null | undefined;
-        priority?: 1 | 2 | 3 | undefined;
         visible?: boolean | undefined;
     }[];
-    schemaVersion: string;
     createdAt: string;
+    updatedAt: string;
+    schemaVersion: string;
     dataSource: {
-        data: unknown[];
         type: "local";
+        data: unknown[];
     } | {
-        url: string;
         type: "url";
+        url: string;
         method?: "GET" | "POST" | undefined;
         headers?: Record<string, string> | undefined;
         dataPath?: string | undefined;
@@ -626,15 +626,15 @@ export declare const GridDefinitionSchema: z.ZodObject<{
             field: string;
             direction: "asc" | "desc";
         } | undefined;
+        columnOrder?: string[] | undefined;
+        columnWidths?: Record<string, number> | undefined;
         filters?: {
             field: string;
             operator: string;
             value?: unknown;
         }[] | undefined;
         groupBy?: string[] | undefined;
-        columnOrder?: string[] | undefined;
         columnVisibility?: Record<string, boolean> | undefined;
-        columnWidths?: Record<string, number> | undefined;
     } | undefined;
     formatting?: {
         conditionalRules?: {
@@ -646,23 +646,23 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         tableSettings?: Record<string, unknown> | undefined;
     } | undefined;
     behavior?: {
-        enableVirtualization?: boolean | undefined;
         density?: "compact" | "comfortable" | "spacious" | undefined;
-        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-        selectionMode?: "none" | "single" | "multi" | "range" | undefined;
         enableGrouping?: boolean | undefined;
+        pageSize?: number | undefined;
+        enableVirtualization?: boolean | undefined;
+        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+        selectionMode?: "multi" | "none" | "single" | "range" | undefined;
         enableColumnResize?: boolean | undefined;
         enableColumnReorder?: boolean | undefined;
         showToolbar?: boolean | undefined;
         showPagination?: boolean | undefined;
-        pageSize?: number | undefined;
     } | undefined;
     views?: {
         views: {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }[];
@@ -677,10 +677,10 @@ export declare const GridDefinitionSchema: z.ZodObject<{
 }, {
     id: string;
     name: string;
-    updatedAt: string;
     columns: {
         field: string;
-        type?: "string" | "number" | "boolean" | "date" | "custom" | undefined;
+        type?: "string" | "number" | "boolean" | "custom" | "date" | undefined;
+        priority?: 2 | 1 | 3 | undefined;
         header?: string | undefined;
         width?: number | undefined;
         minWidth?: number | undefined;
@@ -690,17 +690,17 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         editable?: boolean | undefined;
         resizable?: boolean | undefined;
         frozen?: "left" | "right" | null | undefined;
-        priority?: 1 | 2 | 3 | undefined;
         visible?: boolean | undefined;
     }[];
-    schemaVersion: string;
     createdAt: string;
+    updatedAt: string;
+    schemaVersion: string;
     dataSource: {
-        data: unknown[];
         type: "local";
+        data: unknown[];
     } | {
-        url: string;
         type: "url";
+        url: string;
         method?: "GET" | "POST" | undefined;
         headers?: Record<string, string> | undefined;
         dataPath?: string | undefined;
@@ -721,15 +721,15 @@ export declare const GridDefinitionSchema: z.ZodObject<{
             field: string;
             direction: "asc" | "desc";
         } | undefined;
+        columnOrder?: string[] | undefined;
+        columnWidths?: Record<string, number> | undefined;
         filters?: {
             field: string;
             operator: string;
             value?: unknown;
         }[] | undefined;
         groupBy?: string[] | undefined;
-        columnOrder?: string[] | undefined;
         columnVisibility?: Record<string, boolean> | undefined;
-        columnWidths?: Record<string, number> | undefined;
     } | undefined;
     formatting?: {
         conditionalRules?: {
@@ -741,23 +741,23 @@ export declare const GridDefinitionSchema: z.ZodObject<{
         tableSettings?: Record<string, unknown> | undefined;
     } | undefined;
     behavior?: {
-        enableVirtualization?: boolean | undefined;
         density?: "compact" | "comfortable" | "spacious" | undefined;
-        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
-        selectionMode?: "none" | "single" | "multi" | "range" | undefined;
         enableGrouping?: boolean | undefined;
+        pageSize?: number | undefined;
+        enableVirtualization?: boolean | undefined;
+        editMode?: "none" | "click" | "dblclick" | "manual" | undefined;
+        selectionMode?: "multi" | "none" | "single" | "range" | undefined;
         enableColumnResize?: boolean | undefined;
         enableColumnReorder?: boolean | undefined;
         showToolbar?: boolean | undefined;
         showPagination?: boolean | undefined;
-        pageSize?: number | undefined;
     } | undefined;
     views?: {
         views: {
             id: string;
             name: string;
-            updatedAt: string;
             createdAt: string;
+            updatedAt: string;
             state: Record<string, unknown>;
             isDefault?: boolean | undefined;
         }[];

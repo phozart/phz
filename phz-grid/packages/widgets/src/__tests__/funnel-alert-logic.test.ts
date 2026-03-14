@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Funnel Chart + Alert Panel Pure Logic Tests
+ * @phozart/widgets — Funnel Chart + Alert Panel Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

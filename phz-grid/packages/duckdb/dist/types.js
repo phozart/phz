@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Type Definitions
+ * @phozart/duckdb — Type Definitions
  *
  * DuckDB-WASM data source adapter types.
  * Uses peer dependencies: @duckdb/duckdb-wasm, apache-arrow

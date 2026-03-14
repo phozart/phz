@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Layout Migration (K.2)
+ * @phozart/workspace — Layout Migration (K.2)
  *
  * Migrates legacy absolute-position grid layouts to the
  * composable LayoutNode tree format (AutoGridLayout).

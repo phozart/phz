@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Storage Adapter Tests
+ * @phozart/engine — Storage Adapter Tests
  *
  * TDD: These tests define the EngineStorageAdapter interface contract,
  * MemoryStorageAdapter, LocalStorageAdapter, and BIEngine integration.

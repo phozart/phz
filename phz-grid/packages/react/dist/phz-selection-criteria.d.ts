@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-react — PhzSelectionCriteria React Component
+ * @phozart/react — PhzSelectionCriteria React Component
  *
  * Wraps the <phz-selection-criteria> Web Component for React using @lit/react.
  * Provides a filter bar + drawer UI with presets, tree selects, date ranges, etc.
  */
 import React from 'react';
-import type { CriteriaConfig, SelectionContext, SelectionPreset } from '@phozart/phz-core';
+import type { CriteriaConfig, SelectionContext, SelectionPreset } from '@phozart/core';
 /** Imperative API exposed via ref on the PhzSelectionCriteria component. */
 export interface CriteriaApi {
     /** Returns the current selection context (field values). */

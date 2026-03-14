@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Editor Shell State Machine (B-2.02)
+ * @phozart/editor — Editor Shell State Machine (B-2.02)
  *
  * Headless state management for the editor shell. Manages screen navigation,
  * editing mode, unsaved changes tracking, auto-save debounce, undo/redo stack,
@@ -7,8 +7,8 @@
  *
  * All functions are pure — they return a new state object rather than mutating.
  */
-import type { ViewerContext } from '@phozart/phz-shared/adapters';
-import type { MeasureDefinition } from '@phozart/phz-shared/adapters';
+import type { ViewerContext } from '@phozart/shared/adapters';
+import type { MeasureDefinition } from '@phozart/shared/adapters';
 export type EditorScreen = 'catalog' | 'dashboard-view' | 'dashboard-edit' | 'report' | 'explorer' | 'sharing' | 'alerts';
 export interface NavigationEntry {
     screen: EditorScreen;

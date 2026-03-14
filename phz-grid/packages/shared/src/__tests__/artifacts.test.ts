@@ -15,14 +15,14 @@ import {
   createGridArtifact,
   isGridArtifact,
   gridArtifactToMeta,
-} from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/artifacts';
 import type {
   VisibilityMeta,
   ViewerContext,
   DefaultPresentation,
   PersonalView,
   GridArtifact,
-} from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/artifacts';
 
 // ========================================================================
 // isVisibleToViewer

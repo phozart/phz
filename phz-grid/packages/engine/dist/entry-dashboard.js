@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/dashboard — Dashboard-focused entry point
+ * @phozart/engine/dashboard — Dashboard-focused entry point
  *
  * Dashboard configuration, widget resolution, data processing, and chart projection.
  */

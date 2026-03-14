@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Filter Definition Studio
+ * @phozart/engine-admin — Filter Definition Studio
  *
  * Rich 3-panel visual builder for creating/editing filter definitions.
  * Layout: Type Catalog (200px) | Configuration Form (1fr) | Live Preview (360px)
@@ -18,7 +18,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { filterDefinitionId, resolveLabelTemplate, buildTreeFromSource } from '@phozart/phz-core';
+import { filterDefinitionId, resolveLabelTemplate, buildTreeFromSource } from '@phozart/core';
 const TYPE_CATALOG = [
     { type: 'single_select', label: 'Single Select', icon: '◉', desc: 'Pick one option from a list' },
     { type: 'multi_select', label: 'Multi Select', icon: '☑', desc: 'Pick multiple options' },
@@ -609,7 +609,7 @@ let PhzFilterStudio = class PhzFilterStudio extends LitElement {
     ]; }
     connectedCallback() {
         super.connectedCallback();
-        import('@phozart/phz-criteria');
+        import('@phozart/criteria');
         if (this.definition) {
             this.selectedType = this.definition.type;
             this.draft = { ...this.definition };

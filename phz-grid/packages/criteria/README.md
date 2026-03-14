@@ -1,11 +1,11 @@
-# @phozart/phz-criteria
+# @phozart/criteria
 
 Selection criteria components for phz-grid. Provides page-level filter panels with date range pickers, tree selects, numeric ranges, searchable dropdowns, preset management, and admin configuration. Built as Lit Web Components.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-criteria @phozart/phz-engine @phozart/phz-core
+npm install @phozart/criteria @phozart/engine @phozart/core
 ```
 
 **Peer dependency:** `lit ^3.0.0`
@@ -13,7 +13,7 @@ npm install @phozart/phz-criteria @phozart/phz-engine @phozart/phz-core
 ## Quick Start
 
 ```ts
-import '@phozart/phz-criteria';
+import '@phozart/criteria';
 ```
 
 ```html
@@ -77,10 +77,10 @@ import '@phozart/phz-criteria';
 
 ## Integration with Engine
 
-The criteria components work with `@phozart/phz-engine`'s criteria system:
+The criteria components work with `@phozart/engine`'s criteria system:
 
 ```ts
-import { createCriteriaEngine } from '@phozart/phz-engine';
+import { createCriteriaEngine } from '@phozart/engine';
 
 const engine = createCriteriaEngine({
   filters: filterDefinitions,

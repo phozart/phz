@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Metric Builder
+ * @phozart/engine-admin — Metric Builder
  *
  * Create/edit metric definitions: name, data product, formula, format.
  * Embeddable component.

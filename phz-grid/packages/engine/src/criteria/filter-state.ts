@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter State Management
+ * @phozart/engine — Filter State Management
  *
  * 6-level state resolution chain and StateStorageAdapter for
  * persist/reset session behavior.
@@ -8,7 +8,7 @@
 import type {
   FilterDefinition, FilterDefinitionId, FilterBinding,
   StateStorageAdapter, StateResolutionInputs, StateResolutionLevel,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 // --- Resolved Value ---
 

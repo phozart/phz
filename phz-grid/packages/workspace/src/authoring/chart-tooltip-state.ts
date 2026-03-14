@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — Chart Tooltip Editor State
+ * @phozart/workspace — Chart Tooltip Editor State
  *
  * Pure state machine for CRUD operations on chart tooltip configuration
  * within the dashboard/report authoring environment.
  */
 
-import type { AutoTooltipConfig, TooltipField } from '@phozart/phz-engine';
+import type { AutoTooltipConfig, TooltipField } from '@phozart/engine';
 
 // ========================================================================
 // State

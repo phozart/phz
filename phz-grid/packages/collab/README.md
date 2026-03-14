@@ -1,11 +1,11 @@
-# @phozart/phz-collab
+# @phozart/collab
 
 Real-time collaboration for phz-grid. Built on Yjs CRDTs, provides presence awareness, change tracking, conflict resolution, and multiple sync providers (WebSocket, WebRTC).
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-collab @phozart/phz-core
+npm install @phozart/collab @phozart/core
 ```
 
 **Peer dependency:** `yjs ^13.0.0`
@@ -13,8 +13,8 @@ npm install @phozart/phz-collab @phozart/phz-core
 ## Quick Start
 
 ```ts
-import { createCollabSession, WebSocketSyncProvider } from '@phozart/phz-collab';
-import { createGrid } from '@phozart/phz-core';
+import { createCollabSession, WebSocketSyncProvider } from '@phozart/collab';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({ columns, data });
 
@@ -52,7 +52,7 @@ session.disconnect();
 ### WebSocket
 
 ```ts
-import { WebSocketSyncProvider } from '@phozart/phz-collab';
+import { WebSocketSyncProvider } from '@phozart/collab';
 
 const provider = new WebSocketSyncProvider({
   url: 'wss://collab.example.com',
@@ -65,7 +65,7 @@ const provider = new WebSocketSyncProvider({
 ### WebRTC
 
 ```ts
-import { WebRTCSyncProvider } from '@phozart/phz-collab';
+import { WebRTCSyncProvider } from '@phozart/collab';
 
 const provider = new WebRTCSyncProvider({
   room: 'document-id',
@@ -139,12 +139,12 @@ import type {
   ChangeEntry,
   SessionInfo,
   Conflict,
-} from '@phozart/phz-collab';
+} from '@phozart/collab';
 ```
 
 ## Re-exports
 
-This package re-exports all types from `@phozart/phz-core` for convenience.
+This package re-exports all types from `@phozart/core` for convenience.
 
 ## License
 

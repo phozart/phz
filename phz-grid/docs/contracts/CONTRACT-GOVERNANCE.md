@@ -311,7 +311,7 @@ Process:
 
 ### Core Package: Zero External Dependencies
 
-`@phozart/phz-core` MUST have ZERO npm dependencies.
+`@phozart/core` MUST have ZERO npm dependencies.
 
 ```json
 // packages/core/package.json
@@ -324,15 +324,15 @@ Process:
 
 ### Grid Package: Only Core + Lit
 
-`@phozart/phz-grid` MAY only depend on:
-- `@phozart/phz-core` (workspace dependency)
+`@phozart/grid` MAY only depend on:
+- `@phozart/core` (workspace dependency)
 - `lit@^5.0.0` (rendering library)
 
 ```json
 // packages/grid/package.json
 {
   "dependencies": {
-    "@phozart/phz-core": "workspace:*",
+    "@phozart/core": "workspace:*",
     "lit": "^5.0.0"
   }
 }
@@ -348,8 +348,8 @@ Framework adapters MUST use peer dependencies:
 // packages/react/package.json
 {
   "dependencies": {
-    "@phozart/phz-core": "workspace:*",
-    "@phozart/phz-grid": "workspace:*"
+    "@phozart/core": "workspace:*",
+    "@phozart/grid": "workspace:*"
   },
   "peerDependencies": {
     "react": "^18.0.0"
@@ -360,14 +360,14 @@ Framework adapters MUST use peer dependencies:
 ### Extension Packages: Core + Specific Dependencies
 
 Extension packages may depend on:
-- `@phozart/phz-core` (required)
+- `@phozart/core` (required)
 - Specific libraries (e.g., DuckDB-WASM, Yjs)
 
 ```json
 // packages/duckdb/package.json
 {
   "dependencies": {
-    "@phozart/phz-core": "workspace:*",
+    "@phozart/core": "workspace:*",
     "@duckdb/duckdb-wasm": "^1.31.0",
     "apache-arrow": "^18.0.0"
   }
@@ -442,14 +442,14 @@ npm run test:e2e
 
 | Package | Limit (gzipped) | Measurement |
 |---------|----------------|-------------|
-| `@phozart/phz-core` | 50 KB | Rollup output |
-| `@phozart/phz-grid` | 70 KB | Core + Lit |
-| `@phozart/phz-react` | 5 KB | Adapter only |
-| `@phozart/phz-vue` | 5 KB | Adapter only |
-| `@phozart/phz-angular` | 5 KB | Adapter only |
-| `@phozart/phz-duckdb` | 3.5 MB | Includes DuckDB-WASM |
-| `@phozart/phz-ai` | 100 KB | Excludes LLM SDK |
-| `@phozart/phz-collab` | 200 KB | Includes Yjs |
+| `@phozart/core` | 50 KB | Rollup output |
+| `@phozart/grid` | 70 KB | Core + Lit |
+| `@phozart/react` | 5 KB | Adapter only |
+| `@phozart/vue` | 5 KB | Adapter only |
+| `@phozart/angular` | 5 KB | Adapter only |
+| `@phozart/duckdb` | 3.5 MB | Includes DuckDB-WASM |
+| `@phozart/ai` | 100 KB | Excludes LLM SDK |
+| `@phozart/collab` | 200 KB | Includes Yjs |
 
 CI check fails if any package exceeds limit.
 
@@ -822,16 +822,16 @@ v15 introduced three new packages that are subject to all governance rules:
 
 | Package | Scope | Governance Notes |
 |---------|-------|-----------------|
-| `@phozart/phz-shared` | Shared infrastructure (adapters, types, design system, artifacts, coordination) | Foundation package — breaking changes here affect ALL shells. Requires highest scrutiny. Changes require Solution Architect + 2 Tech Leads approval. |
-| `@phozart/phz-viewer` | Read-only consumption shell (state machines + Lit components) | Viewer-only deployments depend on this package. Changes must maintain backward compatibility with viewer configs. |
-| `@phozart/phz-editor` | Authoring shell (state machines + Lit components) | Author-facing editing capabilities. Changes must be validated against the measure palette constraint model. |
+| `@phozart/shared` | Shared infrastructure (adapters, types, design system, artifacts, coordination) | Foundation package — breaking changes here affect ALL shells. Requires highest scrutiny. Changes require Solution Architect + 2 Tech Leads approval. |
+| `@phozart/viewer` | Read-only consumption shell (state machines + Lit components) | Viewer-only deployments depend on this package. Changes must maintain backward compatibility with viewer configs. |
+| `@phozart/editor` | Authoring shell (state machines + Lit components) | Author-facing editing capabilities. Changes must be validated against the measure palette constraint model. |
 
 ### Amendment Governance
 
 v15 integrated four spec amendments (A through D). Each amendment followed this process:
 
 1. **Amendment drafted** with explicit scope reference (e.g., "7A-A: Alert-Aware KPI Cards")
-2. **Types defined first** in `@phozart/phz-shared/types` — establishing the data contract before implementation
+2. **Types defined first** in `@phozart/shared/types` — establishing the data contract before implementation
 3. **Pure functions tested** with comprehensive unit tests before any Lit component code
 4. **Cross-package contracts validated** — each amendment touches multiple packages (shared + engine/widgets/grid) and requires integration verification
 
@@ -848,9 +848,9 @@ The `CellRendererRegistry` is a **runtime contract**, not a build-time contract.
 
 **Why runtime registration?** The grid package needs to render micro-widget cells, but importing widget renderers at build time would create a circular dependency: `grid -> widgets -> engine -> grid`. Instead:
 
-1. `@phozart/phz-shared` defines the `CellRendererRegistry` interface and `createCellRendererRegistry()` factory
-2. `@phozart/phz-grid` imports the interface and calls `resolveCellRenderer()` during cell formatting
-3. `@phozart/phz-widgets` implements the four SVG renderers (`createSparklineRenderer()`, `createGaugeArcRenderer()`, etc.)
+1. `@phozart/shared` defines the `CellRendererRegistry` interface and `createCellRendererRegistry()` factory
+2. `@phozart/grid` imports the interface and calls `resolveCellRenderer()` during cell formatting
+3. `@phozart/widgets` implements the four SVG renderers (`createSparklineRenderer()`, `createGaugeArcRenderer()`, etc.)
 4. The consuming shell registers renderers at mount time: `registerAllMicroWidgetRenderers(registry)`
 
 **Governance implication**: Changes to the `MicroWidgetRenderer` interface are breaking changes for ALL registered renderers. The interface has two methods (`render()`, `canRender()`) and their signatures are frozen.

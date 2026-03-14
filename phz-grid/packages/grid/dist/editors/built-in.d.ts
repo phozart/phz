@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-grid — Built-in Cell Editors
+ * @phozart/grid — Built-in Cell Editors
  */
 import { type TemplateResult } from 'lit';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 import { PhzCellEditor } from './base-editor.js';
 export declare class TextCellEditor extends PhzCellEditor {
     static styles: import("lit").CSSResult;

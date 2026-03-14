@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Template Selection Logic
+ * @phozart/workspace — Template Selection Logic
  *
  * Orchestrates the existing template pipeline for the creation flow.
  * Connects schema analysis -> template matching -> field auto-binding.

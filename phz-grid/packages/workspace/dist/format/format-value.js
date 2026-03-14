@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Format Value Utility
+ * @phozart/workspace — Format Value Utility
  *
  * Formats numeric values according to UnitSpec using Intl.NumberFormat.
  * Also validates aggregation compatibility with field data types.

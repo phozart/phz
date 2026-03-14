@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- KPI Card Pure Logic Tests
+ * @phozart/widgets -- KPI Card Pure Logic Tests
  *
  * Tests for the internal logic methods of PhzKPICard:
  * - formatValue

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Export Settings
+ * @phozart/grid-admin — Export Settings
  *
  * CSV + Excel export configuration.
  */
@@ -8,7 +8,7 @@ import { LitElement, html, css } from 'lit';
 import { property } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import { adminBaseStyles } from './shared-styles.js';
-import type { ReportExportSettings } from '@phozart/phz-engine';
+import type { ReportExportSettings } from '@phozart/engine';
 
 type ExportSettings = ReportExportSettings;
 

@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { RowData, RowId, ConditionalFormattingRule } from '@phozart/phz-core';
+import type { RowData, RowId, ConditionalFormattingRule } from '@phozart/core';
 import {
   createConditionalFormattingEngine,
   type ConditionalFormattingEngine,

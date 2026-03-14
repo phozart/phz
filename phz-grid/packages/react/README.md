@@ -1,11 +1,11 @@
-# @phozart/phz-react
+# @phozart/react
 
 React wrapper for the phz-grid Web Component. Provides a `<PhzGrid>` component and hooks for state management, selection, sorting, filtering, and editing.
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-react @phozart/phz-grid @phozart/phz-core
+npm install @phozart/react @phozart/grid @phozart/core
 ```
 
 **Peer dependencies:** `react ^18.0.0 || ^19.0.0`, `react-dom ^18.0.0 || ^19.0.0`
@@ -13,8 +13,8 @@ npm install @phozart/phz-react @phozart/phz-grid @phozart/phz-core
 ## Quick Start
 
 ```tsx
-import { PhzGrid } from '@phozart/phz-react';
-import type { ColumnDefinition, GridApi } from '@phozart/phz-react';
+import { PhzGrid } from '@phozart/react';
+import type { ColumnDefinition, GridApi } from '@phozart/react';
 
 const columns: ColumnDefinition[] = [
   { field: 'name', header: 'Name', type: 'string' },
@@ -162,7 +162,7 @@ const { data, setData, addRow, updateRow, deleteRow } = useGridData(gridApi);
 
 ## Re-exports
 
-This package re-exports all types from `@phozart/phz-core` for convenience.
+This package re-exports all types from `@phozart/core` for convenience.
 
 ## License
 

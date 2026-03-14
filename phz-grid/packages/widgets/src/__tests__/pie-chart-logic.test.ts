@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Pie Chart Pure Logic Tests
+ * @phozart/widgets -- Pie Chart Pure Logic Tests
  *
  * Tests for the pure SVG geometry functions exported from phz-pie-chart.
  * These functions do NOT require DOM — they are math/string helpers.

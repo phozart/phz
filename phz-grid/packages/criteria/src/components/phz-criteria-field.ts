@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Field
+ * @phozart/criteria — Criteria Field
  *
  * Individual criterion renderer. Switch-renders based on fieldDef.type.
  */
@@ -12,7 +12,7 @@ import type {
   DateRangeValue,
   NumericRangeValue,
   PresenceState,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 // Ensure sub-components are registered

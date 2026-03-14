@@ -1,12 +1,12 @@
 /**
  * Monochrome SVG Icon System
  *
- * Extracted from @phozart/phz-workspace styles.
+ * Extracted from @phozart/workspace styles.
  * All icons are 24x24 viewBox, 1.5px stroke, no fill (stroke-based).
  * Designed for the Console mode aesthetic: clean, geometric, warm.
  *
  * Usage:
- *   import { ICONS, icon } from '@phozart/phz-shared/design-system';
+ *   import { ICONS, icon } from '@phozart/shared/design-system';
  *   // As inline SVG string:
  *   element.innerHTML = icon('dashboard');
  *   // As raw path data:

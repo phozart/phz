@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { createFilterBindingStore, resolveArtefactFields } from '../criteria/filter-bindings.js';
 import { createCriteriaOutputManager } from '../criteria/criteria-output.js';
 import { createFilterRegistry } from '../criteria/filter-registry.js';
-import type { FilterDefinition, FilterBinding } from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterBinding } from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 
 function makeDef(id: string, overrides?: Partial<FilterDefinition>): FilterDefinition {
   return {

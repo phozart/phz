@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — useGridAdmin Hook Tests
+ * @phozart/react — useGridAdmin Hook Tests
  *
  * Tests for the useGridAdmin hook and settingsToGridProps utility.
  */
@@ -29,9 +29,9 @@ vi.mock('react', () => ({
   createElement: vi.fn(),
 }));
 
-vi.mock('@phozart/phz-grid-admin', () => ({}));
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/grid-admin', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 import { useGridAdmin } from '../hooks/use-grid-admin.js';
 import { settingsToGridProps } from '../utils/settings-to-grid-props.js';

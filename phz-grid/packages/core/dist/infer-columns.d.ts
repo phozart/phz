@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Column Auto-Inference
+ * @phozart/core — Column Auto-Inference
  *
  * Infers ColumnDefinition[] from raw data shape.
  * Runs once at createGrid() time, not per-render.

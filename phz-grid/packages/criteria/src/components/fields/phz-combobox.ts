@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Combobox
+ * @phozart/criteria — Combobox
  *
  * General-purpose autocomplete combobox. Drop-in replacement for native
  * <select> elements with type-to-filter capability.

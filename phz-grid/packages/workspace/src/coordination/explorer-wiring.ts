@@ -15,13 +15,13 @@ import type { DataAdapter, DataQuery, DataResult } from '../data-adapter.js';
 import type {
   ExploreQuery,
   ExploreFilterSlot,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import {
   exploreToReport,
   exploreToDashboardWidget,
   type ReportArtifact,
   type DashboardWidgetArtifact,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // ========================================================================
 // Task 4.1: ExploreQuery → DataQuery

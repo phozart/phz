@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Publish Workflow State Machine
+ * @phozart/workspace — Publish Workflow State Machine
  *
  * Enforces draft -> review -> published lifecycle transitions.
  */

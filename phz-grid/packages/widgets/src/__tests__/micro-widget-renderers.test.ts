@@ -10,9 +10,9 @@ import {
   createDeltaRenderer,
   createGaugeArcRenderer,
   registerAllMicroWidgetRenderers,
-} from '@phozart/phz-widgets';
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
-import type { MicroWidgetCellConfig } from '@phozart/phz-shared/types';
+} from '@phozart/widgets';
+import { createCellRendererRegistry } from '@phozart/shared/types';
+import type { MicroWidgetCellConfig } from '@phozart/shared/types';
 
 // ========================================================================
 // Helpers

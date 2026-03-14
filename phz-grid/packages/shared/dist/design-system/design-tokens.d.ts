@@ -1,7 +1,7 @@
 /**
  * Design Tokens — Central design token definitions for the phozart Console mode.
  *
- * Extracted from @phozart/phz-workspace styles (S.1).
+ * Extracted from @phozart/workspace styles (S.1).
  * Exports plain JS constants and pure functions only — no Lit/CSS dependencies.
  */
 export declare const DESIGN_TOKENS: {

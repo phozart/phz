@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Date Formatter
+ * @phozart/grid — Date Formatter
  *
  * Oracle/SQL-style date format tokens with greedy longest-first matching.
  *

@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — composeWorkspaceAdapter
+ * @phozart/workspace — composeWorkspaceAdapter
  *
  * Composes existing EngineStorageAdapter + AsyncDefinitionStore instances
  * into a unified WorkspaceAdapter, adding placement/catalog methods
  * via in-memory defaults.
  */
-import { MemoryStorageAdapter } from '@phozart/phz-engine';
+import { MemoryStorageAdapter } from '@phozart/engine';
 // In-memory definition store fallback
 class MemoryDefinitionStore {
     constructor() {

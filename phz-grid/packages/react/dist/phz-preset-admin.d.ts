@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzPresetAdmin React Component
+ * @phozart/react — PhzPresetAdmin React Component
  *
  * Wraps the <phz-preset-admin> Web Component for React using @lit/react.
  * Admin UI for managing selection presets (cross-filter or per-filter modes).

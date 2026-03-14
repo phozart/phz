@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Refresh Scheduler (Q.4)
+ * @phozart/workspace — Refresh Scheduler (Q.4)
  *
  * Manages periodic background refreshes for remote data connections.
  * Uses setInterval internally; cancellable per-connection or globally.

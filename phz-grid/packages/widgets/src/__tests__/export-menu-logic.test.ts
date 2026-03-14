@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Export Menu Pure Logic Tests
+ * @phozart/widgets -- Export Menu Pure Logic Tests
  *
  * Tests for EXPORT_MENU_ITEMS and _renderIcon.
  */

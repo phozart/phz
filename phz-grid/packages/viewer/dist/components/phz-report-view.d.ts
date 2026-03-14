@@ -6,8 +6,8 @@
  * Fetches data via DataAdapter.execute() or uses a direct data prop.
  */
 import { LitElement } from 'lit';
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
+import type { ColumnDefinition } from '@phozart/core';
 export interface ReportViewConfig {
     id: string;
     title: string;

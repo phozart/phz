@@ -5,7 +5,7 @@
  * including URL parameter encoding and edge cases.
  */
 import { describe, it, expect } from 'vitest';
-import { buildSubscriptionDeepLink } from '@phozart/phz-shared/types';
+import { buildSubscriptionDeepLink } from '@phozart/shared/types';
 
 describe('buildSubscriptionDeepLink', () => {
   it('builds a basic deep link', () => {

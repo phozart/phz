@@ -2,7 +2,7 @@
 
 > Complete architecture reference, API documentation, and development patterns.
 >
-> **Version**: 0.2.0 (v15) | **Date**: 2026-03-08 | **Tests**: 5,557 passing | **Packages**: 20
+> **Version**: 0.2.0 (v15) | **Date**: 2026-03-14 | **Tests**: 9,605+ passing | **Packages**: 19
 
 > **New to phz-grid workspace?** Start with the [Workspace Integration Guide](./WORKSPACE-INTEGRATION-GUIDE.md)
 > to learn how to mount `<phz-workspace>` in your application. This Developer Guide covers
@@ -39,8 +39,8 @@
 │  Shell Layer       workspace (admin), viewer (analyst),      │
 │                    editor (author) — three shells             │
 ├─────────────────────────────────────────────────────────────┤
-│  UI Layer          grid-admin, engine-admin, grid-creator,  │
-│                    criteria (admin panels, wizards, filter)  │
+│  UI Layer          workspace (authoring, registry, explore), │
+│                    criteria (filter UI components)            │
 ├─────────────────────────────────────────────────────────────┤
 │  Rendering Layer   widgets (20+ Lit Web Components)         │
 │                    KPI cards, charts, gauges, dashboards     │
@@ -68,8 +68,7 @@
 
 ```
 shared → core → definitions → engine → duckdb → criteria → widgets → grid →
-workspace → viewer → editor → grid-admin(shim) → engine-admin(shim) →
-grid-creator(shim) → ai → collab → react → vue → angular
+workspace → viewer → editor → ai → collab → react → vue → angular
 ```
 
 The `shared` package is the new foundation layer — it contains adapter SPIs,
@@ -82,52 +81,54 @@ coordination state machines that all shells depend on.
 
 ### Core Packages
 
-| Package | Purpose | Key File |
-|---------|---------|----------|
-| **core** | Headless grid engine — StateManager, GridApi, events, types, views, row model, subscribeSelector(), tiered attention, filter expressions, query planner | `packages/core/src/create-grid.ts` |
-| **grid** | Web Components rendering — 17 Lit Reactive Controllers, virtual scrolling, column pinning, cell formatting, keyboard nav, a11y | `packages/grid/src/components/phz-grid.ts` |
-| **definitions** | Serializable blueprints — GridDefinition, data sources (local/url/data-product/duckdb-query), Zod validation, stores, converters, migration | `packages/definitions/src/types/grid-definition.ts` |
+| Package         | Purpose                                                                                                                                                 | Key File                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| **core**        | Headless grid engine — StateManager, GridApi, events, types, views, row model, subscribeSelector(), tiered attention, filter expressions, query planner | `packages/core/src/create-grid.ts`                  |
+| **grid**        | Web Components rendering — 17 Lit Reactive Controllers, virtual scrolling, column pinning, cell formatting, keyboard nav, a11y                          | `packages/grid/src/components/phz-grid.ts`          |
+| **definitions** | Serializable blueprints — GridDefinition, data sources (local/url/data-product/duckdb-query), Zod validation, stores, converters, migration             | `packages/definitions/src/types/grid-definition.ts` |
 
 ### BI Engine Packages
 
-| Package | Purpose | Key File |
-|---------|---------|----------|
-| **engine** | BI computation — BIEngine facade, KPI/metric registries, aggregation, pivot, 5-layer expression DAG, CriteriaEngine, widget resolver, chart projection, drill-through, config layering, window functions | `packages/engine/src/engine.ts` |
-| **widgets** | Dashboard widgets — 20+ Lit components (KPI card, scorecard, gauge, bar/line/area/pie/scatter/heatmap/waterfall/funnel charts, trend-line, bottom-N, status table). SVG-based, 3 themes | `packages/widgets/src/components/phz-dashboard.ts` |
+| Package      | Purpose                                                                                                                                                                                                                    | Key File                                                     |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| **engine**   | BI computation — BIEngine facade, KPI/metric registries, aggregation, pivot, 5-layer expression DAG, CriteriaEngine, widget resolver, chart projection, drill-through, config layering, window functions                   | `packages/engine/src/engine.ts`                              |
+| **widgets**  | Dashboard widgets — 20+ Lit components (KPI card, scorecard, gauge, bar/line/area/pie/scatter/heatmap/waterfall/funnel charts, trend-line, bottom-N, status table). SVG-based, 3 themes                                    | `packages/widgets/src/components/phz-dashboard.ts`           |
 | **criteria** | Filter UI — SelectionCriteria (bar + drawer), CriteriaPanel, field types (date-range, tree-select, chip-select, numeric-range, search, field-presence), admin (FilterDesigner, FilterConfigurator, RuleAdmin, PresetAdmin) | `packages/criteria/src/components/phz-selection-criteria.ts` |
 
-### Admin & Tools
+### Workspace Subsystems
 
-| Package | Purpose | Key File |
-|---------|---------|----------|
-| **grid-admin** | Visual config admin — table settings, columns, formatting, filters, export, theme, views. getSettings()/setSettings() API | `packages/grid-admin/src/components/phz-grid-admin.ts` |
-| **engine-admin** | BI artifact designers — ReportDesigner (6-step), KPIDesigner (6-step), DashboardBuilder (3-panel), MetricBuilder, FilterStudio. SaveController, UndoController | `packages/engine-admin/src/components/phz-engine-admin.ts` |
-| **grid-creator** | 5-step wizard — Identity → Data Source → Columns → Config → Review. Pure functional state machine | `packages/grid-creator/src/wizard-state.ts` |
-| **workspace/authoring** | Report & dashboard authoring — state machines, undo/redo, auto-save, drag-drop, context menus, template pipeline, keyboard shortcuts. All pure functions + thin Lit views | `packages/workspace/src/authoring/index.ts` |
+| Subsystem                  | Purpose                                                                                                                                                                   | Key File                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **workspace/authoring**    | Report & dashboard authoring — state machines, undo/redo, auto-save, drag-drop, context menus, template pipeline, keyboard shortcuts. All pure functions + thin Lit views | `packages/workspace/src/authoring/index.ts`    |
+| **workspace/engine-admin** | BI artifact designers — ReportDesigner, KPIDesigner, DashboardBuilder, MetricBuilder, FilterStudio. SaveController, UndoController                                        | `packages/workspace/src/engine-admin/index.ts` |
+| **workspace/registry**     | Widget ManifestRegistry with variants, widget-registry                                                                                                                    | `packages/workspace/src/registry/index.ts`     |
+| **workspace/explore**      | Visual query explorer, chart suggest, artifact conversion                                                                                                                 | `packages/workspace/src/explore/index.ts`      |
+| **workspace/filters**      | 4-level filter hierarchy, cascading, URL sync, filter rules                                                                                                               | `packages/workspace/src/filters/index.ts`      |
+| **workspace/templates**    | Schema analyzer, template matcher, auto-binding                                                                                                                           | `packages/workspace/src/templates/index.ts`    |
 
 ### Specialized
 
-| Package | Purpose | Key File |
-|---------|---------|----------|
-| **duckdb** | DuckDB-WASM adapter — AsyncDataSource, SQL push-down (aggregation, GROUP BY, HAVING), DuckDBBridge | `packages/duckdb/src/duckdb-data-source.ts` |
-| **ai** | AI toolkit — schema-as-contract, NL query translation | `packages/ai/src/index.ts` |
-| **collab** | Real-time collaboration — Yjs CRDTs, sync adapters | `packages/collab/src/collab-session.ts` |
-| **local** | Local Node.js server with native DuckDB, filesystem persistence, CLI binary (`phz-local`). For offline, desktop, and demo scenarios | `packages/local/src/local-server.ts` |
+| Package    | Purpose                                                                                                                             | Key File                                    |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| **duckdb** | DuckDB-WASM adapter — AsyncDataSource, SQL push-down (aggregation, GROUP BY, HAVING), DuckDBBridge                                  | `packages/duckdb/src/duckdb-data-source.ts` |
+| **ai**     | AI toolkit — schema-as-contract, NL query translation                                                                               | `packages/ai/src/index.ts`                  |
+| **collab** | Real-time collaboration — Yjs CRDTs, sync adapters                                                                                  | `packages/collab/src/collab-session.ts`     |
+| **local**  | Local Node.js server with native DuckDB, filesystem persistence, CLI binary (`phz-local`). For offline, desktop, and demo scenarios | `packages/local/src/local-server.ts`        |
 
 ### Framework Adapters
 
-| Package | Purpose | Key File |
-|---------|---------|----------|
-| **react** | React wrapper — uses `@lit/react` `createComponent()` for automatic property bridging. Strips `undefined` props before forwarding to prevent overriding Web Component defaults. Uses `'use client'` directive for Next.js SSR compatibility. Event callbacks unwrap `CustomEvent.detail` for idiomatic React usage | `packages/react/src/phz-grid.ts` |
-| **vue** | Vue wrapper — factory pattern (e.g., `createPhzGridComponent()`, `createUseGrid()`). No hard dependency on Vue; accepts Vue runtime as parameter. Works with Vue 3 composition API. Composables: `useGrid`, `useGridSelection`, `useGridSort`, `useGridFilter`, `useGridEdit` | `packages/vue/src/index.ts` |
-| **angular** | Angular wrapper — standalone components + RxJS-based factory functions for reactive bindings. `createPhzGridComponent()` and `createGridService()` avoid hard dependency on Angular decorators at build time. Service factories: `createSelectionService`, `createSortService`, `createFilterService`, `createEditService`, `createDataService` | `packages/angular/src/index.ts` |
-| **python** | Python package — pip install, anywidget + Arrow IPC for Jupyter/Panel/Streamlit | `packages/python/` |
+| Package     | Purpose                                                                                                                                                                                                                                                                                                                                         | Key File                         |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **react**   | React wrapper — uses `@lit/react` `createComponent()` for automatic property bridging. Strips `undefined` props before forwarding to prevent overriding Web Component defaults. Uses `'use client'` directive for Next.js SSR compatibility. Event callbacks unwrap `CustomEvent.detail` for idiomatic React usage                              | `packages/react/src/phz-grid.ts` |
+| **vue**     | Vue wrapper — factory pattern (e.g., `createPhzGridComponent()`, `createUseGrid()`). No hard dependency on Vue; accepts Vue runtime as parameter. Works with Vue 3 composition API. Composables: `useGrid`, `useGridSelection`, `useGridSort`, `useGridFilter`, `useGridEdit`                                                                   | `packages/vue/src/index.ts`      |
+| **angular** | Angular wrapper — standalone components + RxJS-based factory functions for reactive bindings. `createPhzGridComponent()` and `createGridService()` avoid hard dependency on Angular decorators at build time. Service factories: `createSelectionService`, `createSortService`, `createFilterService`, `createEditService`, `createDataService` | `packages/angular/src/index.ts`  |
+| **python**  | Python package — pip install, anywidget + Arrow IPC for Jupyter/Panel/Streamlit                                                                                                                                                                                                                                                                 | `packages/python/`               |
 
 ---
 
 ## v15 New Packages
 
-### `@phozart/phz-shared` — Shared Infrastructure
+### `@phozart/shared` — Shared Infrastructure
 
 The shared package is the foundation layer extracted from workspace in v15. It
 contains everything that workspace, viewer, and editor all depend on, eliminating
@@ -135,17 +136,17 @@ circular dependency chains.
 
 **Sub-path imports** (preferred for tree-shaking):
 
-| Import | Contents |
-|--------|----------|
-| `@phozart/phz-shared/adapters` | `DataAdapter`, `DataQuery`, `DataResult`, persistence SPIs, `AlertChannelAdapter`, `AttentionAdapter`, `UsageAnalyticsAdapter`, `SubscriptionAdapter`, `MeasureRegistryAdapter`, `HelpConfig` |
-| `@phozart/phz-shared/types` | `ShareTarget`, `FieldEnrichment`, `FilterPresetValue`, `FilterValueMatchRule`, `FilterValueHandling`, `PersonalAlert`, `AsyncReportJob`, `Subscription`, `ErrorState`, `EmptyState`, `WidgetPosition`, `DashboardWidget`, `DecisionTreeNode`, `ApiSpec`, `MessagePool`, `SingleValueAlertConfig`, `AttentionFilterState`, `MicroWidgetCellConfig`, `CellRendererRegistry`, `ImpactChainNode` |
-| `@phozart/phz-shared/design-system` | `DESIGN_TOKENS`, responsive breakpoints, container queries, component patterns, shell layout, icons, mobile interactions, alert tokens, chain tokens |
-| `@phozart/phz-shared/artifacts` | `ArtifactVisibility`, `DefaultPresentation`, `PersonalView`, `GridArtifact`, `ArtifactMeta` |
-| `@phozart/phz-shared/coordination` | `FilterContextManager`, `DashboardDataPipeline`, `QueryCoordinator`, `InteractionBus`, navigation events, `LoadingState`, `ExecutionStrategy`, `ServerGridConfig`, `GridExportConfig`, `FilterAutoSaveConfig`, `AsyncReportUIState`, `ExportsTabState`, `SubscriptionsTabState`, `ExpressionBuilderState`, `PreviewContextState`, `AttentionFacetedState` |
+| Import                              | Contents                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@phozart/shared/adapters`      | `DataAdapter`, `DataQuery`, `DataResult`, persistence SPIs, `AlertChannelAdapter`, `AttentionAdapter`, `UsageAnalyticsAdapter`, `SubscriptionAdapter`, `MeasureRegistryAdapter`, `HelpConfig`                                                                                                                                                                                                |
+| `@phozart/shared/types`         | `ShareTarget`, `FieldEnrichment`, `FilterPresetValue`, `FilterValueMatchRule`, `FilterValueHandling`, `PersonalAlert`, `AsyncReportJob`, `Subscription`, `ErrorState`, `EmptyState`, `WidgetPosition`, `DashboardWidget`, `DecisionTreeNode`, `ApiSpec`, `MessagePool`, `SingleValueAlertConfig`, `AttentionFilterState`, `MicroWidgetCellConfig`, `CellRendererRegistry`, `ImpactChainNode` |
+| `@phozart/shared/design-system` | `DESIGN_TOKENS`, responsive breakpoints, container queries, component patterns, shell layout, icons, mobile interactions, alert tokens, chain tokens                                                                                                                                                                                                                                         |
+| `@phozart/shared/artifacts`     | `ArtifactVisibility`, `DefaultPresentation`, `PersonalView`, `GridArtifact`, `ArtifactMeta`                                                                                                                                                                                                                                                                                                  |
+| `@phozart/shared/coordination`  | `FilterContextManager`, `DashboardDataPipeline`, `QueryCoordinator`, `InteractionBus`, navigation events, `LoadingState`, `ExecutionStrategy`, `ServerGridConfig`, `GridExportConfig`, `FilterAutoSaveConfig`, `AsyncReportUIState`, `ExportsTabState`, `SubscriptionsTabState`, `ExpressionBuilderState`, `PreviewContextState`, `AttentionFacetedState`                                    |
 
 **Source**: `packages/shared/src/`
 
-### `@phozart/phz-viewer` — Read-Only Consumption Shell
+### `@phozart/viewer` — Read-Only Consumption Shell
 
 The viewer package provides the analyst experience: catalog browsing, dashboard
 viewing, report viewing, ad-hoc exploration, attention notifications, and filter
@@ -153,16 +154,16 @@ bars. It has no dependency on workspace — only on shared.
 
 **Key exports**:
 
-| Module | State machines | Components |
-|--------|---------------|------------|
-| Shell | `ViewerShellState` (navigation, error, empty, loading, mobile) | `<phz-viewer-shell>` |
-| Catalog | `CatalogState` (search, type filter, sort, pagination, favorites) | `<phz-viewer-catalog>` |
-| Dashboard | `DashboardViewState` (widget loading, cross-filter, fullscreen) | `<phz-viewer-dashboard>` |
-| Report | `ReportViewState` (sort, pagination, column visibility, export) | `<phz-viewer-report>` |
-| Explorer | `ExplorerScreenState` (data sources, fields, preview, chart suggest) | `<phz-viewer-explorer>` |
-| Attention | `AttentionDropdownState` (items, filtering, read/dismiss) | `<phz-attention-dropdown>` |
-| Filter bar | `FilterBarState` (filter defs, values, presets, collapse) | `<phz-filter-bar>` |
-| Error/Empty | -- | `<phz-viewer-error>`, `<phz-viewer-empty>` |
+| Module      | State machines                                                       | Components                                 |
+| ----------- | -------------------------------------------------------------------- | ------------------------------------------ |
+| Shell       | `ViewerShellState` (navigation, error, empty, loading, mobile)       | `<phz-viewer-shell>`                       |
+| Catalog     | `CatalogState` (search, type filter, sort, pagination, favorites)    | `<phz-viewer-catalog>`                     |
+| Dashboard   | `DashboardViewState` (widget loading, cross-filter, fullscreen)      | `<phz-viewer-dashboard>`                   |
+| Report      | `ReportViewState` (sort, pagination, column visibility, export)      | `<phz-viewer-report>`                      |
+| Explorer    | `ExplorerScreenState` (data sources, fields, preview, chart suggest) | `<phz-viewer-explorer>`                    |
+| Attention   | `AttentionDropdownState` (items, filtering, read/dismiss)            | `<phz-attention-dropdown>`                 |
+| Filter bar  | `FilterBarState` (filter defs, values, presets, collapse)            | `<phz-filter-bar>`                         |
+| Error/Empty | --                                                                   | `<phz-viewer-error>`, `<phz-viewer-empty>` |
 
 **Navigation**: `ViewerRoute` with `parseRoute()` and `buildRoutePath()` for
 client-side routing. `ViewerShellConfig` with `ViewerFeatureFlags` and
@@ -170,7 +171,7 @@ client-side routing. `ViewerShellConfig` with `ViewerFeatureFlags` and
 
 **Source**: `packages/viewer/src/`
 
-### `@phozart/phz-editor` — Authoring Shell
+### `@phozart/editor` — Authoring Shell
 
 The editor package provides the author experience: catalog management, dashboard
 editing (drag-and-drop, widget config), report editing, exploration, measure
@@ -178,18 +179,18 @@ palette, sharing flow, and alert/subscription management.
 
 **Key exports**:
 
-| Module | State machines | Components |
-|--------|---------------|------------|
-| Shell | `EditorShellState` (navigation, edit mode, undo/redo, auto-save) | `<phz-editor-shell>` |
-| Catalog | `CatalogState` (search, type/visibility filter, create dialog) | `<phz-editor-catalog>` |
-| Dashboard view | `DashboardViewState` (permissions, expand/collapse) | `<phz-editor-dashboard>` |
-| Dashboard edit | `DashboardEditState` (add/remove/move/resize widgets, drag, layout) | -- |
-| Report edit | `ReportEditState` (columns, filters, sorts, preview, data source) | `<phz-editor-report>` |
-| Explorer | `ExplorerState` (dimensions, measures, filters, save dialog) | `<phz-editor-explorer>` |
-| Measure palette | `MeasurePaletteState` (search, category, tab, selection) | `<phz-measure-palette>` |
-| Config panel | `ConfigPanelState` (values, validation, sections) | `<phz-config-panel>` |
-| Sharing | `SharingFlowState` (visibility, targets, search) | `<phz-sharing-flow>` |
-| Alerts/Subs | `AlertSubscriptionState` (CRUD, tabs, search, enable/disable) | `<phz-alert-subscription>` |
+| Module          | State machines                                                      | Components                 |
+| --------------- | ------------------------------------------------------------------- | -------------------------- |
+| Shell           | `EditorShellState` (navigation, edit mode, undo/redo, auto-save)    | `<phz-editor-shell>`       |
+| Catalog         | `CatalogState` (search, type/visibility filter, create dialog)      | `<phz-editor-catalog>`     |
+| Dashboard view  | `DashboardViewState` (permissions, expand/collapse)                 | `<phz-editor-dashboard>`   |
+| Dashboard edit  | `DashboardEditState` (add/remove/move/resize widgets, drag, layout) | --                         |
+| Report edit     | `ReportEditState` (columns, filters, sorts, preview, data source)   | `<phz-editor-report>`      |
+| Explorer        | `ExplorerState` (dimensions, measures, filters, save dialog)        | `<phz-editor-explorer>`    |
+| Measure palette | `MeasurePaletteState` (search, category, tab, selection)            | `<phz-measure-palette>`    |
+| Config panel    | `ConfigPanelState` (values, validation, sections)                   | `<phz-config-panel>`       |
+| Sharing         | `SharingFlowState` (visibility, targets, search)                    | `<phz-sharing-flow>`       |
+| Alerts/Subs     | `AlertSubscriptionState` (CRUD, tabs, search, enable/disable)       | `<phz-alert-subscription>` |
 
 **Navigation**: `EditorRoute` with `parseRoute()`, `buildRoutePath()`,
 `buildBreadcrumbs()`, and `buildEditorDeepLink()`. `EditorShellConfig` with
@@ -202,16 +203,16 @@ palette, sharing flow, and alert/subscription management.
 The engine package gained five new subsystems, all pure functions with no DOM
 dependencies:
 
-| Subsystem | Import | Key types/functions |
-|-----------|--------|---------------------|
-| **Personal Alert Engine** | `@phozart/phz-engine` | `AlertEvaluationResult`, `evaluatePersonalAlerts()`, `AlertEvaluationContract`, `createInMemoryAlertContract()` |
-| **Subscription Engine** | `@phozart/phz-engine` | `SubscriptionEngineState`, `createSubscriptionEngineState()`, `addSubscription()`, `removeSubscription()`, `isReadyForExecution()`, `getNextExecutionTime()` |
-| **Usage Analytics** | `@phozart/phz-engine` | `UsageCollectorState`, `createUsageCollector()`, `trackEvent()`, `flush()`, `shouldFlush()` |
-| **OpenAPI Generator** | `@phozart/phz-engine` | `OpenAPIDocument`, `generateOpenAPISpec()` — generates OpenAPI 3.1.0 from `ApiSpec` types |
-| **Attention System** | `@phozart/phz-engine` | `AttentionSystemState`, `createAttentionSystemState()`, `addItems()`, `markAsRead()`, `dismissItem()`, `getUnreadCount()` |
+| Subsystem                 | Import                | Key types/functions                                                                                                                                          |
+| ------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Personal Alert Engine** | `@phozart/engine` | `AlertEvaluationResult`, `evaluatePersonalAlerts()`, `AlertEvaluationContract`, `createInMemoryAlertContract()`                                              |
+| **Subscription Engine**   | `@phozart/engine` | `SubscriptionEngineState`, `createSubscriptionEngineState()`, `addSubscription()`, `removeSubscription()`, `isReadyForExecution()`, `getNextExecutionTime()` |
+| **Usage Analytics**       | `@phozart/engine` | `UsageCollectorState`, `createUsageCollector()`, `trackEvent()`, `flush()`, `shouldFlush()`                                                                  |
+| **OpenAPI Generator**     | `@phozart/engine` | `OpenAPIDocument`, `generateOpenAPISpec()` — generates OpenAPI 3.1.0 from `ApiSpec` types                                                                    |
+| **Attention System**      | `@phozart/engine` | `AttentionSystemState`, `createAttentionSystemState()`, `addItems()`, `markAsRead()`, `dismissItem()`, `getUnreadCount()`                                    |
 
-The **Explorer** module was also moved from `@phozart/phz-workspace/explore`
-to `@phozart/phz-engine/explorer` in v15. It exports `createFieldPalette()`,
+The **Explorer** module was also moved from `@phozart/workspace/explore`
+to `@phozart/engine/explorer` in v15. It exports `createFieldPalette()`,
 `createDropZoneState()`, `suggestChartType()`, `exploreToReport()`,
 `createDataExplorer()`, and dashboard integration helpers.
 
@@ -219,26 +220,30 @@ to `@phozart/phz-engine/explorer` in v15. It exports `createFieldPalette()`,
 
 Four spec amendments were implemented:
 
-**A: Alert-Aware KPI Cards** (`@phozart/phz-shared/types`):
+**A: Alert-Aware KPI Cards** (`@phozart/shared/types`):
+
 - `SingleValueAlertConfig` — binds a widget to an alert rule with visual mode (`none`, `indicator`, `background`, `border`)
 - `resolveAlertVisualState()` — resolves current severity from alert events
 - `getAlertTokens()` — maps severity + mode to design token names
 - `degradeAlertMode()` — responsive degradation at `full`/`compact`/`minimal` container sizes
-- Alert design tokens in `@phozart/phz-shared/design-system` (alert-tokens.ts)
+- Alert design tokens in `@phozart/shared/design-system` (alert-tokens.ts)
 
-**B: Micro-Widget Cell Renderers** (`@phozart/phz-shared/types`):
+**B: Micro-Widget Cell Renderers** (`@phozart/shared/types`):
+
 - `CellRendererRegistry` — runtime registration of cell renderers (avoids circular deps)
 - `MicroWidgetCellConfig` — per-column config for in-cell widgets
 - `MicroWidgetRenderer` interface — `render()` returns SVG/HTML string, `canRender()` checks minimum width
 - Four display modes: `value-only`, `sparkline`, `delta`, `gauge-arc`
 - `createCellRendererRegistry()` — Map-based factory
 
-**C: Impact Chain Widget** (`@phozart/phz-shared/types`):
+**C: Impact Chain Widget** (`@phozart/shared/types`):
+
 - `ImpactChainNode` extends `DecisionTreeNode` with `nodeRole` (`root-cause`, `failure`, `impact`, `hypothesis`), `hypothesisState`, `impactMetrics`, and `edgeLabel`
 - `ChainLayout` for horizontal/vertical flow with edge labels and collapse behavior
 - `DecisionTreeVariantConfig` with `renderVariant: 'tree' | 'impact-chain'`
 
-**D: Faceted Attention Filtering** (`@phozart/phz-shared/types` + `@phozart/phz-shared/coordination`):
+**D: Faceted Attention Filtering** (`@phozart/shared/types` + `@phozart/shared/coordination`):
+
 - `filterAttentionItems()` — pure filter function over attention items by priority, source, artifact, acknowledged state, and date range
 - `computeAttentionFacets()` — computes facet counts for sidebar display
 - `AttentionFacetedState` coordination state with `toggleFacetValue()`, `clearFacet()`, `acknowledgeItem()`, `setAttentionSort()`, `getVisibleItems()`
@@ -251,7 +256,7 @@ creates an empty registry. Shell packages populate it with renderers at mount
 time:
 
 ```typescript
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
+import { createCellRendererRegistry } from '@phozart/shared/types';
 
 // Create at app init
 const cellRenderers = createCellRendererRegistry();
@@ -270,7 +275,7 @@ Grid columns reference renderers by type key in their `MicroWidgetCellConfig`.
 The grid calls `registry.get(config.widgetType)` at render time. If a renderer
 is not registered, the cell falls back to plain text display.
 
-### Python Package (`@phozart/phz-python`)
+### Python Package (`@phozart/python`)
 
 Install via `pip install phz-grid`. The Python package provides a `Grid` anywidget class
 that renders the phz-grid Web Component inside Jupyter notebooks, Panel apps, and Streamlit apps.
@@ -289,6 +294,7 @@ that renders the phz-grid Web Component inside Jupyter notebooks, Panel apps, an
 to Arrow IPC internally.
 
 **Event callbacks** for interactivity:
+
 - `grid.on_selection_change(callback)` — selection changes
 - `grid.on_sort_change(callback)` — sort state changes
 - `grid.on_filter_change(callback)` — filter state changes
@@ -321,7 +327,7 @@ grid  # display in Jupyter
 ### State Management
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({
   columns: [
@@ -348,6 +354,7 @@ const unsub = grid.subscribeSelector(
 ```
 
 **Tiered Attention** — `setState(patch, { priority })`:
+
 - `'immediate'` — synchronous update (user interactions)
 - `'deferred'` — microtask batching (programmatic updates)
 - `'background'` — setTimeout (analytics, telemetry)
@@ -359,8 +366,8 @@ const unsub = grid.subscribeSelector(
 const grid = createGrid(config);
 
 // Split lifecycle (worker-safe)
-const prepared = prepareGrid(config);  // Pure, no DOM
-const grid = activateGrid(prepared);   // Needs main thread
+const prepared = prepareGrid(config); // Pure, no DOM
+const grid = activateGrid(prepared); // Needs main thread
 ```
 
 ### Views
@@ -368,7 +375,7 @@ const grid = activateGrid(prepared);   // Needs main thread
 ```typescript
 // ViewsManager is a peer to StateManager
 const view = grid.saveView('My View');
-grid.loadView(view.id);  // Returns LoadViewResult
+grid.loadView(view.id); // Returns LoadViewResult
 grid.deleteView(view.id);
 grid.setDefaultView(view.id);
 
@@ -379,7 +386,7 @@ const presentation = mergePresentation(base, overrides);
 ### Filter Expressions
 
 ```typescript
-import { evaluateFilterExpression, normalizeFiltersToExpression } from '@phozart/phz-core';
+import { evaluateFilterExpression, normalizeFiltersToExpression } from '@phozart/core';
 
 // AST-based filter (AND/OR/NOT)
 const expr = {
@@ -390,7 +397,7 @@ const expr = {
   ],
 };
 
-const filtered = data.filter(row => evaluateFilterExpression(expr, row));
+const filtered = data.filter((row) => evaluateFilterExpression(expr, row));
 
 // Backward compat: convert legacy filters to expression
 const expr = normalizeFiltersToExpression(legacyFilters);
@@ -409,25 +416,25 @@ const plan = buildQueryPlan(capabilities);
 
 17 Lit Reactive Controllers extracted from God Object decomposition:
 
-| Controller | Responsibility |
-|-----------|----------------|
-| GridCoreController | GridApi lifecycle, state binding |
-| VirtualScrollController | Row virtualization, scroll position |
-| SelectionController | Row/cell selection, range select |
-| ClipboardController | Copy/paste operations |
-| ExportController | CSV/Excel export |
-| GroupController | Row grouping, expand/collapse |
-| ColumnChooserController | Column visibility picker |
-| ConditionalFormattingController | Cell styling rules |
-| ContextMenuController | Right-click command bus |
-| FilterPopoverController | Column filter UI |
-| ColumnResizeController | Drag-to-resize columns |
-| SortController | Header click sorting |
-| EditController | Cell editing |
-| KeyboardController | Keyboard navigation |
-| A11yController | ARIA attributes, live regions |
-| ThemeController | Theme/density application |
-| ToolbarController | Toolbar actions |
+| Controller                      | Responsibility                      |
+| ------------------------------- | ----------------------------------- |
+| GridCoreController              | GridApi lifecycle, state binding    |
+| VirtualScrollController         | Row virtualization, scroll position |
+| SelectionController             | Row/cell selection, range select    |
+| ClipboardController             | Copy/paste operations               |
+| ExportController                | CSV/Excel export                    |
+| GroupController                 | Row grouping, expand/collapse       |
+| ColumnChooserController         | Column visibility picker            |
+| ConditionalFormattingController | Cell styling rules                  |
+| ContextMenuController           | Right-click command bus             |
+| FilterPopoverController         | Column filter UI                    |
+| ColumnResizeController          | Drag-to-resize columns              |
+| SortController                  | Header click sorting                |
+| EditController                  | Cell editing                        |
+| KeyboardController              | Keyboard navigation                 |
+| A11yController                  | ARIA attributes, live regions       |
+| ThemeController                 | Theme/density application           |
+| ToolbarController               | Toolbar actions                     |
 
 ---
 
@@ -436,7 +443,7 @@ const plan = buildQueryPlan(capabilities);
 ### BIEngine Facade
 
 ```typescript
-import { createBIEngine } from '@phozart/phz-engine';
+import { createBIEngine } from '@phozart/engine';
 
 const engine = createBIEngine({
   initialDataProducts: [...],
@@ -450,6 +457,7 @@ const engine = createBIEngine({
 ```
 
 **Sub-systems accessible via engine:**
+
 - `engine.dataProducts` — DataProductRegistry
 - `engine.kpis` — KPIRegistry
 - `engine.metrics` — MetricCatalog
@@ -467,13 +475,11 @@ engine.kpis.register({
   id: kpiId('total-revenue'),
   name: 'Total Revenue',
   target: 1000000,
-  unit: 'currency',           // percent | count | duration | currency | custom
+  unit: 'currency', // percent | count | duration | currency | custom
   direction: 'higher_is_better', // or 'lower_is_better'
   thresholds: { ok: 90, warn: 70 },
   deltaComparison: 'previous_period',
-  breakdowns: [
-    { id: 'us', label: 'United States', targetOverride: 500000 },
-  ],
+  breakdowns: [{ id: 'us', label: 'United States', targetOverride: 500000 }],
   dataSource: { scoreEndpoint: '/api/kpi/revenue/score' },
 });
 
@@ -530,11 +536,22 @@ const dashboard = {
   name: 'Sales Operations',
   layout: { columns: 12, rowHeight: 80, gap: 16 },
   widgets: [
-    { id: widgetId('kpi'), type: 'kpi-card', position: { row: 0, col: 0 },
-      size: { colSpan: 3, rowSpan: 2 }, kpiId: kpiId('revenue') },
-    { id: widgetId('chart'), type: 'bar-chart', position: { row: 0, col: 3 },
-      size: { colSpan: 9, rowSpan: 4 }, dataProductId: dataProductId('sales'),
-      metricField: 'revenue', dimension: 'region' },
+    {
+      id: widgetId('kpi'),
+      type: 'kpi-card',
+      position: { row: 0, col: 0 },
+      size: { colSpan: 3, rowSpan: 2 },
+      kpiId: kpiId('revenue'),
+    },
+    {
+      id: widgetId('chart'),
+      type: 'bar-chart',
+      position: { row: 0, col: 3 },
+      size: { colSpan: 9, rowSpan: 4 },
+      dataProductId: dataProductId('sales'),
+      metricField: 'revenue',
+      dimension: 'region',
+    },
   ],
 };
 engine.dashboards.save(dashboard);
@@ -591,20 +608,20 @@ The engine provides 9 window functions in `packages/engine/src/window-functions.
 accept an optional `partitionBy` parameter for grouped calculations, and most accept `orderField`
 for deterministic ordering.
 
-| Function | Output Field | Description |
-|----------|-------------|-------------|
-| `runningSum` | `_runningSum` | Cumulative sum over ordered rows |
-| `runningAvg` | `_runningAvg` | Cumulative average over ordered rows |
-| `movingAverage` | `_movingAvg` | Sliding window average (configurable `windowSize`) |
-| `movingSum` | `_movingSum` | Sliding window sum (configurable `windowSize`) |
-| `rank` | `_rank` | Dense rank (supports `'asc'` or `'desc'` order) |
-| `percentRank` | `_percentRank` | Percent rank (0 to 1) |
-| `lag` | `_lag` | Value from a previous row (configurable `offset`, optional `defaultValue`) |
-| `lead` | `_lead` | Value from a subsequent row (configurable `offset`, optional `defaultValue`) |
-| `rowNumber` | `_rowNumber` | 1-based sequential row number |
+| Function        | Output Field   | Description                                                                  |
+| --------------- | -------------- | ---------------------------------------------------------------------------- |
+| `runningSum`    | `_runningSum`  | Cumulative sum over ordered rows                                             |
+| `runningAvg`    | `_runningAvg`  | Cumulative average over ordered rows                                         |
+| `movingAverage` | `_movingAvg`   | Sliding window average (configurable `windowSize`)                           |
+| `movingSum`     | `_movingSum`   | Sliding window sum (configurable `windowSize`)                               |
+| `rank`          | `_rank`        | Dense rank (supports `'asc'` or `'desc'` order)                              |
+| `percentRank`   | `_percentRank` | Percent rank (0 to 1)                                                        |
+| `lag`           | `_lag`         | Value from a previous row (configurable `offset`, optional `defaultValue`)   |
+| `lead`          | `_lead`        | Value from a subsequent row (configurable `offset`, optional `defaultValue`) |
+| `rowNumber`     | `_rowNumber`   | 1-based sequential row number                                                |
 
 ```typescript
-import { runningSum, movingAverage, rank } from '@phozart/phz-engine';
+import { runningSum, movingAverage, rank } from '@phozart/engine';
 
 // Running total of revenue, ordered by date
 const withRunning = runningSum(rows, 'revenue', 'date');
@@ -623,19 +640,21 @@ const ranked = rank(rows, 'revenue', 'desc');
 
 Two entry points, one unified system:
 
-| Mode | How | When |
-|------|-----|------|
-| **Inline** | `reportConfig.criteriaConfig` | Simple, code-first |
-| **Registry** | `FilterRegistry` + `FilterBindingStore` | Admin-managed, reusable |
-| **Auto-Hydration** | Inline → registry on load | Backward compat (automatic) |
+| Mode               | How                                     | When                        |
+| ------------------ | --------------------------------------- | --------------------------- |
+| **Inline**         | `reportConfig.criteriaConfig`           | Simple, code-first          |
+| **Registry**       | `FilterRegistry` + `FilterBindingStore` | Admin-managed, reusable     |
+| **Auto-Hydration** | Inline → registry on load               | Backward compat (automatic) |
 
 ```typescript
 // Report service manages filter state
 const service = createReportService(engine, reportId);
-service.getFields();         // SelectionFieldDef[]
+service.getFields(); // SelectionFieldDef[]
 service.setValue('region', ['US']);
-service.subscribe((params) => { /* re-filter */ });
-service.getFilterParams();   // { fields, values, criteria, isComplete, source }
+service.subscribe((params) => {
+  /* re-filter */
+});
+service.getFilterParams(); // { fields, values, criteria, isComplete, source }
 ```
 
 ### Widget Resolver
@@ -643,12 +662,21 @@ service.getFilterParams();   // { fields, values, criteria, isComplete, source }
 ```typescript
 // Transforms widget config → render-ready props
 const props = resolveWidgetProps(widgetConfig, {
-  engine, data, scoreProvider, schema, dataModel, paramValues,
+  engine,
+  data,
+  scoreProvider,
+  schema,
+  dataModel,
+  paramValues,
 });
 
 // Data processing pipeline
 const processed = processWidgetData(rows, {
-  filters, groupBy, aggregations, sort, limit,
+  filters,
+  groupBy,
+  aggregations,
+  sort,
+  limit,
 });
 // → { rows: ProcessedRow[], totals }
 ```
@@ -657,7 +685,7 @@ const processed = processWidgetData(rows, {
 
 ```typescript
 const action = engine.resolveDrill({
-  source: 'chart',  // chart | kpi | scorecard | grid | pivot
+  source: 'chart', // chart | kpi | scorecard | grid | pivot
   sourceField: 'region',
   sourceValue: 'US',
 });
@@ -677,25 +705,25 @@ programmatic use: scatter-chart, heatmap, waterfall-chart, funnel-chart, bottom-
 alert-panel, query-builder, selection-bar, and view-manager. To add any of these to the
 editor palette, register them via `ManifestRegistry` (see [Extending the Workspace](#extending-the-workspace)).
 
-| Type | Component | Config Fields |
-|------|-----------|---------------|
-| kpi-card | `<phz-kpi-card>` | kpiDefinition, value, previousValue, trendData, cardStyle |
-| kpi-scorecard | `<phz-kpi-scorecard>` | kpiDefinitions[], scores[], breakdowns |
-| gauge | `<phz-gauge>` | value, min, max, thresholds[], label, unit |
-| bar-chart | `<phz-bar-chart>` | data, rankOrder, maxBars, mode (simple/grouped/stacked) |
-| line-chart | `<phz-line-chart>` | series[], xAxisType, showGrid, showLegend |
-| area-chart | `<phz-area-chart>` | series[], stacked, colors[] |
-| pie-chart | `<phz-pie-chart>` | data[], donut, innerRadius, outerRadius |
-| scatter-chart | `<phz-scatter-chart>` | data[], bubbleMode, minSize, maxSize |
-| heatmap | `<phz-heatmap>` | data[], colorScale, showLabels |
-| waterfall | `<phz-waterfall-chart>` | data[], showConnectors |
-| funnel | `<phz-funnel-chart>` | data[], showPercentages, showConversions |
-| trend-line | `<phz-trend-line>` | data, target, periods, kpiDefinition |
-| bottom-n | `<phz-bottom-n>` | data[], metricField, dimensionField, n, direction |
-| status-table | `<phz-status-table>` | data[], entityField, kpiDefinitions[] |
-| drill-link | `<phz-drill-link>` | targetReportId, filterMapping |
-| dashboard | `<phz-dashboard>` | config, engine, data, scoreProvider, filterAdapter |
-| widget | `<phz-widget>` | config, data, engine (standalone widget router) |
+| Type          | Component               | Config Fields                                             |
+| ------------- | ----------------------- | --------------------------------------------------------- |
+| kpi-card      | `<phz-kpi-card>`        | kpiDefinition, value, previousValue, trendData, cardStyle |
+| kpi-scorecard | `<phz-kpi-scorecard>`   | kpiDefinitions[], scores[], breakdowns                    |
+| gauge         | `<phz-gauge>`           | value, min, max, thresholds[], label, unit                |
+| bar-chart     | `<phz-bar-chart>`       | data, rankOrder, maxBars, mode (simple/grouped/stacked)   |
+| line-chart    | `<phz-line-chart>`      | series[], xAxisType, showGrid, showLegend                 |
+| area-chart    | `<phz-area-chart>`      | series[], stacked, colors[]                               |
+| pie-chart     | `<phz-pie-chart>`       | data[], donut, innerRadius, outerRadius                   |
+| scatter-chart | `<phz-scatter-chart>`   | data[], bubbleMode, minSize, maxSize                      |
+| heatmap       | `<phz-heatmap>`         | data[], colorScale, showLabels                            |
+| waterfall     | `<phz-waterfall-chart>` | data[], showConnectors                                    |
+| funnel        | `<phz-funnel-chart>`    | data[], showPercentages, showConversions                  |
+| trend-line    | `<phz-trend-line>`      | data, target, periods, kpiDefinition                      |
+| bottom-n      | `<phz-bottom-n>`        | data[], metricField, dimensionField, n, direction         |
+| status-table  | `<phz-status-table>`    | data[], entityField, kpiDefinitions[]                     |
+| drill-link    | `<phz-drill-link>`      | targetReportId, filterMapping                             |
+| dashboard     | `<phz-dashboard>`       | config, engine, data, scoreProvider, filterAdapter        |
+| widget        | `<phz-widget>`          | config, data, engine (standalone widget router)           |
 
 ### Widget Usage
 
@@ -717,7 +745,7 @@ editor palette, register them via `ManifestRegistry` (see [Extending the Workspa
 ### Theming
 
 ```typescript
-import { applyTheme, darkTheme, lightTheme, highContrastTheme } from '@phozart/phz-widgets';
+import { applyTheme, darkTheme, lightTheme, highContrastTheme } from '@phozart/widgets';
 
 applyTheme(dashboardElement, darkTheme);
 // Sets: --phz-surface, --phz-text, --phz-border, --phz-accent,
@@ -728,7 +756,7 @@ applyTheme(dashboardElement, darkTheme);
 ### Widget Export
 
 ```typescript
-import { exportToCSV, exportToClipboard, exportToImage } from '@phozart/phz-widgets';
+import { exportToCSV, exportToClipboard, exportToImage } from '@phozart/widgets';
 
 exportToCSV(data, columns, 'report.csv');
 await exportToClipboard(data, columns);
@@ -738,6 +766,7 @@ await exportToImage(chartElement, 'chart.png');
 ### Pure Logic Exports (for testing)
 
 Every widget exports its computation as pure functions:
+
 - `computeStackedSegments()`, `computeGroupedBars()` (bar chart)
 - `valueToAngle()`, `detectThresholdZone()`, `describeArc()` (gauge)
 - `computeHeatmapCells()`, `interpolateColor()` (heatmap)
@@ -751,27 +780,27 @@ Every widget exports its computation as pure functions:
 
 ### UI Components
 
-| Component | Tag | Use Case |
-|-----------|-----|----------|
-| SelectionCriteria | `<phz-selection-criteria>` | Full bar + drawer (recommended) |
-| CriteriaPanel | `<phz-criteria-panel>` | Simple inline panel |
-| CriteriaBar | `<phz-criteria-bar>` | Horizontal summary bar |
-| FilterDrawer | `<phz-filter-drawer>` | Right-side slide-out (520px) |
-| FilterDesigner | `<phz-filter-designer>` | Admin: definition + rule + preset CRUD |
-| FilterConfigurator | `<phz-filter-configurator>` | Admin: bind filters to artefacts |
+| Component          | Tag                         | Use Case                               |
+| ------------------ | --------------------------- | -------------------------------------- |
+| SelectionCriteria  | `<phz-selection-criteria>`  | Full bar + drawer (recommended)        |
+| CriteriaPanel      | `<phz-criteria-panel>`      | Simple inline panel                    |
+| CriteriaBar        | `<phz-criteria-bar>`        | Horizontal summary bar                 |
+| FilterDrawer       | `<phz-filter-drawer>`       | Right-side slide-out (520px)           |
+| FilterDesigner     | `<phz-filter-designer>`     | Admin: definition + rule + preset CRUD |
+| FilterConfigurator | `<phz-filter-configurator>` | Admin: bind filters to artefacts       |
 
 ### Field Types
 
-| Type | Component | Features |
-|------|-----------|----------|
-| date_range | `<phz-date-range-picker>` | Calendar, quick presets, fiscal support, granularity tabs |
-| tree_select | `<phz-tree-select>` | Hierarchical, tri-state checkboxes, search, expand-to-modal |
-| chip_group | `<phz-chip-select>` | Pill-based toggleable options |
-| single_select | Native `<select>` | Dropdown |
-| numeric_range | `<phz-numeric-range-input>` | Min/max + slider, unit display |
-| search | `<phz-searchable-dropdown>` | Type-ahead, debounced, keyboard nav |
-| field_presence | `<phz-field-presence-filter>` | has_value / empty / any cycling |
-| text | Native `<input>` | Free-text |
+| Type           | Component                     | Features                                                    |
+| -------------- | ----------------------------- | ----------------------------------------------------------- |
+| date_range     | `<phz-date-range-picker>`     | Calendar, quick presets, fiscal support, granularity tabs   |
+| tree_select    | `<phz-tree-select>`           | Hierarchical, tri-state checkboxes, search, expand-to-modal |
+| chip_group     | `<phz-chip-select>`           | Pill-based toggleable options                               |
+| single_select  | Native `<select>`             | Dropdown                                                    |
+| numeric_range  | `<phz-numeric-range-input>`   | Min/max + slider, unit display                              |
+| search         | `<phz-searchable-dropdown>`   | Type-ahead, debounced, keyboard nav                         |
+| field_presence | `<phz-field-presence-filter>` | has_value / empty / any cycling                             |
+| text           | Native `<input>`              | Free-text                                                   |
 
 ### Usage
 
@@ -798,11 +827,11 @@ Every widget exports its computation as pure functions:
 interface GridDefinition extends DefinitionIdentity {
   dataSource: LocalDataSource | UrlDataSource | DataProductDataSource | DuckDBQueryDataSource;
   columns: DefinitionColumnSpec[];
-  defaults?: DefinitionDefaults;     // sort, filters, groupBy, column state
+  defaults?: DefinitionDefaults; // sort, filters, groupBy, column state
   formatting?: DefinitionFormatting; // conditional rules
-  behavior?: DefinitionBehavior;     // density, editMode, selectionMode
-  views?: ViewCollection;            // saved named views
-  access?: DefinitionAccess;         // public/private/role-restricted
+  behavior?: DefinitionBehavior; // density, editMode, selectionMode
+  views?: ViewCollection; // saved named views
+  access?: DefinitionAccess; // public/private/role-restricted
   metadata?: Record<string, unknown>;
 }
 ```
@@ -810,8 +839,12 @@ interface GridDefinition extends DefinitionIdentity {
 ### Round-Trip Serialization
 
 ```typescript
-import { gridConfigToDefinition, definitionToGridConfig,
-  exportDefinition, importDefinition } from '@phozart/phz-definitions';
+import {
+  gridConfigToDefinition,
+  definitionToGridConfig,
+  exportDefinition,
+  importDefinition,
+} from '@phozart/definitions';
 
 // Capture live config → definition
 const def = gridConfigToDefinition(gridConfig, { name: 'My Report' });
@@ -829,12 +862,12 @@ const config = definitionToGridConfig(restored);
 ### Stores
 
 ```typescript
-import { createInMemoryStore, createLocalStorageStore } from '@phozart/phz-definitions';
+import { createInMemoryStore, createLocalStorageStore } from '@phozart/definitions';
 
 const store = createLocalStorageStore({ prefix: 'phz-def:' });
 store.save(def);
 store.load(def.id);
-store.list();        // DefinitionMeta[] (fast listing)
+store.list(); // DefinitionMeta[] (fast listing)
 store.duplicate(def.id, { name: 'Copy' });
 store.delete(def.id);
 ```
@@ -842,11 +875,11 @@ store.delete(def.id);
 ### Validation
 
 ```typescript
-import { validateDefinition } from '@phozart/phz-definitions';
+import { validateDefinition } from '@phozart/definitions';
 
 const result = validateDefinition(def);
 if (!result.valid) {
-  result.errors.forEach(e => console.error(`${e.path}: ${e.message}`));
+  result.errors.forEach((e) => console.error(`${e.path}: ${e.message}`));
 }
 ```
 
@@ -866,7 +899,7 @@ Consumers should always call `migrateDefinition()` when loading saved definition
 forward compatibility:
 
 ```typescript
-import { migrateDefinition } from '@phozart/phz-definitions';
+import { migrateDefinition } from '@phozart/definitions';
 
 const raw = JSON.parse(savedJson);
 const migrated = migrateDefinition(raw);
@@ -877,71 +910,32 @@ const migrated = migrateDefinition(raw);
 
 ## Admin Panels
 
-### PhzGridAdmin
+> **Note:** The standalone packages `@phozart/grid-admin`, `@phozart/engine-admin`,
+> and `@phozart/grid-creator` have been archived. Their functionality now lives in
+> `@phozart/workspace` sub-path exports. Use `<phz-workspace>` as the single entry point.
 
-```typescript
-<phz-grid-admin
-  .open=${showAdmin}
-  .reportId=${'my-report'}
-  .columns=${myColumns}
-  @settings-auto-save=${(e) => persist(e.detail.settings)}
-  @admin-close=${() => setShowAdmin(false)}
-></phz-grid-admin>
+### Workspace Admin Components
 
-// Programmatic access
-const settings = admin.getSettings();  // ReportPresentation
-admin.setSettings(savedPresentation);
-```
+All admin panels are internal to `<phz-workspace>` and rendered automatically based on
+sidebar navigation and the `role` attribute. You do not mount them directly.
 
-**Tabs**: Table Settings | Columns | Formatting | Filters | Export | Theme | Views | Data Source | Criteria
+**Engine Admin** (`@phozart/workspace/engine-admin`):
 
-### PhzEngineAdmin
+- Designers: ReportDesigner, KPIDesigner, DashboardBuilder, MetricBuilder, PivotDesigner, FilterStudio
+- Events: `report-save`, `kpi-save`, `dashboard-save`, `metric-save`
 
-**Designers**: ReportDesigner (6-step) | KPIDesigner (6-step) | DashboardBuilder (3-panel) | MetricBuilder | PivotDesigner | FilterStudio
+**Authoring** (`@phozart/workspace/authoring`):
 
-**Events**: `report-save`, `kpi-save`, `dashboard-save`, `metric-save`
-
-### SaveController
-
-```typescript
-import { SaveController } from '@phozart/phz-engine-admin';
-
-// States: idle → saving → saved (auto-dismiss 3s) → idle
-//                       → error (manual dismiss/retry)
-
-class MyAdmin extends LitElement {
-  private save = new SaveController(this);
-  async handleSave() {
-    await this.save.save(async () => { await api.persist(this.config); });
-  }
-}
-```
-
-### Grid Creator Wizard
-
-```
-Step 0: Report Identity (name, description) — required
-Step 1: Data Source (data product picker) — required
-Step 2: Column Selection — required
-Step 3: Configuration — optional
-Step 4: Review & Create — required
-```
-
-```typescript
-<phz-grid-creator
-  .open=${true}
-  @grid-definition-create=${(e) => {
-    const payload = e.detail; // { name, description, dataProductId, columns, config }
-  }}
-></phz-grid-creator>
-```
+- Creation wizard (5-step: Identity, Data Source, Columns, Config, Review)
+- Report and dashboard editors with undo/redo, auto-save, drag-drop
+- Template pipeline with schema analysis and auto-binding
 
 ---
 
 ## Authoring Module Architecture
 
 The authoring module lives at `packages/workspace/src/authoring/` and is
-exported via `@phozart/phz-workspace/authoring`. It implements a "Tableau
+exported via `@phozart/workspace/authoring`. It implements a "Tableau
 meets AG Grid" authoring experience for building reports and dashboards.
 
 ### Architecture Pattern
@@ -977,7 +971,7 @@ import {
   markSaved,
   returnHome,
   canTransitionTo,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 
 // Start at home
 let state = initialAuthoringState();
@@ -993,10 +987,10 @@ state = openArtifact(state, 'dash-123', 'dashboard');
 
 // Guard transitions — warns if dirty
 state = markDirty(state);
-canTransitionTo(state, 'home');  // → false (unsaved changes)
+canTransitionTo(state, 'home'); // → false (unsaved changes)
 
 state = markSaved(state);
-canTransitionTo(state, 'home');  // → true
+canTransitionTo(state, 'home'); // → true
 state = returnHome(state);
 ```
 
@@ -1011,11 +1005,16 @@ auto-skip the choose-template step.
 published transitions with history tracking:
 
 ```typescript
-import { initialPublishState, submitForReview, approve, reject } from '@phozart/phz-workspace/authoring';
+import {
+  initialPublishState,
+  submitForReview,
+  approve,
+  reject,
+} from '@phozart/workspace/authoring';
 
-let pub = initialPublishState();  // → { status: 'draft', history: [] }
-pub = submitForReview(pub, 'alice');  // → { status: 'review', ... }
-pub = approve(pub, 'bob');           // → { status: 'published', ... }
+let pub = initialPublishState(); // → { status: 'draft', history: [] }
+pub = submitForReview(pub, 'alice'); // → { status: 'review', ... }
+pub = approve(pub, 'bob'); // → { status: 'published', ... }
 // pub.history has 2 entries with from/to/at/by fields
 ```
 
@@ -1025,29 +1024,38 @@ pub = approve(pub, 'bob');           // → { status: 'published', ... }
 sorting, grouping, conditional formatting, and density for a configured
 `<phz-grid>`:
 
-| Function | Purpose |
-|----------|---------|
-| `addColumn(state, field, label?)` | Add a column (no duplicates) |
-| `removeColumn(state, field)` | Remove by field name |
-| `reorderColumns(state, from, to)` | Drag-reorder |
-| `updateColumn(state, field, updates)` | Partial update (width, format, etc.) |
-| `toggleColumnVisibility(state, field)` | Show/hide |
-| `pinColumn(state, field, side?)` | Pin left/right or unpin |
-| `setSorting(state, sorting)` | Multi-column sort |
-| `setGrouping(state, fields)` | Group-by fields |
-| `addConditionalFormat(state, rule)` | Add formatting rule |
-| `toGridConfig(state)` | Convert to phz-grid compatible config |
+| Function                               | Purpose                               |
+| -------------------------------------- | ------------------------------------- |
+| `addColumn(state, field, label?)`      | Add a column (no duplicates)          |
+| `removeColumn(state, field)`           | Remove by field name                  |
+| `reorderColumns(state, from, to)`      | Drag-reorder                          |
+| `updateColumn(state, field, updates)`  | Partial update (width, format, etc.)  |
+| `toggleColumnVisibility(state, field)` | Show/hide                             |
+| `pinColumn(state, field, side?)`       | Pin left/right or unpin               |
+| `setSorting(state, sorting)`           | Multi-column sort                     |
+| `setGrouping(state, fields)`           | Group-by fields                       |
+| `addConditionalFormat(state, rule)`    | Add formatting rule                   |
+| `toGridConfig(state)`                  | Convert to phz-grid compatible config |
 
 **Context Menus** (`report-context-menu.ts`) — pure functions that generate
 `ContextMenuItem[]` based on editor state and click target:
 
 ```typescript
-import { getColumnHeaderMenu, getCellMenu, getSelectionMenu } from '@phozart/phz-workspace/authoring';
+import {
+  getColumnHeaderMenu,
+  getCellMenu,
+  getSelectionMenu,
+} from '@phozart/workspace/authoring';
 
 const items = getColumnHeaderMenu(editorState, 'revenue');
 // → Sort Asc/Desc, Group By, Pin Left/Right, Hide, Add Filter, Conditional Formatting...
 
-const cellItems = getCellMenu(editorState, { type: 'cell', field: 'region', rowIndex: 0, value: 'US' });
+const cellItems = getCellMenu(editorState, {
+  type: 'cell',
+  field: 'region',
+  rowIndex: 0,
+  value: 'US',
+});
 // → Copy Value, Filter by "US", Exclude "US", View Data
 ```
 
@@ -1055,7 +1063,11 @@ const cellItems = getCellMenu(editorState, { type: 'cell', field: 'region', rowI
 human-readable action labels:
 
 ```typescript
-import { createReportUndoManager, initialReportEditorState, addColumn } from '@phozart/phz-workspace/authoring';
+import {
+  createReportUndoManager,
+  initialReportEditorState,
+  addColumn,
+} from '@phozart/workspace/authoring';
 
 let state = initialReportEditorState('Sales Report', 'ds-sales');
 const undo = createReportUndoManager(state, { maxHistory: 50 });
@@ -1068,17 +1080,17 @@ state = addColumn(state, 'region', 'Region');
 undo.execute(state, 'Add column: Region');
 
 // Undo returns previous state
-const prev = undo.undo();  // → state with only 'revenue' column
-undo.canUndo;    // → true
-undo.canRedo;    // → true
-undo.history;    // → [{ label: 'Add column: Revenue', timestamp }, ...]
+const prev = undo.undo(); // → state with only 'revenue' column
+undo.canUndo; // → true
+undo.canRedo; // → true
+undo.history; // → [{ label: 'Add column: Revenue', timestamp }, ...]
 ```
 
 **Auto-Save** (`auto-save.ts`) — debounced save with status tracking
 (idle/dirty/saving/saved/error):
 
 ```typescript
-import { createAutoSave } from '@phozart/phz-workspace/authoring';
+import { createAutoSave } from '@phozart/workspace/authoring';
 
 const autoSave = createAutoSave({
   debounceMs: 2000,
@@ -1091,8 +1103,8 @@ autoSave.onSave(async (state) => {
 
 // Call on every state change — auto-debounces
 autoSave.markDirty();
-autoSave.status;       // → 'dirty', then 'saving', then 'saved'
-autoSave.lastSavedAt;  // → timestamp after save completes
+autoSave.status; // → 'dirty', then 'saving', then 'saved'
+autoSave.lastSavedAt; // → timestamp after save completes
 
 // Pause during bulk operations
 autoSave.pause();
@@ -1105,32 +1117,36 @@ autoSave.dispose();
 **DashboardEditorState** (`dashboard-editor-state.ts`) — canvas-based
 dashboard building with widget CRUD, morph groups, and positioning:
 
-| Function | Purpose |
-|----------|---------|
-| `addWidget(state, type, position?)` | Add widget to canvas |
-| `removeWidget(state, widgetId)` | Remove widget |
-| `moveWidget(state, widgetId, position)` | Reposition on grid |
-| `resizeWidget(state, widgetId, span)` | Change colSpan/rowSpan |
-| `morphWidget(state, widgetId, newType)` | Change type within morph group |
-| `duplicateWidget(state, widgetId)` | Clone with offset position |
-| `selectWidget(state, widgetId)` | Select + open config panel |
-| `deselectWidget(state)` | Deselect + close config panel |
-| `updateWidgetConfig(state, id, updates)` | Partial config update |
+| Function                                  | Purpose                            |
+| ----------------------------------------- | ---------------------------------- |
+| `addWidget(state, type, position?)`       | Add widget to canvas               |
+| `removeWidget(state, widgetId)`           | Remove widget                      |
+| `moveWidget(state, widgetId, position)`   | Reposition on grid                 |
+| `resizeWidget(state, widgetId, span)`     | Change colSpan/rowSpan             |
+| `morphWidget(state, widgetId, newType)`   | Change type within morph group     |
+| `duplicateWidget(state, widgetId)`        | Clone with offset position         |
+| `selectWidget(state, widgetId)`           | Select + open config panel         |
+| `deselectWidget(state)`                   | Deselect + close config panel      |
+| `updateWidgetConfig(state, id, updates)`  | Partial config update              |
 | `updateWidgetData(state, id, dataConfig)` | Update dimensions/measures/filters |
 
 **Morph Groups** — widgets in the same group can be converted without losing
 data configuration:
 
-| Group | Widget Types |
-|-------|-------------|
+| Group            | Widget Types                                 |
+| ---------------- | -------------------------------------------- |
 | `category-chart` | bar-chart, line-chart, area-chart, pie-chart |
-| `single-value` | kpi-card, gauge, kpi-scorecard, trend-line |
-| `tabular` | data-table, pivot-table |
-| `text` | text-block, heading |
-| `navigation` | drill-link |
+| `single-value`   | kpi-card, gauge, kpi-scorecard, trend-line   |
+| `tabular`        | data-table, pivot-table                      |
+| `text`           | text-block, heading                          |
+| `navigation`     | drill-link                                   |
 
 ```typescript
-import { morphWidget, addWidget, initialDashboardEditorState } from '@phozart/phz-workspace/authoring';
+import {
+  morphWidget,
+  addWidget,
+  initialDashboardEditorState,
+} from '@phozart/workspace/authoring';
 
 let state = initialDashboardEditorState('Sales Dashboard', 'ds-sales');
 state = addWidget(state, 'bar-chart', { row: 0, col: 0, colSpan: 4, rowSpan: 3 });
@@ -1150,15 +1166,15 @@ state = morphWidget(state, widgetId, 'kpi-card');
 **Drag-and-Drop** (`drag-drop-state.ts`) — `DragSource` and `DropTarget`
 discriminated unions with pure execution:
 
-| DragSource Type | Valid Drop Targets |
-|----------------|-------------------|
-| `field-palette` | canvas-cell, widget-data-zone, filter-bar |
-| `widget-library` | canvas-cell |
-| `existing-widget` | canvas-cell, widget-swap |
-| `filter-chip` | filter-bar |
+| DragSource Type   | Valid Drop Targets                        |
+| ----------------- | ----------------------------------------- |
+| `field-palette`   | canvas-cell, widget-data-zone, filter-bar |
+| `widget-library`  | canvas-cell                               |
+| `existing-widget` | canvas-cell, widget-swap                  |
+| `filter-chip`     | filter-bar                                |
 
 ```typescript
-import { computeValidTargets, executeDrop } from '@phozart/phz-workspace/authoring';
+import { computeValidTargets, executeDrop } from '@phozart/workspace/authoring';
 
 const source = { type: 'field-palette' as const, field: 'revenue', dataType: 'number' };
 const targets = computeValidTargets(source, dashboardState);
@@ -1177,7 +1193,11 @@ const newState = executeDrop(dashboardState, source, { type: 'canvas-cell', row:
 panel (data/style/filters) with apply-back to the widget:
 
 ```typescript
-import { createConfigForWidget, updateStyleConfig, applyConfigToWidget } from '@phozart/phz-workspace/authoring';
+import {
+  createConfigForWidget,
+  updateStyleConfig,
+  applyConfigToWidget,
+} from '@phozart/workspace/authoring';
 
 // Open config for a widget
 let config = createConfigForWidget(widget);
@@ -1194,7 +1214,11 @@ const updatedWidget = applyConfigToWidget(config, widget);
 that all produce the same `FilterValue` output:
 
 ```typescript
-import { inferFilterDefaults, createFilterFromEntry, finalizeFilter } from '@phozart/phz-workspace/authoring';
+import {
+  inferFilterDefaults,
+  createFilterFromEntry,
+  finalizeFilter,
+} from '@phozart/workspace/authoring';
 
 // Type-based defaults
 inferFilterDefaults('date');
@@ -1216,7 +1240,7 @@ const filter = finalizeFilter(creation);
 analysis → template matching → field auto-binding pipeline:
 
 ```typescript
-import { suggestTemplatesForSource, applyTemplate } from '@phozart/phz-workspace/authoring';
+import { suggestTemplatesForSource, applyTemplate } from '@phozart/workspace/authoring';
 
 // 1. Get ranked template suggestions for a data source schema
 const suggestions = suggestTemplatesForSource(schema);
@@ -1230,6 +1254,7 @@ const dashState = applyTemplate(suggestions[0].template, schema, 'ds-sales');
 ```
 
 The pipeline internally calls:
+
 1. `analyzeSchema(schema)` — profiles fields into dimensions, measures,
    time-series detection
 2. `matchTemplates(profile, templates)` — scores each template against
@@ -1244,19 +1269,23 @@ The pipeline internally calls:
 **Keyboard Shortcuts** (`keyboard-shortcuts.ts`) — platform-aware shortcut
 matching (Cmd on macOS, Ctrl elsewhere) with 9 default bindings:
 
-| Shortcut | Action |
-|----------|--------|
-| Ctrl/Cmd+Z | Undo |
-| Ctrl/Cmd+Shift+Z | Redo |
-| Ctrl/Cmd+Y | Redo |
-| Ctrl/Cmd+S | Save |
-| Ctrl/Cmd+D | Duplicate Widget |
-| Delete / Backspace | Delete Widget |
-| Escape | Deselect / Close Panel |
-| Ctrl/Cmd+A | Select All Widgets |
+| Shortcut           | Action                 |
+| ------------------ | ---------------------- |
+| Ctrl/Cmd+Z         | Undo                   |
+| Ctrl/Cmd+Shift+Z   | Redo                   |
+| Ctrl/Cmd+Y         | Redo                   |
+| Ctrl/Cmd+S         | Save                   |
+| Ctrl/Cmd+D         | Duplicate Widget       |
+| Delete / Backspace | Delete Widget          |
+| Escape             | Deselect / Close Panel |
+| Ctrl/Cmd+A         | Select All Widgets     |
 
 ```typescript
-import { matchShortcut, DEFAULT_AUTHORING_SHORTCUTS, formatShortcut } from '@phozart/phz-workspace/authoring';
+import {
+  matchShortcut,
+  DEFAULT_AUTHORING_SHORTCUTS,
+  formatShortcut,
+} from '@phozart/workspace/authoring';
 
 const action = matchShortcut(DEFAULT_AUTHORING_SHORTCUTS, keyboardEvent, 'mac');
 // → 'undo' | 'save' | 'delete-widget' | ... | null
@@ -1270,9 +1299,13 @@ formatShortcut({ key: 's', ctrl: true, action: 'save', label: 'Save' }, 'mac');
 categories with morph group consistency:
 
 ```typescript
-import { getWidgetLibrary, getWidgetsByCategory, getWidgetsInMorphGroup } from '@phozart/phz-workspace/authoring';
+import {
+  getWidgetLibrary,
+  getWidgetsByCategory,
+  getWidgetsInMorphGroup,
+} from '@phozart/workspace/authoring';
 
-const all = getWidgetLibrary();          // 13 entries
+const all = getWidgetLibrary(); // 13 entries
 const byCategory = getWidgetsByCategory(); // Map<WidgetCategory, WidgetLibraryEntry[]>
 const charts = getWidgetsInMorphGroup('category-chart');
 // → [bar-chart, line-chart, area-chart, pie-chart]
@@ -1283,14 +1316,14 @@ const charts = getWidgetsInMorphGroup('category-chart');
 Six Lit Web Components provide the UI layer. Each is a thin wrapper that
 calls the pure state functions and re-renders:
 
-| Component | Tag | Purpose |
-|-----------|-----|---------|
-| `PhzArtifactCatalog` | `<phz-artifact-catalog>` | Home screen with search, tags, type filter, sorting |
-| `PhzCreationWizard` | `<phz-creation-wizard>` | Multi-step creation wizard (type, source, template, configure) |
-| `PhzReportEditor` | `<phz-report-editor>` | Toolbar + grid preview + config panel for reports |
-| `PhzDashboardEditor` | `<phz-dashboard-editor>` | Field palette + canvas + config panel for dashboards |
-| `PhzConfigPanel` | `<phz-config-panel>` | Reusable 3-tab panel (data/style/filters) |
-| `PhzContextMenu` | `<phz-context-menu>` | Positioned overlay with keyboard nav + nested submenus |
+| Component            | Tag                      | Purpose                                                        |
+| -------------------- | ------------------------ | -------------------------------------------------------------- |
+| `PhzArtifactCatalog` | `<phz-artifact-catalog>` | Home screen with search, tags, type filter, sorting            |
+| `PhzCreationWizard`  | `<phz-creation-wizard>`  | Multi-step creation wizard (type, source, template, configure) |
+| `PhzReportEditor`    | `<phz-report-editor>`    | Toolbar + grid preview + config panel for reports              |
+| `PhzDashboardEditor` | `<phz-dashboard-editor>` | Field palette + canvas + config panel for dashboards           |
+| `PhzConfigPanel`     | `<phz-config-panel>`     | Reusable 3-tab panel (data/style/filters)                      |
+| `PhzContextMenu`     | `<phz-context-menu>`     | Positioned overlay with keyboard nav + nested submenus         |
 
 ---
 
@@ -1302,28 +1335,29 @@ experience; two new shells serve analysts and authors.
 
 ### Shell Overview
 
-| Shell | Package | Persona | Capabilities |
-|-------|---------|---------|-------------|
-| **Workspace** | `@phozart/phz-workspace` | Admin | Full configuration: data sources, filters, alerts, navigation, publish, settings, API access |
-| **Viewer** | `@phozart/phz-viewer` | Analyst | Read-only consumption: catalog, dashboards, reports, explore, attention, filter bar |
-| **Editor** | `@phozart/phz-editor` | Author | Authoring: dashboard editing, report editing, measure palette, sharing, alert/subscription management |
+| Shell         | Package                  | Persona | Capabilities                                                                                          |
+| ------------- | ------------------------ | ------- | ----------------------------------------------------------------------------------------------------- |
+| **Workspace** | `@phozart/workspace` | Admin   | Full configuration: data sources, filters, alerts, navigation, publish, settings, API access          |
+| **Viewer**    | `@phozart/viewer`    | Analyst | Read-only consumption: catalog, dashboards, reports, explore, attention, filter bar                   |
+| **Editor**    | `@phozart/editor`    | Author  | Authoring: dashboard editing, report editing, measure palette, sharing, alert/subscription management |
 
-All three shells depend on `@phozart/phz-shared` for adapters, types, design
+All three shells depend on `@phozart/shared` for adapters, types, design
 system, artifact metadata, and runtime coordination. They do NOT depend on each
 other.
 
 ### Deployment Patterns
 
-| Pattern | Shells | Use Case |
-|---------|--------|----------|
-| **Viewer-only** | viewer | Embed read-only dashboards in a customer portal |
-| **Author + Viewer** | editor + viewer | Self-service BI for business users |
-| **Full admin** | workspace + editor + viewer | Complete platform for IT admins |
-| **Headless** | none (engine + shared only) | Server-side rendering, API-only |
+| Pattern             | Shells                      | Use Case                                        |
+| ------------------- | --------------------------- | ----------------------------------------------- |
+| **Viewer-only**     | viewer                      | Embed read-only dashboards in a customer portal |
+| **Author + Viewer** | editor + viewer             | Self-service BI for business users              |
+| **Full admin**      | workspace + editor + viewer | Complete platform for IT admins                 |
+| **Headless**        | none (engine + shared only) | Server-side rendering, API-only                 |
 
 ### Shared Foundation
 
-The `@phozart/phz-shared` package contains:
+The `@phozart/shared` package contains:
+
 - **Adapters**: `DataAdapter`, persistence SPIs, `AlertChannelAdapter`, `AttentionAdapter`, `UsageAnalyticsAdapter`, `SubscriptionAdapter`
 - **Types**: All shared type definitions (alerts, subscriptions, widgets, filters, API spec, micro-widgets, impact chains, attention)
 - **Design System**: tokens, responsive breakpoints, container queries, component patterns, shell layout, alert tokens
@@ -1334,23 +1368,23 @@ The `@phozart/phz-shared` package contains:
 
 The workspace shell gained 15 new state machines for admin features:
 
-| State Machine | Module | Purpose |
-|---------------|--------|---------|
-| `catalog-dense` | shell | Dense catalog view with bulk actions |
-| `creation-wizard` | authoring | Multi-step artifact creation |
-| `wide-report` | authoring | Full-width report editing |
-| `freeform-grid` | authoring | Freeform dashboard grid layout |
-| `data-config-panel` | shell | Data source configuration sidebar |
-| `filter-admin` | filters | Filter definition CRUD |
-| `filter-value-admin` | filters | Filter value source management |
-| `alert-admin` | alerts | Alert rule + breach management |
-| `enrichment-admin` | shell | Field metadata enrichment overlay |
-| `settings` | govern | Theme, branding, feature flags |
-| `command-palette` | shell | Ctrl+K quick search across artifacts and actions |
-| `keyboard-shortcuts` | shell | Context-aware shortcut registry with customization |
-| `publish-workflow` | authoring | Draft -> review -> published transitions |
-| `navigation-config` | navigation | Drill-through link editor with auto-mapping |
-| `api-access` | govern | API key management, roles, scopes, rate limiting |
+| State Machine        | Module     | Purpose                                            |
+| -------------------- | ---------- | -------------------------------------------------- |
+| `catalog-dense`      | shell      | Dense catalog view with bulk actions               |
+| `creation-wizard`    | authoring  | Multi-step artifact creation                       |
+| `wide-report`        | authoring  | Full-width report editing                          |
+| `freeform-grid`      | authoring  | Freeform dashboard grid layout                     |
+| `data-config-panel`  | shell      | Data source configuration sidebar                  |
+| `filter-admin`       | filters    | Filter definition CRUD                             |
+| `filter-value-admin` | filters    | Filter value source management                     |
+| `alert-admin`        | alerts     | Alert rule + breach management                     |
+| `enrichment-admin`   | shell      | Field metadata enrichment overlay                  |
+| `settings`           | govern     | Theme, branding, feature flags                     |
+| `command-palette`    | shell      | Ctrl+K quick search across artifacts and actions   |
+| `keyboard-shortcuts` | shell      | Context-aware shortcut registry with customization |
+| `publish-workflow`   | authoring  | Draft -> review -> published transitions           |
+| `navigation-config`  | navigation | Drill-through link editor with auto-mapping        |
+| `api-access`         | govern     | API key management, roles, scopes, rate limiting   |
 
 ---
 
@@ -1367,6 +1401,7 @@ Layer 3: Component styles                ← Reference --_* with fallbacks
 ### Density Modes
 
 Set via `<phz-grid density="compact|dense|comfortable">`. Cascades:
+
 - `--_row-height`, `--_cell-padding`
 - `--_cell-overflow` (hidden vs visible)
 - `--_cell-white-space` (nowrap vs normal)
@@ -1403,7 +1438,7 @@ npm run build
 # Build single package
 npm run build --workspace=packages/grid
 
-# Run tests (5,557 tests across 363 files)
+# Run tests (9,605+ tests across 526 files)
 npm test
 
 # Type-check
@@ -1421,17 +1456,17 @@ files directly without building first. v15 added aliases for the new packages:
 
 ```typescript
 // New in v15
-'@phozart/phz-shared/adapters'      → packages/shared/src/adapters/index.ts
-'@phozart/phz-shared/types'         → packages/shared/src/types/index.ts
-'@phozart/phz-shared/design-system' → packages/shared/src/design-system/index.ts
-'@phozart/phz-shared/artifacts'     → packages/shared/src/artifacts/index.ts
-'@phozart/phz-shared/coordination'  → packages/shared/src/coordination/index.ts
-'@phozart/phz-shared'               → packages/shared/src/index.ts
-'@phozart/phz-engine/explorer'      → packages/engine/src/explorer/index.ts
-'@phozart/phz-viewer/react'         → packages/viewer/src/react/index.ts
-'@phozart/phz-viewer'               → packages/viewer/src/index.ts
-'@phozart/phz-editor/react'         → packages/editor/src/react/index.ts
-'@phozart/phz-editor'               → packages/editor/src/index.ts
+'@phozart/shared/adapters'      → packages/shared/src/adapters/index.ts
+'@phozart/shared/types'         → packages/shared/src/types/index.ts
+'@phozart/shared/design-system' → packages/shared/src/design-system/index.ts
+'@phozart/shared/artifacts'     → packages/shared/src/artifacts/index.ts
+'@phozart/shared/coordination'  → packages/shared/src/coordination/index.ts
+'@phozart/shared'               → packages/shared/src/index.ts
+'@phozart/engine/explorer'      → packages/engine/src/explorer/index.ts
+'@phozart/viewer/react'         → packages/viewer/src/react/index.ts
+'@phozart/viewer'               → packages/viewer/src/index.ts
+'@phozart/editor/react'         → packages/editor/src/react/index.ts
+'@phozart/editor'               → packages/editor/src/index.ts
 ```
 
 When adding tests for new modules, ensure sub-path aliases are declared
@@ -1461,8 +1496,8 @@ When adding tests for new modules, ensure sub-path aliases are declared
 All computation is testable without DOM:
 
 ```typescript
-import { computeStackedSegments } from '@phozart/phz-widgets';
-import { computeStatus } from '@phozart/phz-engine';
+import { computeStackedSegments } from '@phozart/widgets';
+import { computeStatus } from '@phozart/engine';
 
 test('stacked segments sum correctly', () => {
   const segments = computeStackedSegments(point, ['a', 'b'], ['#f00', '#0f0']);
@@ -1489,79 +1524,76 @@ Use `tsc --build` (not `tsc --build --noEmit`) for composite projects — `--noE
 
 ## Key File Locations
 
-| Concept | File |
-|---------|------|
-| BIEngine facade | `packages/engine/src/engine.ts` |
-| KPI definitions | `packages/engine/src/kpi.ts` |
-| Metric catalog | `packages/engine/src/metric.ts` |
-| Report config | `packages/engine/src/report.ts` |
-| Dashboard config | `packages/engine/src/dashboard.ts` |
-| Enhanced dashboard (v2) | `packages/engine/src/dashboard-enhanced.ts` — sibling type definition with v2 dashboard format including `globalFilters`, `theme`, `placements`. Not a replacement for `dashboard.ts`; used for enhanced dashboard features |
-| Widget types | `packages/engine/src/widget.ts` |
-| Widget data processor | `packages/engine/src/widget-data-processor.ts` |
-| Widget resolver | `packages/engine/src/widget-resolver.ts` |
-| Status computation | `packages/engine/src/status.ts` |
-| Aggregation | `packages/engine/src/aggregation.ts` |
-| Pivot engine | `packages/engine/src/pivot.ts` |
-| Chart projection | `packages/engine/src/chart-projection.ts` |
-| Expression compiler | `packages/engine/src/expression-compiler.ts` |
-| Expression AST types | `packages/engine/src/expression-types.ts` |
-| Criteria engine | `packages/engine/src/criteria/criteria-engine.ts` |
-| Filter resolution | `packages/engine/src/criteria/resolve-criteria.ts` |
-| Report/Dashboard service | `packages/engine/src/report-service.ts` |
-| Compute backend | `packages/engine/src/compute-backend.ts` |
-| Drill-through | `packages/engine/src/drill-through.ts` |
-| Config merge | `packages/engine/src/config-merge.ts` |
-| Dashboard component | `packages/widgets/src/components/phz-dashboard.ts` |
-| Widget router | `packages/widgets/src/components/phz-widget.ts` |
-| KPI card | `packages/widgets/src/components/phz-kpi-card.ts` |
-| Bar chart | `packages/widgets/src/components/phz-bar-chart.ts` |
-| Themes | `packages/widgets/src/themes.ts` |
-| Widget export | `packages/widgets/src/widget-export.ts` |
-| Responsive layout | `packages/widgets/src/responsive-layout.ts` |
-| Cross-filter | `packages/widgets/src/cross-filter.ts` |
-| Selection criteria | `packages/criteria/src/components/phz-selection-criteria.ts` |
-| Filter designer | `packages/criteria/src/components/phz-filter-designer.ts` |
-| Grid admin | `packages/grid-admin/src/components/phz-grid-admin.ts` |
-| Engine admin | `packages/engine-admin/src/components/phz-engine-admin.ts` |
-| Save controller | `packages/engine-admin/src/save-controller.ts` |
-| Grid definition type | `packages/definitions/src/types/grid-definition.ts` |
-| Converters | `packages/definitions/src/converters/` |
-| Zod validation | `packages/definitions/src/validation/schemas.ts` |
-| Definition stores | `packages/definitions/src/store/` |
-| Wizard state machine | `packages/grid-creator/src/wizard-state.ts` |
-| Grid component | `packages/grid/src/components/phz-grid.ts` |
-| Create grid | `packages/core/src/create-grid.ts` |
-| State manager | `packages/core/src/state.ts` |
-| Filter expressions | `packages/core/src/filter-expression.ts` |
-| Query planner | `packages/core/src/query-planner.ts` |
-| Views manager | `packages/core/src/views.ts` |
-| Shared adapters | `packages/shared/src/adapters/index.ts` |
-| Shared types | `packages/shared/src/types/index.ts` |
-| Design system | `packages/shared/src/design-system/index.ts` |
-| Artifact visibility | `packages/shared/src/artifacts/artifact-visibility.ts` |
-| Coordination | `packages/shared/src/coordination/index.ts` |
-| Micro-widget types | `packages/shared/src/types/micro-widget.ts` |
-| Single-value alert | `packages/shared/src/types/single-value-alert.ts` |
-| Impact chain types | `packages/shared/src/types/impact-chain.ts` |
-| Attention filter | `packages/shared/src/types/attention-filter.ts` |
-| Personal alert engine | `packages/engine/src/alerts/personal-alert-engine.ts` |
-| Alert evaluation contract | `packages/engine/src/alerts/alert-contract.ts` |
-| Subscription engine | `packages/engine/src/subscriptions/subscription-engine.ts` |
-| Usage analytics collector | `packages/engine/src/analytics/usage-collector.ts` |
-| OpenAPI generator | `packages/engine/src/api/openapi-generator.ts` |
-| Attention system | `packages/engine/src/attention/attention-system.ts` |
-| Explorer (visual query) | `packages/engine/src/explorer/index.ts` |
-| Viewer shell state | `packages/viewer/src/viewer-state.ts` |
-| Viewer navigation | `packages/viewer/src/viewer-navigation.ts` |
-| Viewer shell config | `packages/viewer/src/viewer-config.ts` |
-| Editor shell state | `packages/editor/src/editor-state.ts` |
-| Editor navigation | `packages/editor/src/editor-navigation.ts` |
-| Editor shell config | `packages/editor/src/editor-config.ts` |
-| Command palette state | `packages/workspace/src/shell/command-palette-state.ts` |
-| Keyboard shortcuts state | `packages/workspace/src/shell/keyboard-shortcuts-state.ts` |
-| Settings state | `packages/workspace/src/govern/settings-state.ts` |
-| API access state | `packages/workspace/src/govern/api-access-state.ts` |
+| Concept                   | File                                                                                                                                                                                                                        |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BIEngine facade           | `packages/engine/src/engine.ts`                                                                                                                                                                                             |
+| KPI definitions           | `packages/engine/src/kpi.ts`                                                                                                                                                                                                |
+| Metric catalog            | `packages/engine/src/metric.ts`                                                                                                                                                                                             |
+| Report config             | `packages/engine/src/report.ts`                                                                                                                                                                                             |
+| Dashboard config          | `packages/engine/src/dashboard.ts`                                                                                                                                                                                          |
+| Enhanced dashboard (v2)   | `packages/engine/src/dashboard-enhanced.ts` — sibling type definition with v2 dashboard format including `globalFilters`, `theme`, `placements`. Not a replacement for `dashboard.ts`; used for enhanced dashboard features |
+| Widget types              | `packages/engine/src/widget.ts`                                                                                                                                                                                             |
+| Widget data processor     | `packages/engine/src/widget-data-processor.ts`                                                                                                                                                                              |
+| Widget resolver           | `packages/engine/src/widget-resolver.ts`                                                                                                                                                                                    |
+| Status computation        | `packages/engine/src/status.ts`                                                                                                                                                                                             |
+| Aggregation               | `packages/engine/src/aggregation.ts`                                                                                                                                                                                        |
+| Pivot engine              | `packages/engine/src/pivot.ts`                                                                                                                                                                                              |
+| Chart projection          | `packages/engine/src/chart-projection.ts`                                                                                                                                                                                   |
+| Expression compiler       | `packages/engine/src/expression-compiler.ts`                                                                                                                                                                                |
+| Expression AST types      | `packages/engine/src/expression-types.ts`                                                                                                                                                                                   |
+| Criteria engine           | `packages/engine/src/criteria/criteria-engine.ts`                                                                                                                                                                           |
+| Filter resolution         | `packages/engine/src/criteria/resolve-criteria.ts`                                                                                                                                                                          |
+| Report/Dashboard service  | `packages/engine/src/report-service.ts`                                                                                                                                                                                     |
+| Compute backend           | `packages/engine/src/compute-backend.ts`                                                                                                                                                                                    |
+| Drill-through             | `packages/engine/src/drill-through.ts`                                                                                                                                                                                      |
+| Config merge              | `packages/engine/src/config-merge.ts`                                                                                                                                                                                       |
+| Dashboard component       | `packages/widgets/src/components/phz-dashboard.ts`                                                                                                                                                                          |
+| Widget router             | `packages/widgets/src/components/phz-widget.ts`                                                                                                                                                                             |
+| KPI card                  | `packages/widgets/src/components/phz-kpi-card.ts`                                                                                                                                                                           |
+| Bar chart                 | `packages/widgets/src/components/phz-bar-chart.ts`                                                                                                                                                                          |
+| Themes                    | `packages/widgets/src/themes.ts`                                                                                                                                                                                            |
+| Widget export             | `packages/widgets/src/widget-export.ts`                                                                                                                                                                                     |
+| Responsive layout         | `packages/widgets/src/responsive-layout.ts`                                                                                                                                                                                 |
+| Cross-filter              | `packages/widgets/src/cross-filter.ts`                                                                                                                                                                                      |
+| Selection criteria        | `packages/criteria/src/components/phz-selection-criteria.ts`                                                                                                                                                                |
+| Filter designer           | `packages/criteria/src/components/phz-filter-designer.ts`                                                                                                                                                                   |
+| Engine admin              | `packages/workspace/src/engine-admin/index.ts`                                                                                                                                                                              |
+| Grid definition type      | `packages/definitions/src/types/grid-definition.ts`                                                                                                                                                                         |
+| Converters                | `packages/definitions/src/converters/`                                                                                                                                                                                      |
+| Zod validation            | `packages/definitions/src/validation/schemas.ts`                                                                                                                                                                            |
+| Definition stores         | `packages/definitions/src/store/`                                                                                                                                                                                           |
+| Grid component            | `packages/grid/src/components/phz-grid.ts`                                                                                                                                                                                  |
+| Create grid               | `packages/core/src/create-grid.ts`                                                                                                                                                                                          |
+| State manager             | `packages/core/src/state.ts`                                                                                                                                                                                                |
+| Filter expressions        | `packages/core/src/filter-expression.ts`                                                                                                                                                                                    |
+| Query planner             | `packages/core/src/query-planner.ts`                                                                                                                                                                                        |
+| Views manager             | `packages/core/src/views.ts`                                                                                                                                                                                                |
+| Shared adapters           | `packages/shared/src/adapters/index.ts`                                                                                                                                                                                     |
+| Shared types              | `packages/shared/src/types/index.ts`                                                                                                                                                                                        |
+| Design system             | `packages/shared/src/design-system/index.ts`                                                                                                                                                                                |
+| Artifact visibility       | `packages/shared/src/artifacts/artifact-visibility.ts`                                                                                                                                                                      |
+| Coordination              | `packages/shared/src/coordination/index.ts`                                                                                                                                                                                 |
+| Micro-widget types        | `packages/shared/src/types/micro-widget.ts`                                                                                                                                                                                 |
+| Single-value alert        | `packages/shared/src/types/single-value-alert.ts`                                                                                                                                                                           |
+| Impact chain types        | `packages/shared/src/types/impact-chain.ts`                                                                                                                                                                                 |
+| Attention filter          | `packages/shared/src/types/attention-filter.ts`                                                                                                                                                                             |
+| Personal alert engine     | `packages/engine/src/alerts/personal-alert-engine.ts`                                                                                                                                                                       |
+| Alert evaluation contract | `packages/engine/src/alerts/alert-contract.ts`                                                                                                                                                                              |
+| Subscription engine       | `packages/engine/src/subscriptions/subscription-engine.ts`                                                                                                                                                                  |
+| Usage analytics collector | `packages/engine/src/analytics/usage-collector.ts`                                                                                                                                                                          |
+| OpenAPI generator         | `packages/engine/src/api/openapi-generator.ts`                                                                                                                                                                              |
+| Attention system          | `packages/engine/src/attention/attention-system.ts`                                                                                                                                                                         |
+| Explorer (visual query)   | `packages/engine/src/explorer/index.ts`                                                                                                                                                                                     |
+| Viewer shell state        | `packages/viewer/src/viewer-state.ts`                                                                                                                                                                                       |
+| Viewer navigation         | `packages/viewer/src/viewer-navigation.ts`                                                                                                                                                                                  |
+| Viewer shell config       | `packages/viewer/src/viewer-config.ts`                                                                                                                                                                                      |
+| Editor shell state        | `packages/editor/src/editor-state.ts`                                                                                                                                                                                       |
+| Editor navigation         | `packages/editor/src/editor-navigation.ts`                                                                                                                                                                                  |
+| Editor shell config       | `packages/editor/src/editor-config.ts`                                                                                                                                                                                      |
+| Command palette state     | `packages/workspace/src/shell/command-palette-state.ts`                                                                                                                                                                     |
+| Keyboard shortcuts state  | `packages/workspace/src/shell/keyboard-shortcuts-state.ts`                                                                                                                                                                  |
+| Settings state            | `packages/workspace/src/govern/settings-state.ts`                                                                                                                                                                           |
+| API access state          | `packages/workspace/src/govern/api-access-state.ts`                                                                                                                                                                         |
 
 ---
 
@@ -1569,7 +1601,7 @@ Use `tsc --build` (not `tsc --build --noEmit`) for composite projects — `--noE
 
 ## Extending the Workspace
 
-The `@phozart/phz-workspace` package provides extension points for developers
+The `@phozart/workspace` package provides extension points for developers
 who want to add custom widgets, data backends, notification channels,
 templates, and inter-widget interactions.
 
@@ -1583,8 +1615,8 @@ Register a custom widget type by creating a `WidgetManifest` and registering
 it with the `ManifestRegistry`:
 
 ```typescript
-import { createManifestRegistry } from '@phozart/phz-workspace/registry';
-import type { WidgetManifest } from '@phozart/phz-workspace';
+import { createManifestRegistry } from '@phozart/workspace/registry';
+import type { WidgetManifest } from '@phozart/workspace';
 
 const heatmap: WidgetManifest = {
   type: 'heatmap',
@@ -1603,12 +1635,23 @@ const heatmap: WidgetManifest = {
   supportedInteractions: ['cross-filter', 'drill-through'],
   variants: [
     { id: 'default', name: 'Standard', description: 'Color gradient', presetConfig: {} },
-    { id: 'discrete', name: 'Discrete', description: 'Binned colors', presetConfig: { binCount: 5 } },
+    {
+      id: 'discrete',
+      name: 'Discrete',
+      description: 'Binned colors',
+      presetConfig: { binCount: 5 },
+    },
   ],
   load: async () => ({
-    render(config, container, context) { /* render heatmap into container */ },
-    update(config, context) { /* update without full re-render */ },
-    destroy() { /* cleanup */ },
+    render(config, container, context) {
+      /* render heatmap into container */
+    },
+    update(config, context) {
+      /* update without full re-render */
+    },
+    destroy() {
+      /* cleanup */
+    },
   }),
 };
 
@@ -1617,6 +1660,7 @@ registry.registerManifest(heatmap);
 ```
 
 Key `WidgetManifest` fields:
+
 - `type` — unique identifier (used in configs)
 - `requiredFields` — what data the widget needs (role: measure/dimension/category/time)
 - `variants` — named presets with different visual configurations
@@ -1628,15 +1672,18 @@ Key `WidgetManifest` fields:
 Implement the `DataAdapter` interface to connect any data backend:
 
 ```typescript
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema } from '@phozart/phz-workspace';
+import type { DataAdapter, DataQuery, DataResult, DataSourceSchema } from '@phozart/workspace';
 
 class PostgresDataAdapter implements DataAdapter {
-  async execute(query: DataQuery, context?: { viewerContext?: unknown; signal?: AbortSignal }): Promise<DataResult> {
+  async execute(
+    query: DataQuery,
+    context?: { viewerContext?: unknown; signal?: AbortSignal },
+  ): Promise<DataResult> {
     const sql = this.buildSQL(query);
     const rows = await this.pool.query(sql, { signal: context?.signal });
     return {
-      columns: query.fields.map(f => ({ name: f, dataType: 'string' })),
-      rows: rows.map(r => query.fields.map(f => r[f])),
+      columns: query.fields.map((f) => ({ name: f, dataType: 'string' })),
+      rows: rows.map((r) => query.fields.map((f) => r[f])),
       metadata: { totalRows: rows.length, truncated: false, queryTimeMs: 0 },
     };
   }
@@ -1649,7 +1696,11 @@ class PostgresDataAdapter implements DataAdapter {
     // List available tables/views
   }
 
-  async getDistinctValues(sourceId: string, field: string, options?: { search?: string; limit?: number; filters?: unknown }) {
+  async getDistinctValues(
+    sourceId: string,
+    field: string,
+    options?: { search?: string; limit?: number; filters?: unknown },
+  ) {
     // SELECT DISTINCT for filter dropdowns
     return { values: [], totalCount: 0, truncated: false };
   }
@@ -1671,7 +1722,7 @@ phz-grid defines the `AlertChannelAdapter` interface but ships **zero**
 implementations. Consumers build their own notification channels:
 
 ```typescript
-import type { AlertChannelAdapter, BreachRecord, AlertSubscription } from '@phozart/phz-workspace';
+import type { AlertChannelAdapter, BreachRecord, AlertSubscription } from '@phozart/workspace';
 
 const slackChannel: AlertChannelAdapter = {
   async send(breach: BreachRecord, subscription: AlertSubscription): Promise<void> {
@@ -1686,7 +1737,9 @@ const slackChannel: AlertChannelAdapter = {
     // Verify webhook URL is reachable
     return true;
   },
-  configSchema: { /* optional schema for auto-form generation */ },
+  configSchema: {
+    /* optional schema for auto-form generation */
+  },
 };
 ```
 
@@ -1695,8 +1748,8 @@ const slackChannel: AlertChannelAdapter = {
 Create reusable dashboard layouts with data binding placeholders:
 
 ```typescript
-import type { TemplateDefinition, LayoutNode } from '@phozart/phz-workspace';
-import { templateId } from '@phozart/phz-workspace';
+import type { TemplateDefinition, LayoutNode } from '@phozart/workspace';
+import { templateId } from '@phozart/workspace';
 
 const customTemplate: TemplateDefinition = {
   id: templateId('my-sales-overview'),
@@ -1708,25 +1761,49 @@ const customTemplate: TemplateDefinition = {
   layout: {
     kind: 'sections',
     sections: [
-      { title: 'Key Metrics', children: [
-        { kind: 'auto-grid', minItemWidth: 200, gap: 16, children: [
-          { kind: 'widget', widgetId: 'kpi-revenue' },
-          { kind: 'widget', widgetId: 'kpi-orders' },
-        ]},
-      ]},
-      { title: 'Trend', children: [
-        { kind: 'widget', widgetId: 'revenue-trend' },
-      ]},
+      {
+        title: 'Key Metrics',
+        children: [
+          {
+            kind: 'auto-grid',
+            minItemWidth: 200,
+            gap: 16,
+            children: [
+              { kind: 'widget', widgetId: 'kpi-revenue' },
+              { kind: 'widget', widgetId: 'kpi-orders' },
+            ],
+          },
+        ],
+      },
+      { title: 'Trend', children: [{ kind: 'widget', widgetId: 'revenue-trend' }] },
     ],
   },
   widgetSlots: [
-    { slotId: 'kpi-revenue', widgetType: 'kpi-card', defaultConfig: { title: 'Revenue' }, fieldBindings: {} },
-    { slotId: 'kpi-orders', widgetType: 'kpi-card', defaultConfig: { title: 'Orders' }, fieldBindings: {} },
+    {
+      slotId: 'kpi-revenue',
+      widgetType: 'kpi-card',
+      defaultConfig: { title: 'Revenue' },
+      fieldBindings: {},
+    },
+    {
+      slotId: 'kpi-orders',
+      widgetType: 'kpi-card',
+      defaultConfig: { title: 'Orders' },
+      fieldBindings: {},
+    },
     { slotId: 'revenue-trend', widgetType: 'trend-line', defaultConfig: {}, fieldBindings: {} },
   ],
   matchRules: [
-    { requiredFieldTypes: [{ type: 'number', semanticHint: 'measure', minCount: 2 }], weight: 1, rationale: 'Needs multiple measures' },
-    { requiredFieldTypes: [{ type: 'date', minCount: 1 }], weight: 0.5, rationale: 'Trend needs a date field' },
+    {
+      requiredFieldTypes: [{ type: 'number', semanticHint: 'measure', minCount: 2 }],
+      weight: 1,
+      rationale: 'Needs multiple measures',
+    },
+    {
+      requiredFieldTypes: [{ type: 'date', minCount: 1 }],
+      weight: 0.5,
+      rationale: 'Trend needs a date field',
+    },
   ],
 };
 ```
@@ -1736,7 +1813,7 @@ const customTemplate: TemplateDefinition = {
 Widgets communicate through the `InteractionBus` — a typed pub/sub system:
 
 ```typescript
-import { createInteractionBus } from '@phozart/phz-workspace';
+import { createInteractionBus } from '@phozart/workspace';
 
 const bus = createInteractionBus();
 
@@ -1777,46 +1854,46 @@ Event types: `drill-through`, `cross-filter`, `clear-cross-filter`,
 All events are dispatched as `CustomEvent` with `bubbles: true, composed: true`. The full
 type map is defined in `packages/grid/src/events.ts` (`PhzGridEventMap`).
 
-| Event Name | Payload | Description |
-|------------|---------|-------------|
-| `grid-ready` | `{ gridInstance: GridApi }` | Grid has initialized and is ready for interaction |
-| `state-change` | `StateChangeEvent` | Any state mutation (sort, filter, selection, etc.) |
-| `cell-click` | `CellClickEvent` | Single click on a cell |
-| `cell-dblclick` | `CellDoubleClickEvent` | Double click on a cell |
-| `row-click` | `{ rowId, rowIndex, data, originalEvent }` | Click on a row |
-| `selection-change` | `SelectionChangeEvent` | Row or cell selection changed |
-| `sort-change` | `SortChangeEvent` | Sort order changed |
-| `filter-change` | `FilterChangeEvent` | Filter criteria changed |
-| `edit-start` | `CellEditStartEvent` | Cell editing began |
-| `edit-commit` | `CellEditCommitEvent` | Cell edit committed |
-| `edit-cancel` | `CellEditCancelEvent` | Cell edit cancelled |
-| `scroll` | `ScrollEvent` | Scroll position changed |
-| `resize` | `{ width, height }` | Grid container resized |
-| `copy` | `{ text, rowCount, colCount, source }` | Data copied to clipboard |
-| `drill-through` | `{ source, config, field, value }` | Drill-through action triggered |
-| `row-action` | `{ actionId, rowId, rowData, href, isBulk, rowIds }` | Custom row action invoked |
-| `generate-dashboard` | `{ dataMode, reportId, currentFilters, currentSort, visibleColumns }` | Dashboard generation requested |
-| `virtual-scroll` | `{ startIndex, endIndex, totalCount }` | Virtual scroll viewport changed |
-| `remote-data-load` | `{ offset, count, totalCount }` | Remote data page loaded |
-| `remote-data-error` | `{ error, offset }` | Remote data fetch failed |
-| `bulk-delete` | `{ rowIds }` | Bulk row deletion requested |
-| `admin-settings` | `{}` | Admin settings panel opened |
+| Event Name           | Payload                                                               | Description                                        |
+| -------------------- | --------------------------------------------------------------------- | -------------------------------------------------- |
+| `grid-ready`         | `{ gridInstance: GridApi }`                                           | Grid has initialized and is ready for interaction  |
+| `state-change`       | `StateChangeEvent`                                                    | Any state mutation (sort, filter, selection, etc.) |
+| `cell-click`         | `CellClickEvent`                                                      | Single click on a cell                             |
+| `cell-dblclick`      | `CellDoubleClickEvent`                                                | Double click on a cell                             |
+| `row-click`          | `{ rowId, rowIndex, data, originalEvent }`                            | Click on a row                                     |
+| `selection-change`   | `SelectionChangeEvent`                                                | Row or cell selection changed                      |
+| `sort-change`        | `SortChangeEvent`                                                     | Sort order changed                                 |
+| `filter-change`      | `FilterChangeEvent`                                                   | Filter criteria changed                            |
+| `edit-start`         | `CellEditStartEvent`                                                  | Cell editing began                                 |
+| `edit-commit`        | `CellEditCommitEvent`                                                 | Cell edit committed                                |
+| `edit-cancel`        | `CellEditCancelEvent`                                                 | Cell edit cancelled                                |
+| `scroll`             | `ScrollEvent`                                                         | Scroll position changed                            |
+| `resize`             | `{ width, height }`                                                   | Grid container resized                             |
+| `copy`               | `{ text, rowCount, colCount, source }`                                | Data copied to clipboard                           |
+| `drill-through`      | `{ source, config, field, value }`                                    | Drill-through action triggered                     |
+| `row-action`         | `{ actionId, rowId, rowData, href, isBulk, rowIds }`                  | Custom row action invoked                          |
+| `generate-dashboard` | `{ dataMode, reportId, currentFilters, currentSort, visibleColumns }` | Dashboard generation requested                     |
+| `virtual-scroll`     | `{ startIndex, endIndex, totalCount }`                                | Virtual scroll viewport changed                    |
+| `remote-data-load`   | `{ offset, count, totalCount }`                                       | Remote data page loaded                            |
+| `remote-data-error`  | `{ error, offset }`                                                   | Remote data fetch failed                           |
+| `bulk-delete`        | `{ rowIds }`                                                          | Bulk row deletion requested                        |
+| `admin-settings`     | `{}`                                                                  | Admin settings panel opened                        |
 
 ### Workspace Events (`<phz-workspace>` and child components)
 
-| Event Name | Payload | Emitted By | Description |
-|------------|---------|------------|-------------|
-| `panel-change` | `{ panelId: string }` | `<phz-workspace>`, `<phz-workspace-shell>` | Active panel changed via sidebar navigation |
-| `artifact-select` | `{ artifact }` | `<phz-catalog-browser>` | User selected an artifact from the catalog |
-| `grid-definition-create` | `{ name, description, dataProductId, columns, config }` | `<phz-grid-creator>` | Grid definition wizard completed |
-| `save-report` | `{ report }` | `<phz-report-editor>` | Report saved |
-| `publish-report` | `{ report }` | `<phz-report-editor>` | Report published |
-| `save-dashboard` | `{ dashboard }` | `<phz-dashboard-editor>` | Dashboard saved |
-| `publish-dashboard` | `{ dashboard }` | `<phz-dashboard-editor>` | Dashboard published |
-| `config-changed` | `{ config }` | `<phz-config-panel>` | Widget configuration changed in config panel |
-| `menu-action` | `{ actionId }` | `<phz-context-menu>` | Context menu action selected |
-| `filter-change` | `{ filters }` | `<phz-global-filter-bar>` | Global filter values changed |
+| Event Name               | Payload                                                 | Emitted By                                 | Description                                  |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------ | -------------------------------------------- |
+| `panel-change`           | `{ panelId: string }`                                   | `<phz-workspace>`, `<phz-workspace-shell>` | Active panel changed via sidebar navigation  |
+| `artifact-select`        | `{ artifact }`                                          | `<phz-catalog-browser>`                    | User selected an artifact from the catalog   |
+| `grid-definition-create` | `{ name, description, dataProductId, columns, config }` | `<phz-creation-wizard>`                    | Grid definition wizard completed             |
+| `save-report`            | `{ report }`                                            | `<phz-report-editor>`                      | Report saved                                 |
+| `publish-report`         | `{ report }`                                            | `<phz-report-editor>`                      | Report published                             |
+| `save-dashboard`         | `{ dashboard }`                                         | `<phz-dashboard-editor>`                   | Dashboard saved                              |
+| `publish-dashboard`      | `{ dashboard }`                                         | `<phz-dashboard-editor>`                   | Dashboard published                          |
+| `config-changed`         | `{ config }`                                            | `<phz-config-panel>`                       | Widget configuration changed in config panel |
+| `menu-action`            | `{ actionId }`                                          | `<phz-context-menu>`                       | Context menu action selected                 |
+| `filter-change`          | `{ filters }`                                           | `<phz-global-filter-bar>`                  | Global filter values changed                 |
 
 ---
 
-*Generated 2026-03-08 | phz-grid v0.1.0 | 5,023 tests passing | 19 packages*
+_Updated 2026-03-14 | phz-grid v0.2.0 | 9,605+ tests passing | 19 active packages_

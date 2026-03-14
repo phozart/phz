@@ -17,7 +17,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import type { DataAdapter, FieldMetadata } from '@phozart/phz-shared';
+import type { DataAdapter, FieldMetadata } from '@phozart/shared';
 import {
   createDataSourceState,
   selectSource,

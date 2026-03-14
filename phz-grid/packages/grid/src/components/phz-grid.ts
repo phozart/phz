@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-grid> Custom Element
+ * @phozart/grid — <phz-grid> Custom Element
  *
  * God Object refactored into Lit Reactive Controllers.
  * Rendering and public API live here; behaviour delegates to controllers.
@@ -18,7 +18,7 @@ import {
   type QueryBackend,
   type ProgressiveLoadConfig,
   type ProgressivePhase,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import type { AriaManager } from '../a11y/aria-manager.js';
 import { KeyboardNavigator, type KeyboardNavigatorCallbacks } from '../a11y/keyboard-navigator.js';
 import { ForcedColorsAdapter } from '../a11y/forced-colors-adapter.js';
@@ -26,12 +26,12 @@ import { dispatchGridEvent, type RowActionEventDetail, type GenerateDashboardEve
 
 import type { FilterApplyEvent } from './phz-filter-popover.js';
 import type { ColumnChooserChangeEvent, ColumnProfile, ComputedColumnDef } from './phz-column-chooser.js';
-import type { ConditionalFormattingRule, RowGroup } from '@phozart/phz-core';
-import type { DrillThroughConfig, GridRowDrillSource, GenerateDashboardConfig } from '@phozart/phz-engine';
+import type { ConditionalFormattingRule, RowGroup, ColumnFormatting } from '@phozart/core';
+import type { DrillThroughConfig, GridRowDrillSource, GenerateDashboardConfig } from '@phozart/core';
 
 import type { Density, FilterInfo, RowAction, ScrollMode } from '../types.js';
 import { formatCellValue } from '../formatters/cell-formatter.js';
-import type { AsyncDataSource } from '@phozart/phz-core';
+import type { AsyncDataSource } from '@phozart/core';
 import type { ComputedCellStyle } from '../features/conditional-formatting.js';
 
 // Controllers
@@ -52,12 +52,13 @@ import {
   ColumnChooserController,
   ComputedColumnsController,
   GridCoreController,
+  TooltipController,
 } from '../controllers/index.js';
-import type { ContextMenuCommands, StateSyncPayload } from '../controllers/index.js';
+import type { ContextMenuCommands, StateSyncPayload, TooltipHost, ToastIcon } from '../controllers/index.js';
 
 // Styles & templates
 import { phzGridStyles } from './phz-grid.styles.js';
-import { renderTitleBar, renderPagination, renderGroupedRows, renderColumnGroupHeader } from './phz-grid.templates.js';
+import { renderTitleBar, renderPagination, renderGroupedRows, renderColumnGroupHeader, renderSummaryRow } from './phz-grid.templates.js';
 import { splitPinnedColumns, computePinnedOffsets, getPinnedStyle } from '../utils/column-pinning.js';
 
 // Eager sub-component (always rendered when toolbar is visible)
@@ -89,7 +90,7 @@ export class PhzGrid extends LitElement {
   @property({ type: String, attribute: 'edit-mode' })
   editMode: 'none' | 'click' | 'dblclick' | 'manual' = 'dblclick';
   @property({ attribute: false })
-  ariaLabels: import('@phozart/phz-core').AriaLabels = {};
+  ariaLabels: import('@phozart/core').AriaLabels = {};
   @property({ type: Boolean })
   loading: boolean = false;
   @property({ type: String, attribute: 'grid-height' })
@@ -184,6 +185,8 @@ export class PhzGrid extends LitElement {
   defaultSortField: string = '';
   @property({ type: String, attribute: 'default-sort-direction' })
   defaultSortDirection: 'asc' | 'desc' = 'asc';
+  @property({ type: Number, attribute: 'sort-debounce-ms' })
+  sortDebounceMs = 0;
   @property({ type: Boolean, attribute: 'header-wrapping' })
   headerWrapping: boolean = false;
   @property({ type: Boolean, attribute: 'auto-size-columns' })
@@ -203,7 +206,7 @@ export class PhzGrid extends LitElement {
   @property({ attribute: false })
   numberFormats: Record<string, { decimals?: number; display?: 'number' | 'percent' | 'currency'; prefix?: string; suffix?: string }> = {};
   @property({ attribute: false })
-  columnFormatting: Record<string, any> = {};
+  columnFormatting: Record<string, ColumnFormatting> = {};
   @property({ type: String, attribute: 'user-role' })
   userRole: 'viewer' | 'user' | 'editor' | 'admin' = 'user';
   @property({ attribute: false })
@@ -257,6 +260,10 @@ export class PhzGrid extends LitElement {
   drillThroughConfig?: DrillThroughConfig;
   @property({ type: String, attribute: 'aggregation-position' })
   aggregationPosition: 'top' | 'bottom' | 'both' = 'bottom';
+  @property({ type: Boolean, attribute: 'show-summary' })
+  showSummary: boolean = false;
+  @property({ type: String, attribute: 'summary-function' })
+  summaryFunction: 'sum' | 'avg' | 'min' | 'max' | 'count' = 'sum';
   @property({ attribute: false })
   rowActions: RowAction[] = [];
   @property({ attribute: false })
@@ -271,6 +278,10 @@ export class PhzGrid extends LitElement {
   queryBackend?: QueryBackend;
   @property({ attribute: false })
   progressiveLoad?: ProgressiveLoadConfig;
+  @property({ type: Boolean, attribute: 'enable-cell-tooltips' })
+  enableCellTooltips: boolean = true;
+  @property({ type: Number, attribute: 'tooltip-delay' })
+  tooltipDelay: number = 300;
 
   // --- Internal state ---
 
@@ -335,6 +346,7 @@ export class PhzGrid extends LitElement {
   readonly columnChooser = new ColumnChooserController(this);
   readonly computedColumnsCtrl = new ComputedColumnsController(this);
   readonly gridCore = new GridCoreController(this);
+  readonly tooltipCtrl = new TooltipController(this as unknown as TooltipHost);
 
   static readonly slots = {
     header: 'Custom header bar content',
@@ -719,9 +731,28 @@ export class PhzGrid extends LitElement {
 
       ${this.toast.toast ? html`
         <div class="phz-toast phz-toast--${this.toast.toast.type}" role="alert" aria-live="assertive">
-          ${this.toast.toast.message}
+          ${this.toast.toast.icon ? html`<svg class="phz-toast__icon" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">${this._toastIconPath(this.toast.toast.icon)}</svg>` : html`<span class="phz-toast__dot"></span>`}
+          <span class="phz-toast__message">${this.toast.toast.message}</span>
+          ${this.toast.toast.dismissible ? html`<button class="phz-toast__close" aria-label="Dismiss" @click=${() => this.toast.dismiss()}>\u00D7</button>` : nothing}
         </div>` : nothing}
     `;
+  }
+
+  private _toastIconPath(icon: ToastIcon): TemplateResult {
+    switch (icon) {
+      case 'copy':
+        return html`<path d="M5 2H11C11.55 2 12 2.45 12 3V11C12 11.55 11.55 12 11 12H5C4.45 12 4 11.55 4 11V3C4 2.45 4.45 2 5 2Z" stroke="currentColor" stroke-width="1.5"/><path d="M8 5H14C14.55 5 15 5.45 15 6V14C15 14.55 14.55 15 14 15H8C7.45 15 7 14.55 7 14V6C7 5.45 7.45 5 8 5Z" stroke="currentColor" stroke-width="1.5" fill="var(--phz-toast-icon-fill, none)"/>`;
+      case 'export':
+        return html`<path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12V13C3 13.55 3.45 14 4 14H12C12.55 14 13 13.55 13 13V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`;
+      case 'check':
+        return html`<path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      case 'error':
+        return html`<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r="0.75" fill="currentColor"/>`;
+      case 'info':
+        return html`<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 7V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="4.5" r="0.75" fill="currentColor"/>`;
+      default:
+        return html``;
+    }
   }
 
   private _renderTitleBar(): TemplateResult {
@@ -802,7 +833,8 @@ export class PhzGrid extends LitElement {
 
   private _renderHeader(): TemplateResult {
     const visibleCols = this.columnDefs.filter(c => !c.hidden);
-    const pinned = splitPinnedColumns(this.columnDefs);
+    const pinOverrides = this.gridApi?.getState()?.columns?.pinOverrides;
+    const pinned = splitPinnedColumns(this.columnDefs, pinOverrides);
     const leftOffsets = computePinnedOffsets(pinned.left, 'left');
     const rightOffsets = computePinnedOffsets(pinned.right, 'right');
     return html`
@@ -874,7 +906,8 @@ export class PhzGrid extends LitElement {
     const isSelected = this.selectedRowIds.has(row.__id);
     const isFocused = this.focusedRowId === row.__id;
     const visibleCols = this.columnDefs.filter(c => !c.hidden);
-    const pinned = splitPinnedColumns(this.columnDefs);
+    const pinOverrides = this.gridApi?.getState()?.columns?.pinOverrides;
+    const pinned = splitPinnedColumns(this.columnDefs, pinOverrides);
     const leftOffsets = computePinnedOffsets(pinned.left, 'left');
     const rightOffsets = computePinnedOffsets(pinned.right, 'right');
     return html`

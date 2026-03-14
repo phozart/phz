@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — CatalogBrowser Component
+ * @phozart/workspace — CatalogBrowser Component
  *
  * Lists artifacts grouped by type (reports, dashboards, KPIs, grids).
  * Supports search filtering and emits 'artifact-select' on item click.

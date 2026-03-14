@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Container Box Widget
+ * @phozart/widgets — Container Box Widget
  *
  * A visual container that groups child widgets with a configurable
  * appearance (background, border, shadow, padding) and optional
@@ -14,7 +14,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { createDefaultContainerBoxConfig } from '@phozart/phz-shared/types';
+import { createDefaultContainerBoxConfig } from '@phozart/shared/types';
 import { createContainerBoxState, toggleContainerCollapse, } from '../container-box-state.js';
 let PhzContainerBox = class PhzContainerBox extends LitElement {
     constructor() {

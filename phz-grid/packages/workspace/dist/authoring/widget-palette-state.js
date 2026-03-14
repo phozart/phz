@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Widget Palette State
+ * @phozart/workspace — Widget Palette State
  *
  * Pure state machine for the tabbed Fields/Widgets panel in the dashboard editor.
  * Manages tab selection, search filtering, and category expansion.

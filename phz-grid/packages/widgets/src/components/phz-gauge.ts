@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Gauge / Speedometer
+ * @phozart/widgets — Gauge / Speedometer
  *
  * SVG gauge widget for KPI display with color zones and animated needle.
  */

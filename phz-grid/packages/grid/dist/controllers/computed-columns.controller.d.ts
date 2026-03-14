@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 export interface ComputedColumnDef {
     field: string;
     header: string;

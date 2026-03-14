@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — KPI Generator Tests
+ * @phozart/ai — KPI Generator Tests
  *
  * Tests for generating KPI configs from NL descriptions + schema.
  */

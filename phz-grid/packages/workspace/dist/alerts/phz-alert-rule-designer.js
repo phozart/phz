@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Alert Rule Designer (N.2)
+ * @phozart/workspace — Alert Rule Designer (N.2)
  *
  * Pure logic functions for building and validating AlertRules.
  * The Lit component wraps these for visual authoring.

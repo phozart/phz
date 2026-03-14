@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB Bridge
+ * @phozart/duckdb — DuckDB Bridge
  *
  * Connects DuckDB to grid state changes. On sort/filter/grouping change,
  * builds SQL via sql-builder, executes via DuckDB, and pushes results to the grid.

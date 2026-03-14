@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — AI Toolkit
+ * @phozart/ai — AI Toolkit
  *
  * Schema-as-contract AI integration for phz-grid.
  * Provides schema inference, natural language queries,

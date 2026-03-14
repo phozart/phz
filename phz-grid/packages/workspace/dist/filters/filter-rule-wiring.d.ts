@@ -10,7 +10,7 @@
  *
  * Tasks: 2.3 (WB-008), 2.4 (WB-009)
  */
-import type { FilterValue, FilterContextManager } from '@phozart/phz-shared';
+import type { FilterValue, FilterContextManager } from '@phozart/shared';
 import type { ViewerContext } from '../types.js';
 import { type FilterRule, type FilterRuleResult, type FilterRuleAction } from './filter-rule-engine.js';
 /**

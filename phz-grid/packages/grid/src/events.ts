@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — DOM Custom Event Map
+ * @phozart/grid — DOM Custom Event Map
  *
  * These are the CustomEvent types dispatched by the <phz-grid> element.
  * They bridge the internal EventEmitter (colon-separated names) to
@@ -17,8 +17,8 @@ import type {
   CellEditCommitEvent,
   CellEditCancelEvent,
   ScrollEvent,
-} from '@phozart/phz-core';
-import type { DrillThroughConfig, GridRowDrillSource } from '@phozart/phz-engine';
+} from '@phozart/core';
+import type { DrillThroughConfig, GridRowDrillSource } from '@phozart/core';
 
 export interface RowClickEventDetail {
   rowId: string | number;

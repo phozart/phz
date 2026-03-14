@@ -1,6 +1,6 @@
 import { type RefObject } from 'react';
-import type { GridApi, SelectionContext } from '@phozart/phz-core';
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { GridApi, SelectionContext } from '@phozart/core';
+import type { ReportPresentation } from '@phozart/engine';
 import type { PhzGridProps } from '../phz-grid.js';
 export interface OrchestratorConfig {
     initialFilters?: SelectionContext;

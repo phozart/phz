@@ -18,30 +18,30 @@
 import type {
   FieldMetadata,
   DataSourceMeta,
-} from '@phozart/phz-shared';
-import { groupFieldsByRole } from '@phozart/phz-shared';
+} from '@phozart/shared';
+import { groupFieldsByRole } from '@phozart/shared';
 import type {
   DropZoneState,
   DimensionEntry,
   ValueEntry,
   FilterEntry,
   ZoneName,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import type {
   ExploreQuery,
   ExploreFieldSlot,
   ExploreValueSlot,
   ExploreFilterSlot,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import {
   createDropZoneState,
   addFieldToZone,
   removeFieldFromZone,
   getDefaultAggregation,
-} from '@phozart/phz-engine';
-import { autoPlaceField } from '@phozart/phz-engine';
-import { suggestChartType } from '@phozart/phz-engine';
-import { toExploreQuery } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import { autoPlaceField } from '@phozart/engine';
+import { suggestChartType } from '@phozart/engine';
+import { toExploreQuery } from '@phozart/engine';
 
 // ========================================================================
 // Types

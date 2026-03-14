@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — FilterValueHandling (A-1.10)
+ * @phozart/shared — FilterValueHandling (A-1.10)
  *
  * Defines how filter values are sourced, transformed, defaulted,
  * and handled across the lifecycle of a filter interaction.

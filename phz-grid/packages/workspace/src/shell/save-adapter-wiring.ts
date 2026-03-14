@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Save Adapter Wiring (L.4)
+ * @phozart/workspace — Save Adapter Wiring (L.4)
  *
  * Routes artifact saves to the correct WorkspaceAdapter method based on type.
  */

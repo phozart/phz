@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Drill Config State
+ * @phozart/workspace — Report Drill Config State
  *
  * Pure functions for managing drill-through action configuration
  * on report columns. Supports CRUD operations on drill actions

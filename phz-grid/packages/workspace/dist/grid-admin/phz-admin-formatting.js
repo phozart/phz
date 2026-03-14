@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Conditional Formatting Rule Builder
+ * @phozart/grid-admin — Conditional Formatting Rule Builder
  *
  * Rule list with inline condition builder, style editor, and live preview.
  * Embeddable component.

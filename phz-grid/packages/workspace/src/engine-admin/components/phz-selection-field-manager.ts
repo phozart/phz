@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Selection Field Manager
+ * @phozart/engine-admin — Selection Field Manager
  *
  * CRUD for selection field definitions. Embeddable component.
  */
@@ -8,7 +8,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { SelectionFieldDef, SelectionFieldType } from '@phozart/phz-core';
+import type { SelectionFieldDef, SelectionFieldType } from '@phozart/core';
 
 @safeCustomElement('phz-selection-field-manager')
 export class PhzSelectionFieldManager extends LitElement {

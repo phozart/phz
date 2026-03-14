@@ -9,4 +9,6 @@ export type { SuggestionResult } from './phz-suggestion-flow.js';
 export { resolveBindings, autoBindFields } from './template-bindings.js';
 export type { TemplateBinding } from './template-bindings.js';
 export { validateTemplate } from './template-validator.js';
+export { createTemplateGalleryState, setSearchQuery, selectCategory, selectTemplate, toggleFavorite, getFilteredTemplates, getGroupedTemplates, } from './template-gallery-state.js';
+export type { TemplateGalleryState } from './template-gallery-state.js';
 //# sourceMappingURL=index.d.ts.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Extended RenderContext (N.4)
+ * @phozart/workspace — Extended RenderContext (N.4)
  *
  * Extends the base RenderContext with breach information,
  * maintaining backward compatibility (breaches defaults to []).

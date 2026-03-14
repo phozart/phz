@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — DefaultPresentation (A-1.04)
+ * @phozart/shared — DefaultPresentation (A-1.04)
  *
  * Admin-defined presentation defaults for artifacts (density, theme,
  * column order, frozen columns, etc.). Users can create personal views

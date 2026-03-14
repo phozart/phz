@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-react",
+  "name": "@phozart/react",
   "version": "0.1.0",
   "description": "React wrapper / adapter for phz-grid",
   "type": "module",
@@ -57,21 +57,21 @@
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/react#readme",
   "dependencies": {
     "@lit/react": "^1.0.8",
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
-    "@phozart/phz-grid": "^0.1.0"
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
+    "@phozart/grid": "^0.1.0"
   },
   "peerDependencies": {
-    "@phozart/phz-workspace": ">=0.1.0",
-    "@phozart/phz-criteria": ">=0.1.0",
+    "@phozart/workspace": ">=0.1.0",
+    "@phozart/criteria": ">=0.1.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "peerDependenciesMeta": {
-    "@phozart/phz-workspace": {
+    "@phozart/workspace": {
       "optional": true
     },
-    "@phozart/phz-criteria": {
+    "@phozart/criteria": {
       "optional": true
     }
   }

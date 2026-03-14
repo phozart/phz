@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Data Blending
+ * @phozart/duckdb — Data Blending
  *
  * JOIN query builder for multi-table data blending.
  * Supports inner, left, right, full joins with multiple conditions.

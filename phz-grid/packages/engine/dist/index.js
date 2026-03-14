@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Headless BI Engine
+ * @phozart/engine — Headless BI Engine
  *
  * Pure computation: KPIs, metrics, dashboards, reports, aggregation, pivot, drill-through.
  * No DOM dependencies.
@@ -16,6 +16,8 @@ export { computeStatus, computeDelta, classifyKPIScore, STATUS_COLORS, STATUS_IC
 export { createMetricCatalog } from './metric.js';
 // Aggregation Engine
 export { computeAggregation, computeAggregations, computeGroupAggregations } from './aggregation.js';
+// Incremental Aggregation
+export { createIncrementalAggregator } from './incremental-aggregation.js';
 // Report Configuration
 export { createReportConfigStore } from './report.js';
 export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from './report-presentation.js';
@@ -28,9 +30,13 @@ export { createDashboardConfigStore, upgradeDashboardConfig } from './dashboard.
 // Config Merge / Layering
 export { deepMerge, mergeReportConfigs, mergeDashboardConfigs, createConfigLayerManager } from './config-merge.js';
 // Pivot Engine
-export { computePivot, pivotResultToFlatRows } from './pivot.js';
+export { computePivot, pivotResultToFlatRows, applyShowValuesAs } from './pivot.js';
+// Date Grouping
+export { groupDate, addDateBuckets, dateGroupingSQL } from './date-grouping.js';
 // Chart Data Projection
 export { projectChartData, projectAggregatedChartData, projectPieData } from './chart-projection.js';
+// Grid Visualization Bridge
+export { suggestChartFromData, gridDataToChart, pivotToChart, createQuickDashboard } from './grid-visualization.js';
 // Drill-Through Resolution
 export { resolveDrillFilter, resolveDrillAction } from './drill-through.js';
 // Hierarchy Definitions (within-visualization drill-down)
@@ -85,6 +91,10 @@ export { ExpressionCache } from './expression-cache.js';
 export { validateExpression } from './expression-validator.js';
 // Formula Parser
 export { parseFormula, formatFormula } from './formula-parser.js';
+// Expression SQL Transpiler
+export { expressionToSQL, FUNCTION_SQL_MAP } from './expression-sql-transpiler.js';
+// Error Classes
+export { PhzConfigError, PhzExpressionError } from './errors.js';
 // Dashboard Data Model Store
 export { createDashboardDataModelStore } from './dashboard-data-model.js';
 // Status (add new exports)
@@ -95,6 +105,8 @@ export { MemoryStorageAdapter, LocalStorageAdapter } from './storage-adapter.js'
 export { createFilterAdapter, applyArtefactCriteria, globalFiltersToCriteriaBindings } from './filter-adapter.js';
 // Compute Backend Strategy
 export { createJSComputeBackend, JSComputeBackend } from './compute-backend.js';
+// Web Worker Compute
+export { WorkerComputeBackend } from './workers/worker-compute-backend.js';
 // Engine Metrics (Performance Monitor)
 export { EngineMetrics } from './engine-metrics.js';
 // Metrics Controller (Lit reactive controller for admin UI)
@@ -127,4 +139,11 @@ export * from './api/index.js';
 export { computeLinearRegression, computeMovingAverage, computeExponentialRegression, resolveTargetForCategory, alertRuleToThresholdBands, } from './chart-overlays.js';
 // Attention System (C-2.12)
 export * from './attention/index.js';
+// Unified Chart Specification
+export { applyChartDefaults, validateChartSpec, CHART_SPEC_DEFAULTS } from './chart-spec.js';
+// Chart Data Transform Pipeline
+export { applyTransforms } from './chart-transforms.js';
+export { applyFilter, applySort, applyAggregate, applyStack, applyTimeUnit, applyBin, applyNormalize, applyCalculate, } from './chart-transforms.js';
+// AI Chart Recommendation
+export { recommendChartSpec } from './chart-recommend.js';
 //# sourceMappingURL=index.js.map

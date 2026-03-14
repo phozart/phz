@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Selection Field Manager
+ * @phozart/engine-admin — Selection Field Manager
  *
  * CRUD for selection field definitions. Embeddable component.
  */

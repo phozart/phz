@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — createGrid Factory
+ * @phozart/core — createGrid Factory
  *
  * Main entry point. Creates a headless grid instance with full API.
  */
@@ -25,5 +25,34 @@ export interface PreparedGrid<TData = any> {
 }
 export declare function prepareGrid<TData = any>(config: GridConfig<TData>): PreparedGrid<TData>;
 export declare function activateGrid<TData = any>(prepared: PreparedGrid<TData>): GridApi<TData>;
+/**
+ * Create a headless grid instance with the full {@link GridApi}.
+ *
+ * This is the primary entry point for `@phozart/core`. It parses the
+ * supplied data, builds the initial row model, and returns a stateful API
+ * object that can be used directly or wired to a rendering layer (e.g. the
+ * `<phz-grid>` Web Component or a React/Vue/Angular wrapper).
+ *
+ * @param config - Grid configuration: data, columns, features, plugins, etc.
+ * @returns A fully initialized {@link GridApi} instance.
+ *
+ * @example
+ * ```ts
+ * import { createGrid } from '@phozart/core';
+ *
+ * const grid = createGrid({
+ *   data: salesRows,
+ *   columns: [
+ *     { field: 'product', header: 'Product', type: 'string' },
+ *     { field: 'revenue', header: 'Revenue', type: 'number' },
+ *   ],
+ *   enableSorting: true,
+ *   enableFiltering: true,
+ * });
+ *
+ * grid.sort('revenue', 'desc');
+ * console.log(grid.getData().length);
+ * ```
+ */
 export declare function createGrid<TData = any>(config: GridConfig<TData>): GridApi<TData>;
 //# sourceMappingURL=create-grid.d.ts.map

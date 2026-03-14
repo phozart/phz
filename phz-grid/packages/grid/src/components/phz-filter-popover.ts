@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-filter-popover>
+ * @phozart/grid — <phz-filter-popover>
  *
  * Excel-like filter popover with:
  *  - Value checklist with counts
@@ -12,7 +12,7 @@
  */
 import { LitElement, html, css, nothing, type TemplateResult, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 export interface FilterValueEntry {
   value: unknown;

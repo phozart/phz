@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Security Tests (Sprint 1.1 + 1.2)
+ * @phozart/duckdb — Security Tests (Sprint 1.1 + 1.2)
  *
  * TDD RED: Tests for SQL statement allowlist, load option injection,
  * and positional parameter binding.

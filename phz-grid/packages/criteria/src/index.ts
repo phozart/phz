@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Selection Criteria Components
+ * @phozart/criteria — Selection Criteria Components
  *
  * Page-level selection criteria panel with date ranges, tree selects,
  * numeric ranges, searchable dropdowns, presets, and admin configuration.

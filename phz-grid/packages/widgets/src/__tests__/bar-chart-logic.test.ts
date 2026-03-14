@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Bar Chart Pure Logic Tests
+ * @phozart/widgets — Bar Chart Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

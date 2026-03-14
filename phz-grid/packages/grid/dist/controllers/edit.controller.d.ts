@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition, RowData, RowId } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, RowId } from '@phozart/core';
 import type { ToastController } from './toast.controller.js';
 export interface EditingCell {
     rowId: RowId;

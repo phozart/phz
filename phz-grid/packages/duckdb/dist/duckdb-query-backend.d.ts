@@ -4,7 +4,7 @@
  * Delegates SQL generation and execution to a provided executeSQL function.
  * Consumers must provide a pre-initialized query executor with data loaded.
  */
-import type { QueryBackend } from '@phozart/phz-core';
+import type { QueryBackend } from '@phozart/core';
 export interface DuckDBQueryBackendOptions {
     tableName: string;
     /**

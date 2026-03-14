@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — Built-in Cell Editors
+ * @phozart/grid — Built-in Cell Editors
  */
 import { html, css, type TemplateResult } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 import { PhzCellEditor } from './base-editor.js';
 
 const editorStyles = css`

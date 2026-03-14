@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Decision Tree State
+ * @phozart/widgets — Decision Tree State
  *
  * Headless state machine for decision tree visualization.
  * Pure functions that manage tree expansion, evaluation, and traversal.
  */
-import type { DecisionTreeNode, NodeStatus } from '@phozart/phz-shared/types';
+import type { DecisionTreeNode, NodeStatus } from '@phozart/shared/types';
 /** Immutable state representation for a decision tree widget. */
 export interface DecisionTreeState {
     nodes: DecisionTreeNode[];

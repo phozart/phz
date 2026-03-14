@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-duckdb — DuckDB Bridge
+ * @phozart/duckdb — DuckDB Bridge
  *
  * Connects DuckDB to grid state changes. On sort/filter/grouping change,
  * builds SQL via sql-builder, executes via DuckDB, and pushes results to the grid.
  */
 
-import type { GridApi, Unsubscribe } from '@phozart/phz-core';
+import type { GridApi, Unsubscribe } from '@phozart/core';
 import type { DuckDBDataSource } from './types.js';
 import { buildGridQuery, buildCountQuery, type FilterInput, type SortInput } from './sql-builder.js';
 

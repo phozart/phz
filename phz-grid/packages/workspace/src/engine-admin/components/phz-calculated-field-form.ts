@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Calculated Field Form
+ * @phozart/engine-admin — Calculated Field Form
  *
  * Slide-over form for creating/editing calculated fields with expression builder.
  */
@@ -11,8 +11,8 @@ import { engineAdminStyles } from '../shared-styles.js';
 import type {
   CalculatedFieldDef, CalculatedFieldOutputType,
   DataModelField, ParameterDef, ExpressionNode,
-} from '@phozart/phz-engine';
-import { calculatedFieldId, evaluateRowExpression } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import { calculatedFieldId, evaluateRowExpression } from '@phozart/engine';
 
 import './phz-expression-builder.js';
 

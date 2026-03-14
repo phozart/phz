@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-shared",
+  "name": "@phozart/shared",
   "version": "0.1.0",
   "description": "Shared infrastructure — adapter interfaces, design system, artifact types, runtime coordination",
   "type": "module",

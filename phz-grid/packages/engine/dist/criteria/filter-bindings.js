@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Bindings
+ * @phozart/engine — Filter Bindings
  *
  * Associates filter definitions to artefacts (reports/dashboards)
  * with per-binding overrides. Includes migration from legacy CriteriaConfig.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Faceted Attention View State (7A-D)
+ * @phozart/shared — Faceted Attention View State (7A-D)
  *
  * Headless state machine for the faceted attention sidebar.
  * Manages filter selections, acknowledgment, sort order, and pagination.

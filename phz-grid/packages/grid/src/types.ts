@@ -1,8 +1,8 @@
 /**
- * Shared types for @phozart/phz-grid components.
+ * Shared types for @phozart/grid components.
  * Extracted to avoid circular imports between phz-grid and phz-toolbar.
  */
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 export type Density = 'comfortable' | 'compact' | 'dense';
 

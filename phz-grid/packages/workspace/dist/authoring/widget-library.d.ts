@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Widget Library
+ * @phozart/workspace — Widget Library
  *
  * Curated list of addable widgets with metadata for the "Add Widget" UI.
  * Static data — no side effects.

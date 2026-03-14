@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-react — Hook Compatibility Tests (WP-2.3)
+ * @phozart/react — Hook Compatibility Tests (WP-2.3)
  *
  * Verifies that all 9 hooks and the settingsToGridProps utility are
  * compatible with the @lit/react wrapper rewrite. Specifically:
  * 1. Each hook exports a function
  * 2. settingsToGridProps exports a function
- * 3. Hooks only depend on public APIs (GridApi from @phozart/phz-core,
+ * 3. Hooks only depend on public APIs (GridApi from @phozart/core,
  *    or type-only imports from wrapper files) — never on wrapper internals
  * 4. No hook accesses private _fields on elements
  */
@@ -24,11 +24,11 @@ vi.mock('react', () => ({
   createElement: vi.fn(),
 }));
 
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
-vi.mock('@phozart/phz-grid', () => ({}));
-vi.mock('@phozart/phz-criteria', () => ({}));
-vi.mock('@phozart/phz-grid-admin', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
+vi.mock('@phozart/grid', () => ({}));
+vi.mock('@phozart/criteria', () => ({}));
+vi.mock('@phozart/grid-admin', () => ({}));
 
 // ─── Hook Imports ───────────────────────────────────────────
 import { useGridState } from '../hooks/use-grid-state.js';

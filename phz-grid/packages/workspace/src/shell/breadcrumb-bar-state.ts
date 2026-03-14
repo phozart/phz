@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Breadcrumb Bar State
+ * @phozart/workspace — Breadcrumb Bar State
  *
  * Pure functions wrapping NavigationStack from shell-utils.ts.
  * Adds maxVisible truncation and collapsed breadcrumb computation.

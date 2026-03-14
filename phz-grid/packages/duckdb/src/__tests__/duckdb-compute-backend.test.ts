@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDBComputeBackend Tests
+ * @phozart/duckdb — DuckDBComputeBackend Tests
  *
  * TDD: Red phase — tests for DuckDBComputeBackend SQL generation.
  * Since we cannot use actual DuckDB-WASM in unit tests, we verify
@@ -11,7 +11,7 @@ import {
   DuckDBComputeBackend,
   type DuckDBQueryExecutor,
 } from '../duckdb-compute-backend.js';
-import type { AggregationConfig, PivotConfig } from '@phozart/phz-core';
+import type { AggregationConfig, PivotConfig } from '@phozart/core';
 import type { FilterInput } from '../sql-builder.js';
 
 function createMockExecutor(rows: Record<string, unknown>[] = []): DuckDBQueryExecutor {
@@ -177,6 +177,85 @@ describe('DuckDBComputeBackend', () => {
       const sql = (executor.execute as ReturnType<typeof vi.fn>).mock.calls[0][0] as string;
       expect(sql).toContain('SELECT * FROM');
       expect(result).toEqual(mockRows);
+    });
+  });
+
+  describe('grandTotals', () => {
+    it('should compute actual grand totals by summing columns across rows', async () => {
+      const mockRows = [
+        { category: 'A', East: 100, West: 200 },
+        { category: 'B', East: 150, West: 250 },
+      ];
+      const executor = createMockExecutor(mockRows);
+      const backend = new DuckDBComputeBackend(executor);
+
+      const config: PivotConfig = {
+        rowFields: ['category'],
+        columnFields: ['region'],
+        valueFields: [{ field: 'revenue', aggregation: 'sum' }],
+      };
+      const result = await backend.pivot([], config);
+
+      // Grand totals should be the sum of each column: East=250, West=450
+      expect(result.grandTotals).toEqual([250, 450]);
+    });
+
+    it('should return null for columns with no numeric values', async () => {
+      const mockRows = [
+        { category: 'A', East: 'N/A', West: 'N/A' },
+      ];
+      const executor = createMockExecutor(mockRows);
+      const backend = new DuckDBComputeBackend(executor);
+
+      const config: PivotConfig = {
+        rowFields: ['category'],
+        columnFields: ['region'],
+        valueFields: [{ field: 'revenue', aggregation: 'sum' }],
+      };
+      const result = await backend.pivot([], config);
+
+      expect(result.grandTotals).toEqual([null, null]);
+    });
+
+    it('should handle mixed numeric and null values in grand totals', async () => {
+      const mockRows = [
+        { category: 'A', East: 100, West: null },
+        { category: 'B', East: null, West: 250 },
+        { category: 'C', East: 50, West: 150 },
+      ];
+      const executor = createMockExecutor(mockRows);
+      const backend = new DuckDBComputeBackend(executor);
+
+      const config: PivotConfig = {
+        rowFields: ['category'],
+        columnFields: ['region'],
+        valueFields: [{ field: 'revenue', aggregation: 'sum' }],
+      };
+      const result = await backend.pivot([], config);
+
+      // East: 100 + 50 = 150 (null skipped), West: 250 + 150 = 400 (null skipped)
+      expect(result.grandTotals).toEqual([150, 400]);
+    });
+  });
+
+  describe('pivot with date grouping options', () => {
+    it('should pass through to buildPivotQuery and execute', async () => {
+      const mockRows = [
+        { category: 'A', '2024': 300 },
+        { category: 'B', '2024': 500 },
+      ];
+      const executor = createMockExecutor(mockRows);
+      const backend = new DuckDBComputeBackend(executor);
+
+      const config: PivotConfig = {
+        rowFields: ['category'],
+        columnFields: ['order_date'],
+        valueFields: [{ field: 'revenue', aggregation: 'sum' }],
+      };
+      const result = await backend.pivot([], config);
+
+      expect(executor.execute).toHaveBeenCalledOnce();
+      expect(result.grandTotals).toEqual([800]);
     });
   });
 });

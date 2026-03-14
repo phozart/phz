@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Metric Form
+ * @phozart/engine-admin — Metric Form
  *
  * Slide-over form for creating/editing metrics.
  * Two tabs: Simple (field + aggregation) and Composite (expression builder).
  */
 import { LitElement } from 'lit';
-import type { DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/phz-engine';
-import type { MetricDef } from '@phozart/phz-engine';
+import type { DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/engine';
+import type { MetricDef } from '@phozart/engine';
 import './phz-expression-builder.js';
 export declare class PhzMetricForm extends LitElement {
     static styles: import("lit").CSSResult[];

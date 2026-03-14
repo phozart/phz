@@ -10,7 +10,7 @@ import {
   setDashboardViewLoading,
   setDashboardViewError,
 } from '../screens/dashboard-view-state.js';
-import type { DashboardWidget } from '@phozart/phz-shared/types';
+import type { DashboardWidget } from '@phozart/shared/types';
 
 const WIDGET: DashboardWidget = {
   id: 'w1',

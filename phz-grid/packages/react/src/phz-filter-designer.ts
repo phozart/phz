@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzFilterDesigner React Component
+ * @phozart/react — PhzFilterDesigner React Component
  *
  * Wraps the <phz-filter-designer> Web Component for React using @lit/react.
  * Provides admin UI for managing filter definitions, rules, and presets.
@@ -12,7 +12,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { PhzFilterDesigner as PhzFilterDesignerElement } from '@phozart/phz-workspace/criteria-admin';
+import { PhzFilterDesigner as PhzFilterDesignerElement } from '@phozart/workspace/criteria-admin';
 
 const PhzFilterDesignerLit = createComponent({
   tagName: 'phz-filter-designer',

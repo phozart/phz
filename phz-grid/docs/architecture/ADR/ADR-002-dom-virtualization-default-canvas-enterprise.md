@@ -77,7 +77,7 @@ We will implement a **hybrid three-mode system**:
 ### Rendering Mode Selection
 
 ```typescript
-import { PhzGrid } from '@phozart/phz-grid';
+import { PhzGrid } from '@phozart/grid';
 
 // Mode 1: DOM virtualization (default)
 <phz-grid .data=${data} .columns=${columns}></phz-grid>

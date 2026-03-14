@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — FilterPresetValue (A-1.08)
+ * @phozart/shared — FilterPresetValue (A-1.08)
  *
  * Saved filter presets that users can apply to dashboards/reports.
  * Each FilterPresetValue captures a single filter's state (field,

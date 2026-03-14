@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — QueryBackend abstraction
+ * @phozart/core — QueryBackend abstraction
  *
  * A unified query interface that decouples the grid's data pipeline
  * from the execution engine. Implementations can use in-memory JS,

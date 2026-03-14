@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-definitions — <phz-definition-report>
+ * @phozart/definitions — <phz-definition-report>
  *
  * Form for editing report/definition identity (name, description).
  * Emits `report-meta-change` on any field change.

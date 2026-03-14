@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DuckDBBridge } from '../duckdb-bridge.js';
 import { createDuckDBDataSource } from '../duckdb-data-source.js';
 import type { DuckDBDataSource, ArrowTable, ArrowSchema } from '../types.js';
-import { createGrid } from '@phozart/phz-core';
-import type { GridApi } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
+import type { GridApi } from '@phozart/core';
 
 // --- Mock DuckDB data source ---
 function createMockDataSource(): DuckDBDataSource {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Type Guards
+ * @phozart/core — Type Guards
  */
 export function isEditStateIdle(state) {
     return state.status === 'idle';

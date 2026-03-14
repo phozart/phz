@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Drill-Down State Machine
+ * @phozart/engine — Drill-Down State Machine
  *
  * Manages within-visualization drill navigation through hierarchy levels.
  * Complementary to drill-through.ts which handles cross-artifact navigation.

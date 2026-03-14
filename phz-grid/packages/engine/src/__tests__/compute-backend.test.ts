@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — ComputeBackend Tests
+ * @phozart/engine — ComputeBackend Tests
  *
  * TDD: Red phase — tests for ComputeBackend interface and JSComputeBackend.
  */
@@ -10,7 +10,7 @@ import {
   type ComputeBackend,
   type ComputeFilterInput,
 } from '../compute-backend.js';
-import type { AggregationConfig, PivotConfig } from '@phozart/phz-core';
+import type { AggregationConfig, PivotConfig } from '@phozart/core';
 
 describe('ComputeBackend interface', () => {
   describe('JSComputeBackend', () => {

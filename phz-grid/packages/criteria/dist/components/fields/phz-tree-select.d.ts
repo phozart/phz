@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-criteria — Tree Select
+ * @phozart/criteria — Tree Select
  *
  * Dropdown trigger with chip display + tree panel with custom checkboxes,
  * expand/collapse, search filter, Select All / Clear All.
  * Tri-state parent checkboxes (all/some/none checked).
  */
 import { LitElement } from 'lit';
-import type { TreeNode, CriteriaSelectionMode } from '@phozart/phz-core';
+import type { TreeNode, CriteriaSelectionMode } from '@phozart/core';
 export declare class PhzTreeSelect extends LitElement {
     static styles: import("lit").CSSResult[];
     nodes: TreeNode[];

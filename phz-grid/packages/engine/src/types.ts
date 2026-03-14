@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Base Types
+ * @phozart/engine — Base Types
  *
  * Branded ID types, config layers, and shared types for the BI engine.
  */
@@ -46,8 +46,8 @@ export type StatusLevel = 'ok' | 'warn' | 'crit' | 'unknown';
 // Converts package-specific branded IDs to the generic ArtefactId
 // used by the filter binding system. Prefixed to prevent collisions.
 
-import type { ArtefactId } from '@phozart/phz-core';
-import { artefactId } from '@phozart/phz-core';
+import type { ArtefactId } from '@phozart/core';
+import { artefactId } from '@phozart/core';
 
 export function reportArtefactId(id: ReportId): ArtefactId {
   return artefactId(`report:${id}`);

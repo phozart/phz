@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-grid",
+  "name": "@phozart/grid",
   "version": "0.1.0",
   "description": "Web Components grid (Lit) — rendering, virtualization, a11y",
   "type": "module",
@@ -37,9 +37,20 @@
   },
   "author": "phozart",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=20" },
-  "keywords": ["web-components", "lit", "data-grid", "a11y", "virtual-scroll", "table"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "data-grid",
+    "a11y",
+    "virtual-scroll",
+    "table"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phozart/phz-grid.git",
@@ -50,14 +61,19 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/grid#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/core": "^0.1.0",
     "lit": "^3.2.0"
   },
   "peerDependencies": {
-    "@phozart/phz-workspace": ">=0.1.0"
+    "@phozart/engine": ">=0.1.0",
+    "@phozart/workspace": ">=0.1.0"
   },
   "peerDependenciesMeta": {
-    "@phozart/phz-workspace": { "optional": true }
+    "@phozart/engine": {
+      "optional": true
+    },
+    "@phozart/workspace": {
+      "optional": true
+    }
   }
 }

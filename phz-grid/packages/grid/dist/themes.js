@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-grid — Theme Presets
+ * @phozart/grid — Theme Presets
  *
  * Named theme presets that override the grid's CSS custom properties.
  * Each preset provides semantic tokens (colors, borders, shadows)
  * while sharing the same brand tokens (typography, spacing, radii).
  *
  * Usage:
- *   import { themes, applyGridTheme } from '@phozart/phz-grid';
+ *   import { themes, applyGridTheme } from '@phozart/grid';
  *   applyGridTheme(gridElement, 'midnight');
  *
  * Or via the theme property:

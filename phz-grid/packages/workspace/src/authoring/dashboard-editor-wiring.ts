@@ -9,9 +9,9 @@
  * Tasks: 1.2, 1.5 (WB-004)
  */
 
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 import type { WidgetManifest } from '../types.js';
-import { suggestWidgetForFieldDrop, type WidgetSuggestion } from '@phozart/phz-engine';
+import { suggestWidgetForFieldDrop, type WidgetSuggestion } from '@phozart/engine';
 import {
   addWidget,
   selectWidget,

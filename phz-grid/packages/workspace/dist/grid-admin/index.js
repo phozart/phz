@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/grid-admin — Embeddable Admin Components for Grid Configuration
+ * @phozart/workspace/grid-admin — Embeddable Admin Components for Grid Configuration
  *
  * All components are Lit Web Components that can be dropped into any page.
  */
@@ -15,5 +15,5 @@ export { PhzAdminReport } from './phz-admin-report.js';
 export { PhzAdminDataSource } from './phz-admin-data-source.js';
 export { PhzAdminCriteria } from './phz-admin-criteria.js';
 export { PhzGridAdmin } from './phz-grid-admin.js';
-export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from '@phozart/phz-engine';
+export { DEFAULT_TABLE_SETTINGS, DEFAULT_REPORT_PRESENTATION } from '@phozart/engine';
 //# sourceMappingURL=index.js.map

@@ -4,8 +4,8 @@
 import {
   createDefaultFilterValueHandling,
   resolveStaticDefault,
-} from '@phozart/phz-shared/types';
-import type { FilterDefault } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { FilterDefault } from '@phozart/shared/types';
 
 // ========================================================================
 // createDefaultFilterValueHandling

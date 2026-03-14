@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — ShareTarget (A-1.06)
+ * @phozart/shared — ShareTarget (A-1.06)
  *
  * Represents the target audience when sharing an artifact.
  * ShareTarget is a discriminated union covering individual users,

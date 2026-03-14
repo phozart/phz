@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Data Product Registry
+ * @phozart/engine — Data Product Registry
  *
  * Data products are the foundational data entities in the BI engine.
  * Each data product has a schema describing its fields.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Pivot Designer
+ * @phozart/engine-admin — Pivot Designer
  *
  * Single-page configurator: data product → row/column/value fields → preview.
  * Embeddable component.
@@ -9,8 +9,8 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import type { BIEngine, PivotResult } from '@phozart/phz-engine';
-import type { PivotConfig, AggregationFunction } from '@phozart/phz-core';
+import type { BIEngine, PivotResult } from '@phozart/engine';
+import type { PivotConfig, AggregationFunction } from '@phozart/core';
 
 const AGG_OPTIONS: AggregationFunction[] = ['sum', 'avg', 'count', 'min', 'max'];
 

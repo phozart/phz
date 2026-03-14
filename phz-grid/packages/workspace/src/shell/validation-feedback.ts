@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Validation Feedback (L.14)
+ * @phozart/workspace — Validation Feedback (L.14)
  *
  * Pure functions for inline field validation, panel status,
  * cross-reference validation, and config diffing.

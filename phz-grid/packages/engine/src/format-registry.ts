@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — FormatRegistry
+ * @phozart/engine — FormatRegistry
  *
  * Instance-based registry of named formatters. Each BIEngine instance gets
  * its own FormatRegistry so custom formatters are scoped per-engine.

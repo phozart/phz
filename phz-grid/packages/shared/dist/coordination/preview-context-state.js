@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Preview Context State (C-2.11)
+ * @phozart/shared — Preview Context State (C-2.11)
  *
  * State for "preview as viewer" functionality. Allows admins/authors
  * to impersonate a viewer role and see the dashboard as that user would.

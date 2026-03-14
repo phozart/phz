@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Data Quality Metrics (DIFF-9)
+ * @phozart/core — Data Quality Metrics (DIFF-9)
  *
  * Computes aggregate data quality metrics: completeness score,
  * missing value counts, duplicate detection, and health grade.

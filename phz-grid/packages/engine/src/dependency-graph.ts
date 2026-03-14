@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Dependency Graph
+ * @phozart/engine — Dependency Graph
  *
  * Tracks dependencies between entities in the 5-layer computation DAG.
  * Provides cycle detection, topological sort, and deletion safety checks.

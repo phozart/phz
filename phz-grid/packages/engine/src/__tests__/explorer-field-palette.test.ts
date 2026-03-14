@@ -8,7 +8,7 @@ import {
   groupFieldsByType,
   searchFields,
   autoPlaceField,
-} from '@phozart/phz-workspace/explore';
+} from '@phozart/workspace/explore';
 
 // FieldMetadata type inferred from the function signatures
 interface FieldMetadata {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Source Relationship Types
+ * @phozart/shared — Source Relationship Types
  *
  * Defines join semantics between data sources in a multi-source dashboard.
  * These operate at the filter propagation level, NOT SQL join level.

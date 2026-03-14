@@ -38,46 +38,46 @@ techstack:
 # Packages (monorepo structure)
 # ----------------------------------------------------------
 packages:
-  - name: "@phozart/phz-core"
+  - name: "@phozart/core"
     path: packages/core
     description: Headless grid engine — data model, state, events
-  - name: "@phozart/phz-grid"
+  - name: "@phozart/grid"
     path: packages/grid
     description: Web Components grid (Lit) — rendering, virtualization, a11y
-  - name: "@phozart/phz-react"
+  - name: "@phozart/react"
     path: packages/react
     description: React wrapper / adapter
-  - name: "@phozart/phz-vue"
+  - name: "@phozart/vue"
     path: packages/vue
     description: Vue wrapper / adapter
-  - name: "@phozart/phz-angular"
+  - name: "@phozart/angular"
     path: packages/angular
     description: Angular wrapper / adapter
-  - name: "@phozart/phz-duckdb"
+  - name: "@phozart/duckdb"
     path: packages/duckdb
     description: DuckDB-WASM data source adapter
-  - name: "@phozart/phz-ai"
+  - name: "@phozart/ai"
     path: packages/ai
     description: AI toolkit — schema-as-contract, NL query
-  - name: "@phozart/phz-collab"
+  - name: "@phozart/collab"
     path: packages/collab
     description: Real-time collaboration — Yjs CRDTs, sync adapters
-  - name: "@phozart/phz-engine"
+  - name: "@phozart/engine"
     path: packages/engine
     description: BI engine — reports, dashboards, KPIs, filters, pivots, aggregation
-  - name: "@phozart/phz-widgets"
+  - name: "@phozart/widgets"
     path: packages/widgets
     description: Dashboard widgets — bar-chart, KPI card, trend-line, scorecard, etc.
-  - name: "@phozart/phz-criteria"
+  - name: "@phozart/criteria"
     path: packages/criteria
     description: Selection criteria & filter UI components
-  - name: "@phozart/phz-grid-admin"
+  - name: "@phozart/grid-admin"
     path: packages/grid-admin
     description: Grid admin panel — columns, formatting, export settings
-  - name: "@phozart/phz-engine-admin"
+  - name: "@phozart/engine-admin"
     path: packages/engine-admin
     description: Engine admin panel — report/dashboard/KPI designers
-  - name: "@phozart/phz-python"
+  - name: "@phozart/python"
     path: packages/python
     description: Python package (pip) — anywidget Jupyter widget + Panel/Streamlit adapters
     distribution: pypi

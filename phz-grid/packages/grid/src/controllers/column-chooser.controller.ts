@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 export interface ColumnChooserHost extends ReactiveControllerHost {
   columnDefs: ColumnDefinition[];

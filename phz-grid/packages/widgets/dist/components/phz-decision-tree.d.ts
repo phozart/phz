@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Decision Tree Widget
+ * @phozart/widgets — Decision Tree Widget
  *
  * Visualizes branching decision logic as an expandable/collapsible tree.
  * Nodes show conditions, statuses, and outcomes. Supports external
  * evaluation via a callback property.
  */
 import { LitElement } from 'lit';
-import type { DecisionTreeNode, NodeStatus } from '@phozart/phz-shared/types';
+import type { DecisionTreeNode, NodeStatus } from '@phozart/shared/types';
 export declare class PhzDecisionTree extends LitElement {
     static styles: import("lit").CSSResult[];
     /** Flat array of tree nodes. Parent/child relationships defined by parentId/children. */

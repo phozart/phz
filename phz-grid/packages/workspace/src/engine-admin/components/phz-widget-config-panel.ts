@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Widget Configuration Panel
+ * @phozart/engine-admin — Widget Configuration Panel
  *
  * 3-tab panel: Data | Appearance | Behaviour
  * Per-widget-type controls for rich configuration.
@@ -13,11 +13,11 @@ import type {
   EnhancedWidgetConfig, WidgetDataConfig, WidgetAppearanceConfig, WidgetBehaviourConfig,
   ChartBinding, KpiBinding, ScorecardBinding, StatusTableBinding, DataTableBinding, DrillLinkBinding,
   ChartAppearance, WidgetFilterRule, EnhancedFilterOperator as FilterOperator, MeasureRef,
-} from '@phozart/phz-engine';
-import type { KPIDefinition } from '@phozart/phz-engine';
-import type { MetricDef } from '@phozart/phz-engine';
-import { PALETTE_PRESETS, getPaletteColors } from '@phozart/phz-engine';
-import type { KPIId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import type { KPIDefinition } from '@phozart/engine';
+import type { MetricDef } from '@phozart/engine';
+import { PALETTE_PRESETS, getPaletteColors } from '@phozart/engine';
+import type { KPIId } from '@phozart/engine';
 
 interface FieldInfo {
   name: string;

@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Aggregation Engine
+ * @phozart/engine — Aggregation Engine
  *
  * Compute aggregations over row data: sum, avg, min, max, count, first, last.
  */
-import type { AggregationConfig, AggregationFunction } from '@phozart/phz-core';
-import type { RowGroup } from '@phozart/phz-core';
+import type { AggregationConfig, AggregationFunction } from '@phozart/core';
+import type { RowGroup } from '@phozart/core';
 export interface AggregationResult {
     fieldResults: Record<string, Record<string, unknown>>;
 }

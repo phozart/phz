@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Canvas Pointer Controller (Canvas Phase 1E)
+ * @phozart/workspace — Canvas Pointer Controller (Canvas Phase 1E)
  *
  * Lit Reactive Controller that handles pointer events on the freeform canvas.
  * Converts pixel coordinates to grid coordinates via pixelToGrid(),

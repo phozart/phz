@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Plugin Types
+ * @phozart/core — Plugin Types
  */
 
 import type { RowId, RowData } from './row.js';

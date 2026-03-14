@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB Bridge Push-down Tests
+ * @phozart/duckdb — DuckDB Bridge Push-down Tests
  *
  * Tests for wired push-down behavior: pagination LIMIT/OFFSET in bridge,
  * totalCount propagation, and initial load on attach.
@@ -8,7 +8,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DuckDBBridge } from '../duckdb-bridge.js';
 import type { DuckDBDataSource } from '../types.js';
-import type { GridApi } from '@phozart/phz-core';
+import type { GridApi } from '@phozart/core';
 
 function createMockDataSource(
   data: unknown[] = [{ id: 1 }],

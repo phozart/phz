@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Detail Source Loader (T.5)
+ * @phozart/workspace — Detail Source Loader (T.5)
  *
  * Loads detail data for drill-through, breach, and user-action triggers.
  * Maps dashboard filter context to detail source fields via filterMapping.

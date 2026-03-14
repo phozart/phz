@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid — Anomaly Detector
+ * @phozart/grid — Anomaly Detector
  *
  * Statistical anomaly detection for grid columns. Supports Z-score and IQR
  * methods. Zero external dependencies. Returns anomalies with scores and
  * reasons that can be fed into conditional formatting.
  */
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 
 export interface AnomalyResult {
   rowId: string | number;

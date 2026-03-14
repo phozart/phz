@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-react/grid — Grid-only exports (no criteria/admin dependencies)
+ * @phozart/react/grid — Grid-only exports (no criteria/admin dependencies)
  *
  * SSR-safe entry point for consumers that only use the grid.
- * import { PhzGrid, useGridState } from '@phozart/phz-react/grid';
+ * import { PhzGrid, useGridState } from '@phozart/react/grid';
  */
 
 // Grid Component

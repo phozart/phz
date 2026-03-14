@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Date Range Picker
+ * @phozart/criteria — Date Range Picker
  *
  * Two-zone date selector:
  *   Zone 1: Quick presets (grouped list) — one-click selection
@@ -15,7 +15,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { resolveBuiltinPreset, resolveComparisonPeriod, getAvailablePresets, formatDateRangeDisplay, getWeekStart, getISOWeekNumber, getSequentialWeekNumber, getFiscalQuarterBounds, DATE_PRESET_GROUP_LABELS, } from '@phozart/phz-engine';
+import { resolveBuiltinPreset, resolveComparisonPeriod, getAvailablePresets, formatDateRangeDisplay, getWeekStart, getISOWeekNumber, getSequentialWeekNumber, getFiscalQuarterBounds, DATE_PRESET_GROUP_LABELS, } from '@phozart/engine';
 import { criteriaStyles } from '../../shared-styles.js';
 const DAY_HEADERS_MON = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const DAY_HEADERS_SUN = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];

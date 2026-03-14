@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Expandable Widget State
+ * @phozart/widgets — Expandable Widget State
  *
  * Headless state machine for expandable/collapsible widget behavior.
  * Pure functions that manage expansion toggling and animation tracking.
  */
-import type { ExpandableWidgetConfig } from '@phozart/phz-shared/types';
+import type { ExpandableWidgetConfig } from '@phozart/shared/types';
 /** Immutable state for an expandable widget. */
 export interface ExpandableWidgetState {
     config: ExpandableWidgetConfig;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-local — Local Server
+ * @phozart/local — Local Server
  *
  * Lightweight local Node.js server for the phz-grid workspace.
  * Binds to localhost only, serves workspace API endpoints,

@@ -6,8 +6,8 @@ import {
   createDefaultExpandableConfig,
   createDefaultContainerBoxConfig,
   evaluateNodeStatus,
-} from '@phozart/phz-shared/types';
-import type { DecisionTreeNode } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { DecisionTreeNode } from '@phozart/shared/types';
 
 // ========================================================================
 // getViewSwitchingMode

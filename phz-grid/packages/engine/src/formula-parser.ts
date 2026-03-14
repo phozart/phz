@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Formula Parser
+ * @phozart/engine — Formula Parser
  *
  * Recursive descent parser for formula text → ExpressionNode AST.
  * Also provides a formatter: ExpressionNode → formula text.
@@ -49,6 +49,16 @@ const BUILTIN_FUNCTIONS = new Set<string>([
   'UPPER', 'LOWER', 'TRIM', 'LEN', 'SUBSTR', 'CONCAT',
   'YEAR', 'MONTH', 'DAY',
   'COALESCE', 'IF', 'CLAMP',
+  // New math
+  'SQRT', 'POWER', 'MOD', 'LOG', 'EXP',
+  // New string
+  'LEFT', 'RIGHT', 'REPLACE', 'REPEAT',
+  // New date
+  'DATE_DIFF', 'DATE_ADD', 'FORMAT_DATE',
+  // Statistical
+  'STDDEV', 'VARIANCE', 'PERCENTILE',
+  // Window
+  'RANK', 'DENSE_RANK', 'LAG', 'LEAD', 'RUNNING_SUM', 'NTILE',
 ]);
 
 function tokenize(input: string): { tokens: Token[]; errors: Array<{ message: string; pos: number }> } {

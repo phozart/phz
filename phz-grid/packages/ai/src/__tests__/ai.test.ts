@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Unit Tests
+ * @phozart/ai — Unit Tests
  *
  * Tests for type exports, factory function, provider classes,
  * and toolkit behavior.
@@ -55,7 +55,7 @@ function createMockProvider(): AIProvider {
   };
 }
 
-describe('@phozart/phz-ai', () => {
+describe('@phozart/ai', () => {
   describe('type exports', () => {
     it('exports createAIToolkit factory', () => {
       expect(createAIToolkit).toBeDefined();

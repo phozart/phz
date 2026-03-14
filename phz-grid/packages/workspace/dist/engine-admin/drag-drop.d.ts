@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine-admin — Drag-and-Drop Layout Utilities
+ * @phozart/engine-admin — Drag-and-Drop Layout Utilities
  *
  * Pure functions for widget repositioning logic.
  * No DOM dependencies — used by PhzDashboardBuilder for drag-drop operations.
  */
-import type { WidgetPlacement } from '@phozart/phz-engine';
+import type { WidgetPlacement } from '@phozart/engine';
 export interface LayoutChangeDetail {
     positions: Array<{
         widgetId: string;

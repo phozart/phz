@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Data Source Bug Fix Tests
+ * @phozart/duckdb — Data Source Bug Fix Tests
  *
  * Tests for P0 bug fixes in duckdb-data-source.ts:
  * - Task #7: .arrow/.ipc files should use Arrow format, not CSV
@@ -15,11 +15,18 @@ import type { DuckDBDataSource, ArrowTable, AsyncDuckDBConnection } from '../typ
  * Helper: create a data source with mocked internals so we can test
  * loadFile, fromArrowTable, and query without real DuckDB-WASM.
  */
+interface QueryCall {
+  sql: string;
+  params?: unknown[];
+}
+
 function createMockedDataSource() {
   const queries: string[] = [];
+  const queryCalls: QueryCall[] = [];
   const mockConnection: AsyncDuckDBConnection = {
-    query: vi.fn(async (sql: string) => {
+    query: vi.fn(async (sql: string, params?: unknown[]) => {
       queries.push(sql);
+      queryCalls.push({ sql, params });
       return {
         toArray: () => [],
         numRows: 0,
@@ -47,7 +54,7 @@ function createMockedDataSource() {
   impl.connection = mockConnection;
   impl.connected = true;
 
-  return { ds, queries, mockConnection, mockDb };
+  return { ds, queries, queryCalls, mockConnection, mockDb };
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -143,7 +150,7 @@ describe('Task #8: fromArrowTable() batch INSERT', () => {
   });
 
   it('should load all rows correctly via batch INSERT', async () => {
-    const { ds, queries } = createMockedDataSource();
+    const { ds, queryCalls } = createMockedDataSource();
     const rows = [
       { id: 1, name: 'Alice' },
       { id: 2, name: 'Bob' },
@@ -153,11 +160,16 @@ describe('Task #8: fromArrowTable() batch INSERT', () => {
 
     await ds.fromArrowTable(table, 'people');
 
-    // All values should appear in INSERT statements
-    const insertSql = queries.filter(q => q.includes('INSERT INTO')).join('\n');
-    expect(insertSql).toContain('Alice');
-    expect(insertSql).toContain('Bob');
-    expect(insertSql).toContain('Charlie');
+    // All values should appear in the params array, not SQL string
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    expect(insertCalls.length).toBeGreaterThan(0);
+    const allParams = insertCalls.flatMap(c => c.params ?? []);
+    expect(allParams).toContain(1);
+    expect(allParams).toContain('Alice');
+    expect(allParams).toContain(2);
+    expect(allParams).toContain('Bob');
+    expect(allParams).toContain(3);
+    expect(allParams).toContain('Charlie');
   });
 
   it('should handle empty Arrow table gracefully', async () => {
@@ -172,7 +184,7 @@ describe('Task #8: fromArrowTable() batch INSERT', () => {
   });
 
   it('should handle NULL values in batch INSERT', async () => {
-    const { ds, queries } = createMockedDataSource();
+    const { ds, queryCalls } = createMockedDataSource();
     const rows = [
       { id: 1, name: null },
       { id: 2, name: 'Bob' },
@@ -181,13 +193,14 @@ describe('Task #8: fromArrowTable() batch INSERT', () => {
 
     await ds.fromArrowTable(table, 'nulls_test');
 
-    const insertSql = queries.filter(q => q.includes('INSERT INTO')).join('\n');
-    expect(insertSql).toContain('NULL');
-    expect(insertSql).toContain('Bob');
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    const allParams = insertCalls.flatMap(c => c.params ?? []);
+    expect(allParams).toContain(null);
+    expect(allParams).toContain('Bob');
   });
 
-  it('should properly escape single quotes in batch INSERT', async () => {
-    const { ds, queries } = createMockedDataSource();
+  it('should pass single quotes through params without manual escaping', async () => {
+    const { ds, queryCalls } = createMockedDataSource();
     const rows = [
       { id: 1, name: "O'Brien" },
     ];
@@ -195,9 +208,84 @@ describe('Task #8: fromArrowTable() batch INSERT', () => {
 
     await ds.fromArrowTable(table, 'escape_test');
 
-    const insertSql = queries.filter(q => q.includes('INSERT INTO')).join('\n');
-    // Should contain escaped quote (double single-quote)
-    expect(insertSql).toContain("O''Brien");
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    const allParams = insertCalls.flatMap(c => c.params ?? []);
+    // With parameterized queries, values are passed as-is (no manual escaping)
+    expect(allParams).toContain("O'Brien");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────
+// Task #9a: fromArrowTable fallback — parameterized INSERT
+// ─────────────────────────────────────────────────────────────────────
+describe('Task #9a: fromArrowTable fallback uses parameterized queries', () => {
+  function makeArrowTable(rows: Array<Record<string, unknown>>): ArrowTable {
+    return {
+      toArray: () => rows,
+      numRows: rows.length,
+      schema: {
+        fields: rows.length > 0
+          ? Object.keys(rows[0]).map(name => ({ name, type: 'VARCHAR', nullable: true }))
+          : [],
+      },
+    };
+  }
+
+  it('fromArrowTable fallback uses ? placeholders not literal values', async () => {
+    const { ds, queryCalls } = createMockedDataSource();
+    const rows = [{ id: 1, name: 'Alice' }];
+    const table = makeArrowTable(rows);
+
+    await ds.fromArrowTable(table, 'param_test');
+
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    expect(insertCalls.length).toBe(1);
+    expect(insertCalls[0].sql).toContain('?');
+    expect(insertCalls[0].sql).not.toContain('Alice');
+    expect(insertCalls[0].sql).not.toContain("'1'");
+  });
+
+  it('fromArrowTable fallback passes values as params array', async () => {
+    const { ds, queryCalls } = createMockedDataSource();
+    const rows = [
+      { id: 1, name: 'Alice' },
+      { id: 2, name: 'Bob' },
+    ];
+    const table = makeArrowTable(rows);
+
+    await ds.fromArrowTable(table, 'params_array_test');
+
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    expect(insertCalls.length).toBe(1);
+    expect(insertCalls[0].params).toBeDefined();
+    expect(insertCalls[0].params).toEqual([1, 'Alice', 2, 'Bob']);
+  });
+
+  it('fromArrowTable SQL does not contain raw user values', async () => {
+    const { ds, queryCalls } = createMockedDataSource();
+    const malicious = "'; DROP TABLE users; --";
+    const rows = [{ id: 1, name: malicious }];
+    const table = makeArrowTable(rows);
+
+    await ds.fromArrowTable(table, 'injection_test');
+
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    // SQL should only contain placeholders, not the malicious string
+    expect(insertCalls[0].sql).not.toContain('DROP');
+    expect(insertCalls[0].sql).not.toContain(malicious);
+    // But the value should be in the params
+    expect(insertCalls[0].params).toContain(malicious);
+  });
+
+  it('fromArrowTable fallback converts undefined to null in params', async () => {
+    const { ds, queryCalls } = createMockedDataSource();
+    const rows = [{ id: 1, name: undefined }];
+    const table = makeArrowTable(rows);
+
+    await ds.fromArrowTable(table, 'undef_test');
+
+    const insertCalls = queryCalls.filter(q => q.sql.includes('INSERT INTO'));
+    expect(insertCalls[0].params).toEqual([1, null]);
   });
 });
 

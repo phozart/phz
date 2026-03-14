@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Exports Tab State (C-2.02)
+ * @phozart/shared — Exports Tab State (C-2.02)
  *
  * UI state for the exports history tab. Tracks recent async exports,
  * sorting, and status filtering.

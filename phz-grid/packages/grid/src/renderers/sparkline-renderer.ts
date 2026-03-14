@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Sparkline Cell Renderer
+ * @phozart/grid — Sparkline Cell Renderer
  *
  * SVG-based sparkline/mini-chart renderer for inline data visualization.
  * Supports line, bar, and area types. Zero external dependencies.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Builder
+ * @phozart/engine-admin — Dashboard Builder
  *
  * 3-panel: widget catalog (left) | canvas (center) | widget config (right).
  * Produces complete DashboardConfig with data bindings per widget type.
@@ -15,9 +15,9 @@ import type {
   KPICardWidgetConfig, ScorecardWidgetConfig, BarChartWidgetConfig,
   TrendLineWidgetConfig, BottomNWidgetConfig, StatusTableWidgetConfig,
   DrillLinkWidgetConfig,
-} from '@phozart/phz-engine';
-import { widgetId, dashboardId } from '@phozart/phz-engine';
-import type { KPIId, ReportId, DataProductId } from '@phozart/phz-engine';
+} from '@phozart/engine';
+import { widgetId, dashboardId } from '@phozart/engine';
+import type { KPIId, ReportId, DataProductId } from '@phozart/engine';
 
 interface CatalogItem { type: WidgetType; icon: string; label: string; description: string; }
 
@@ -62,6 +62,9 @@ const DEFAULT_CONFIGS: Record<WidgetType, (id: string) => WidgetConfig> = {
   'drill-link': (id) => ({
     id: widgetId(id), type: 'drill-link', label: 'View Details', targetReportId: '' as ReportId, position: { row: 0, col: 0 }, size: { rowSpan: 1, colSpan: 1 },
   } as DrillLinkWidgetConfig),
+  'slicer': (id) => ({
+    id: widgetId(id), type: 'slicer', field: '', position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },
+  } as any),
   'custom': (id) => ({
     id: widgetId(id), type: 'custom', renderer: '', position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },
   }),

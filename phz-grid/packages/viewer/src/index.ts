@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Read-only consumption shell
+ * @phozart/viewer — Read-only consumption shell
  *
  * Headless state machines, Lit components, and configuration
  * for the viewer persona. No workspace dependency.
@@ -60,6 +60,10 @@ export {
   toggleViewMode,
   getCurrentPage,
   getTotalPages,
+  addRecentItem,
+  getRecentArtifacts,
+  loadPersistedFavorites,
+  loadPersistedRecents,
 } from './screens/catalog-state.js';
 
 export {
@@ -81,6 +85,8 @@ export {
   type ReportColumnView,
   type ReportSort,
   type ReportViewState,
+  type HeaderActionType,
+  type ColumnHeaderAction,
   createReportViewState,
   loadReport,
   setReportData,
@@ -93,6 +99,12 @@ export {
   setExporting,
   getReportTotalPages,
   getVisibleColumns,
+  addSortColumn,
+  removeSortColumn,
+  clearAllSorts,
+  getSortIndex,
+  setHoveredColumn,
+  computeHeaderActions,
 } from './screens/report-state.js';
 
 export {
@@ -125,6 +137,21 @@ export {
 } from './screens/attention-state.js';
 
 export {
+  type CommandItem,
+  type CommandPaletteState,
+  type GroupedCommands,
+  createCommandPaletteState,
+  openPalette,
+  closePalette,
+  togglePalette,
+  setQuery,
+  selectNext,
+  selectPrevious,
+  executeSelected,
+  getFilteredCommands,
+} from './screens/command-palette-state.js';
+
+export {
   type FilterBarState,
   createFilterBarState,
   setFilterDefs,
@@ -139,6 +166,95 @@ export {
   getActiveFilterCount,
   hasFilterValue,
 } from './screens/filter-bar-state.js';
+
+export {
+  type ViewManagerState,
+  createViewManagerState,
+  openViewManager,
+  closeViewManager,
+  setViews,
+  setActiveView,
+  setDirty,
+  startRename,
+  updateRenameName,
+  finishRename,
+  cancelRename,
+} from './screens/view-manager-state.js';
+
+export {
+  type FreshnessLevel,
+  type DataFreshnessState,
+  createDataFreshnessState,
+  recordRefresh,
+  computeFreshnessLevel,
+  getFreshnessAge,
+  formatFreshnessLabel,
+  setFreshnessThresholds,
+  enableAutoRefresh,
+  disableAutoRefresh,
+  isRefreshDue,
+} from './screens/data-freshness-state.js';
+
+// UX-020 — Row detail expansion
+export type { RowDetailField, RowDetailState, RowDetailColumnInput } from './screens/row-detail-state.js';
+export {
+  createRowDetailState,
+  rowToDetailFields,
+  expandRowDetail,
+  collapseRowDetail,
+  toggleRowDetail,
+  navigateToNextRow,
+  navigateToPrevRow,
+  setDetailSearch,
+  togglePinnedField,
+  clearPinnedFields,
+  getVisibleDetailFields,
+  isRowExpanded,
+  getExpandedRowIndex,
+  scrollToDetailField,
+} from './screens/row-detail-state.js';
+
+// UX-021 — Active filter visibility
+export type { ActiveFilterChip, ActiveFilterVisibilityState, FilterDefinitionInput, FilterValueInput } from './screens/active-filter-state.js';
+export {
+  createActiveFilterVisibilityState,
+  computeFilterChips,
+  formatFilterValue,
+  setFilterChips,
+  expandChip,
+  collapseChip,
+  toggleCollapsed,
+  removeChip,
+  getChipCount,
+  getExpandedChip,
+} from './screens/active-filter-state.js';
+
+// UX-024 — Cross-filter source highlighting
+export type { WidgetHighlightRole, CrossFilterHighlightState } from './screens/cross-filter-highlight-state.js';
+export {
+  createCrossFilterHighlightState,
+  activateHighlighting,
+  deactivateHighlighting,
+  setHoverWidget,
+  clearHoverWidget,
+  getWidgetRole,
+  isHighlightActive,
+  getHighlightedWidgetIds,
+} from './screens/cross-filter-highlight-state.js';
+
+// UX-023 — Keyboard shortcuts help panel
+export type { HelpShortcutEntry, HelpShortcutCategory, KeyboardHelpState } from './screens/keyboard-help-state.js';
+export {
+  createKeyboardHelpState,
+  openKeyboardHelp,
+  closeKeyboardHelp,
+  toggleKeyboardHelp,
+  setHelpSearch,
+  setHelpCategory,
+  getFilteredShortcuts,
+  getShortcutsByCategory,
+  DEFAULT_HELP_SHORTCUTS,
+} from './screens/keyboard-help-state.js';
 
 // --- Lit components (side-effect: custom element registration) ---
 export { PhzViewerShell } from './components/phz-viewer-shell.js';

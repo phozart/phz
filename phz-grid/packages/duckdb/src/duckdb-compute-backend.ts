@@ -1,14 +1,16 @@
 /**
- * @phozart/phz-duckdb — DuckDB ComputeBackend
+ * @phozart/duckdb — DuckDB ComputeBackend
  *
  * Implements ComputeBackend by generating SQL and delegating execution
  * to a DuckDB connection via the DuckDBQueryExecutor interface.
  */
 
-import type { AggregationConfig, PivotConfig } from '@phozart/phz-core';
-import type { ComputeBackend, CalculatedFieldInput } from '@phozart/phz-engine';
-import type { AggregationResult } from '@phozart/phz-engine';
-import type { PivotResult } from '@phozart/phz-engine';
+import type { AggregationConfig, PivotConfig } from '@phozart/core';
+import type { ComputeBackend, CalculatedFieldInput } from '@phozart/engine';
+import type { AggregationResult } from '@phozart/engine';
+import type { PivotResult } from '@phozart/engine';
+import type { ExpressionNode } from '@phozart/engine';
+import { expressionToSQL } from '@phozart/engine';
 import { buildAggregationQuery } from './duckdb-aggregation.js';
 import { buildPivotQuery } from './duckdb-pivot.js';
 import { buildGridQuery, sanitizeIdentifier, type FilterInput, type SqlResult } from './sql-builder.js';
@@ -56,7 +58,7 @@ export class DuckDBComputeBackend implements ComputeBackend {
     config: PivotConfig,
   ): Promise<PivotResult> {
     if (config.valueFields.length === 0 || config.columnFields.length === 0) {
-      return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [] };
+      return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [], rowTotals: [], subtotals: [] };
     }
 
     const { sql, params } = buildPivotQuery(this.executor.tableName, config);
@@ -87,9 +89,12 @@ export class DuckDBComputeBackend implements ComputeBackend {
       return Array.from(colHeaderSet).sort().map(col => row[col] ?? null);
     });
 
-    const grandTotals = Array.from(colHeaderSet).sort().map(() => null);
+    const grandTotals = Array.from(colHeaderSet).sort().map(col => {
+      const values = rows.map(row => row[col]).filter(v => v != null && typeof v === 'number') as number[];
+      return values.length > 0 ? values.reduce((a, b) => a + b, 0) : null;
+    });
 
-    return { rowHeaders, columnHeaders, cells, grandTotals };
+    return { rowHeaders, columnHeaders, cells, grandTotals, rowTotals: [], subtotals: [] };
   }
 
   async filter(
@@ -116,9 +121,12 @@ export class DuckDBComputeBackend implements ComputeBackend {
       return this.executor.execute(sql);
     }
 
-    const extras = fields.map(f =>
-      `(${f.expression}) AS "${sanitizeIdentifier(f.name)}"`
-    ).join(', ');
+    const extras = fields.map(f => {
+      const sqlExpr = typeof f.expression === 'string'
+        ? f.expression
+        : expressionToSQL(f.expression as ExpressionNode);
+      return `(${sqlExpr}) AS "${sanitizeIdentifier(f.name)}"`;
+    }).join(', ');
 
     const sql = `SELECT *, ${extras} FROM ${table}`;
     return this.executor.execute(sql);

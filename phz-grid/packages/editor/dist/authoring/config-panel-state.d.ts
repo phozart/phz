@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Config Panel State (B-2.08)
+ * @phozart/editor — Config Panel State (B-2.08)
  *
  * Constrained configuration panel state machine. Authors configure
  * widgets by picking from pre-approved measures and fields, not

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — AriaManager
+ * @phozart/grid — AriaManager
  *
  * Manages ARIA attributes on the grid's DOM elements to maintain
  * screen reader accessibility, including the semantic shadow layer
@@ -9,7 +9,7 @@
  * (for querySelector/appendChild) to avoid the crash when the grid
  * passes its renderRoot instead of the host.
  */
-import type { GridApi, AriaLabels } from '@phozart/phz-core';
+import type { GridApi, AriaLabels } from '@phozart/core';
 
 export class AriaManager {
   private hostElement: HTMLElement | null = null;

@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzFilterConfigurator React Component
+ * @phozart/react — PhzFilterConfigurator React Component
  *
  * Wraps the <phz-filter-configurator> Web Component for React using @lit/react.
  * Configure which filter definitions appear on a specific report/dashboard,
@@ -8,7 +8,7 @@
  */
 import React, { createElement } from 'react';
 import { createComponent } from '@lit/react';
-import { PhzFilterConfigurator as PhzFilterConfiguratorElement } from '@phozart/phz-workspace/criteria-admin';
+import { PhzFilterConfigurator as PhzFilterConfiguratorElement } from '@phozart/workspace/criteria-admin';
 const PhzFilterConfiguratorLit = createComponent({
     tagName: 'phz-filter-configurator',
     elementClass: PhzFilterConfiguratorElement,

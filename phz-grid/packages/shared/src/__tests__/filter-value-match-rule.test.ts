@@ -7,8 +7,8 @@
 import {
   evaluateMatchRule,
   applyExpression,
-} from '@phozart/phz-shared/types';
-import type { FilterValueMatchRule } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { FilterValueMatchRule } from '@phozart/shared/types';
 
 // ========================================================================
 // applyExpression

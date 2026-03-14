@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, RowData, RowId, ColumnDefinition } from '@phozart/phz-core';
+import type { GridApi, RowData, RowId, ColumnDefinition } from '@phozart/core';
 export interface SelectionHost extends ReactiveControllerHost, EventTarget {
     gridApi: GridApi | null;
     selectionMode: 'none' | 'single' | 'multi' | 'range';

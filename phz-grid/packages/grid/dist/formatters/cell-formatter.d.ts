@@ -1,4 +1,4 @@
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 export interface CellFormatOptions {
     numberFormats: Record<string, {
         decimals?: number;

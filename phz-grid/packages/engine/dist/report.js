@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Report Configuration
+ * @phozart/engine — Report Configuration
  *
  * Reports define how data is displayed: columns, sorting, filtering,
  * aggregation, grouping, and conditional formatting.

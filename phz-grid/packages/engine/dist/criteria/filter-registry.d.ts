@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Filter Definition Registry
+ * @phozart/engine — Filter Definition Registry
  *
  * Reusable, artefact-independent filter definitions with dependency
  * graph validation (cycle detection + topological sort).
  */
-import type { FilterDefinition, FilterDefinitionId } from '@phozart/phz-core';
+import type { FilterDefinition, FilterDefinitionId } from '@phozart/core';
 export interface FilterRegistry {
     register(def: FilterDefinition): void;
     get(id: FilterDefinitionId): FilterDefinition | undefined;

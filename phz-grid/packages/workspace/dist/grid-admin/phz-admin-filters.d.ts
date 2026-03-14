@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-grid-admin — Filter Preset Manager
+ * @phozart/grid-admin — Filter Preset Manager
  *
  * Manage filter presets: create, apply, duplicate, delete.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { FilterPreset } from '@phozart/phz-core';
+import type { FilterPreset } from '@phozart/core';
 export declare class PhzAdminFilters extends LitElement {
     static styles: import("lit").CSSResult[];
     presets: Record<string, FilterPreset>;

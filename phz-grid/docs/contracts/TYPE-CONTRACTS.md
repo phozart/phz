@@ -18,7 +18,7 @@
 
 ## Overview
 
-This document defines the **complete, binding TypeScript type export contracts** for all packages in the phz-grid monorepo (22 packages, 15 documented here). Every type, interface, class, function, and constant listed here MUST be exported exactly as specified.
+This document defines the **complete, binding TypeScript type export contracts** for all packages in the phz-grid monorepo (19 active packages, 15 documented here). Every type, interface, class, function, and constant listed here MUST be exported exactly as specified.
 
 ### Purpose
 
@@ -39,7 +39,7 @@ The Data Model uses strict, generic types (`GridConfig<TData>`, `GridState<TData
 
 ## Package Export Map
 
-### 1. @phozart/phz-core
+### 1. @phozart/core
 
 **Description**: Headless grid engine with zero DOM dependencies. All types originate here.
 
@@ -252,22 +252,22 @@ export interface SerializedGridState
 #### Functions
 
 ```typescript
-export function createGrid<TData = any>(config: GridConfig<TData>): GridApi<TData>
-export function serializeCellPosition(pos: CellPosition): string
-export function deserializeCellPosition(key: string): CellPosition
+export function createGrid<TData = any>(config: GridConfig<TData>): GridApi<TData>;
+export function serializeCellPosition(pos: CellPosition): string;
+export function deserializeCellPosition(key: string): CellPosition;
 ```
 
 #### Type Guards
 
 ```typescript
-export function isEditStateIdle(state: EditState): state is EditStateIdle
-export function isEditStateEditing(state: EditState): state is EditStateEditing
-export function isEditStateValidating(state: EditState): state is EditStateValidating
-export function isEditStateCommitting(state: EditState): state is EditStateCommitting
-export function isEditStateError(state: EditState): state is EditStateError
-export function isLocalDataSource<T>(ds: DataSource<T>): ds is LocalDataSource<T>
-export function isAsyncDataSource<T>(ds: DataSource<T>): ds is AsyncDataSource<T>
-export function isDuckDBDataSource(ds: DataSource): ds is DuckDBDataSource
+export function isEditStateIdle(state: EditState): state is EditStateIdle;
+export function isEditStateEditing(state: EditState): state is EditStateEditing;
+export function isEditStateValidating(state: EditState): state is EditStateValidating;
+export function isEditStateCommitting(state: EditState): state is EditStateCommitting;
+export function isEditStateError(state: EditState): state is EditStateError;
+export function isLocalDataSource<T>(ds: DataSource<T>): ds is LocalDataSource<T>;
+export function isAsyncDataSource<T>(ds: DataSource<T>): ds is AsyncDataSource<T>;
+export function isDuckDBDataSource(ds: DataSource): ds is DuckDBDataSource;
 ```
 
 #### Utility Types
@@ -281,65 +281,77 @@ export type PartialDeep<T>
 #### Utility Functions
 
 ```typescript
-export function immutableUpdate<T>(obj: T, updates: Partial<T>): T
-export function immutableArrayUpdate<T>(arr: ReadonlyArray<T>, index: number, update: Partial<T>): ReadonlyArray<T>
-export function immutableArrayInsert<T>(arr: ReadonlyArray<T>, index: number, item: T): ReadonlyArray<T>
-export function immutableArrayRemove<T>(arr: ReadonlyArray<T>, index: number): ReadonlyArray<T>
-export function immutableMapUpdate<K, V>(map: ReadonlyMap<K, V>, key: K, value: V): ReadonlyMap<K, V>
-export function immutableMapDelete<K, V>(map: ReadonlyMap<K, V>, key: K): ReadonlyMap<K, V>
-export function immutableSetAdd<T>(set: ReadonlySet<T>, item: T): ReadonlySet<T>
-export function immutableSetDelete<T>(set: ReadonlySet<T>, item: T): ReadonlySet<T>
+export function immutableUpdate<T>(obj: T, updates: Partial<T>): T;
+export function immutableArrayUpdate<T>(
+  arr: ReadonlyArray<T>,
+  index: number,
+  update: Partial<T>,
+): ReadonlyArray<T>;
+export function immutableArrayInsert<T>(
+  arr: ReadonlyArray<T>,
+  index: number,
+  item: T,
+): ReadonlyArray<T>;
+export function immutableArrayRemove<T>(arr: ReadonlyArray<T>, index: number): ReadonlyArray<T>;
+export function immutableMapUpdate<K, V>(
+  map: ReadonlyMap<K, V>,
+  key: K,
+  value: V,
+): ReadonlyMap<K, V>;
+export function immutableMapDelete<K, V>(map: ReadonlyMap<K, V>, key: K): ReadonlyMap<K, V>;
+export function immutableSetAdd<T>(set: ReadonlySet<T>, item: T): ReadonlySet<T>;
+export function immutableSetDelete<T>(set: ReadonlySet<T>, item: T): ReadonlySet<T>;
 ```
 
 ---
 
-### 2. @phozart/phz-grid
+### 2. @phozart/grid
 
-**Description**: Lit Web Components rendering layer. Depends on @phozart/phz-core.
+**Description**: Lit Web Components rendering layer. Depends on @phozart/core.
 
 #### Custom Elements (Lit)
 
 ```typescript
 export class PhzGrid extends LitElement {
   // Properties
-  data: unknown[]
-  columns: ColumnDefinition[]
-  theme: string
-  locale: string
-  responsive: boolean
-  virtualization: boolean
-  selectionMode: 'none' | 'single' | 'multi' | 'range'
-  editMode: 'none' | 'click' | 'dblclick' | 'manual'
-  loading: boolean
-  height: string | number
-  width: string | number
+  data: unknown[];
+  columns: ColumnDefinition[];
+  theme: string;
+  locale: string;
+  responsive: boolean;
+  virtualization: boolean;
+  selectionMode: 'none' | 'single' | 'multi' | 'range';
+  editMode: 'none' | 'click' | 'dblclick' | 'manual';
+  loading: boolean;
+  height: string | number;
+  width: string | number;
 
   // Methods
-  getGridInstance(): GridApi
-  refresh(): void
-  invalidate(): void
+  getGridInstance(): GridApi;
+  refresh(): void;
+  invalidate(): void;
 
   // Static
-  static readonly slots: Record<string, string>
+  static readonly slots: Record<string, string>;
 }
 
 export class PhzColumn extends LitElement {
   // Properties (same as ColumnDefinition fields)
-  field: string
-  header: string
-  width: number
-  minWidth: number
-  maxWidth: number
-  sortable: boolean
-  filterable: boolean
-  editable: boolean
-  resizable: boolean
-  type: ColumnType
-  priority: 1 | 2 | 3
-  frozen: 'left' | 'right' | null
+  field: string;
+  header: string;
+  width: number;
+  minWidth: number;
+  maxWidth: number;
+  sortable: boolean;
+  filterable: boolean;
+  editable: boolean;
+  resizable: boolean;
+  type: ColumnType;
+  priority: 1 | 2 | 3;
+  frozen: 'left' | 'right' | null;
 
   // Static
-  static readonly slots: Record<string, string>
+  static readonly slots: Record<string, string>;
 }
 ```
 
@@ -347,13 +359,13 @@ export class PhzColumn extends LitElement {
 
 ```typescript
 export abstract class PhzCellRenderer extends LitElement {
-  abstract render(value: unknown, row: RowData, column: ColumnDefinition): TemplateResult
+  abstract render(value: unknown, row: RowData, column: ColumnDefinition): TemplateResult;
 }
 
 export abstract class PhzCellEditor extends LitElement {
-  abstract render(value: unknown, row: RowData, column: ColumnDefinition): TemplateResult
-  abstract getValue(): unknown
-  abstract focus(): void
+  abstract render(value: unknown, row: RowData, column: ColumnDefinition): TemplateResult;
+  abstract getValue(): unknown;
+  abstract focus(): void;
 }
 ```
 
@@ -382,28 +394,28 @@ export class CheckboxCellEditor extends PhzCellEditor {}
 #### CSS Token Constants
 
 ```typescript
-export const BrandTokens: Record<string, string>
-export const SemanticTokens: Record<string, string>
-export const ComponentTokens: Record<string, string>
+export const BrandTokens: Record<string, string>;
+export const SemanticTokens: Record<string, string>;
+export const ComponentTokens: Record<string, string>;
 ```
 
 #### Event Map (DOM Custom Events)
 
 ```typescript
 export interface PhzGridEventMap {
-  'grid-ready': CustomEvent<{ gridInstance: GridApi }>
-  'state-change': CustomEvent<StateChangeEvent>
-  'cell-click': CustomEvent<CellClickEvent>
-  'cell-dblclick': CustomEvent<CellDoubleClickEvent>
-  'row-click': CustomEvent<RowClickEvent>
-  'selection-change': CustomEvent<SelectionChangeEvent>
-  'sort-change': CustomEvent<SortChangeEvent>
-  'filter-change': CustomEvent<FilterChangeEvent>
-  'edit-start': CustomEvent<EditStartEvent>
-  'edit-commit': CustomEvent<EditCommitEvent>
-  'edit-cancel': CustomEvent<EditCancelEvent>
-  'scroll': CustomEvent<ScrollEvent>
-  'resize': CustomEvent<{ width: number; height: number }>
+  'grid-ready': CustomEvent<{ gridInstance: GridApi }>;
+  'state-change': CustomEvent<StateChangeEvent>;
+  'cell-click': CustomEvent<CellClickEvent>;
+  'cell-dblclick': CustomEvent<CellDoubleClickEvent>;
+  'row-click': CustomEvent<RowClickEvent>;
+  'selection-change': CustomEvent<SelectionChangeEvent>;
+  'sort-change': CustomEvent<SortChangeEvent>;
+  'filter-change': CustomEvent<FilterChangeEvent>;
+  'edit-start': CustomEvent<EditStartEvent>;
+  'edit-commit': CustomEvent<EditCommitEvent>;
+  'edit-cancel': CustomEvent<EditCancelEvent>;
+  scroll: CustomEvent<ScrollEvent>;
+  resize: CustomEvent<{ width: number; height: number }>;
 }
 ```
 
@@ -411,282 +423,282 @@ export interface PhzGridEventMap {
 
 ```typescript
 export class AriaManager {
-  constructor(grid: GridApi)
-  updateGridRole(rowCount: number, columnCount: number): void
-  updateCellRole(position: CellPosition, role: string): void
-  announceChange(message: string): void
+  constructor(grid: GridApi);
+  updateGridRole(rowCount: number, columnCount: number): void;
+  updateCellRole(position: CellPosition, role: string): void;
+  announceChange(message: string): void;
 }
 
 export class KeyboardNavigator {
-  constructor(grid: GridApi)
-  handleKeyDown(event: KeyboardEvent): void
-  moveFocus(direction: 'up' | 'down' | 'left' | 'right'): void
-  moveFocusToFirstCell(): void
-  moveFocusToLastCell(): void
+  constructor(grid: GridApi);
+  handleKeyDown(event: KeyboardEvent): void;
+  moveFocus(direction: 'up' | 'down' | 'left' | 'right'): void;
+  moveFocusToFirstCell(): void;
+  moveFocusToLastCell(): void;
 }
 
 export class ForcedColorsAdapter {
-  static detect(): boolean
-  static applyForcedColorsStyles(element: HTMLElement): void
-  static removeForcedColorsStyles(element: HTMLElement): void
+  static detect(): boolean;
+  static applyForcedColorsStyles(element: HTMLElement): void;
+  static removeForcedColorsStyles(element: HTMLElement): void;
 }
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-// All types from @phozart/phz-core are re-exported for convenience
-export * from '@phozart/phz-core'
+// All types from @phozart/core are re-exported for convenience
+export * from '@phozart/core';
 ```
 
 ---
 
-### 3. @phozart/phz-react
+### 3. @phozart/react
 
-**Description**: React wrapper with hooks. Depends on @phozart/phz-core, @phozart/phz-grid.
+**Description**: React wrapper with hooks. Depends on @phozart/core, @phozart/grid.
 
 #### Components
 
 ```typescript
-import type { GridApi, ColumnDefinition, GridState } from '@phozart/phz-core'
-import type { ReactNode, RefObject } from 'react'
+import type { GridApi, ColumnDefinition, GridState } from '@phozart/core';
+import type { ReactNode, RefObject } from 'react';
 
 export interface PhzGridProps {
-  data: unknown[]
-  columns: ColumnDefinition[]
-  theme?: string
-  locale?: string
-  responsive?: boolean
-  virtualization?: boolean
-  selectionMode?: 'none' | 'single' | 'multi' | 'range'
-  editMode?: 'none' | 'click' | 'dblclick' | 'manual'
-  loading?: boolean
-  height?: string | number
-  width?: string | number
+  data: unknown[];
+  columns: ColumnDefinition[];
+  theme?: string;
+  locale?: string;
+  responsive?: boolean;
+  virtualization?: boolean;
+  selectionMode?: 'none' | 'single' | 'multi' | 'range';
+  editMode?: 'none' | 'click' | 'dblclick' | 'manual';
+  loading?: boolean;
+  height?: string | number;
+  width?: string | number;
 
   // Event handlers
-  onGridReady?: (gridInstance: GridApi) => void
-  onStateChange?: (state: GridState) => void
-  onCellClick?: (event: CellClickEvent) => void
-  onCellDoubleClick?: (event: CellDoubleClickEvent) => void
-  onRowClick?: (event: RowClickEvent) => void
-  onSelectionChange?: (event: SelectionChangeEvent) => void
-  onSortChange?: (event: SortChangeEvent) => void
-  onFilterChange?: (event: FilterChangeEvent) => void
-  onEditStart?: (event: EditStartEvent) => void
-  onEditCommit?: (event: EditCommitEvent) => void
-  onEditCancel?: (event: EditCancelEvent) => void
-  onScroll?: (event: ScrollEvent) => void
+  onGridReady?: (gridInstance: GridApi) => void;
+  onStateChange?: (state: GridState) => void;
+  onCellClick?: (event: CellClickEvent) => void;
+  onCellDoubleClick?: (event: CellDoubleClickEvent) => void;
+  onRowClick?: (event: RowClickEvent) => void;
+  onSelectionChange?: (event: SelectionChangeEvent) => void;
+  onSortChange?: (event: SortChangeEvent) => void;
+  onFilterChange?: (event: FilterChangeEvent) => void;
+  onEditStart?: (event: EditStartEvent) => void;
+  onEditCommit?: (event: EditCommitEvent) => void;
+  onEditCancel?: (event: EditCancelEvent) => void;
+  onScroll?: (event: ScrollEvent) => void;
 
   // Slots as children
-  children?: ReactNode
-  header?: ReactNode
-  footer?: ReactNode
-  emptyState?: ReactNode
-  loadingIndicator?: ReactNode
-  toolbar?: ReactNode
+  children?: ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
+  emptyState?: ReactNode;
+  loadingIndicator?: ReactNode;
+  toolbar?: ReactNode;
 
   // Ref to access GridApi
-  ref?: RefObject<GridApi>
+  ref?: RefObject<GridApi>;
 }
 
-export const PhzGrid: React.ForwardRefExoticComponent<PhzGridProps>
+export const PhzGrid: React.ForwardRefExoticComponent<PhzGridProps>;
 ```
 
 #### React Hooks
 
 ```typescript
 export function useGridState(gridRef: RefObject<GridApi>): {
-  state: GridState | null
-  setState: (state: Partial<GridState>) => void
-  exportState: () => SerializedGridState | null
-  importState: (state: SerializedGridState) => void
-}
+  state: GridState | null;
+  setState: (state: Partial<GridState>) => void;
+  exportState: () => SerializedGridState | null;
+  importState: (state: SerializedGridState) => void;
+};
 
 export function useGridSelection(gridRef: RefObject<GridApi>): {
-  selectedRows: RowId[]
-  selectedCells: CellPosition[]
-  select: (rowIds: RowId | RowId[]) => void
-  deselect: (rowIds: RowId | RowId[]) => void
-  selectAll: () => void
-  deselectAll: () => void
-  selectRange: (start: CellPosition, end: CellPosition) => void
-}
+  selectedRows: RowId[];
+  selectedCells: CellPosition[];
+  select: (rowIds: RowId | RowId[]) => void;
+  deselect: (rowIds: RowId | RowId[]) => void;
+  selectAll: () => void;
+  deselectAll: () => void;
+  selectRange: (start: CellPosition, end: CellPosition) => void;
+};
 
 export function useGridSort(gridRef: RefObject<GridApi>): {
-  sortState: SortState | null
-  sort: (field: string, direction: 'asc' | 'desc' | null) => void
-  multiSort: (sorts: Array<{ field: string; direction: 'asc' | 'desc' }>) => void
-  clearSort: () => void
-}
+  sortState: SortState | null;
+  sort: (field: string, direction: 'asc' | 'desc' | null) => void;
+  multiSort: (sorts: Array<{ field: string; direction: 'asc' | 'desc' }>) => void;
+  clearSort: () => void;
+};
 
 export function useGridFilter(gridRef: RefObject<GridApi>): {
-  filterState: FilterState | null
-  addFilter: (field: string, operator: FilterOperator, value: unknown) => void
-  removeFilter: (field: string) => void
-  clearFilters: () => void
-  savePreset: (name: string) => void
-  loadPreset: (name: string) => void
-}
+  filterState: FilterState | null;
+  addFilter: (field: string, operator: FilterOperator, value: unknown) => void;
+  removeFilter: (field: string) => void;
+  clearFilters: () => void;
+  savePreset: (name: string) => void;
+  loadPreset: (name: string) => void;
+};
 
 export function useGridEdit(gridRef: RefObject<GridApi>): {
-  editState: EditState | null
-  startEdit: (position: CellPosition) => void
-  commitEdit: (position: CellPosition, value: unknown) => Promise<boolean>
-  cancelEdit: (position: CellPosition) => void
-  isDirty: boolean
-  dirtyRows: RowId[]
-}
+  editState: EditState | null;
+  startEdit: (position: CellPosition) => void;
+  commitEdit: (position: CellPosition, value: unknown) => Promise<boolean>;
+  cancelEdit: (position: CellPosition) => void;
+  isDirty: boolean;
+  dirtyRows: RowId[];
+};
 
 export function useGridData(gridRef: RefObject<GridApi>): {
-  data: RowData[]
-  setData: (data: unknown[]) => void
-  addRow: (data: Record<string, unknown>, position?: number) => RowId
-  updateRow: (id: RowId, data: Partial<Record<string, unknown>>) => void
-  deleteRow: (id: RowId) => void
-}
+  data: RowData[];
+  setData: (data: unknown[]) => void;
+  addRow: (data: Record<string, unknown>, position?: number) => RowId;
+  updateRow: (id: RowId, data: Partial<Record<string, unknown>>) => void;
+  deleteRow: (id: RowId) => void;
+};
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 4. @phozart/phz-vue
+### 4. @phozart/vue
 
-**Description**: Vue 3 wrapper with Composition API. Depends on @phozart/phz-core, @phozart/phz-grid.
+**Description**: Vue 3 wrapper with Composition API. Depends on @phozart/core, @phozart/grid.
 
 #### Components
 
 ```typescript
-import type { GridApi, ColumnDefinition } from '@phozart/phz-core'
-import type { Component, Ref } from 'vue'
+import type { GridApi, ColumnDefinition } from '@phozart/core';
+import type { Component, Ref } from 'vue';
 
 export interface PhzGridProps {
-  data: unknown[]
-  columns: ColumnDefinition[]
-  theme?: string
-  locale?: string
-  responsive?: boolean
-  virtualization?: boolean
-  selectionMode?: 'none' | 'single' | 'multi' | 'range'
-  editMode?: 'none' | 'click' | 'dblclick' | 'manual'
-  loading?: boolean
-  height?: string | number
-  width?: string | number
+  data: unknown[];
+  columns: ColumnDefinition[];
+  theme?: string;
+  locale?: string;
+  responsive?: boolean;
+  virtualization?: boolean;
+  selectionMode?: 'none' | 'single' | 'multi' | 'range';
+  editMode?: 'none' | 'click' | 'dblclick' | 'manual';
+  loading?: boolean;
+  height?: string | number;
+  width?: string | number;
 
   // v-model support
-  modelValue?: RowId[]
+  modelValue?: RowId[];
 }
 
 export interface PhzGridEmits {
-  'update:modelValue': (value: RowId[]) => void
-  'grid-ready': (gridInstance: GridApi) => void
-  'selection-change': (event: SelectionChangeEvent) => void
-  'sort-change': (event: SortChangeEvent) => void
-  'filter-change': (event: FilterChangeEvent) => void
-  'edit-commit': (event: EditCommitEvent) => void
-  'cell-click': (event: CellClickEvent) => void
-  'row-click': (event: RowClickEvent) => void
+  'update:modelValue': (value: RowId[]) => void;
+  'grid-ready': (gridInstance: GridApi) => void;
+  'selection-change': (event: SelectionChangeEvent) => void;
+  'sort-change': (event: SortChangeEvent) => void;
+  'filter-change': (event: FilterChangeEvent) => void;
+  'edit-commit': (event: EditCommitEvent) => void;
+  'cell-click': (event: CellClickEvent) => void;
+  'row-click': (event: RowClickEvent) => void;
 }
 
-export const PhzGrid: Component<PhzGridProps, PhzGridEmits>
+export const PhzGrid: Component<PhzGridProps, PhzGridEmits>;
 ```
 
 #### Vue Composables
 
 ```typescript
 export function useGrid(): {
-  gridInstance: Ref<GridApi | null>
-  state: Ref<GridState | null>
-  exportState: () => SerializedGridState | null
-  importState: (state: SerializedGridState) => void
-}
+  gridInstance: Ref<GridApi | null>;
+  state: Ref<GridState | null>;
+  exportState: () => SerializedGridState | null;
+  importState: (state: SerializedGridState) => void;
+};
 
 export function useGridSelection(gridInstance?: Ref<GridApi | null>): {
-  selectedRows: Ref<RowId[]>
-  selectedCells: Ref<CellPosition[]>
-  select: (rowIds: RowId | RowId[]) => void
-  deselect: (rowIds: RowId | RowId[]) => void
-  selectAll: () => void
-  deselectAll: () => void
-  selectRange: (start: CellPosition, end: CellPosition) => void
-}
+  selectedRows: Ref<RowId[]>;
+  selectedCells: Ref<CellPosition[]>;
+  select: (rowIds: RowId | RowId[]) => void;
+  deselect: (rowIds: RowId | RowId[]) => void;
+  selectAll: () => void;
+  deselectAll: () => void;
+  selectRange: (start: CellPosition, end: CellPosition) => void;
+};
 
 export function useGridSort(gridInstance?: Ref<GridApi | null>): {
-  sortState: Ref<SortState | null>
-  sort: (field: string, direction: 'asc' | 'desc' | null) => void
-  multiSort: (sorts: Array<{ field: string; direction: 'asc' | 'desc' }>) => void
-  clearSort: () => void
-}
+  sortState: Ref<SortState | null>;
+  sort: (field: string, direction: 'asc' | 'desc' | null) => void;
+  multiSort: (sorts: Array<{ field: string; direction: 'asc' | 'desc' }>) => void;
+  clearSort: () => void;
+};
 
 export function useGridFilter(gridInstance?: Ref<GridApi | null>): {
-  filterState: Ref<FilterState | null>
-  addFilter: (field: string, operator: FilterOperator, value: unknown) => void
-  removeFilter: (field: string) => void
-  clearFilters: () => void
-  savePreset: (name: string) => void
-  loadPreset: (name: string) => void
-}
+  filterState: Ref<FilterState | null>;
+  addFilter: (field: string, operator: FilterOperator, value: unknown) => void;
+  removeFilter: (field: string) => void;
+  clearFilters: () => void;
+  savePreset: (name: string) => void;
+  loadPreset: (name: string) => void;
+};
 
 export function useGridEdit(gridInstance?: Ref<GridApi | null>): {
-  editState: Ref<EditState | null>
-  startEdit: (position: CellPosition) => void
-  commitEdit: (position: CellPosition, value: unknown) => Promise<boolean>
-  cancelEdit: (position: CellPosition) => void
-  isDirty: Ref<boolean>
-  dirtyRows: Ref<RowId[]>
-}
+  editState: Ref<EditState | null>;
+  startEdit: (position: CellPosition) => void;
+  commitEdit: (position: CellPosition, value: unknown) => Promise<boolean>;
+  cancelEdit: (position: CellPosition) => void;
+  isDirty: Ref<boolean>;
+  dirtyRows: Ref<RowId[]>;
+};
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 5. @phozart/phz-angular
+### 5. @phozart/angular
 
-**Description**: Angular standalone component with RxJS. Depends on @phozart/phz-core, @phozart/phz-grid.
+**Description**: Angular standalone component with RxJS. Depends on @phozart/core, @phozart/grid.
 
 #### Components
 
 ```typescript
-import { Component, Input, Output, EventEmitter, Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import type { GridApi, ColumnDefinition, GridState } from '@phozart/phz-core'
+import { Component, Input, Output, EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import type { GridApi, ColumnDefinition, GridState } from '@phozart/core';
 
 @Component({
   selector: 'phz-grid',
-  standalone: true
+  standalone: true,
 })
 export class PhzGridComponent {
-  @Input() data: unknown[]
-  @Input() columns: ColumnDefinition[]
-  @Input() theme: string
-  @Input() locale: string
-  @Input() responsive: boolean
-  @Input() virtualization: boolean
-  @Input() selectionMode: 'none' | 'single' | 'multi' | 'range'
-  @Input() editMode: 'none' | 'click' | 'dblclick' | 'manual'
-  @Input() loading: boolean
-  @Input() height?: string | number
-  @Input() width?: string | number
+  @Input() data: unknown[];
+  @Input() columns: ColumnDefinition[];
+  @Input() theme: string;
+  @Input() locale: string;
+  @Input() responsive: boolean;
+  @Input() virtualization: boolean;
+  @Input() selectionMode: 'none' | 'single' | 'multi' | 'range';
+  @Input() editMode: 'none' | 'click' | 'dblclick' | 'manual';
+  @Input() loading: boolean;
+  @Input() height?: string | number;
+  @Input() width?: string | number;
 
-  @Output() gridReady: EventEmitter<GridApi>
-  @Output() selectionChange: EventEmitter<SelectionChangeEvent>
-  @Output() sortChange: EventEmitter<SortChangeEvent>
-  @Output() filterChange: EventEmitter<FilterChangeEvent>
-  @Output() editCommit: EventEmitter<EditCommitEvent>
-  @Output() cellClick: EventEmitter<CellClickEvent>
-  @Output() rowClick: EventEmitter<RowClickEvent>
+  @Output() gridReady: EventEmitter<GridApi>;
+  @Output() selectionChange: EventEmitter<SelectionChangeEvent>;
+  @Output() sortChange: EventEmitter<SortChangeEvent>;
+  @Output() filterChange: EventEmitter<FilterChangeEvent>;
+  @Output() editCommit: EventEmitter<EditCommitEvent>;
+  @Output() cellClick: EventEmitter<CellClickEvent>;
+  @Output() rowClick: EventEmitter<RowClickEvent>;
 
-  getGridInstance(): GridApi | null
+  getGridInstance(): GridApi | null;
 }
 ```
 
@@ -695,384 +707,384 @@ export class PhzGridComponent {
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class GridService {
-  registerGrid(id: string, instance: GridApi): void
-  unregisterGrid(id: string): void
-  getGrid(id: string): GridApi | undefined
+  registerGrid(id: string, instance: GridApi): void;
+  unregisterGrid(id: string): void;
+  getGrid(id: string): GridApi | undefined;
 
   // Observable state streams
-  getSelectionState$(gridId: string): Observable<SelectionState>
-  getSortState$(gridId: string): Observable<SortState>
-  getFilterState$(gridId: string): Observable<FilterState>
-  getEditState$(gridId: string): Observable<EditState>
+  getSelectionState$(gridId: string): Observable<SelectionState>;
+  getSortState$(gridId: string): Observable<SortState>;
+  getFilterState$(gridId: string): Observable<FilterState>;
+  getEditState$(gridId: string): Observable<EditState>;
 }
 ```
 
 #### Module (for non-standalone)
 
 ```typescript
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 
 @NgModule({
   imports: [PhzGridComponent],
-  exports: [PhzGridComponent]
+  exports: [PhzGridComponent],
 })
 export class PhzGridModule {}
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 6. @phozart/phz-duckdb
+### 6. @phozart/duckdb
 
-**Description**: DuckDB-WASM data source adapter. Depends on @phozart/phz-core.
+**Description**: DuckDB-WASM data source adapter. Depends on @phozart/core.
 
 #### Factory Function
 
 ```typescript
-export function createDuckDBDataSource(config: DuckDBConfig): DuckDBDataSource
+export function createDuckDBDataSource(config: DuckDBConfig): DuckDBDataSource;
 ```
 
 #### Types
 
 ```typescript
 export interface DuckDBConfig {
-  workerUrl?: string
-  wasmUrl?: string
-  enableStreaming?: boolean
-  enableProgress?: boolean
-  memoryLimit?: number
-  threads?: number
+  workerUrl?: string;
+  wasmUrl?: string;
+  enableStreaming?: boolean;
+  enableProgress?: boolean;
+  memoryLimit?: number;
+  threads?: number;
 }
 
 export interface DuckDBDataSource {
   // Connection
-  initialize(): Promise<void>
-  connect(): Promise<AsyncDuckDBConnection>
-  disconnect(): Promise<void>
-  isConnected(): boolean
+  initialize(): Promise<void>;
+  connect(): Promise<AsyncDuckDBConnection>;
+  disconnect(): Promise<void>;
+  isConnected(): boolean;
 
   // Data Loading
-  loadFile(file: File | URL | string, options?: LoadFileOptions): Promise<string>
-  loadMultipleFiles(files: Array<{ name: string; file: File | URL | string }>): Promise<string[]>
+  loadFile(file: File | URL | string, options?: LoadFileOptions): Promise<string>;
+  loadMultipleFiles(files: Array<{ name: string; file: File | URL | string }>): Promise<string[]>;
 
   // Schema
-  getSchema(tableName?: string): Promise<TableSchema>
-  getTables(): Promise<string[]>
-  getTableInfo(tableName: string): Promise<TableInfo>
+  getSchema(tableName?: string): Promise<TableSchema>;
+  getTables(): Promise<string[]>;
+  getTableInfo(tableName: string): Promise<TableInfo>;
 
   // Query
-  query(sql: string, params?: Record<string, unknown>): Promise<QueryResult>
-  queryStream(sql: string, params?: Record<string, unknown>): AsyncIterable<QueryChunk>
-  executeSQL(sql: string): Promise<void>
-  cancelQuery(): void
-  onProgress(handler: (progress: QueryProgress) => void): Unsubscribe
+  query(sql: string, params?: Record<string, unknown>): Promise<QueryResult>;
+  queryStream(sql: string, params?: Record<string, unknown>): AsyncIterable<QueryChunk>;
+  executeSQL(sql: string): Promise<void>;
+  cancelQuery(): void;
+  onProgress(handler: (progress: QueryProgress) => void): Unsubscribe;
 
   // Arrow Integration
-  toArrowTable(tableName?: string): Promise<ArrowTable>
-  fromArrowTable(table: ArrowTable, tableName: string): Promise<void>
+  toArrowTable(tableName?: string): Promise<ArrowTable>;
+  fromArrowTable(table: ArrowTable, tableName: string): Promise<void>;
 
   // Worker
-  getDatabase(): AsyncDuckDB
-  terminateWorker(): Promise<void>
+  getDatabase(): AsyncDuckDB;
+  terminateWorker(): Promise<void>;
 
   // Grid Integration
-  attachToGrid(grid: GridApi): void
-  detachFromGrid(): void
+  attachToGrid(grid: GridApi): void;
+  detachFromGrid(): void;
 }
 
 export interface LoadFileOptions {
-  format?: 'csv' | 'parquet' | 'json' | 'arrow' | 'auto'
-  tableName?: string
-  schema?: Record<string, string>
-  header?: boolean
-  delimiter?: string
-  compression?: 'gzip' | 'zstd' | 'snappy' | 'none' | 'auto'
+  format?: 'csv' | 'parquet' | 'json' | 'arrow' | 'auto';
+  tableName?: string;
+  schema?: Record<string, string>;
+  header?: boolean;
+  delimiter?: string;
+  compression?: 'gzip' | 'zstd' | 'snappy' | 'none' | 'auto';
 }
 
 export interface TableSchema {
-  name: string
-  columns: ColumnSchema[]
-  rowCount: number
+  name: string;
+  columns: ColumnSchema[];
+  rowCount: number;
 }
 
 export interface ColumnSchema {
-  name: string
-  type: string
-  nullable: boolean
+  name: string;
+  type: string;
+  nullable: boolean;
 }
 
 export interface TableInfo {
-  name: string
-  schema: TableSchema
-  sizeBytes: number
-  rowCount: number
-  columnCount: number
+  name: string;
+  schema: TableSchema;
+  sizeBytes: number;
+  rowCount: number;
+  columnCount: number;
 }
 
 export interface QueryResult {
-  data: unknown[]
-  schema: ColumnSchema[]
-  rowCount: number
-  executionTime: number
-  fromCache: boolean
+  data: unknown[];
+  schema: ColumnSchema[];
+  rowCount: number;
+  executionTime: number;
+  fromCache: boolean;
 }
 
 export interface QueryChunk {
-  data: unknown[]
-  index: number
-  total: number
-  progress: number
+  data: unknown[];
+  index: number;
+  total: number;
+  progress: number;
 }
 
 export interface QueryProgress {
-  state: 'preparing' | 'executing' | 'streaming' | 'complete' | 'error'
-  progress: number
-  rowsProcessed: number
-  totalRows?: number
-  message?: string
+  state: 'preparing' | 'executing' | 'streaming' | 'complete' | 'error';
+  progress: number;
+  rowsProcessed: number;
+  totalRows?: number;
+  message?: string;
 }
 
-export type Unsubscribe = () => void
+export type Unsubscribe = () => void;
 ```
 
 #### Advanced Features
 
 ```typescript
 export interface ParquetMetadata {
-  version: string
-  rowGroups: RowGroupMetadata[]
-  schema: ParquetSchema
-  totalRows: number
+  version: string;
+  rowGroups: RowGroupMetadata[];
+  schema: ParquetSchema;
+  totalRows: number;
 }
 
 export interface RowGroupMetadata {
-  id: number
-  rowCount: number
-  columns: ColumnChunkMetadata[]
-  totalByteSize: number
+  id: number;
+  rowCount: number;
+  columns: ColumnChunkMetadata[];
+  totalByteSize: number;
 }
 
 export interface ColumnChunkMetadata {
-  name: string
-  type: string
-  encoding: string
-  compression: string
-  statistics?: ColumnStatistics
+  name: string;
+  type: string;
+  encoding: string;
+  compression: string;
+  statistics?: ColumnStatistics;
 }
 
 export interface ColumnStatistics {
-  min?: unknown
-  max?: unknown
-  nullCount: number
-  distinctCount?: number
+  min?: unknown;
+  max?: unknown;
+  nullCount: number;
+  distinctCount?: number;
 }
 
 export interface ParquetSchema {
-  fields: Array<{ name: string; type: string; nullable: boolean }>
+  fields: Array<{ name: string; type: string; nullable: boolean }>;
 }
 
 export interface QueryPlan {
-  sql: string
-  plan: QueryPlanNode[]
-  estimatedCost: number
-  estimatedRows: number
+  sql: string;
+  plan: QueryPlanNode[];
+  estimatedCost: number;
+  estimatedRows: number;
 }
 
 export interface QueryPlanNode {
-  id: number
-  type: string
-  table?: string
-  filter?: string
-  estimatedRows: number
-  children: QueryPlanNode[]
+  id: number;
+  type: string;
+  table?: string;
+  filter?: string;
+  estimatedRows: number;
+  children: QueryPlanNode[];
 }
 
-export function getQueryPlan(dataSource: DuckDBDataSource, sql: string): Promise<QueryPlan>
+export function getQueryPlan(dataSource: DuckDBDataSource, sql: string): Promise<QueryPlan>;
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 7. @phozart/phz-ai
+### 7. @phozart/ai
 
-**Description**: AI toolkit for schema inference and NL queries. Depends on @phozart/phz-core.
+**Description**: AI toolkit for schema inference and NL queries. Depends on @phozart/core.
 
 #### Factory Function
 
 ```typescript
-export function createAIToolkit(config: AIConfig): AIToolkit
+export function createAIToolkit(config: AIConfig): AIToolkit;
 ```
 
 #### Types
 
 ```typescript
-import type { JSONSchema7 } from 'json-schema'
+import type { JSONSchema7 } from 'json-schema';
 
 export interface AIConfig {
-  provider: AIProvider
-  model?: string
-  apiKey?: string
-  baseURL?: string
-  temperature?: number
-  maxTokens?: number
-  enableCaching?: boolean
-  enableLogging?: boolean
+  provider: AIProvider;
+  model?: string;
+  apiKey?: string;
+  baseURL?: string;
+  temperature?: number;
+  maxTokens?: number;
+  enableCaching?: boolean;
+  enableLogging?: boolean;
 }
 
 export interface AIProvider {
-  name: string
-  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>
-  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>
-  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>
+  name: string;
+  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>;
+  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>;
+  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>;
 }
 
 export interface AIToolkit {
   // Schema
-  getStructuredSchema(): JSONSchema7
-  inferSchema(sampleData: unknown[], options?: InferSchemaOptions): Promise<ColumnDefinition[]>
-  validateSchema(schema: ColumnDefinition[], data: unknown[]): Promise<SchemaValidationResult>
+  getStructuredSchema(): JSONSchema7;
+  inferSchema(sampleData: unknown[], options?: InferSchemaOptions): Promise<ColumnDefinition[]>;
+  validateSchema(schema: ColumnDefinition[], data: unknown[]): Promise<SchemaValidationResult>;
 
   // Natural Language
-  executeNaturalLanguageQuery(query: string, options?: NLQueryOptions): Promise<AIQueryResult>
-  explainQuery(sql: string): Promise<string>
-  suggestQueries(context?: string): Promise<string[]>
+  executeNaturalLanguageQuery(query: string, options?: NLQueryOptions): Promise<AIQueryResult>;
+  explainQuery(sql: string): Promise<string>;
+  suggestQueries(context?: string): Promise<string[]>;
 
   // Data Quality
-  detectAnomalies(column: string, options?: AnomalyDetectionOptions): Promise<AnomalyResult[]>
-  suggestDataTypes(sampleData: unknown[]): Promise<DataTypeSuggestion[]>
-  detectDuplicates(columns?: string[]): Promise<DuplicateResult[]>
+  detectAnomalies(column: string, options?: AnomalyDetectionOptions): Promise<AnomalyResult[]>;
+  suggestDataTypes(sampleData: unknown[]): Promise<DataTypeSuggestion[]>;
+  detectDuplicates(columns?: string[]): Promise<DuplicateResult[]>;
 
   // Summarization
-  summarize(options?: SummarizeOptions): Promise<string>
-  generateInsights(columns?: string[]): Promise<Insight[]>
+  summarize(options?: SummarizeOptions): Promise<string>;
+  generateInsights(columns?: string[]): Promise<Insight[]>;
 
   // Filtering & Search
-  suggestFilters(input: string): Promise<FilterSuggestion[]>
-  autoCompleteValue(column: string, partial: string): Promise<string[]>
+  suggestFilters(input: string): Promise<FilterSuggestion[]>;
+  autoCompleteValue(column: string, partial: string): Promise<string[]>;
 
   // Grid Integration
-  attachToGrid(grid: GridApi): void
-  detachFromGrid(): void
+  attachToGrid(grid: GridApi): void;
+  detachFromGrid(): void;
 }
 
 export interface CompletionOptions {
-  temperature?: number
-  maxTokens?: number
-  stopSequences?: string[]
-  systemPrompt?: string
+  temperature?: number;
+  maxTokens?: number;
+  stopSequences?: string[];
+  systemPrompt?: string;
 }
 
 export interface CompletionResult {
-  text: string
-  model: string
-  usage: { promptTokens: number; completionTokens: number; totalTokens: number }
-  finishReason: 'stop' | 'length' | 'content_filter'
+  text: string;
+  model: string;
+  usage: { promptTokens: number; completionTokens: number; totalTokens: number };
+  finishReason: 'stop' | 'length' | 'content_filter';
 }
 
 export interface CompletionChunk {
-  text: string
-  index: number
-  finishReason?: 'stop' | 'length' | 'content_filter'
+  text: string;
+  index: number;
+  finishReason?: 'stop' | 'length' | 'content_filter';
 }
 
 export interface InferSchemaOptions {
-  sampleSize?: number
-  confidence?: number
-  detectDates?: boolean
-  detectEnums?: boolean
-  maxEnumValues?: number
+  sampleSize?: number;
+  confidence?: number;
+  detectDates?: boolean;
+  detectEnums?: boolean;
+  maxEnumValues?: number;
 }
 
 export interface SchemaValidationResult {
-  valid: boolean
-  errors: Array<{ row: number; column: string; error: string }>
-  warnings: Array<{ row: number; column: string; warning: string }>
-  coverage: number
+  valid: boolean;
+  errors: Array<{ row: number; column: string; error: string }>;
+  warnings: Array<{ row: number; column: string; warning: string }>;
+  coverage: number;
 }
 
 export interface NLQueryOptions {
-  schema?: ColumnDefinition[]
-  sampleData?: unknown[]
-  dialect?: 'duckdb' | 'sqlite' | 'postgres' | 'mysql'
-  explainSQL?: boolean
-  dryRun?: boolean
+  schema?: ColumnDefinition[];
+  sampleData?: unknown[];
+  dialect?: 'duckdb' | 'sqlite' | 'postgres' | 'mysql';
+  explainSQL?: boolean;
+  dryRun?: boolean;
 }
 
 export interface AIQueryResult {
-  sql: string
-  explanation?: string
-  data?: unknown[]
-  error?: string
-  confidence: number
+  sql: string;
+  explanation?: string;
+  data?: unknown[];
+  error?: string;
+  confidence: number;
 }
 
 export interface AnomalyDetectionOptions {
-  method?: 'zscore' | 'iqr' | 'isolation_forest' | 'auto'
-  threshold?: number
-  sensitivity?: 'low' | 'medium' | 'high'
+  method?: 'zscore' | 'iqr' | 'isolation_forest' | 'auto';
+  threshold?: number;
+  sensitivity?: 'low' | 'medium' | 'high';
 }
 
 export interface AnomalyResult {
-  rowId: string
-  column: string
-  value: unknown
-  score: number
-  reason: string
-  severity: 'low' | 'medium' | 'high'
+  rowId: string;
+  column: string;
+  value: unknown;
+  score: number;
+  reason: string;
+  severity: 'low' | 'medium' | 'high';
 }
 
 export interface DataTypeSuggestion {
-  column: string
-  currentType: string
-  suggestedType: string
-  confidence: number
-  reason: string
-  examples: Array<{ value: unknown; parsedValue: unknown }>
+  column: string;
+  currentType: string;
+  suggestedType: string;
+  confidence: number;
+  reason: string;
+  examples: Array<{ value: unknown; parsedValue: unknown }>;
 }
 
 export interface DuplicateResult {
-  rowIds: string[]
-  columns: string[]
-  values: Record<string, unknown>
-  count: number
+  rowIds: string[];
+  columns: string[];
+  values: Record<string, unknown>;
+  count: number;
 }
 
 export interface SummarizeOptions {
-  maxLength?: number
-  style?: 'technical' | 'business' | 'casual'
-  includeStats?: boolean
-  includeTrends?: boolean
-  columns?: string[]
+  maxLength?: number;
+  style?: 'technical' | 'business' | 'casual';
+  includeStats?: boolean;
+  includeTrends?: boolean;
+  columns?: string[];
 }
 
 export interface Insight {
-  type: 'trend' | 'correlation' | 'outlier' | 'pattern' | 'distribution'
-  title: string
-  description: string
-  columns: string[]
-  confidence: number
+  type: 'trend' | 'correlation' | 'outlier' | 'pattern' | 'distribution';
+  title: string;
+  description: string;
+  columns: string[];
+  confidence: number;
   visualization?: {
-    type: 'line' | 'bar' | 'scatter' | 'heatmap'
-    data: unknown[]
-  }
+    type: 'line' | 'bar' | 'scatter' | 'heatmap';
+    data: unknown[];
+  };
 }
 
 export interface FilterSuggestion {
-  field: string
-  operator: FilterOperator
-  value: unknown
-  displayText: string
-  confidence: number
+  field: string;
+  operator: FilterOperator;
+  value: unknown;
+  displayText: string;
+  confidence: number;
 }
 ```
 
@@ -1080,251 +1092,256 @@ export interface FilterSuggestion {
 
 ```typescript
 export class OpenAIProvider implements AIProvider {
-  constructor(config: { apiKey: string; model?: string; baseURL?: string })
-  name: 'openai'
-  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>
-  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>
-  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>
+  constructor(config: { apiKey: string; model?: string; baseURL?: string });
+  name: 'openai';
+  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>;
+  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>;
+  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>;
 }
 
 export class AnthropicProvider implements AIProvider {
-  constructor(config: { apiKey: string; model?: string; baseURL?: string })
-  name: 'anthropic'
-  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>
-  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>
-  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>
+  constructor(config: { apiKey: string; model?: string; baseURL?: string });
+  name: 'anthropic';
+  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>;
+  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>;
+  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>;
 }
 
 export class GoogleProvider implements AIProvider {
-  constructor(config: { apiKey: string; model?: string; baseURL?: string })
-  name: 'google'
-  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>
-  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>
-  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>
+  constructor(config: { apiKey: string; model?: string; baseURL?: string });
+  name: 'google';
+  generateCompletion(prompt: string, options?: CompletionOptions): Promise<CompletionResult>;
+  generateStructuredOutput<T>(prompt: string, schema: JSONSchema7): Promise<T>;
+  streamCompletion(prompt: string, options?: CompletionOptions): AsyncIterable<CompletionChunk>;
 }
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 8. @phozart/phz-collab
+### 8. @phozart/collab
 
-**Description**: Real-time collaboration with CRDTs. Depends on @phozart/phz-core.
+**Description**: Real-time collaboration with CRDTs. Depends on @phozart/core.
 
 #### Factory Function
 
 ```typescript
-export function createCollabSession(config: CollabConfig): CollabSession
+export function createCollabSession(config: CollabConfig): CollabSession;
 ```
 
 #### Types
 
 ```typescript
-import type { Doc as YDoc } from 'yjs'
+import type { Doc as YDoc } from 'yjs';
 
 export interface CollabConfig {
-  sessionId?: string
-  userId: string
-  userName: string
-  userColor?: string
-  conflictResolution?: ConflictStrategy
-  enablePresence?: boolean
-  enableHistory?: boolean
-  historyLimit?: number
+  sessionId?: string;
+  userId: string;
+  userName: string;
+  userColor?: string;
+  conflictResolution?: ConflictStrategy;
+  enablePresence?: boolean;
+  enableHistory?: boolean;
+  historyLimit?: number;
 }
 
-export type ConflictStrategy = 'last-write-wins' | 'manual' | 'custom'
+export type ConflictStrategy = 'last-write-wins' | 'manual' | 'custom';
 
 export interface CollabSession {
   // Connection
-  connect(provider: SyncProvider): Promise<void>
-  disconnect(): Promise<void>
-  isConnected(): boolean
-  getConnectionState(): ConnectionState
+  connect(provider: SyncProvider): Promise<void>;
+  disconnect(): Promise<void>;
+  isConnected(): boolean;
+  getConnectionState(): ConnectionState;
 
   // Presence
-  getPresence(): ReadonlyMap<UserId, UserPresence>
-  updatePresence(data: Partial<UserPresence>): void
-  onPresenceChange(handler: (presenceMap: Map<UserId, UserPresence>) => void): Unsubscribe
+  getPresence(): ReadonlyMap<UserId, UserPresence>;
+  updatePresence(data: Partial<UserPresence>): void;
+  onPresenceChange(handler: (presenceMap: Map<UserId, UserPresence>) => void): Unsubscribe;
 
   // Change Tracking
-  onRemoteChange(handler: (change: RemoteChange) => void): Unsubscribe
-  onLocalChange(handler: (change: LocalChange) => void): Unsubscribe
-  getChangeHistory(options?: HistoryOptions): ChangeEntry[]
+  onRemoteChange(handler: (change: RemoteChange) => void): Unsubscribe;
+  onLocalChange(handler: (change: LocalChange) => void): Unsubscribe;
+  getChangeHistory(options?: HistoryOptions): ChangeEntry[];
 
   // Session Info
-  getSessionInfo(): SessionInfo
-  getUserInfo(userId: UserId): UserInfo | undefined
+  getSessionInfo(): SessionInfo;
+  getUserInfo(userId: UserId): UserInfo | undefined;
 
   // Conflict Resolution
-  onConflict(handler: (conflict: Conflict) => ConflictResolution): Unsubscribe
-  resolveConflict(conflictId: string, resolution: ConflictResolution): void
+  onConflict(handler: (conflict: Conflict) => ConflictResolution): Unsubscribe;
+  resolveConflict(conflictId: string, resolution: ConflictResolution): void;
 
   // Yjs Document
-  getYDoc(): YDoc
+  getYDoc(): YDoc;
 
   // Grid Integration
-  attachToGrid(grid: GridApi): void
-  detachFromGrid(): void
+  attachToGrid(grid: GridApi): void;
+  detachFromGrid(): void;
 
   // Lifecycle
-  destroy(): void
+  destroy(): void;
 }
 
-export type UserId = string
+export type UserId = string;
 
 export interface UserPresence {
-  userId: UserId
-  userName: string
-  userColor: string
-  cursor?: CellPosition
-  selection?: CellPosition[]
-  editing?: CellPosition
-  lastActivity: number
-  online: boolean
+  userId: UserId;
+  userName: string;
+  userColor: string;
+  cursor?: CellPosition;
+  selection?: CellPosition[];
+  editing?: CellPosition;
+  lastActivity: number;
+  online: boolean;
 }
 
-export type ConnectionState = 'disconnected' | 'connecting' | 'connected' | 'reconnecting' | 'error'
+export type ConnectionState =
+  | 'disconnected'
+  | 'connecting'
+  | 'connected'
+  | 'reconnecting'
+  | 'error';
 
 export interface RemoteChange {
-  type: 'cell' | 'row' | 'column' | 'state'
-  userId: UserId
-  timestamp: number
-  change: CellChange | RowChange | ColumnChange | StateChange
+  type: 'cell' | 'row' | 'column' | 'state';
+  userId: UserId;
+  timestamp: number;
+  change: CellChange | RowChange | ColumnChange | StateChange;
 }
 
 export interface LocalChange {
-  type: 'cell' | 'row' | 'column' | 'state'
-  timestamp: number
-  change: CellChange | RowChange | ColumnChange | StateChange
+  type: 'cell' | 'row' | 'column' | 'state';
+  timestamp: number;
+  change: CellChange | RowChange | ColumnChange | StateChange;
 }
 
 export interface CellChange {
-  position: CellPosition
-  oldValue: unknown
-  newValue: unknown
+  position: CellPosition;
+  oldValue: unknown;
+  newValue: unknown;
 }
 
 export interface RowChange {
-  action: 'add' | 'update' | 'delete'
-  rowId: RowId
-  data?: RowData
+  action: 'add' | 'update' | 'delete';
+  rowId: RowId;
+  data?: RowData;
 }
 
 export interface ColumnChange {
-  action: 'add' | 'update' | 'delete' | 'reorder'
-  field: string
-  data?: ColumnDefinition
-  newIndex?: number
+  action: 'add' | 'update' | 'delete' | 'reorder';
+  field: string;
+  data?: ColumnDefinition;
+  newIndex?: number;
 }
 
 export interface StateChange {
-  field: keyof GridState
-  oldValue: unknown
-  newValue: unknown
+  field: keyof GridState;
+  oldValue: unknown;
+  newValue: unknown;
 }
 
 export interface HistoryOptions {
-  limit?: number
-  since?: number
-  userId?: UserId
-  type?: 'cell' | 'row' | 'column' | 'state'
+  limit?: number;
+  since?: number;
+  userId?: UserId;
+  type?: 'cell' | 'row' | 'column' | 'state';
 }
 
 export interface ChangeEntry {
-  id: string
-  userId: UserId
-  timestamp: number
-  type: 'cell' | 'row' | 'column' | 'state'
-  change: CellChange | RowChange | ColumnChange | StateChange
+  id: string;
+  userId: UserId;
+  timestamp: number;
+  type: 'cell' | 'row' | 'column' | 'state';
+  change: CellChange | RowChange | ColumnChange | StateChange;
 }
 
 export interface SessionInfo {
-  sessionId: string
-  createdAt: number
-  connectedUsers: number
-  totalChanges: number
+  sessionId: string;
+  createdAt: number;
+  connectedUsers: number;
+  totalChanges: number;
 }
 
 export interface UserInfo {
-  userId: UserId
-  userName: string
-  userColor: string
-  joinedAt: number
-  changeCount: number
+  userId: UserId;
+  userName: string;
+  userColor: string;
+  joinedAt: number;
+  changeCount: number;
 }
 
 export interface Conflict {
-  id: string
-  type: 'cell' | 'row' | 'column'
-  position?: CellPosition
-  rowId?: RowId
-  field?: string
-  localValue: unknown
-  remoteValue: unknown
-  localUserId: UserId
-  remoteUserId: UserId
-  timestamp: number
+  id: string;
+  type: 'cell' | 'row' | 'column';
+  position?: CellPosition;
+  rowId?: RowId;
+  field?: string;
+  localValue: unknown;
+  remoteValue: unknown;
+  localUserId: UserId;
+  remoteUserId: UserId;
+  timestamp: number;
 }
 
 export interface ConflictResolution {
-  conflictId: string
-  resolution: 'local' | 'remote' | 'merge' | 'custom'
-  customValue?: unknown
+  conflictId: string;
+  resolution: 'local' | 'remote' | 'merge' | 'custom';
+  customValue?: unknown;
 }
 
-export type Unsubscribe = () => void
+export type Unsubscribe = () => void;
 ```
 
 #### Sync Providers
 
 ```typescript
 export interface SyncProvider {
-  name: string
-  connect(doc: YDoc, sessionId: string): Promise<void>
-  disconnect(): Promise<void>
-  isConnected(): boolean
-  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe
+  name: string;
+  connect(doc: YDoc, sessionId: string): Promise<void>;
+  disconnect(): Promise<void>;
+  isConnected(): boolean;
+  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe;
 }
 
 export class WebSocketSyncProvider implements SyncProvider {
-  constructor(config: WebSocketSyncConfig)
-  name: 'websocket'
-  connect(doc: YDoc, sessionId: string): Promise<void>
-  disconnect(): Promise<void>
-  isConnected(): boolean
-  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe
+  constructor(config: WebSocketSyncConfig);
+  name: 'websocket';
+  connect(doc: YDoc, sessionId: string): Promise<void>;
+  disconnect(): Promise<void>;
+  isConnected(): boolean;
+  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe;
 }
 
 export interface WebSocketSyncConfig {
-  url: string
-  protocols?: string[]
-  reconnectInterval?: number
-  maxReconnectAttempts?: number
+  url: string;
+  protocols?: string[];
+  reconnectInterval?: number;
+  maxReconnectAttempts?: number;
   auth?: {
-    token?: string
-    headers?: Record<string, string>
-  }
+    token?: string;
+    headers?: Record<string, string>;
+  };
 }
 
 export class WebRTCSyncProvider implements SyncProvider {
-  constructor(config: WebRTCSyncConfig)
-  name: 'webrtc'
-  connect(doc: YDoc, sessionId: string): Promise<void>
-  disconnect(): Promise<void>
-  isConnected(): boolean
-  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe
+  constructor(config: WebRTCSyncConfig);
+  name: 'webrtc';
+  connect(doc: YDoc, sessionId: string): Promise<void>;
+  disconnect(): Promise<void>;
+  isConnected(): boolean;
+  onConnectionStateChange(handler: (state: ConnectionState) => void): Unsubscribe;
 }
 
 export interface WebRTCSyncConfig {
-  signalingServer: string
-  iceServers?: RTCIceServer[]
-  enableDataChannelOptimization?: boolean
+  signalingServer: string;
+  iceServers?: RTCIceServer[];
+  enableDataChannelOptimization?: boolean;
 }
 ```
 
@@ -1332,24 +1349,24 @@ export interface WebRTCSyncConfig {
 
 ```typescript
 export interface YGridDocument {
-  rows: Y.Array<Y.Map<unknown>>
-  columns: Y.Array<Y.Map<unknown>>
-  state: Y.Map<unknown>
-  presence: Y.Map<UserPresence>
+  rows: Y.Array<Y.Map<unknown>>;
+  columns: Y.Array<Y.Map<unknown>>;
+  state: Y.Map<unknown>;
+  presence: Y.Map<UserPresence>;
 }
 
-export function getYGridDocument(doc: YDoc): YGridDocument
+export function getYGridDocument(doc: YDoc): YGridDocument;
 ```
 
-#### Re-exports from @phozart/phz-core
+#### Re-exports from @phozart/core
 
 ```typescript
-export * from '@phozart/phz-core'
+export * from '@phozart/core';
 ```
 
 ---
 
-### 9. @phozart/phz-docs (Internal)
+### 9. @phozart/docs (Internal)
 
 **Description**: Documentation site. No public API exports.
 
@@ -1357,7 +1374,7 @@ export * from '@phozart/phz-core'
 
 ---
 
-### 10. @phozart/phz-python
+### 10. @phozart/python
 
 **Description**: Python package distributed on PyPI as `phz-grid`. Wraps JavaScript core with anywidget.
 
@@ -1365,7 +1382,7 @@ export * from '@phozart/phz-core'
 
 ---
 
-### 11. @phozart/phz-shared
+### 11. @phozart/shared
 
 **Description**: Shared infrastructure — adapter interfaces, design system, artifact types, runtime coordination. Foundation layer with no Lit or DOM dependencies.
 
@@ -1806,7 +1823,7 @@ export function getVisibleItems(state: AttentionFacetedState): FilterableAttenti
 
 ---
 
-### 12. @phozart/phz-viewer
+### 12. @phozart/viewer
 
 **Description**: Read-only consumption shell for the analyst persona. Provides catalog, dashboard, report, explorer, and attention screens.
 
@@ -1961,7 +1978,7 @@ export class PhzViewerEmpty extends LitElement
 
 ---
 
-### 13. @phozart/phz-editor
+### 13. @phozart/editor
 
 **Description**: Authoring shell for the author persona. Supports creating and editing dashboards, reports, explorer queries, alerts, and subscriptions.
 
@@ -2201,7 +2218,7 @@ export class PhzAlertSubscription extends LitElement
 
 ---
 
-### 14. @phozart/phz-engine (v15 Additions)
+### 14. @phozart/engine (v15 Additions)
 
 **Description**: New subsystems added to the BI engine in v15.
 
@@ -2270,7 +2287,7 @@ export function filterBySeverity(state: AttentionSystemState, severity: string):
 
 ---
 
-### 15. @phozart/phz-workspace (v15 Additions — Wave 5)
+### 15. @phozart/workspace (v15 Additions — Wave 5)
 
 **Description**: New authoring, governance, and shell state machines added to workspace in v15.
 
@@ -2404,7 +2421,7 @@ This section documents where the Data Model (DATA-MODEL.md) and API Contracts (A
 - **API-CONTRACTS.md**: Not explicitly defined, uses `unknown` in many places
 - **RESOLUTION**: Export both:
   ```typescript
-  export type CellValue = string | number | boolean | Date | null | undefined
+  export type CellValue = string | number | boolean | Date | null | undefined;
   ```
   But allow `unknown` in function parameters for flexibility.
 - **RATIONALE**: CellValue is a helpful constraint for internal logic, but forcing it at API boundaries is too restrictive.
@@ -2425,8 +2442,8 @@ This section documents where the Data Model (DATA-MODEL.md) and API Contracts (A
 - **DATA-MODEL.md**: Uses colon separators: `'grid:ready'`, `'cell:click'`
 - **API-CONTRACTS.md**: Uses hyphen separators for DOM events: `'grid-ready'`, `'cell-click'`
 - **RESOLUTION**:
-  - Internal event system (@phozart/phz-core): Use colon: `'grid:ready'`
-  - DOM custom events (@phozart/phz-grid): Use hyphen: `'grid-ready'`
+  - Internal event system (@phozart/core): Use colon: `'grid:ready'`
+  - DOM custom events (@phozart/grid): Use hyphen: `'grid-ready'`
 - **RATIONALE**: Colons are idiomatic for EventEmitter-style APIs. Hyphens are standard for DOM custom events.
 
 ### 7. FilterOperator Type
@@ -2436,14 +2453,23 @@ This section documents where the Data Model (DATA-MODEL.md) and API Contracts (A
 - **RESOLUTION**: Use DATA-MODEL.md's full set of named operators:
   ```typescript
   export type FilterOperator =
-    | 'equals' | 'notEquals'
-    | 'contains' | 'notContains'
-    | 'startsWith' | 'endsWith'
-    | 'lessThan' | 'lessThanOrEqual'
-    | 'greaterThan' | 'greaterThanOrEqual'
-    | 'between' | 'in' | 'notIn'
-    | 'isNull' | 'isNotNull'
-    | 'isEmpty' | 'isNotEmpty'
+    | 'equals'
+    | 'notEquals'
+    | 'contains'
+    | 'notContains'
+    | 'startsWith'
+    | 'endsWith'
+    | 'lessThan'
+    | 'lessThanOrEqual'
+    | 'greaterThan'
+    | 'greaterThanOrEqual'
+    | 'between'
+    | 'in'
+    | 'notIn'
+    | 'isNull'
+    | 'isNotNull'
+    | 'isEmpty'
+    | 'isNotEmpty';
   ```
 - **RATIONALE**: Named operators are more self-documenting and avoid confusion with comparison operators.
 
@@ -2454,56 +2480,56 @@ This section documents where the Data Model (DATA-MODEL.md) and API Contracts (A
 This diagram shows which packages import types from which packages. All arrows point FROM dependent TO dependency.
 
 ```
-@phozart/phz-shared (Foundation — adapters, types, design system, coordination)
+@phozart/shared (Foundation — adapters, types, design system, coordination)
     ↑
-    ├─ @phozart/phz-core
+    ├─ @phozart/core
     │   ↑
-    │   ├─ @phozart/phz-grid
+    │   ├─ @phozart/grid
     │   │   ↑
-    │   │   ├─ @phozart/phz-react
-    │   │   ├─ @phozart/phz-vue
-    │   │   └─ @phozart/phz-angular
+    │   │   ├─ @phozart/react
+    │   │   ├─ @phozart/vue
+    │   │   └─ @phozart/angular
     │   │
-    │   ├─ @phozart/phz-duckdb
-    │   ├─ @phozart/phz-ai
-    │   └─ @phozart/phz-collab
+    │   ├─ @phozart/duckdb
+    │   ├─ @phozart/ai
+    │   └─ @phozart/collab
     │
-    ├─ @phozart/phz-engine (also depends on core)
+    ├─ @phozart/engine (also depends on core)
     │   ↑
-    │   └─ @phozart/phz-widgets
+    │   └─ @phozart/widgets
     │
-    ├─ @phozart/phz-workspace (also depends on core, engine, criteria, definitions)
+    ├─ @phozart/workspace (also depends on core, engine, criteria, definitions)
     │
-    ├─ @phozart/phz-viewer (read-only shell)
+    ├─ @phozart/viewer (read-only shell)
     │
-    └─ @phozart/phz-editor (authoring shell)
+    └─ @phozart/editor (authoring shell)
 
-@phozart/phz-definitions (no internal deps)
-@phozart/phz-python (JavaScript bundle includes core + grid)
+@phozart/definitions (no internal deps)
+@phozart/python (JavaScript bundle includes core + grid)
 ```
 
 ### Dependency Rules
 
-1. **@phozart/phz-shared** has ZERO internal dependencies (foundation package)
-2. **@phozart/phz-core** depends on @phozart/phz-shared and @phozart/phz-definitions
-3. **@phozart/phz-grid** depends ONLY on @phozart/phz-core
-4. **Framework adapters** (@phozart/phz-react, @phozart/phz-vue, @phozart/phz-angular) depend on @phozart/phz-core AND @phozart/phz-grid
-5. **Extension packages** (@phozart/phz-duckdb, @phozart/phz-ai, @phozart/phz-collab) depend ONLY on @phozart/phz-core
-6. **@phozart/phz-engine** depends on @phozart/phz-core AND @phozart/phz-shared
-7. **@phozart/phz-viewer** depends ONLY on @phozart/phz-shared (no workspace dependency)
-8. **@phozart/phz-editor** depends ONLY on @phozart/phz-shared (no workspace dependency)
-9. **@phozart/phz-workspace** depends on @phozart/phz-shared, core, engine, criteria, definitions
-10. **@phozart/phz-python** bundles @phozart/phz-core + @phozart/phz-grid (no direct TypeScript imports)
+1. **@phozart/shared** has ZERO internal dependencies (foundation package)
+2. **@phozart/core** depends on @phozart/shared and @phozart/definitions
+3. **@phozart/grid** depends ONLY on @phozart/core
+4. **Framework adapters** (@phozart/react, @phozart/vue, @phozart/angular) depend on @phozart/core AND @phozart/grid
+5. **Extension packages** (@phozart/duckdb, @phozart/ai, @phozart/collab) depend ONLY on @phozart/core
+6. **@phozart/engine** depends on @phozart/core AND @phozart/shared
+7. **@phozart/viewer** depends ONLY on @phozart/shared (no workspace dependency)
+8. **@phozart/editor** depends ONLY on @phozart/shared (no workspace dependency)
+9. **@phozart/workspace** depends on @phozart/shared, core, engine, criteria, definitions
+10. **@phozart/python** bundles @phozart/core + @phozart/grid (no direct TypeScript imports)
 
 ### Re-export Strategy
 
-- All packages re-export `@phozart/phz-core` types via `export * from '@phozart/phz-core'`
+- All packages re-export `@phozart/core` types via `export * from '@phozart/core'`
 - This allows consumers to import types from any package without worrying about the source:
   ```typescript
   // All valid:
-  import { GridApi, ColumnDefinition } from '@phozart/phz-core'
-  import { GridApi, ColumnDefinition } from '@phozart/phz-grid'
-  import { GridApi, ColumnDefinition } from '@phozart/phz-react'
+  import { GridApi, ColumnDefinition } from '@phozart/core';
+  import { GridApi, ColumnDefinition } from '@phozart/grid';
+  import { GridApi, ColumnDefinition } from '@phozart/react';
   ```
 - This simplifies imports and prevents "imported from two different modules" TypeScript errors
 
@@ -2529,7 +2555,7 @@ This diagram shows which packages import types from which packages. All arrows p
    - Example:
      ```typescript
      /** @deprecated Use newMethod() instead. Will be removed in v3.0.0 */
-     export function oldMethod(): void
+     export function oldMethod(): void;
      ```
 
 4. **Non-breaking changes require:**
@@ -2546,7 +2572,8 @@ This diagram shows which packages import types from which packages. All arrows p
 4. Provide migration path in deprecation message
 
 Example:
-```typescript
+
+````typescript
 /**
  * @deprecated since v2.0.0, use `createGrid()` instead.
  * Will be removed in v4.0.0.
@@ -2561,7 +2588,7 @@ Example:
  * ```
  */
 export class Grid { ... }
-```
+````
 
 ### Versioning Strategy
 
@@ -2573,9 +2600,9 @@ All packages follow **strict semantic versioning**:
 
 ### Type Compatibility Matrix
 
-| Version | @phozart/phz-core | @phozart/phz-grid | @phozart/phz-react | @phozart/phz-vue | @phozart/phz-angular | @phozart/phz-duckdb | @phozart/phz-ai | @phozart/phz-collab |
-|---------|---------------|---------------|----------------|--------------|------------------|-----------------|-------------|-----------------|
-| 1.0.0   | 1.0.0         | 1.0.0         | 1.0.0          | 1.0.0        | 1.0.0            | 1.0.0           | 1.0.0       | 1.0.0           |
+| Version | @phozart/core | @phozart/grid | @phozart/react | @phozart/vue | @phozart/angular | @phozart/duckdb | @phozart/ai | @phozart/collab |
+| ------- | ----------------- | ----------------- | ------------------ | ---------------- | -------------------- | ------------------- | --------------- | ------------------- |
+| 1.0.0   | 1.0.0             | 1.0.0             | 1.0.0              | 1.0.0            | 1.0.0                | 1.0.0               | 1.0.0           | 1.0.0               |
 
 All packages MUST stay in sync for major and minor versions. Patches can diverge.
 
@@ -2603,7 +2630,8 @@ All packages MUST stay in sync for major and minor versions. Patches can diverge
 **Next Review**: On any contract change request
 
 **Changelog**:
-- v1.1 (2026-03-08): Added @phozart/phz-shared (#11), @phozart/phz-viewer (#12), @phozart/phz-editor (#13), engine v15 additions (#14), workspace Wave 5 additions (#15)
+
+- v1.1 (2026-03-08): Added @phozart/shared (#11), @phozart/viewer (#12), @phozart/editor (#13), engine v15 additions (#14), workspace Wave 5 additions (#15)
 - v1.0 (2026-02-24): Initial type contracts (packages #1-#10)
 
 ---

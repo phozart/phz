@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Report Presentation Types
+ * @phozart/engine — Report Presentation Types
  *
  * Canonical types for how a report _looks_: table settings, column formatting,
  * number formats, export settings, status colors, etc.

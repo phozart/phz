@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/storage — Storage-focused entry point
+ * @phozart/engine/storage — Storage-focused entry point
  *
  * Storage adapters for persisting engine state.
  */

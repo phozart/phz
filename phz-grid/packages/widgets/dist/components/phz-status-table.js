@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Status Table
+ * @phozart/widgets — Status Table
  *
  * Entity list with status indicators per KPI metric.
  */
@@ -12,7 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { computeStatus } from '@phozart/phz-engine';
+import { computeStatus } from '@phozart/engine';
 import { resolveWidgetState } from '../widget-states.js';
 let PhzStatusTable = class PhzStatusTable extends LitElement {
     constructor() {

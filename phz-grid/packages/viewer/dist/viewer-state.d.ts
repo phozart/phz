@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Viewer Shell State Machine
+ * @phozart/viewer — Viewer Shell State Machine
  *
  * Headless state management for the viewer shell. Pure functions
  * operating on immutable ViewerShellState. No DOM dependency.
@@ -12,9 +12,9 @@
  * - Loading / error / empty states
  * - Attention items count
  */
-import type { ViewerContext } from '@phozart/phz-shared/adapters';
-import type { FilterContextManager } from '@phozart/phz-shared/coordination';
-import type { ErrorState, EmptyState } from '@phozart/phz-shared/types';
+import type { ViewerContext } from '@phozart/shared/adapters';
+import type { FilterContextManager } from '@phozart/shared/coordination';
+import type { ErrorState, EmptyState } from '@phozart/shared/types';
 export type ViewerScreen = 'catalog' | 'dashboard' | 'report' | 'explorer';
 export interface NavigationEntry {
     screen: ViewerScreen;

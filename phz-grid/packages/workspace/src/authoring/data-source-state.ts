@@ -14,8 +14,8 @@ import type {
   DataSourceMeta,
   FieldMetadata,
   FieldStatsResult,
-} from '@phozart/phz-shared';
-import { groupFieldsByRole } from '@phozart/phz-shared';
+} from '@phozart/shared';
+import { groupFieldsByRole } from '@phozart/shared';
 
 // Re-export the schema type for consumers
 export type { DataSourceMeta, FieldMetadata };

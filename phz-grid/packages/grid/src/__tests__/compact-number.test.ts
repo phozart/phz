@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — Compact Number Formatting + CSV Formula Injection Tests
+ * @phozart/grid — Compact Number Formatting + CSV Formula Injection Tests
  */
 import { describe, it, expect } from 'vitest';
 import { formatCompactNumber, exportToCSV, type CsvExportOptions } from '../export/csv-exporter.js';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 
 describe('formatCompactNumber', () => {
   it('formats billions', () => {

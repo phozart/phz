@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Shared Styles
+ * @phozart/engine-admin — Shared Styles
  *
  * Common CSS for engine admin components. Uses phz-ea- prefix.
  */

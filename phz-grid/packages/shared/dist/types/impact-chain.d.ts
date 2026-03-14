@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Impact Chain types (7A-C)
+ * @phozart/shared — Impact Chain types (7A-C)
  *
  * Types for the impact chain rendering variant of the decision tree widget.
  * An impact chain is a horizontal causal flow for root cause analysis,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Loading & Quality Renderer (K.4 + K.7)
+ * @phozart/workspace — Loading & Quality Renderer (K.4 + K.7)
  *
  * Generates loading skeletons from LayoutNode structure,
  * freshness badges, quality warnings, and stale dimming CSS.

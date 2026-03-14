@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   createCellRendererRegistry,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 import type {
   MicroWidgetDisplayMode,
   MicroWidgetType,
@@ -14,7 +14,7 @@ import type {
   MicroWidgetRenderResult,
   MicroWidgetRenderer,
   CellRendererRegistry,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Type-level validation (compile-time checks via assignments)

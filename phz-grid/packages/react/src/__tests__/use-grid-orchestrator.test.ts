@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — useGridOrchestrator Hook Tests
+ * @phozart/react — useGridOrchestrator Hook Tests
  *
  * Tests for the orchestrator hook that coordinates
  * PhzGrid + PhzSelectionCriteria + PhzGridAdmin.
@@ -30,9 +30,9 @@ vi.mock('react', () => ({
   createElement: vi.fn(),
 }));
 
-vi.mock('@phozart/phz-grid', () => ({}));
-vi.mock('@phozart/phz-core', () => ({}));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/grid', () => ({}));
+vi.mock('@phozart/core', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 // ─── Imports ────────────────────────────────────────────────
 

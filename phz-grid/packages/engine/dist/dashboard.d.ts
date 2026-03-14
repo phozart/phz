@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Dashboard Configuration & Layout
+ * @phozart/engine — Dashboard Configuration & Layout
  *
  * Dashboards are collections of widgets arranged in a responsive grid layout.
  */
 import type { DashboardId, WidgetId, ValidationResult } from './types.js';
 import type { WidgetPlacement } from './widget.js';
-import type { CriteriaConfig } from '@phozart/phz-core';
+import type { CriteriaConfig } from '@phozart/core';
 import type { EnhancedDashboardConfig } from './dashboard-enhanced.js';
 export interface DashboardLayout {
     columns: number;

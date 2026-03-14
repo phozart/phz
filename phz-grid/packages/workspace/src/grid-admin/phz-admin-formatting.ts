@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Conditional Formatting Rule Builder
+ * @phozart/grid-admin — Conditional Formatting Rule Builder
  *
  * Rule list with inline condition builder, style editor, and live preview.
  * Embeddable component.
@@ -9,7 +9,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import { adminBaseStyles } from './shared-styles.js';
-import type { ConditionalFormattingRule, FilterOperator } from '@phozart/phz-core';
+import type { ConditionalFormattingRule, FilterOperator } from '@phozart/core';
 
 const OPERATOR_LABELS: Record<string, string> = {
   equals: 'Equals',

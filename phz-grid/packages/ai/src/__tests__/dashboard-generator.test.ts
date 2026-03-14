@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Dashboard Generator Tests
+ * @phozart/ai — Dashboard Generator Tests
  *
  * Tests for generating dashboard configs from data schema + NL prompt.
  */

@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, RowGroup } from '@phozart/phz-core';
+import type { GridApi, RowGroup } from '@phozart/core';
 export interface GroupHost extends ReactiveControllerHost {
     gridApi: GridApi | null;
     groupBy: string[];

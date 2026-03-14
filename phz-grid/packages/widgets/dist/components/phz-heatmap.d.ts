@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Heatmap
+ * @phozart/widgets — Heatmap
  *
  * CSS-grid heatmap with color interpolation, tooltips, and SR accessibility.
  * Renders row/col labeled cells with value-proportional coloring.

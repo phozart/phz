@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Unified CDN Entry Point
+ * @phozart/grid — Unified CDN Entry Point
  *
  * All-in-one bundle: grid + engine + widgets + grid-admin + engine-admin.
  * For use in plain HTML demos and prototypes.
@@ -15,43 +15,43 @@ import './components/phz-column-chooser.js';
 import './components/phz-chart-popover.js';
 import './components/phz-toolbar.js';
 import './components/phz-report-view.js';
-import '@phozart/phz-widgets/components/phz-kpi-card.js';
-import '@phozart/phz-widgets/components/phz-kpi-scorecard.js';
-import '@phozart/phz-widgets/components/phz-bar-chart.js';
-import '@phozart/phz-widgets/components/phz-trend-line.js';
-import '@phozart/phz-widgets/components/phz-bottom-n.js';
-import '@phozart/phz-widgets/components/phz-status-table.js';
-import '@phozart/phz-widgets/components/phz-drill-link.js';
-import '@phozart/phz-widgets/components/phz-dashboard.js';
-import '@phozart/phz-widgets/components/phz-view-manager.js';
-import '@phozart/phz-widgets/components/phz-selection-bar.js';
-import '@phozart/phz-widgets/components/phz-widget.js';
-import '@phozart/phz-workspace/grid-admin';
-import '@phozart/phz-workspace/engine-admin';
-import '@phozart/phz-criteria/components/phz-criteria-panel.js';
-import '@phozart/phz-criteria/components/phz-criteria-field.js';
-import '@phozart/phz-criteria/components/phz-criteria-summary.js';
-import '@phozart/phz-criteria/components/phz-preset-manager.js';
-import '@phozart/phz-criteria/components/phz-criteria-admin.js';
-import '@phozart/phz-criteria/components/fields/phz-date-range-picker.js';
-import '@phozart/phz-criteria/components/fields/phz-numeric-range-input.js';
-import '@phozart/phz-criteria/components/fields/phz-tree-select.js';
-import '@phozart/phz-criteria/components/fields/phz-searchable-dropdown.js';
-import '@phozart/phz-criteria/components/fields/phz-field-presence-filter.js';
-import '@phozart/phz-criteria/components/fields/phz-chip-select.js';
-import '@phozart/phz-criteria/components/fields/phz-match-filter-pill.js';
-import '@phozart/phz-criteria/components/phz-selection-criteria.js';
-import '@phozart/phz-criteria/components/phz-criteria-bar.js';
-import '@phozart/phz-criteria/components/phz-filter-drawer.js';
-import '@phozart/phz-criteria/components/phz-filter-section.js';
-import '@phozart/phz-criteria/components/phz-expanded-modal.js';
-import '@phozart/phz-criteria/components/phz-preset-sidebar.js';
-import '@phozart/phz-criteria/components/phz-rule-admin.js';
-import '@phozart/phz-criteria/components/phz-preset-admin.js';
-import '@phozart/phz-criteria/components/phz-filter-designer.js';
-import '@phozart/phz-criteria/components/phz-filter-configurator.js';
-import '@phozart/phz-criteria/components/phz-rule-editor-modal.js';
-import '@phozart/phz-criteria/components/fields/phz-combobox.js';
+import '@phozart/widgets/components/phz-kpi-card.js';
+import '@phozart/widgets/components/phz-kpi-scorecard.js';
+import '@phozart/widgets/components/phz-bar-chart.js';
+import '@phozart/widgets/components/phz-trend-line.js';
+import '@phozart/widgets/components/phz-bottom-n.js';
+import '@phozart/widgets/components/phz-status-table.js';
+import '@phozart/widgets/components/phz-drill-link.js';
+import '@phozart/widgets/components/phz-dashboard.js';
+import '@phozart/widgets/components/phz-view-manager.js';
+import '@phozart/widgets/components/phz-selection-bar.js';
+import '@phozart/widgets/components/phz-widget.js';
+import '@phozart/workspace/grid-admin';
+import '@phozart/workspace/engine-admin';
+import '@phozart/criteria/components/phz-criteria-panel.js';
+import '@phozart/criteria/components/phz-criteria-field.js';
+import '@phozart/criteria/components/phz-criteria-summary.js';
+import '@phozart/criteria/components/phz-preset-manager.js';
+import '@phozart/criteria/components/phz-criteria-admin.js';
+import '@phozart/criteria/components/fields/phz-date-range-picker.js';
+import '@phozart/criteria/components/fields/phz-numeric-range-input.js';
+import '@phozart/criteria/components/fields/phz-tree-select.js';
+import '@phozart/criteria/components/fields/phz-searchable-dropdown.js';
+import '@phozart/criteria/components/fields/phz-field-presence-filter.js';
+import '@phozart/criteria/components/fields/phz-chip-select.js';
+import '@phozart/criteria/components/fields/phz-match-filter-pill.js';
+import '@phozart/criteria/components/phz-selection-criteria.js';
+import '@phozart/criteria/components/phz-criteria-bar.js';
+import '@phozart/criteria/components/phz-filter-drawer.js';
+import '@phozart/criteria/components/phz-filter-section.js';
+import '@phozart/criteria/components/phz-expanded-modal.js';
+import '@phozart/criteria/components/phz-preset-sidebar.js';
+import '@phozart/criteria/components/phz-rule-admin.js';
+import '@phozart/criteria/components/phz-preset-admin.js';
+import '@phozart/criteria/components/phz-filter-designer.js';
+import '@phozart/criteria/components/phz-filter-configurator.js';
+import '@phozart/criteria/components/phz-rule-editor-modal.js';
+import '@phozart/criteria/components/fields/phz-combobox.js';
 export * from './index.js';
-export { createCriteriaEngine, migrateFromCriteriaConfig, createReportService, createDashboardService, createJSComputeBackend, JSComputeBackend, compileRowExpression, compileMetricExpression, MemoryStorageAdapter, LocalStorageAdapter, createFilterAdapter, applyArtefactCriteria, globalFiltersToCriteriaBindings, EngineMetrics, MetricsController, detectTrendChange, createKPIAlertEngine, runningSum, runningAvg, movingAverage, movingSum, rank, percentRank, lag, lead, rowNumber, ResolutionCache, DirtyTracker, EmbedManager, createBIEngine, } from '@phozart/phz-engine';
+export { createCriteriaEngine, migrateFromCriteriaConfig, createReportService, createDashboardService, createJSComputeBackend, JSComputeBackend, compileRowExpression, compileMetricExpression, MemoryStorageAdapter, LocalStorageAdapter, createFilterAdapter, applyArtefactCriteria, globalFiltersToCriteriaBindings, EngineMetrics, MetricsController, detectTrendChange, createKPIAlertEngine, runningSum, runningAvg, movingAverage, movingSum, rank, percentRank, lag, lead, rowNumber, ResolutionCache, DirtyTracker, EmbedManager, createBIEngine, } from '@phozart/engine';
 //# sourceMappingURL=cdn-all.d.ts.map

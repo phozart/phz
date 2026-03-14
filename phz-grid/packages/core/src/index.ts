@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Headless grid engine
+ * @phozart/core — Headless grid engine
  *
  * Zero DOM dependencies. Foundation for all rendering layers.
  */
@@ -14,7 +14,13 @@ export { createGrid } from './create-grid.js';
 export { EventEmitter } from './event-emitter.js';
 
 // State Management
-export { StateManager, createInitialState } from './state.js';
+export {
+  StateManager,
+  createInitialState,
+  pinColumn,
+  unpinColumn,
+  getEffectivePinState,
+} from './state.js';
 
 // Row Model Pipeline
 export {
@@ -69,6 +75,19 @@ export { toColumnDefinitions, createDataSet, inferDataSetColumns } from './datas
 
 // QueryBackend
 export { createJSArrayQueryBackend } from './js-query-backend.js';
+
+// Query Planner
+export { QueryPlanner, PlanOptimizer } from './query-planner.js';
+export type {
+  ExecutionEngine,
+  QueryPlanStage,
+  QueryPlan,
+  PipelineCapabilities,
+  QueryPlannerConfig,
+  OptimizedQueryPlan,
+  QueryHint,
+  PlanContext,
+} from './query-planner.js';
 
 // Progressive Loading
 export {

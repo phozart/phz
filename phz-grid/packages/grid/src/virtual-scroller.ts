@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — VirtualScroller
+ * @phozart/grid — VirtualScroller
  *
  * Encapsulates scroll mechanics for virtual scroll mode.
  * Attaches to a scroll container, calculates visible row range

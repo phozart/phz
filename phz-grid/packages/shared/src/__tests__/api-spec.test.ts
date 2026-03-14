@@ -1,7 +1,7 @@
 /**
  * Tests for ApiSpec types and helpers.
  */
-import { createApiEndpoint } from '@phozart/phz-shared/types';
+import { createApiEndpoint } from '@phozart/shared/types';
 
 describe('createApiEndpoint', () => {
   it('creates an endpoint with required fields', () => {

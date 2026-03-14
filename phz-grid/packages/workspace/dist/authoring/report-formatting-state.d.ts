@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Formatting State
+ * @phozart/workspace — Report Formatting State
  *
  * Pure functions for managing conditional formatting rules in the
  * report editor. Supports CRUD operations, reordering, and draft editing.

@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-widgets — Decision Tree Variant Entries (7A-C)
+ * @phozart/widgets — Decision Tree Variant Entries (7A-C)
  *
  * WidgetManifest variant definitions for the decision tree widget.
  * Each variant specifies a preset config that the authoring layer uses
  * when placing or switching between rendering modes.
  */
-import type { DecisionTreeRenderVariant } from '@phozart/phz-shared/types';
+import type { DecisionTreeRenderVariant } from '@phozart/shared/types';
 /** A single variant entry for the decision tree widget manifest. */
 export interface DecisionTreeVariantEntry {
     readonly id: string;

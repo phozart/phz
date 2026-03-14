@@ -16,7 +16,7 @@ import {
   hasVisibilityChanged,
   canSaveSharing,
 } from '../authoring/sharing-state.js';
-import type { ShareTarget } from '@phozart/phz-shared/types';
+import type { ShareTarget } from '@phozart/shared/types';
 
 describe('createSharingFlowState', () => {
   it('creates with defaults', () => {

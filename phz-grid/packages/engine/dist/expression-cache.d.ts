@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression Cache
+ * @phozart/engine — Expression Cache
  *
  * LRU cache for compiled expression functions.
  * Keyed by expression string, with stats tracking and schema-change invalidation.

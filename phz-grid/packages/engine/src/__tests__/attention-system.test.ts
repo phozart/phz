@@ -12,7 +12,7 @@ import {
   getUnreadItems,
   filterBySeverity,
 } from '../attention/attention-system.js';
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 
 // --- Test helpers ---
 

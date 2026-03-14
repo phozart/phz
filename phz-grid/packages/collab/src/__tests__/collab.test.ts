@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Unit Tests
+ * @phozart/collab — Unit Tests
  *
  * Tests for type exports, factory function, session behavior,
  * and sync provider classes.
@@ -38,7 +38,7 @@ import type {
   YGridDocument,
 } from '../index.js';
 
-describe('@phozart/phz-collab', () => {
+describe('@phozart/collab', () => {
   describe('type exports', () => {
     it('exports createCollabSession factory', () => {
       expect(createCollabSession).toBeDefined();

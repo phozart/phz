@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Expression Builder
+ * @phozart/engine-admin — Expression Builder
  *
  * Dual-mode expression editor (Block mode + Formula mode).
  * Both modes edit the same ExpressionNode tree.
  */
 import { LitElement } from 'lit';
-import type { ExpressionNode, DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/phz-engine';
-import type { MetricDef } from '@phozart/phz-engine';
+import type { ExpressionNode, DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/engine';
+import type { MetricDef } from '@phozart/engine';
 export declare class PhzExpressionBuilder extends LitElement {
     static styles: import("lit").CSSResult;
     expression?: ExpressionNode;

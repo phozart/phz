@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Window Functions Tests (TDD: RED phase)
+ * @phozart/engine — Window Functions Tests (TDD: RED phase)
  */
 import { describe, it, expect } from 'vitest';
 import {

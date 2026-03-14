@@ -16,7 +16,7 @@
  * └──────────────────────────────────────────────────────────────────┘
  *
  * Usage:
- *   import '@phozart/phz-workspace/all';
+ *   import '@phozart/workspace/all';
  *   <phz-workspace .adapter=${adapter} workspace-role="admin"></phz-workspace>
  */
 

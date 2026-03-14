@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Widget Configuration Types
+ * @phozart/engine — Widget Configuration Types
  *
  * 10 widget types for dashboards: KPI cards, scorecards, charts, tables, and more.
  */
@@ -20,6 +20,7 @@ export type WidgetType =
   | 'data-table'
   | 'status-table'
   | 'drill-link'
+  | 'slicer'
   | 'custom';
 
 // --- Layout ---
@@ -141,6 +142,15 @@ export interface DrillLinkWidgetConfig extends BaseWidgetConfig {
   filters?: Record<string, string>;
 }
 
+export interface SlicerWidgetConfig extends BaseWidgetConfig {
+  type: 'slicer';
+  field: string;
+  mode?: 'multi' | 'single' | 'range';
+  showSearch?: boolean;
+  showCounts?: boolean;
+  layout?: 'vertical' | 'horizontal' | 'chips';
+}
+
 export interface CustomWidgetConfig extends BaseWidgetConfig {
   type: 'custom';
   renderer: string;
@@ -156,6 +166,7 @@ export type WidgetConfig =
   | DataTableWidgetConfig
   | StatusTableWidgetConfig
   | DrillLinkWidgetConfig
+  | SlicerWidgetConfig
   | CustomWidgetConfig;
 
 // --- Widget Placement ---

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Dashboard Edit State (B-2.06)
+ * @phozart/editor — Dashboard Edit State (B-2.06)
  *
  * State machine for dashboard editing: widget placement, drag-drop,
  * grid layout configuration, widget config panel, and measure palette.

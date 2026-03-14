@@ -13,7 +13,7 @@ import { describe, it, expect } from 'vitest';
 
 // Import from compiled dist/ via package names
 // (vitest.integration.config.ts points these to dist/)
-import { createGrid, EventEmitter } from '@phozart/phz-core';
+import { createGrid, EventEmitter } from '@phozart/core';
 import {
   createBIEngine,
   createDataProductRegistry,
@@ -22,7 +22,7 @@ import {
   computeAggregation,
   computeAggregations,
   computeStatus,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 const sampleData = [
   { name: 'Alice', age: 30, city: 'NYC', sales: 100 },

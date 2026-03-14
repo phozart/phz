@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — KPI Designer
+ * @phozart/engine-admin — KPI Designer
  *
  * 6-step wizard: 3-column layout (step nav | content | live preview).
  * Embeddable component — drop into any admin page.
  */
 import { LitElement } from 'lit';
-import type { BIEngine } from '@phozart/phz-engine';
+import type { BIEngine } from '@phozart/engine';
 export declare class PhzKPIDesigner extends LitElement {
     static styles: import("lit").CSSResult[];
     engine?: BIEngine;

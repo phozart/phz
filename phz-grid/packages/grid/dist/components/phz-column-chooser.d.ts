@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — <phz-column-chooser>
+ * @phozart/grid — <phz-column-chooser>
  *
  * Column management panel: show/hide columns, drag-reorder,
  * save/load user profiles, add/edit computed columns.
@@ -12,7 +12,7 @@
  *   admin  — above + computed columns
  */
 import { LitElement, type TemplateResult, type PropertyValues } from 'lit';
-import type { ColumnDefinition, ColumnState, UserRole } from '@phozart/phz-core';
+import type { ColumnDefinition, ColumnState, UserRole } from '@phozart/core';
 export interface ColumnProfile {
     name: string;
     order: string[];

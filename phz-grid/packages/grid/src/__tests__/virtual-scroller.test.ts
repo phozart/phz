@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — VirtualScroller Tests
+ * @phozart/grid — VirtualScroller Tests
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { VirtualScroller } from '../virtual-scroller.js';

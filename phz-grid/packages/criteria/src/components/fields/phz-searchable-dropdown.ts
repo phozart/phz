@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Searchable Dropdown
+ * @phozart/criteria — Searchable Dropdown
  *
  * Text input + dropdown with type-ahead, debounced filtering.
  * WAI-ARIA combobox pattern.
@@ -7,7 +7,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/phz-core';
+import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 /** Filter search options respecting matchMode and multiValue config. */

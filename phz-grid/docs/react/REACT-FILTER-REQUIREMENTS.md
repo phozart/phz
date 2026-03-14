@@ -1,6 +1,6 @@
 # React Filter Components Requirements
 
-> Formal requirements for filter/criteria React wrappers in `@phozart/phz-react`.
+> Formal requirements for filter/criteria React wrappers in `@phozart/react`.
 > Traced to the underlying `<phz-selection-criteria>`, `<phz-filter-designer>`,
 > `<phz-preset-admin>`, and `<phz-filter-configurator>` Web Components.
 

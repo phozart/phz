@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Subscriptions Tab State (C-2.06)
+ * @phozart/shared — Subscriptions Tab State (C-2.06)
  *
  * UI state for the subscriptions management tab. Tracks active/paused
  * subscriptions, search, and dialog state.

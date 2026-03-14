@@ -1,28 +1,33 @@
-# @phozart/phz-editor
+# @phozart/editor
 
-Constrained authoring shell for the phz-grid SDK. Provides headless state machines and Lit Web Components for content authors to create dashboards, design reports, explore data, configure alerts, and share artifacts within admin-defined constraints.
+The Studio Console -- BI authoring shell for creating and editing dashboards, reports, alerts, and shared artifacts. Headless state machines and Lit Web Components for content authors working within admin-defined constraints.
+
+In the phozart modular system, the editor is the **performer's interface**. While the workspace exposes every knob and patch cable, the editor provides a focused authoring experience with live preview, drag-and-drop, undo/redo, and context-appropriate tooling.
+
+| Shell                 | Persona                | Role                               |
+| --------------------- | ---------------------- | ---------------------------------- |
+| `@phozart/workspace`  | Admin / Data Engineer  | Studio -- full configuration       |
+| **`@phozart/editor`** | **Author / Analyst**   | **Performer -- focused authoring** |
+| `@phozart/viewer`     | Consumer / Stakeholder | Speaker -- read-only output        |
 
 ## Installation
 
 ```bash
-npm install @phozart/phz-editor
+npm install @phozart/editor
 ```
 
-**Dependencies:** `@phozart/phz-shared`, `@phozart/phz-core`, `@phozart/phz-engine`, `lit`
+**Dependencies:** `@phozart/shared`, `@phozart/core`, `@phozart/engine`, `lit`
 
-> **Note:** Authors work within admin-defined constraints. Pair with `@phozart/phz-viewer` for the read-only consumption layer.
+> **Note:** Authors work within admin-defined constraints. Pair with `@phozart/viewer` for the read-only consumption layer.
 
 ## Quick Start (Lit)
 
 ```ts
-import '@phozart/phz-editor';
+import '@phozart/editor';
 ```
 
 ```html
-<phz-editor-shell
-  .config=${editorConfig}
-  @editor-navigate=${handleNavigation}
->
+<phz-editor-shell .config="${editorConfig}" @editor-navigate="${handleNavigation}">
 </phz-editor-shell>
 ```
 
@@ -33,7 +38,7 @@ The editor components can be wrapped with `@lit/react` for React integration:
 ```tsx
 import React from 'react';
 import { createComponent } from '@lit/react';
-import { PhzEditorShell } from '@phozart/phz-editor';
+import { PhzEditorShell } from '@phozart/editor';
 
 const EditorShell = createComponent({
   tagName: 'phz-editor-shell',
@@ -56,17 +61,17 @@ function AuthoringApp() {
 
 ## Custom Elements
 
-| Element | Description |
-|---------|-------------|
-| `<phz-editor-shell>` | Top-level editor shell with navigation, undo/redo, auto-save |
-| `<phz-editor-catalog>` | Artifact catalog with create dialog, type and visibility filtering |
-| `<phz-editor-dashboard>` | Dashboard editor with drag-and-drop widget placement |
-| `<phz-editor-report>` | Report designer with column, filter, and sort configuration |
-| `<phz-editor-explorer>` | Data explorer with dimension/measure selection and save-to-artifact |
-| `<phz-measure-palette>` | Draggable palette of available measures and dimensions |
-| `<phz-editor-config-panel>` | Widget configuration panel with validation |
-| `<phz-sharing-flow>` | Artifact sharing dialog with visibility and target selection |
-| `<phz-alert-subscription>` | Personal alert and subscription management |
+| Element                     | Description                                                         |
+| --------------------------- | ------------------------------------------------------------------- |
+| `<phz-editor-shell>`        | Top-level editor shell with navigation, undo/redo, auto-save        |
+| `<phz-editor-catalog>`      | Artifact catalog with create dialog, type and visibility filtering  |
+| `<phz-editor-dashboard>`    | Dashboard editor with drag-and-drop widget placement                |
+| `<phz-editor-report>`       | Report designer with column, filter, and sort configuration         |
+| `<phz-editor-explorer>`     | Data explorer with dimension/measure selection and save-to-artifact |
+| `<phz-measure-palette>`     | Draggable palette of available measures and dimensions              |
+| `<phz-editor-config-panel>` | Widget configuration panel with validation                          |
+| `<phz-sharing-flow>`        | Artifact sharing dialog with visibility and target selection        |
+| `<phz-alert-subscription>`  | Personal alert and subscription management                          |
 
 ## Headless State Machines
 
@@ -75,7 +80,13 @@ All state management is provided as pure functions for testability and framework
 ### Editor Shell State
 
 ```ts
-import { createEditorShellState, navigateTo, toggleEditMode, pushUndo, undo } from '@phozart/phz-editor';
+import {
+  createEditorShellState,
+  navigateTo,
+  toggleEditMode,
+  pushUndo,
+  undo,
+} from '@phozart/editor';
 
 let state = createEditorShellState();
 state = navigateTo(state, { screen: 'catalog' });
@@ -93,7 +104,7 @@ import {
   moveWidget,
   resizeWidget,
   setDashboardTitle,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 let dashboard = createDashboardEditState();
 dashboard = setDashboardTitle(dashboard, 'Q4 Revenue Dashboard');
@@ -111,7 +122,7 @@ import {
   addReportFilter,
   setReportSorts,
   toggleReportPreview,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 let report = createReportEditState();
 report = addReportColumn(report, { field: 'revenue', header: 'Revenue' });
@@ -123,12 +134,7 @@ report = toggleReportPreview(report);
 ### Explorer
 
 ```ts
-import {
-  createExplorerState,
-  addDimension,
-  addMeasure,
-  setExplorerResults,
-} from '@phozart/phz-editor';
+import { createExplorerState, addDimension, addMeasure, setExplorerResults } from '@phozart/editor';
 
 let explorer = createExplorerState();
 explorer = addDimension(explorer, 'region');
@@ -139,7 +145,7 @@ explorer = setExplorerResults(explorer, queryResults);
 ### Measure Palette
 
 ```ts
-import { createMeasurePaletteState, searchMeasures, filterByCategory } from '@phozart/phz-editor';
+import { createMeasurePaletteState, searchMeasures, filterByCategory } from '@phozart/editor';
 
 let palette = createMeasurePaletteState();
 palette = searchMeasures(palette, 'revenue');
@@ -149,11 +155,7 @@ palette = filterByCategory(palette, 'financial');
 ### Sharing
 
 ```ts
-import {
-  createSharingFlowState,
-  setTargetVisibility,
-  addShareTarget,
-} from '@phozart/phz-editor';
+import { createSharingFlowState, setTargetVisibility, addShareTarget } from '@phozart/editor';
 
 let sharing = createSharingFlowState();
 sharing = setTargetVisibility(sharing, 'shared');
@@ -168,7 +170,7 @@ import {
   addAlert,
   addSubscription,
   toggleAlertEnabled,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 let alertSub = createAlertSubscriptionState();
 alertSub = addAlert(alertSub, { name: 'Revenue Drop', condition: '...' });
@@ -178,7 +180,7 @@ alertSub = addSubscription(alertSub, { name: 'Weekly Summary', frequency: 'weekl
 ## Configuration
 
 ```ts
-import { createEditorShellConfig, validateEditorConfig } from '@phozart/phz-editor';
+import { createEditorShellConfig, validateEditorConfig } from '@phozart/editor';
 
 const config = createEditorShellConfig({
   features: {

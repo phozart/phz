@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Selection Bar
+ * @phozart/widgets — Selection Bar
  *
  * Global filter bar that scopes all widgets. Renders selection fields as dropdowns, chips, etc.
  */

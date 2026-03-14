@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — MemoryDataAdapter
+ * @phozart/workspace — MemoryDataAdapter
  *
  * In-memory implementation of DataAdapter for testing, prototyping,
  * and small datasets. Stores rows as plain objects and executes

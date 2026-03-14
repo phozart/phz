@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Widget Data Resolver
+ * @phozart/engine — Widget Data Resolver
  *
  * Pure functions that map WidgetPlacement + BIEngine + raw data → resolved widget props.
  * No DOM dependencies — suitable for server-side pre-rendering or headless tests.

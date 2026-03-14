@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-viewer — Attention Dropdown State
+ * @phozart/viewer — Attention Dropdown State
  *
  * Headless state for the attention items dropdown (alerts,
  * notifications, action items). Pure functions on immutable state.
  */
 
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 
 // ========================================================================
 // AttentionDropdownState

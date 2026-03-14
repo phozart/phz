@@ -5,8 +5,8 @@ import {
   createDefaultEmptyStateConfig,
   createEmptyState,
   DEFAULT_EMPTY_STATES,
-} from '@phozart/phz-shared/types';
-import type { EmptyScenario } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { EmptyScenario } from '@phozart/shared/types';
 
 // ========================================================================
 // createDefaultEmptyStateConfig

@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-duckdb — DuckDB-WASM Data Source Implementation
+ * @phozart/duckdb — DuckDB-WASM Data Source Implementation
  *
  * Creates a DuckDB-backed data source that can connect to a grid instance.
  * Uses @duckdb/duckdb-wasm as a peer dependency — at runtime users must
  * have it installed.
  */
 
-import type { GridApi, Unsubscribe } from '@phozart/phz-core';
+import type { GridApi, Unsubscribe } from '@phozart/core';
 import { DuckDBBridge } from './duckdb-bridge.js';
 import type {
   DuckDBConfig,
@@ -147,7 +147,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
     this._hasSharedArrayBuffer = typeof SharedArrayBuffer !== 'undefined';
     if (!this._hasSharedArrayBuffer) {
       console.warn(
-        '@phozart/phz-duckdb: SharedArrayBuffer not available. ' +
+        '@phozart/duckdb: SharedArrayBuffer not available. ' +
         'Ensure COOP/COEP headers are set for full performance. ' +
         'Falling back to single-threaded mode.'
       );
@@ -185,7 +185,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
 
   async connect(): Promise<AsyncDuckDBConnection> {
     if (!this.db) {
-      throw new Error('@phozart/phz-duckdb: Call initialize() before connect()');
+      throw new Error('@phozart/duckdb: Call initialize() before connect()');
     }
     this.connection = await this.db.connect() as unknown as AsyncDuckDBConnection;
     this.connected = true;
@@ -221,7 +221,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
       const conn = this.connection! as any;
 
       if (typeof conn.insertArrowFromIPCStream !== 'function') {
-        throw new Error('@phozart/phz-duckdb: insertArrowFromIPCStream not available on this DuckDB WASM connection');
+        throw new Error('@phozart/duckdb: insertArrowFromIPCStream not available on this DuckDB WASM connection');
       }
 
       // Detect format: Arrow IPC file starts with "ARROW1", stream starts with 0xFFFFFFFF
@@ -252,7 +252,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
       const check = await this.connection!.query(`SELECT count(*) as cnt FROM "${safeTable}"`);
       const cnt = Number((check.toArray() as Array<Record<string, unknown>>)[0]?.['cnt'] ?? -1);
       if (cnt < 0) {
-        throw new Error(`@phozart/phz-duckdb: Arrow IPC loading failed — table "${safeTable}" was not created`);
+        throw new Error(`@phozart/duckdb: Arrow IPC loading failed — table "${safeTable}" was not created`);
       }
       return tableName;
     }
@@ -390,7 +390,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
 
   async executeSQL(sql: string): Promise<void> {
     if (!DuckDBDataSourceImpl.ALLOWED_EXECUTE_SQL.test(sql)) {
-      throw new Error('@phozart/phz-duckdb: executeSQL only allows SELECT, WITH, EXPLAIN, DESCRIBE, and SHOW statements.');
+      throw new Error('@phozart/duckdb: executeSQL only allows SELECT, WITH, EXPLAIN, DESCRIBE, and SHOW statements.');
     }
     this.ensureConnected();
     await this.connection!.query(sql);
@@ -440,20 +440,22 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
       const BATCH_SIZE = 1000;
       for (let i = 0; i < data.length; i += BATCH_SIZE) {
         const batch = data.slice(i, i + BATCH_SIZE);
-        const valueRows = batch.map((row) => {
-          const values = columns.map((c) => {
+        const placeholderRow = `(${columns.map(() => '?').join(', ')})`;
+        const placeholders = batch.map(() => placeholderRow).join(', ');
+        const params: unknown[] = [];
+        for (const row of batch) {
+          for (const c of columns) {
             const v = (row as Record<string, unknown>)[c];
-            return v === null || v === undefined ? 'NULL' : `'${sanitizeStringLiteral(String(v))}'`;
-          }).join(', ');
-          return `(${values})`;
-        }).join(', ');
-        await conn.query(`INSERT INTO "${safeTable}" VALUES ${valueRows}`);
+            params.push(v === undefined ? null : v);
+          }
+        }
+        await conn.query(`INSERT INTO "${safeTable}" VALUES ${placeholders}`, params);
       }
     }
   }
 
   getDatabase(): AsyncDuckDB {
-    if (!this.db) throw new Error('@phozart/phz-duckdb: Not initialized');
+    if (!this.db) throw new Error('@phozart/duckdb: Not initialized');
     return this.db;
   }
 
@@ -488,13 +490,13 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
 
   private ensureConnected(): void {
     if (!this.connection || !this.connected) {
-      throw new Error('@phozart/phz-duckdb: Not connected. Call connect() first.');
+      throw new Error('@phozart/duckdb: Not connected. Call connect() first.');
     }
   }
 
   private async getDefaultTable(): Promise<string> {
     const tables = await this.getTables();
-    if (tables.length === 0) throw new Error('@phozart/phz-duckdb: No tables loaded');
+    if (tables.length === 0) throw new Error('@phozart/duckdb: No tables loaded');
     return tables[0];
   }
 
@@ -529,7 +531,7 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
     const resolved = format === 'arrow' ? 'arrow_ipc' : format;
     if (!DuckDBDataSourceImpl.VALID_FORMATS.has(format) && !DuckDBDataSourceImpl.VALID_FORMATS.has(resolved)) {
       throw new Error(
-        `@phozart/phz-duckdb: Unsupported file format '${sanitizeIdentifier(format)}'. ` +
+        `@phozart/duckdb: Unsupported file format '${sanitizeIdentifier(format)}'. ` +
         `Allowed: ${[...DuckDBDataSourceImpl.VALID_FORMATS].join(', ')}`
       );
     }
@@ -558,6 +560,33 @@ class DuckDBDataSourceImpl implements DuckDBDataSource {
   }
 }
 
+/**
+ * Create a DuckDB-WASM backed data source for in-browser SQL analytics.
+ *
+ * The returned {@link DuckDBDataSource} must be initialized and connected
+ * before use. It can load CSV, Parquet, JSON, and Arrow IPC files, run
+ * arbitrary SQL queries, and attach directly to a grid via `attachToGrid()`.
+ *
+ * @param config - DuckDB configuration (WASM/Worker URLs, memory limit, threads).
+ * @returns An uninitialized {@link DuckDBDataSource}. Call `initialize()` then `connect()`.
+ *
+ * @throws Error if `initialize()` or `connect()` fails (e.g. missing WASM binary).
+ *
+ * @example
+ * ```ts
+ * import { createDuckDBDataSource } from '@phozart/duckdb';
+ *
+ * const ds = createDuckDBDataSource({ memoryLimit: 512 });
+ * await ds.initialize();
+ * await ds.connect();
+ *
+ * await ds.loadFile('/data/sales.parquet');
+ * const result = await ds.query('SELECT region, SUM(revenue) FROM sales GROUP BY region');
+ * console.log(result.data);
+ *
+ * await ds.terminateWorker();
+ * ```
+ */
 export function createDuckDBDataSource(config: DuckDBConfig): DuckDBDataSource {
   return new DuckDBDataSourceImpl(config);
 }
@@ -568,14 +597,14 @@ function validateReadOnlySQL(sql: string): void {
   const allowed = ['SELECT ', 'WITH '];
   if (!allowed.some(prefix => trimmed.startsWith(prefix))) {
     throw new Error(
-      '@phozart/phz-duckdb: getQueryPlan() only accepts SELECT or WITH statements'
+      '@phozart/duckdb: getQueryPlan() only accepts SELECT or WITH statements'
     );
   }
   // Block statement terminators that could chain additional commands
   const stripped = sql.replace(/'[^']*'/g, ''); // remove string literals
   if (stripped.includes(';')) {
     throw new Error(
-      '@phozart/phz-duckdb: getQueryPlan() does not allow multiple statements'
+      '@phozart/duckdb: getQueryPlan() does not allow multiple statements'
     );
   }
 }

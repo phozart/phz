@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — GridPresentation Types (Item 6.5)
+ * @phozart/core — GridPresentation Types (Item 6.5)
  *
  * Unified visual/behavioral configuration for the grid.
  * Lives in core so all packages can reference it without depending on engine.
@@ -35,4 +35,44 @@ export interface GridPresentation {
   rowHeight?: number;
   fontSize?: number;
   fontFamily?: string;
+}
+
+// ── Drill-Through Types ─────────────────────────────────────────────────
+// Moved from @phozart/engine so the grid package can use them
+// without depending on the full engine. Engine re-exports these types
+// (with branded ReportId narrowing) for backward compatibility.
+
+/**
+ * Configuration for drill-through navigation from a grid row click.
+ * Describes which target report to open and how to pass filters.
+ */
+export interface DrillThroughConfig {
+  targetReportId: string;
+  trigger: 'click' | 'dblclick';
+  openIn: 'panel' | 'modal' | 'page';
+  mode: 'filtered' | 'full';
+  fieldMappings?: Array<{ sourceField: string; targetField: string }>;
+  filterFields?: string[];
+}
+
+/**
+ * Drill source context originating from a grid row.
+ * Captures the row data and clicked field for filter resolution.
+ */
+export interface GridRowDrillSource {
+  type: 'grid-row';
+  rowData: Record<string, unknown>;
+  field?: string;
+  value?: unknown;
+  isSummaryRow?: boolean;
+}
+
+/**
+ * Configuration for the "Generate Dashboard" action on a grid.
+ */
+export interface GenerateDashboardConfig {
+  /** URL template with {reportId}, {dataMode} tokens. */
+  href?: string;
+  /** Custom menu label (default: "Dashboard from …"). */
+  label?: string;
 }

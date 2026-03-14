@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Catalog State
+ * @phozart/workspace — Catalog State
  *
  * Pure functions for filtering, searching, sorting, and tagging artifacts
  * in the home/catalog view.

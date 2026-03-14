@@ -13,7 +13,7 @@ import {
   resolveTemporalFilter,
   injectFiltersIntoQuery,
 } from '../filters/filter-query-bridge.js';
-import type { FilterValue } from '@phozart/phz-shared';
+import type { FilterValue } from '@phozart/shared';
 
 describe('filter-query-bridge', () => {
   describe('mapFilterOperator', () => {

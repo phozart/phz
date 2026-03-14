@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-sharing-flow> (B-2.11)
+ * @phozart/editor — <phz-sharing-flow> (B-2.11)
  *
  * Sharing workflow component. Manages visibility transitions
  * and share target selection.

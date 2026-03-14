@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-workspace — Explore Module (P.7)
+ * @phozart/workspace — Explore Module (P.7)
  *
- * @deprecated Import from '@phozart/phz-engine/explorer' instead.
+ * @deprecated Import from '@phozart/engine/explorer' instead.
  * These re-exports will be removed in v16.
  */
 // Field palette (P.1)
@@ -18,4 +18,6 @@ export { exploreToReport, exploreToDashboardWidget, } from './explore-to-artifac
 export { createDataExplorer, } from './phz-data-explorer.js';
 // Explorer <-> Dashboard integration (P.6)
 export { promoteFilterToDashboard, buildDrillThroughPrePopulation, } from './explorer-dashboard-integration.js';
+// Explore → Pivot converter
+export { exploreQueryToPivot } from './explore-pivot.js';
 //# sourceMappingURL=index.js.map

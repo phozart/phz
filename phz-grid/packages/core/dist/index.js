@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Headless grid engine
+ * @phozart/core — Headless grid engine
  *
  * Zero DOM dependencies. Foundation for all rendering layers.
  */
@@ -10,7 +10,7 @@ export { createGrid } from './create-grid.js';
 // Event Emitter (internal, but exported for grid package)
 export { EventEmitter } from './event-emitter.js';
 // State Management
-export { StateManager, createInitialState } from './state.js';
+export { StateManager, createInitialState, pinColumn, unpinColumn, getEffectivePinState, } from './state.js';
 // Row Model Pipeline
 export { parseData, buildCoreRowModel, buildRowMap, filterRows, sortRows, groupRows, flattenRows, virtualizeRows, } from './row-model.js';
 // Type Guards
@@ -23,6 +23,8 @@ export { serializeSelection, deserializeSelection, mergeSelection, validateSelec
 export { toColumnDefinitions, createDataSet, inferDataSetColumns } from './dataset.js';
 // QueryBackend
 export { createJSArrayQueryBackend } from './js-query-backend.js';
+// Query Planner
+export { QueryPlanner, PlanOptimizer } from './query-planner.js';
 // Progressive Loading
 export { createInitialProgressiveState, startProgressiveLoad, onChunkReceived, onAllChunksComplete, startRefresh, shouldShowOverlay, shouldShowFooterIndicator, getProgressMessage, getNextOffset, } from './progressive-load.js';
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Breach Highlight (L.8)
+ * @phozart/workspace — Breach Highlight (L.8)
  *
  * CSS class helpers and breach bar data for dashboard breach visualization.
  */

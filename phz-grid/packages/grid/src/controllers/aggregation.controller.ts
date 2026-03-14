@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 
 type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
 
@@ -44,5 +44,43 @@ export class AggregationController implements ReactiveController {
       }
       default: return String(values.length);
     }
+  }
+
+  /**
+   * Compute a summary row for all visible columns.
+   * Returns a map of field -> formatted aggregation value.
+   */
+  computeSummaryRow(
+    rows: Record<string, unknown>[],
+    columns: ColumnDefinition[],
+    fn: AggregationFn,
+  ): Record<string, string> {
+    const result: Record<string, string> = {};
+
+    for (const col of columns) {
+      // Only numeric columns get sum/avg/min/max. Date/datetime values as strings
+      // cannot be meaningfully Number()-coerced, so they only support count.
+      if (col.type === 'number') {
+        result[col.field] = this.computeColumnAgg(rows, col, fn);
+      } else if (fn === 'count') {
+        result[col.field] = this.computeColumnAgg(rows, col, 'count');
+      } else {
+        result[col.field] = '';
+      }
+    }
+
+    return result;
+  }
+
+  static getSummaryLabel(fn: AggregationFn): string {
+    const labels: Record<AggregationFn, string> = {
+      sum: 'Sum',
+      avg: 'Average',
+      min: 'Minimum',
+      max: 'Maximum',
+      count: 'Count',
+      none: '',
+    };
+    return labels[fn] ?? '';
   }
 }

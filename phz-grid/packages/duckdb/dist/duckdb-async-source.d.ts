@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-duckdb — DuckDB AsyncDataSource Adapter
+ * @phozart/duckdb — DuckDB AsyncDataSource Adapter
  *
- * Implements AsyncDataSource from @phozart/phz-core, converting
+ * Implements AsyncDataSource from @phozart/core, converting
  * DataFetchRequest into parameterized SQL via sql-builder and executing
  * against DuckDB.
  */
-import type { AsyncDataSource, DataFetchRequest, DataFetchResponse } from '@phozart/phz-core';
+import type { AsyncDataSource, DataFetchRequest, DataFetchResponse } from '@phozart/core';
 import type { DuckDBDataSource } from './types.js';
 export declare class DuckDBAsyncSource<TData = any> implements AsyncDataSource<TData> {
     private dataSource;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Formula injection prevention tests
+ * @phozart/grid — Formula injection prevention tests
  */
 
 import { describe, it, expect } from 'vitest';

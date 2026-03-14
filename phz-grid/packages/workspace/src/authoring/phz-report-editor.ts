@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Editor Component
+ * @phozart/workspace — Report Editor Component
  *
  * Toolbar (undo/redo/save/publish) + grid preview + config panel (columns/filters/style).
  */
@@ -7,7 +7,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 import {
   type ReportEditorState,
   initialReportEditorState,

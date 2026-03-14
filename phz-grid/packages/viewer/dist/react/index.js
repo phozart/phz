@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer/react — React Wrappers for Viewer Components
+ * @phozart/viewer/react — React Wrappers for Viewer Components
  *
  * Thin React wrappers using @lit/react createComponent() for
  * automatic property bridging from Lit custom elements.

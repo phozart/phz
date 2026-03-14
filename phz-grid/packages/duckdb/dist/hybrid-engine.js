@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Hybrid Engine
+ * @phozart/duckdb — Hybrid Engine
  *
  * Auto-switches between JS row model pipeline (< threshold rows) and
  * DuckDB SQL push-down (>= threshold rows).

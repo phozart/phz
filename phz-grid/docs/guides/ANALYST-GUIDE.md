@@ -34,7 +34,7 @@ When you sign in, the Viewer shell opens automatically if your role is
 Install the Viewer package in your app:
 
 ```bash
-npm install @phozart/phz-viewer
+npm install @phozart/viewer
 ```
 
 ---
@@ -129,11 +129,11 @@ Click any node to drill through to its detail view.
 
 The Visual Query Explorer is a headless drag-and-drop interface for slicing and
 pivoting data without writing SQL. It is orchestrated by `createDataExplorer()`
-from `@phozart/phz-workspace`.
+from `@phozart/workspace`.
 
 ```typescript
-import { createDataExplorer } from '@phozart/phz-workspace';
-import type { FieldMetadata } from '@phozart/phz-workspace';
+import { createDataExplorer } from '@phozart/workspace';
+import type { FieldMetadata } from '@phozart/workspace';
 
 const explorer = createDataExplorer();
 
@@ -177,7 +177,7 @@ import {
   createFieldPalette,
   groupFieldsByType,
   searchFields,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 const palette = createFieldPalette(fields);
 
@@ -215,7 +215,7 @@ to a drop zone based on data type:
 | `string` (default) | Rows |
 
 ```typescript
-import { autoPlaceField } from '@phozart/phz-workspace';
+import { autoPlaceField } from '@phozart/workspace';
 
 // Returns: 'rows' | 'columns' | 'values' | 'filters'
 const zone = autoPlaceField({ name: 'revenue', dataType: 'number', nullable: false });
@@ -246,7 +246,7 @@ import {
   addFieldToZone,
   removeFieldFromZone,
   moveFieldBetweenZones,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 let state = createDropZoneState();
 
@@ -285,7 +285,7 @@ automatically:
 | `string`, `date`, `boolean` | `count` |
 
 ```typescript
-import { getDefaultAggregation } from '@phozart/phz-workspace';
+import { getDefaultAggregation } from '@phozart/workspace';
 
 getDefaultAggregation('number'); // => 'sum'
 getDefaultAggregation('string'); // => 'count'
@@ -300,7 +300,7 @@ When a field placed in Columns has many distinct values, it will produce an
 extremely wide pivot table. Check before rendering:
 
 ```typescript
-import { getCardinalityWarning } from '@phozart/phz-workspace';
+import { getCardinalityWarning } from '@phozart/workspace';
 
 const warning = getCardinalityWarning('country', 180, 20);
 // => 'Field "country" has 180 distinct values (threshold: 20). This may produce a wide pivot.'
@@ -314,7 +314,7 @@ const warning = getCardinalityWarning('country', 180, 20);
 appropriate widget type based on dimension and measure counts.
 
 ```typescript
-import { suggestChartType } from '@phozart/phz-workspace';
+import { suggestChartType } from '@phozart/workspace';
 
 const chartType = suggestChartType(explorer.toQuery());
 // Possible values: 'table' | 'kpi' | 'bar' | 'line' | 'multi-line' |
@@ -364,7 +364,7 @@ Converts the current query into a `ReportArtifact` — a serializable report
 configuration that can be stored, shared, and loaded.
 
 ```typescript
-import { exploreToReport } from '@phozart/phz-workspace';
+import { exploreToReport } from '@phozart/workspace';
 
 const query = explorer.toQuery();
 
@@ -386,7 +386,7 @@ Converts the exploration into a `DashboardWidgetArtifact` ready to be placed on
 a dashboard canvas:
 
 ```typescript
-import { exploreToDashboardWidget } from '@phozart/phz-workspace';
+import { exploreToDashboardWidget } from '@phozart/workspace';
 
 const widget = exploreToDashboardWidget(
   query,
@@ -406,7 +406,7 @@ Promotes a filter from the explore session into a persistent dashboard filter
 bar definition:
 
 ```typescript
-import { promoteFilterToDashboard } from '@phozart/phz-workspace';
+import { promoteFilterToDashboard } from '@phozart/workspace';
 
 const state = explorer.getState();
 const filterEntry = state.dropZones.filters[0];
@@ -439,7 +439,7 @@ global filters
 ### FilterContextManager
 
 ```typescript
-import { createFilterContext } from '@phozart/phz-workspace';
+import { createFilterContext } from '@phozart/workspace';
 
 const ctx = createFilterContext({
   dashboardFilters: myDashboardFilterDefs, // optional defaults
@@ -502,7 +502,7 @@ Filter state serializes to URL query parameters using the format
 import {
   serializeFilterState,
   deserializeFilterState,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 // Serialize current filter state to query string
 const qs = serializeFilterState(ctx.getState());
@@ -550,8 +550,8 @@ All quarter and year periods respect `fiscalYearStartMonth` (1-12).
 ### Configuration
 
 ```typescript
-import type { TimeIntelligenceConfig } from '@phozart/phz-workspace';
-import { DEFAULT_RELATIVE_PERIODS, resolvePeriod } from '@phozart/phz-workspace';
+import type { TimeIntelligenceConfig } from '@phozart/workspace';
+import { DEFAULT_RELATIVE_PERIODS, resolvePeriod } from '@phozart/workspace';
 
 const config: TimeIntelligenceConfig = {
   primaryDateField: 'order_date',
@@ -603,7 +603,7 @@ interface DataQualityIssue {
 Compute the freshness badge for display:
 
 ```typescript
-import { computeFreshnessStatus } from '@phozart/phz-workspace';
+import { computeFreshnessStatus } from '@phozart/workspace';
 
 const status = computeFreshnessStatus(
   result.metadata.quality?.lastRefreshed ?? '',

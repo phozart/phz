@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Row Model Pipeline Types
+ * @phozart/core — Row Model Pipeline Types
  */
 import type { RowId, RowData } from './row.js';
 export interface RowModelPipeline<TData = any> {

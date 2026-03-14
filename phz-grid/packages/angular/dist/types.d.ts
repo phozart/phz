@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-angular — Type definitions
+ * @phozart/angular — Type definitions
  */
-import type { GridApi, ColumnDefinition, RowId, CellPosition, SortState, FilterState, FilterOperator, EditState, ConditionalFormattingRule, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditCommitEvent, CellClickEvent, ScrollEvent, StateChangeEvent } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowId, CellPosition, SortState, FilterState, FilterOperator, EditState, ConditionalFormattingRule, SelectionChangeEvent, SortChangeEvent, FilterChangeEvent, CellEditCommitEvent, CellClickEvent, ScrollEvent, StateChangeEvent } from '@phozart/core';
 export interface PhzGridInputs {
     data: unknown[];
     columns: ColumnDefinition[];

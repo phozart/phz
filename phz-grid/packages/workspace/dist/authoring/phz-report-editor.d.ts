@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-workspace — Report Editor Component
+ * @phozart/workspace — Report Editor Component
  *
  * Toolbar (undo/redo/save/publish) + grid preview + config panel (columns/filters/style).
  */
 import { LitElement } from 'lit';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 export declare class PhzReportEditor extends LitElement {
     name: string;
     dataSourceId: string;

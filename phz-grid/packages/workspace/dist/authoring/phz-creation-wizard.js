@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Creation Wizard Component
+ * @phozart/workspace — Creation Wizard Component
  *
  * Minimal 3-step wizard: pick type -> pick data source -> pick template -> configure.
  */

@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — View Manager
+ * @phozart/widgets — View Manager
  *
  * User saved view CRUD: save, load, rename, delete, set as default.
  */
 import { LitElement } from 'lit';
-import type { UserViewConfig } from '@phozart/phz-engine';
+import type { UserViewConfig } from '@phozart/engine';
 export declare class PhzViewManager extends LitElement {
     static styles: import("lit").CSSResult[];
     views: UserViewConfig[];

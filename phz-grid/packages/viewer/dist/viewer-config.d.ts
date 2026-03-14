@@ -1,13 +1,13 @@
 /**
- * @phozart/phz-viewer — ViewerShellConfig
+ * @phozart/viewer — ViewerShellConfig
  *
  * Configuration type and factory for the viewer shell. Consumers
  * provide adapters (data, persistence, attention) and optional
  * feature toggles to customise the viewer experience.
  */
-import type { DataAdapter, ViewerContext } from '@phozart/phz-shared/adapters';
-import type { PersistenceAdapter } from '@phozart/phz-shared/adapters';
-import type { AttentionAdapter } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, ViewerContext } from '@phozart/shared/adapters';
+import type { PersistenceAdapter } from '@phozart/shared/adapters';
+import type { AttentionAdapter } from '@phozart/shared/adapters';
 import type { ViewerScreen } from './viewer-state.js';
 export interface ViewerFeatureFlags {
     /** Show the explorer screen in the navigation. Default: true */

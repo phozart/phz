@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 
-// Mock @phozart/phz-grid to avoid side-effect import (registers custom element)
-vi.mock('@phozart/phz-grid', () => ({}));
+// Mock @phozart/grid to avoid side-effect import (registers custom element)
+vi.mock('@phozart/grid', () => ({}));
 
 import {
   createPhzGridComponent,

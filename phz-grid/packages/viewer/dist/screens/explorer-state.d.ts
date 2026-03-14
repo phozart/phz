@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-viewer — Explorer Screen State
+ * @phozart/viewer — Explorer Screen State
  *
- * Thin wrapper around @phozart/phz-engine/explorer DataExplorer.
+ * Thin wrapper around @phozart/engine/explorer DataExplorer.
  * Adds viewer-specific concerns: data source selection, preview
  * rendering mode, and chart type tracking.
  */
-import type { DataExplorer, DataExplorerState } from '@phozart/phz-engine/explorer';
-import type { DataSourceMeta, FieldMetadata } from '@phozart/phz-shared/adapters';
+import type { DataExplorer, DataExplorerState } from '@phozart/engine/explorer';
+import type { DataSourceMeta, FieldMetadata } from '@phozart/shared/adapters';
 export type ExplorerPreviewMode = 'table' | 'chart' | 'pivot';
 export interface ExplorerScreenState {
     /** Available data sources for the explorer. */

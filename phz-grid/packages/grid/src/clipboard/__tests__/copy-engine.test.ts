@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — Copy Engine Tests
+ * @phozart/grid — Copy Engine Tests
  */
 import { describe, it, expect } from 'vitest';
 import { formatCellForCopy, buildCopyText, type CopyOptions } from '../copy-engine.js';
-import type { ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { ColumnDefinition, RowData } from '@phozart/core';
 
 // ─── formatCellForCopy ──────────────────────────────────────
 

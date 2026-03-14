@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Data Model Sidebar
+ * @phozart/engine-admin — Data Model Sidebar
  *
  * 5-section collapsible sidebar for the computation DAG layers:
  * Fields (gray) → Parameters (purple) → Calculated Fields (amber) → Metrics (blue) → KPIs (green)
  */
 import { LitElement } from 'lit';
-import type { DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/phz-engine';
-import type { MetricDef, KPIDefinition } from '@phozart/phz-engine';
+import type { DataModelField, ParameterDef, CalculatedFieldDef } from '@phozart/engine';
+import type { MetricDef, KPIDefinition } from '@phozart/engine';
 export declare class PhzDataModelSidebar extends LitElement {
     static styles: import("lit").CSSResult;
     fields: DataModelField[];

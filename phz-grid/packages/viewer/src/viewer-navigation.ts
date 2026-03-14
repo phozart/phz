@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — Route/Screen Management
+ * @phozart/viewer — Route/Screen Management
  *
  * URL-based routing helpers for the viewer shell. Converts between
  * ViewerScreen/artifactId pairs and URL fragments. Supports both

@@ -24,7 +24,7 @@ JavaScript module systems have evolved through multiple eras:
 
 ```javascript
 // CommonJS (legacy)
-const grid = require('@phozart/phz-grid');
+const grid = require('@phozart/grid');
 
 // Problems:
 // 1. Synchronous (blocks event loop)
@@ -37,7 +37,7 @@ const grid = require('@phozart/phz-grid');
 
 ```javascript
 // ESM (modern)
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 // Benefits:
 // 1. Async loading (non-blocking)
@@ -63,11 +63,11 @@ Supporting both ESM and CommonJS creates the "dual package hazard":
 
 ```javascript
 // User code (ESM)
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 const grid1 = createGrid();
 
 // Library code (accidentally CJS)
-const { createGrid } = require('@phozart/phz-core');
+const { createGrid } = require('@phozart/core');
 const grid2 = createGrid();
 
 // Problem: grid1 and grid2 are from DIFFERENT module instances
@@ -99,7 +99,7 @@ Node.js 20 (LTS, released 2023) has native ESM support:
 ```javascript
 // Native ESM in Node.js
 import fs from 'fs/promises';
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 await fs.writeFile('data.json', JSON.stringify(gridState));
 ```
@@ -113,7 +113,7 @@ phz-grid will be **ESM-only**. We will NOT ship CommonJS builds.
 ```json
 // package.json
 {
-  "name": "@phozart/phz-core",
+  "name": "@phozart/core",
   "version": "1.0.0",
   "type": "module",
   "exports": {
@@ -137,11 +137,11 @@ phz-grid will be **ESM-only**. We will NOT ship CommonJS builds.
 
 ```typescript
 // ✅ Supported (ESM)
-import { createGrid } from '@phozart/phz-core';
-import { PhzGrid } from '@phozart/phz-grid';
+import { createGrid } from '@phozart/core';
+import { PhzGrid } from '@phozart/grid';
 
 // ❌ Not supported (CommonJS)
-const { createGrid } = require('@phozart/phz-core');
+const { createGrid } = require('@phozart/core');
 ```
 
 ### Migration Path for CommonJS Users
@@ -151,7 +151,7 @@ If users are stuck on CommonJS, they can use dynamic imports:
 ```javascript
 // User code (CommonJS environment)
 (async () => {
-  const { createGrid } = await import('@phozart/phz-core');
+  const { createGrid } = await import('@phozart/core');
   const grid = createGrid({ data, columns });
 })();
 ```
@@ -184,7 +184,7 @@ For users who need `<script>` tag support (no bundler), we provide a single UMD 
 
 ```html
 <!-- CDN UMD bundle (for <script> tags only) -->
-<script src="https://cdn.jsdelivr.net/npm/@phozart/phz-grid@1.0.0/dist/phz-grid.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@phozart/grid@1.0.0/dist/phz-grid.umd.js"></script>
 <script>
   const grid = window.Phz.createGrid({ data, columns });
 </script>
@@ -230,7 +230,7 @@ We will provide a comprehensive migration guide:
 ✅ No changes needed! Just install and import:
 
 ```js
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 ```
 
 ## If you're using Webpack 4
@@ -238,7 +238,7 @@ import { createGrid } from '@phozart/phz-core';
 2. OR use dynamic import:
 
 ```js
-import('@phozart/phz-core').then(({ createGrid }) => {
+import('@phozart/core').then(({ createGrid }) => {
   const grid = createGrid({ data, columns });
 });
 ```
@@ -249,7 +249,7 @@ import('@phozart/phz-core').then(({ createGrid }) => {
 
 ```js
 (async () => {
-  const { createGrid } = await import('@phozart/phz-core');
+  const { createGrid } = await import('@phozart/core');
 })();
 ```
 
@@ -257,7 +257,7 @@ import('@phozart/phz-core').then(({ createGrid }) => {
 Use the CDN UMD bundle:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@phozart/phz-grid@1.0.0/dist/phz-grid.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@phozart/grid@1.0.0/dist/phz-grid.umd.js"></script>
 ```
 ```
 

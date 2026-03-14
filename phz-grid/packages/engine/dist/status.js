@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Status Engine
+ * @phozart/engine — Status Engine
  *
  * Core classification: given a value and a KPI definition, compute status and delta.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Retry Policy
+ * @phozart/core — Retry Policy
  *
  * Exponential backoff retry wrapper for server data fetching.
  * Respects AbortSignal, retryable flags, and retryAfterMs hints.

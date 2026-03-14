@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression Compiler
+ * @phozart/engine — Expression Compiler
  *
  * Compiles ExpressionNode ASTs into JS closure functions for fast evaluation.
  * Compiled functions avoid tree traversal overhead, yielding 5-10x speedup

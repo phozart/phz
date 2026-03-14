@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Expandable Widget State
+ * @phozart/widgets — Expandable Widget State
  *
  * Headless state machine for expandable/collapsible widget behavior.
  * Pure functions that manage expansion toggling and animation tracking.
  */
-import { createDefaultExpandableConfig } from '@phozart/phz-shared/types';
+import { createDefaultExpandableConfig } from '@phozart/shared/types';
 /**
  * Create initial expandable widget state from a configuration.
  * The expanded state defaults to `config.defaultExpanded`.

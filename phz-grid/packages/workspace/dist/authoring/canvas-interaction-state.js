@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Canvas Interaction State (Canvas Phase 1D)
+ * @phozart/workspace — Canvas Interaction State (Canvas Phase 1D)
  *
  * Tracks the visual interaction layer — what the user sees during
  * drag/resize/select operations on the freeform canvas.

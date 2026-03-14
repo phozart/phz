@@ -122,11 +122,11 @@ awareness.setLocalState({
 ### Implementation
 
 ```typescript
-// @phozart/phz-collab
+// @phozart/collab
 
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
-import type { GridApi } from '@phozart/phz-core';
+import type { GridApi } from '@phozart/core';
 
 export class CollabGridBinding {
   private yDoc: Y.Doc;
@@ -327,7 +327,7 @@ export class CollabGridBinding {
 ### Presence Cursor Rendering
 
 ```typescript
-// In @phozart/phz-grid component
+// In @phozart/grid component
 class PhzGrid extends LitElement {
   @state() private presenceCursors: PresenceCursor[] = [];
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Query Layer Resolution (T.2)
+ * @phozart/workspace — Query Layer Resolution (T.2)
  *
  * Determines whether a filter change should trigger a server reload
  * or a client-side re-query based on the filter's queryLayer config.

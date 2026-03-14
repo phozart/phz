@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Layout Container HTML Generation (K.3)
+ * @phozart/workspace — Layout Container HTML Generation (K.3)
  *
  * Pure functions that generate accessible HTML from LayoutNode trees.
  * These produce HTML strings for SSR / headless usage. The Lit component

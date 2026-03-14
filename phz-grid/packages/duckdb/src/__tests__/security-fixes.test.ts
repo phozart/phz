@@ -1,5 +1,5 @@
 /**
- * Security fix regression tests for @phozart/phz-duckdb
+ * Security fix regression tests for @phozart/duckdb
  *
  * Covers:
  * - SQL injection prevention in getQueryPlan()
@@ -23,13 +23,13 @@ describe('getQueryPlan SQL injection prevention', () => {
     const allowed = ['SELECT ', 'WITH '];
     if (!allowed.some(prefix => trimmed.startsWith(prefix))) {
       throw new Error(
-        '@phozart/phz-duckdb: getQueryPlan() only accepts SELECT or WITH statements'
+        '@phozart/duckdb: getQueryPlan() only accepts SELECT or WITH statements'
       );
     }
     const stripped = sql.replace(/'[^']*'/g, '');
     if (stripped.includes(';')) {
       throw new Error(
-        '@phozart/phz-duckdb: getQueryPlan() does not allow multiple statements'
+        '@phozart/duckdb: getQueryPlan() does not allow multiple statements'
       );
     }
   };

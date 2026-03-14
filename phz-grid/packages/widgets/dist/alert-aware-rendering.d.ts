@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Alert-Aware Rendering State Machine (7A-A)
+ * @phozart/widgets — Alert-Aware Rendering State Machine (7A-A)
  *
  * Pure functions that compute CSS custom property overrides for
  * alert-aware single-value widgets. No DOM, no Lit — just state -> CSS props.
  */
-import type { SingleValueAlertConfig, AlertVisualState, AlertContainerSize } from '@phozart/phz-shared/types';
+import type { SingleValueAlertConfig, AlertVisualState, AlertContainerSize } from '@phozart/shared/types';
 /**
  * Compute CSS custom property overrides for a widget based on its alert config,
  * current alert visual state, and container size.

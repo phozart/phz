@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Source Relationship State
+ * @phozart/workspace — Source Relationship State
  *
  * Pure functions for managing source-to-source relationships in the
  * dashboard editor. Relationships define filter propagation semantics

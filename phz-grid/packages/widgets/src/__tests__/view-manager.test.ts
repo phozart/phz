@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { UserViewConfig } from '@phozart/phz-engine';
+import type { UserViewConfig } from '@phozart/engine';
 
 describe('View Manager logic', () => {
   it('identifies the default view', () => {

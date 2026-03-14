@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Tooltip Utilities
+ * @phozart/widgets — Tooltip Utilities
  *
  * Pure functions for tooltip content formatting and position calculation.
  * Used by chart widgets to render accessible, positioned tooltips.

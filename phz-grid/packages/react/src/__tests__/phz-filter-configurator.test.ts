@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzFilterConfigurator Component Tests
+ * @phozart/react — PhzFilterConfigurator Component Tests
  *
  * Structural validation: exports, component shape, prop interface.
  */
@@ -24,7 +24,7 @@ vi.mock('@lit/react', () => ({
   EventName: {},
 }));
 
-vi.mock('@phozart/phz-criteria', () => ({
+vi.mock('@phozart/criteria', () => ({
   PhzFilterConfigurator: class PhzFilterConfigurator {},
 }));
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — GridPresentation helpers (Item 6.5)
+ * @phozart/core — GridPresentation helpers (Item 6.5)
  *
  * Factory + merge utilities for GridPresentation.
  */

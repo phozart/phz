@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Chart Data Projection
+ * @phozart/engine — Chart Data Projection
  *
  * Projects row data into chart-ready data series.
  */

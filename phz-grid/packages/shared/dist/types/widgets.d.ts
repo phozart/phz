@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Widget types (A-1.18 through A-1.21)
+ * @phozart/shared — Widget types (A-1.18 through A-1.21)
  *
  * Shared widget position, dashboard widget, widget view,
  * expandable config, container box config, and decision tree types.

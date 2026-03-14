@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Drill Link
+ * @phozart/widgets — Drill Link
  *
  * Navigation button to a detail view.
  */

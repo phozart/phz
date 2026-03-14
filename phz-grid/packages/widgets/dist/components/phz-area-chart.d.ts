@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Area Chart
+ * @phozart/widgets — Area Chart
  *
  * SVG area chart with optional stacking, gridlines, axes, and multi-series support.
  */

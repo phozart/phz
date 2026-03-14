@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — AI Toolkit Implementation
+ * @phozart/ai — AI Toolkit Implementation
  *
  * Schema-as-contract AI toolkit. Uses an AI provider (OpenAI, Anthropic, Google)
  * to provide schema inference, NL queries, anomaly detection, and insights.

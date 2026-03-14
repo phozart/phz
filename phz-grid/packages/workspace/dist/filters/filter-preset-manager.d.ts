@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Preset Manager (O.4)
+ * @phozart/workspace — Filter Preset Manager (O.4)
  *
  * Save/load/share named filter presets. Headless logic —
  * Lit components can be layered on top.

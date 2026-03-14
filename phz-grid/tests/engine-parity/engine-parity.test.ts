@@ -10,10 +10,10 @@
  * but run entirely in-memory for deterministic testing.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { LocalQuery, LocalQueryResult, QueryBackend, QueryBackendCapabilities } from '@phozart/phz-core';
-import { createJSArrayQueryBackend } from '@phozart/phz-core';
-import { createDuckDBQueryBackend } from '@phozart/phz-duckdb';
-import { createServerQueryBackend } from '@phozart/phz-shared/coordination';
+import type { LocalQuery, LocalQueryResult, QueryBackend, QueryBackendCapabilities } from '@phozart/core';
+import { createJSArrayQueryBackend } from '@phozart/core';
+import { createDuckDBQueryBackend } from '@phozart/duckdb';
+import { createServerQueryBackend } from '@phozart/shared/coordination';
 
 // ========================================================================
 // Shared test dataset

@@ -30,21 +30,21 @@ Every example in this guide is extracted from production test apps and verified 
 
 | Package | Purpose | Use When |
 |---------|---------|----------|
-| `@phozart/phz-core` | Headless grid engine | You need data operations without UI |
-| `@phozart/phz-react` | React components + hooks | Building a React/Next.js app |
-| `@phozart/phz-grid` | Lit Web Component grid | Using vanilla JS or non-React frameworks |
-| `@phozart/phz-criteria` | Filter/criteria UI components | Adding page-level filters |
-| `@phozart/phz-grid-admin` | Admin configuration panel | Letting users customize the grid |
-| `@phozart/phz-widgets` | Dashboard widgets (charts, KPIs) | Building dashboards |
-| `@phozart/phz-engine` | BI computation engine | KPIs, aggregation, pivots, reports |
-| `@phozart/phz-definitions` | Serializable grid blueprints | Saving/loading grid configurations |
-| `@phozart/phz-grid-creator` | Grid creation wizard | Guided grid setup flow |
-| `@phozart/phz-ai` | AI toolkit | Schema analysis, widget suggestions, KPI generation |
-| `@phozart/phz-duckdb` | DuckDB-WASM adapter | Large-scale analytics in the browser |
-| `@phozart/phz-collab` | Real-time collaboration | Multi-user editing with CRDTs |
-| `@phozart/phz-shared` | Shared infrastructure (adapters, types, design system) | Foundation for all shells |
-| `@phozart/phz-viewer` | Read-only consumption shell | Embedded analytics, analyst dashboards |
-| `@phozart/phz-editor` | Authoring shell | Self-service BI, dashboard/report creation |
+| `@phozart/core` | Headless grid engine | You need data operations without UI |
+| `@phozart/react` | React components + hooks | Building a React/Next.js app |
+| `@phozart/grid` | Lit Web Component grid | Using vanilla JS or non-React frameworks |
+| `@phozart/criteria` | Filter/criteria UI components | Adding page-level filters |
+| `@phozart/grid-admin` | Admin configuration panel | Letting users customize the grid |
+| `@phozart/widgets` | Dashboard widgets (charts, KPIs) | Building dashboards |
+| `@phozart/engine` | BI computation engine | KPIs, aggregation, pivots, reports |
+| `@phozart/definitions` | Serializable grid blueprints | Saving/loading grid configurations |
+| `@phozart/grid-creator` | Grid creation wizard | Guided grid setup flow |
+| `@phozart/ai` | AI toolkit | Schema analysis, widget suggestions, KPI generation |
+| `@phozart/duckdb` | DuckDB-WASM adapter | Large-scale analytics in the browser |
+| `@phozart/collab` | Real-time collaboration | Multi-user editing with CRDTs |
+| `@phozart/shared` | Shared infrastructure (adapters, types, design system) | Foundation for all shells |
+| `@phozart/viewer` | Read-only consumption shell | Embedded analytics, analyst dashboards |
+| `@phozart/editor` | Authoring shell | Self-service BI, dashboard/report creation |
 
 ### Dependency Graph
 
@@ -70,19 +70,19 @@ shared ← editor (authoring shell)
 ### For a React/Next.js App (most common)
 
 ```bash
-npm install @phozart/phz-core @phozart/phz-react @phozart/phz-grid @phozart/phz-criteria @phozart/phz-grid-admin
+npm install @phozart/core @phozart/react @phozart/grid @phozart/criteria @phozart/grid-admin
 ```
 
 ### Add dashboard widgets
 
 ```bash
-npm install @phozart/phz-widgets @phozart/phz-engine
+npm install @phozart/widgets @phozart/engine
 ```
 
 ### Add AI features
 
 ```bash
-npm install @phozart/phz-ai
+npm install @phozart/ai
 ```
 
 ---
@@ -121,18 +121,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkgs = path.resolve(__dirname, '../phz-grid/packages');
 
 const packageAliases: Record<string, string> = {
-  '@phozart/phz-core':           path.resolve(pkgs, 'core/dist/index.js'),
-  '@phozart/phz-engine':         path.resolve(pkgs, 'engine/dist/index.js'),
-  '@phozart/phz-grid':           path.resolve(pkgs, 'grid/dist/index.js'),
-  '@phozart/phz-react/grid':     path.resolve(pkgs, 'react/dist/grid.js'),
-  '@phozart/phz-react/criteria': path.resolve(pkgs, 'react/dist/criteria.js'),
-  '@phozart/phz-react/admin':    path.resolve(pkgs, 'react/dist/admin.js'),
-  '@phozart/phz-react':          path.resolve(pkgs, 'react/dist/index.js'),
-  '@phozart/phz-widgets':        path.resolve(pkgs, 'widgets/dist/index.js'),
-  '@phozart/phz-criteria':       path.resolve(pkgs, 'criteria/dist/index.js'),
-  '@phozart/phz-grid-admin':     path.resolve(pkgs, 'grid-admin/dist/index.js'),
-  '@phozart/phz-definitions':    path.resolve(pkgs, 'definitions/dist/index.js'),
-  '@phozart/phz-ai':             path.resolve(pkgs, 'ai/dist/index.js'),
+  '@phozart/core':           path.resolve(pkgs, 'core/dist/index.js'),
+  '@phozart/engine':         path.resolve(pkgs, 'engine/dist/index.js'),
+  '@phozart/grid':           path.resolve(pkgs, 'grid/dist/index.js'),
+  '@phozart/react/grid':     path.resolve(pkgs, 'react/dist/grid.js'),
+  '@phozart/react/criteria': path.resolve(pkgs, 'react/dist/criteria.js'),
+  '@phozart/react/admin':    path.resolve(pkgs, 'react/dist/admin.js'),
+  '@phozart/react':          path.resolve(pkgs, 'react/dist/index.js'),
+  '@phozart/widgets':        path.resolve(pkgs, 'widgets/dist/index.js'),
+  '@phozart/criteria':       path.resolve(pkgs, 'criteria/dist/index.js'),
+  '@phozart/grid-admin':     path.resolve(pkgs, 'grid-admin/dist/index.js'),
+  '@phozart/definitions':    path.resolve(pkgs, 'definitions/dist/index.js'),
+  '@phozart/ai':             path.resolve(pkgs, 'ai/dist/index.js'),
 };
 
 const nextConfig: NextConfig = {
@@ -163,7 +163,7 @@ Every phz component must be client-side rendered (Lit web components don't suppo
 import dynamic from 'next/dynamic';
 
 export const PhzGridDynamic = dynamic(
-  () => import('@phozart/phz-react/grid').then((mod) => mod.PhzGrid),
+  () => import('@phozart/react/grid').then((mod) => mod.PhzGrid),
   { ssr: false, loading: () => <div>Loading grid...</div> },
 );
 ```
@@ -175,7 +175,7 @@ export const PhzGridDynamic = dynamic(
 'use client';
 
 import { PhzGridDynamic } from '../components/PhzGridWrapper';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 const data = [
   { id: 1, name: 'Alice Johnson', department: 'Engineering', salary: 120000 },
@@ -209,8 +209,8 @@ The `useGridOrchestrator` hook manages grid state and coordinates with criteria 
 'use client';
 
 import { useState, useCallback } from 'react';
-import { PhzGrid, useGridOrchestrator } from '@phozart/phz-react/grid';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import { PhzGrid, useGridOrchestrator } from '@phozart/react/grid';
+import type { ColumnDefinition } from '@phozart/core';
 
 const COLUMNS: ColumnDefinition[] = [
   { field: 'id', header: 'ID', width: 60, type: 'number', sortable: true, filterable: true },
@@ -332,8 +332,8 @@ Filter bars that connect to the grid via `useGridOrchestrator`.
 ```typescript
 'use client';
 
-import { PhzSelectionCriteria } from '@phozart/phz-react/criteria';
-import type { CriteriaConfig } from '@phozart/phz-core';
+import { PhzSelectionCriteria } from '@phozart/react/criteria';
+import type { CriteriaConfig } from '@phozart/core';
 
 const CRITERIA_CONFIG: CriteriaConfig = {
   fields: [
@@ -412,7 +412,7 @@ Tabbed configuration panel for grid appearance and behavior.
 ```typescript
 'use client';
 
-import { PhzGridAdmin } from '@phozart/phz-react/admin';
+import { PhzGridAdmin } from '@phozart/react/admin';
 
 <PhzGridAdmin
   open={isAdminOpen}
@@ -445,7 +445,7 @@ import dynamic from 'next/dynamic';
 
 function widgetFactory(tag: string): FC<Record<string, any>> {
   function Widget(props: Record<string, any>) {
-    useEffect(() => { import('@phozart/phz-widgets'); }, []);
+    useEffect(() => { import('@phozart/widgets'); }, []);
     return React.createElement(tag, props);
   }
   Widget.displayName = tag;
@@ -483,10 +483,10 @@ export const DynamicPhzTrendLine = dynamic(() => Promise.resolve(widgetFactory('
 
 ## Headless Grid (No UI)
 
-Use `@phozart/phz-core` directly for data operations without any rendering.
+Use `@phozart/core` directly for data operations without any rendering.
 
 ```typescript
-import { createGrid } from '@phozart/phz-core';
+import { createGrid } from '@phozart/core';
 
 const grid = createGrid({
   data: [
@@ -563,7 +563,7 @@ import {
   createDashboardService,
   createCriteriaEngine,
   computeStatus,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // Facade: creates engine with all sub-systems
 const engine = createBIEngine();
@@ -605,8 +605,8 @@ import {
   generateDashboardConfig,
   generateKPIConfig,
   parseKPIDescription,
-} from '@phozart/phz-ai';
-import type { SchemaAnalysis, WidgetSuggestion } from '@phozart/phz-ai';
+} from '@phozart/ai';
+import type { SchemaAnalysis, WidgetSuggestion } from '@phozart/ai';
 
 // Step 1: Analyze your data schema
 const analysis = analyzeSchema([
@@ -657,7 +657,7 @@ import {
   importDefinition,
   validateDefinition,
   migrateDefinition,
-} from '@phozart/phz-definitions';
+} from '@phozart/definitions';
 
 // Validate a grid definition
 const result = GridDefinitionSchema.safeParse({
@@ -726,7 +726,7 @@ computeAggregations(data, {
 
 ---
 
-## Shared Infrastructure (`@phozart/phz-shared`)
+## Shared Infrastructure (`@phozart/shared`)
 
 The shared package provides adapter interfaces, design system tokens, artifact metadata types, and runtime coordination state machines. All three shells (workspace, viewer, editor) depend on it.
 
@@ -734,7 +734,7 @@ The shared package provides adapter interfaces, design system tokens, artifact m
 
 ```typescript
 // Adapter SPI — implement these in your app
-import type { DataAdapter, DataQuery, DataResult, ViewerContext } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, DataQuery, DataResult, ViewerContext } from '@phozart/shared/adapters';
 
 // Types — alert, subscription, widget types
 import type {
@@ -743,16 +743,16 @@ import type {
   SingleValueAlertConfig,
   MicroWidgetCellConfig,
   CellRendererRegistry,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // Artifact metadata
-import type { ArtifactVisibility, DefaultPresentation, GridArtifact } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility, DefaultPresentation, GridArtifact } from '@phozart/shared/artifacts';
 
 // Design tokens
-import { DESIGN_TOKENS, ALERT_WIDGET_TOKENS, IMPACT_CHAIN_TOKENS } from '@phozart/phz-shared/design-system';
+import { DESIGN_TOKENS, ALERT_WIDGET_TOKENS, IMPACT_CHAIN_TOKENS } from '@phozart/shared/design-system';
 
 // Runtime coordination
-import { createFilterContext, createInteractionBus } from '@phozart/phz-shared/coordination';
+import { createFilterContext, createInteractionBus } from '@phozart/shared/coordination';
 ```
 
 ### CellRendererRegistry setup
@@ -760,8 +760,8 @@ import { createFilterContext, createInteractionBus } from '@phozart/phz-shared/c
 Micro-widget renderers (sparklines, gauges, deltas inside grid cells) are registered at mount time to avoid circular build-time dependencies between grid and widgets.
 
 ```typescript
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
-import type { MicroWidgetRenderer, MicroWidgetCellConfig } from '@phozart/phz-shared/types';
+import { createCellRendererRegistry } from '@phozart/shared/types';
+import type { MicroWidgetRenderer, MicroWidgetCellConfig } from '@phozart/shared/types';
 
 // Create the registry once
 const registry = createCellRendererRegistry();
@@ -796,8 +796,8 @@ import {
   resolveAlertVisualState,
   getAlertTokens,
   degradeAlertMode,
-} from '@phozart/phz-shared/types';
-import type { SingleValueAlertConfig, WidgetAlertSeverity } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { SingleValueAlertConfig, WidgetAlertSeverity } from '@phozart/shared/types';
 
 // 1. Configure alert binding on the widget
 const alertConfig: SingleValueAlertConfig = {
@@ -824,14 +824,14 @@ const params = degradeAlertMode(alertConfig.alertVisualMode, 'compact');
 
 ---
 
-## Viewer Shell (`@phozart/phz-viewer`)
+## Viewer Shell (`@phozart/viewer`)
 
 The viewer shell provides a read-only consumption experience for the analyst persona. It includes catalog browsing, dashboard viewing, report viewing, data exploration, attention notifications, and global filter bar.
 
 ### Installation
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-viewer
+npm install @phozart/shared @phozart/viewer
 ```
 
 ### Basic setup
@@ -844,8 +844,8 @@ import {
   createViewerShellConfig,
   navigateTo,
   setViewerContext,
-} from '@phozart/phz-viewer';
-import type { ViewerShellState } from '@phozart/phz-viewer';
+} from '@phozart/viewer';
+import type { ViewerShellState } from '@phozart/viewer';
 
 // Initialize state
 let state = createViewerShellState();
@@ -866,7 +866,7 @@ state = navigateTo(state, 'dashboard', 'dashboard-sales-overview');
 The viewer ships 9 Lit web components. Register them by importing the package, then use in HTML or a framework.
 
 ```typescript
-import '@phozart/phz-viewer';
+import '@phozart/viewer';
 
 // In HTML:
 // <phz-viewer-shell></phz-viewer-shell>
@@ -880,14 +880,14 @@ import '@phozart/phz-viewer';
 
 ---
 
-## Editor Shell (`@phozart/phz-editor`)
+## Editor Shell (`@phozart/editor`)
 
 The editor shell provides a BI authoring environment for the author persona. It supports creating and editing dashboards, reports, and explorer queries, with widget configuration, measure palette, sharing, and alert/subscription management.
 
 ### Installation
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-editor
+npm install @phozart/shared @phozart/editor
 ```
 
 ### Basic setup
@@ -902,7 +902,7 @@ import {
   toggleEditMode,
   markUnsavedChanges,
   markSaved,
-} from '@phozart/phz-editor';
+} from '@phozart/editor';
 
 // Initialize state
 let state = createEditorShellState();
@@ -923,7 +923,7 @@ state = markSaved(state);
 The editor ships 9 Lit web components.
 
 ```typescript
-import '@phozart/phz-editor';
+import '@phozart/editor';
 
 // <phz-editor-shell></phz-editor-shell>
 // <phz-editor-catalog></phz-editor-catalog>
@@ -945,7 +945,7 @@ import '@phozart/phz-editor';
 Deploy only the viewer shell for read-only consumption. Smallest bundle, no authoring UI.
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-viewer
+npm install @phozart/shared @phozart/viewer
 ```
 
 ### Author + Viewer (self-service BI)
@@ -953,7 +953,7 @@ npm install @phozart/phz-shared @phozart/phz-viewer
 Deploy viewer for analysts and editor for authors. Authors create dashboards and reports; analysts consume them.
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-viewer @phozart/phz-editor
+npm install @phozart/shared @phozart/viewer @phozart/editor
 ```
 
 ### Full Admin (platform administrators)
@@ -961,7 +961,7 @@ npm install @phozart/phz-shared @phozart/phz-viewer @phozart/phz-editor
 Deploy all three shells. Workspace for admin operations (data sources, filter architecture, governance), editor for authoring, viewer for consumption.
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-workspace @phozart/phz-viewer @phozart/phz-editor
+npm install @phozart/shared @phozart/workspace @phozart/viewer @phozart/editor
 ```
 
 ### Headless (server-side computation)
@@ -969,7 +969,7 @@ npm install @phozart/phz-shared @phozart/phz-workspace @phozart/phz-viewer @phoz
 Use the engine and core packages without any UI shells.
 
 ```bash
-npm install @phozart/phz-shared @phozart/phz-core @phozart/phz-engine
+npm install @phozart/shared @phozart/core @phozart/engine
 ```
 
 ---
@@ -993,7 +993,7 @@ Each shell requires consumer-provided adapters. These are interfaces (SPI) that 
 
 ```typescript
 // lib/my-data-adapter.ts
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/phz-shared/adapters';
+import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/shared/adapters';
 
 export class MyDataAdapter implements DataAdapter {
   async execute(query: DataQuery, context?: { signal?: AbortSignal }): Promise<DataResult> {
@@ -1031,7 +1031,7 @@ export class MyDataAdapter implements DataAdapter {
 
 ```typescript
 // lib/my-persistence-adapter.ts
-import type { PersistenceAdapter, ArtifactPayload, SaveResult, ArtifactFilter, ArtifactList } from '@phozart/phz-shared/adapters';
+import type { PersistenceAdapter, ArtifactPayload, SaveResult, ArtifactFilter, ArtifactList } from '@phozart/shared/adapters';
 
 export class MyPersistenceAdapter implements PersistenceAdapter {
   async save(payload: ArtifactPayload): Promise<SaveResult> {
@@ -1054,7 +1054,7 @@ export class MyPersistenceAdapter implements PersistenceAdapter {
     return res.json();
   }
   // ... saveFilterPreset, listFilterPresets, savePersonalView, etc.
-  // See PersistenceAdapter interface in @phozart/phz-shared/adapters for full list.
+  // See PersistenceAdapter interface in @phozart/shared/adapters for full list.
 }
 ```
 
@@ -1062,7 +1062,7 @@ export class MyPersistenceAdapter implements PersistenceAdapter {
 
 ```typescript
 // lib/my-workspace-adapter.ts — extends EngineStorageAdapter + AsyncDefinitionStore
-// See @phozart/phz-workspace WorkspaceAdapter interface for full signature.
+// See @phozart/workspace WorkspaceAdapter interface for full signature.
 // Requires: savePlacement, loadPlacements, deletePlacement, listArtifacts, initialize, clear,
 // plus all EngineStorageAdapter methods (saveReport, loadReports, etc.)
 // and AsyncDefinitionStore methods (save, load, list, delete, duplicate, clear for grid definitions).
@@ -1124,7 +1124,7 @@ function WorkspaceHost({ adapter, dataAdapter }: { adapter: any; dataAdapter: an
 
   // Import registers <phz-workspace> + all sub-components (grid-admin, engine-admin, etc.)
   useEffect(() => {
-    import('@phozart/phz-workspace/all').then(() => setLoaded(true));
+    import('@phozart/workspace/all').then(() => setLoaded(true));
   }, []);
 
   // Set complex properties imperatively
@@ -1181,14 +1181,14 @@ export default function WorkspacePage() {
 
 | Panel ID | Custom Element Tag | Slot Name | Registered By |
 |----------|-------------------|-----------|---------------|
-| `dashboards` | `phz-dashboard-builder` | `dashboards` | `@phozart/phz-workspace/all` (engine-admin) |
-| `reports` | `phz-report-designer` | `reports` | `@phozart/phz-workspace/all` (engine-admin) |
-| `grid-admin` | `phz-grid-admin` | `grid-admin` | `@phozart/phz-workspace/all` (grid-admin) |
-| `engine-admin` | `phz-engine-admin` | `engine-admin` | `@phozart/phz-workspace/all` (engine-admin) |
-| `grid-creator` | `phz-grid-creator` | `grid-creator` | `@phozart/phz-workspace/all` (grid-creator) |
-| `connectors` | `phz-connection-editor` | `connectors` | `@phozart/phz-workspace/all` (adapters) |
-| `criteria-admin` | `phz-criteria-admin` | `criteria-admin` | `@phozart/phz-workspace/all` (criteria-admin) |
-| `catalog` | `phz-catalog-browser` | `catalog` | Needs separate import: `import '@phozart/phz-workspace/catalog'` |
+| `dashboards` | `phz-dashboard-builder` | `dashboards` | `@phozart/workspace/all` (engine-admin) |
+| `reports` | `phz-report-designer` | `reports` | `@phozart/workspace/all` (engine-admin) |
+| `grid-admin` | `phz-grid-admin` | `grid-admin` | `@phozart/workspace/all` (grid-admin) |
+| `engine-admin` | `phz-engine-admin` | `engine-admin` | `@phozart/workspace/all` (engine-admin) |
+| `grid-creator` | `phz-grid-creator` | `grid-creator` | `@phozart/workspace/all` (grid-creator) |
+| `connectors` | `phz-connection-editor` | `connectors` | `@phozart/workspace/all` (adapters) |
+| `criteria-admin` | `phz-criteria-admin` | `criteria-admin` | `@phozart/workspace/all` (criteria-admin) |
+| `catalog` | `phz-catalog-browser` | `catalog` | Needs separate import: `import '@phozart/workspace/catalog'` |
 | `explore` | `phz-data-explorer` | `explore` | Not yet a Lit component (use headless APIs) |
 | `data-sources` | `phz-data-source-panel` | `data-sources` | Not yet a Lit component |
 | `alerts` | `phz-alert-rule-designer` | `alerts` | Not yet a Lit component |
@@ -1214,7 +1214,7 @@ function ViewerHost({ config, viewerContext }: { config: any; viewerContext: any
 
   // Import registers all 9 viewer components
   useEffect(() => {
-    import('@phozart/phz-viewer').then(() => setLoaded(true));
+    import('@phozart/viewer').then(() => setLoaded(true));
   }, []);
 
   useLayoutEffect(() => {
@@ -1323,7 +1323,7 @@ function EditorHost({ theme }: { theme: string }) {
 
   // Import registers all 9 editor components
   useEffect(() => {
-    import('@phozart/phz-editor').then(() => setLoaded(true));
+    import('@phozart/editor').then(() => setLoaded(true));
   }, []);
 
   useLayoutEffect(() => {
@@ -1380,24 +1380,24 @@ const packageAliases: Record<string, string> = {
   // ... existing core/grid/react/engine aliases ...
 
   // Shared infrastructure
-  '@phozart/phz-shared/adapters':      path.resolve(pkgs, 'shared/dist/adapters/index.js'),
-  '@phozart/phz-shared/types':         path.resolve(pkgs, 'shared/dist/types/index.js'),
-  '@phozart/phz-shared/artifacts':     path.resolve(pkgs, 'shared/dist/artifacts/index.js'),
-  '@phozart/phz-shared/design-system': path.resolve(pkgs, 'shared/dist/design-system/index.js'),
-  '@phozart/phz-shared/coordination':  path.resolve(pkgs, 'shared/dist/coordination/index.js'),
-  '@phozart/phz-shared':               path.resolve(pkgs, 'shared/dist/index.js'),
+  '@phozart/shared/adapters':      path.resolve(pkgs, 'shared/dist/adapters/index.js'),
+  '@phozart/shared/types':         path.resolve(pkgs, 'shared/dist/types/index.js'),
+  '@phozart/shared/artifacts':     path.resolve(pkgs, 'shared/dist/artifacts/index.js'),
+  '@phozart/shared/design-system': path.resolve(pkgs, 'shared/dist/design-system/index.js'),
+  '@phozart/shared/coordination':  path.resolve(pkgs, 'shared/dist/coordination/index.js'),
+  '@phozart/shared':               path.resolve(pkgs, 'shared/dist/index.js'),
 
   // Viewer shell
-  '@phozart/phz-viewer':               path.resolve(pkgs, 'viewer/dist/index.js'),
+  '@phozart/viewer':               path.resolve(pkgs, 'viewer/dist/index.js'),
 
   // Editor shell
-  '@phozart/phz-editor':               path.resolve(pkgs, 'editor/dist/index.js'),
+  '@phozart/editor':               path.resolve(pkgs, 'editor/dist/index.js'),
 
   // Workspace (main + all + sub-paths)
-  '@phozart/phz-workspace/all':        path.resolve(pkgs, 'workspace/dist/all.js'),
-  '@phozart/phz-workspace/shell':      path.resolve(pkgs, 'workspace/dist/shell/index.js'),
+  '@phozart/workspace/all':        path.resolve(pkgs, 'workspace/dist/all.js'),
+  '@phozart/workspace/shell':      path.resolve(pkgs, 'workspace/dist/shell/index.js'),
   // ... existing workspace sub-path aliases ...
-  '@phozart/phz-workspace':            path.resolve(pkgs, 'workspace/dist/index.js'),
+  '@phozart/workspace':            path.resolve(pkgs, 'workspace/dist/index.js'),
 };
 ```
 
@@ -1409,12 +1409,12 @@ Add corresponding paths to `tsconfig.json` for type checking:
 {
   "compilerOptions": {
     "paths": {
-      "@phozart/phz-shared/*": ["../phz-grid/packages/shared/dist/*"],
-      "@phozart/phz-shared": ["../phz-grid/packages/shared/dist/index.d.ts"],
-      "@phozart/phz-viewer": ["../phz-grid/packages/viewer/dist/index.d.ts"],
-      "@phozart/phz-editor": ["../phz-grid/packages/editor/dist/index.d.ts"],
-      "@phozart/phz-workspace/*": ["../phz-grid/packages/workspace/dist/*"],
-      "@phozart/phz-workspace": ["../phz-grid/packages/workspace/dist/index.d.ts"]
+      "@phozart/shared/*": ["../phz-grid/packages/shared/dist/*"],
+      "@phozart/shared": ["../phz-grid/packages/shared/dist/index.d.ts"],
+      "@phozart/viewer": ["../phz-grid/packages/viewer/dist/index.d.ts"],
+      "@phozart/editor": ["../phz-grid/packages/editor/dist/index.d.ts"],
+      "@phozart/workspace/*": ["../phz-grid/packages/workspace/dist/*"],
+      "@phozart/workspace": ["../phz-grid/packages/workspace/dist/index.d.ts"]
     }
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Container Query Widget Adaptations
  *
- * Extracted from @phozart/phz-workspace styles (S.3).
+ * Extracted from @phozart/workspace styles (S.3).
  * Pure helper functions that return CSS class names based on container width.
  * Widgets use these to adapt their layout at various breakpoints.
  */

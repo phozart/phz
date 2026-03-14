@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Enhanced Widget Configuration Types
+ * @phozart/engine — Enhanced Widget Configuration Types
  *
  * Rich per-widget configuration: data bindings, appearance, behaviour.
  * These extend the existing WidgetConfig types without breaking them.
@@ -142,6 +142,16 @@ export const SMART_DEFAULTS = {
             titleBar: { show: false },
         },
         behaviour: { ...defaultBehaviour(), onClick: 'open-detail' },
+    }),
+    'slicer': () => ({
+        type: 'slicer',
+        name: 'Slicer',
+        data: { bindings: { type: 'slicer', field: '', mode: 'multi' } },
+        appearance: {
+            container: defaultContainer(),
+            titleBar: defaultTitleBar('Slicer'),
+        },
+        behaviour: defaultBehaviour(),
     }),
     'custom': () => ({
         type: 'custom',

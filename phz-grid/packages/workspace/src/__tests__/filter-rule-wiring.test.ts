@@ -12,7 +12,7 @@ import {
   applyCrossFilterFromWidget,
   type FilterRuleActionMap,
 } from '../filters/filter-rule-wiring.js';
-import { createFilterContext } from '@phozart/phz-shared';
+import { createFilterContext } from '@phozart/shared';
 import type { FilterRule } from '../filters/filter-rule-engine.js';
 
 describe('filter-rule-wiring', () => {

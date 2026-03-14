@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Data Source Enrichment Admin State (B-3.09)
+ * @phozart/workspace — Data Source Enrichment Admin State (B-3.09)
  *
  * Pure functions for field enrichment editing — semantic hints, units, labels.
  * Supports bulk enrichment via CSV import and enrichment preview.

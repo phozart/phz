@@ -6,14 +6,14 @@ import {
   DESIGN_TOKENS,
   generateTokenCSS,
   SECTION_HEADERS,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   BREAKPOINT_VALUES,
   getViewportBreakpoint,
   getBreakpointClasses,
   getBottomTabItems,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   getKPICardClass,
@@ -21,7 +21,7 @@ import {
   getTableClass,
   getFilterBarClass,
   getVisibleColumns,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   getFormDensityClasses,
@@ -32,14 +32,14 @@ import {
   getSkeletonClass,
   STATUS_BADGE_VARIANTS,
   getOverflowClasses,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   SHELL_LAYOUT,
   EXPLORER_LAYOUT,
   SQL_PREVIEW_THEME,
   getDefaultShellRegions,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   ICONS,
@@ -54,7 +54,7 @@ import {
   SOURCE_ICONS,
   NAV_ICONS,
   ACTION_ICONS,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 import {
   MIN_TOUCH_TARGET,
@@ -62,7 +62,7 @@ import {
   getBottomSheetDimensions,
   SWIPE_THRESHOLDS,
   getMobileNavConfig,
-} from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/design-system';
 
 // ========================================================================
 // Design Tokens

@@ -12,7 +12,7 @@ import {
   autoMapColumnsToEncoding,
   getChartTypeAvailability,
 } from '../report-chart-state.js';
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 
 function makeField(name: string, dataType: FieldMetadata['dataType'], hint?: FieldMetadata['semanticHint']): FieldMetadata {
   return { name, dataType, nullable: false, semanticHint: hint };

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — FetchWorkspaceAdapter
+ * @phozart/workspace — FetchWorkspaceAdapter
  *
  * REST client implementing WorkspaceAdapter that delegates to a server.
  */

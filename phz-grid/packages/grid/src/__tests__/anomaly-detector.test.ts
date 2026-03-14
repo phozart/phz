@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — Anomaly Detector Tests
+ * @phozart/grid — Anomaly Detector Tests
  */
 import { describe, it, expect } from 'vitest';
 import { detectAnomalies, detectAllAnomalies, buildAnomalyLookup } from '../features/anomaly-detector.js';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 
 function makeRows(values: (number | null | undefined | string)[]): RowData[] {
   return values.map((v, i) => ({ __id: String(i), value: v }));

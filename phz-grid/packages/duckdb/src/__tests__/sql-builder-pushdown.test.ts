@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — SQL Builder Push-down Enhancement Tests
+ * @phozart/duckdb — SQL Builder Push-down Enhancement Tests
  *
  * Tests for enhanced sql-builder features: HAVING clause, GROUP BY with
  * aggregate SELECT columns, and combined push-down queries.
@@ -11,7 +11,7 @@ import {
   buildCountQuery,
   type GridQueryInput,
 } from '../sql-builder.js';
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 describe('sql-builder push-down enhancements', () => {
   describe('HAVING clause', () => {

@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-shared — Shared infrastructure for all shells
+ * @phozart/shared — Shared infrastructure for all shells
  *
  * This package contains adapter interfaces, design system, artifact types,
  * runtime coordination, and shared type definitions used by workspace,
  * viewer, and editor packages.
  *
- * Sub-path imports (e.g., '@phozart/phz-shared/adapters') are the preferred
+ * Sub-path imports (e.g., '@phozart/shared/adapters') are the preferred
  * way to consume this package. The barrel re-export here is for convenience
  * but uses explicit re-exports to avoid duplicate member collisions.
  */
@@ -89,6 +89,7 @@ export {
   createDefaultErrorStateConfig,
   pickRandomMessage,
   formatErrorForClipboard,
+  // error-hierarchy (see also errors/ barrel below)
   // empty-states
   type EmptyScenario,
   type EmptyStateConfig,
@@ -373,7 +374,7 @@ export {
   getOverallAssessment,
 } from './dashboard-performance.js';
 
-// Definition types, stores, converters (migrated from @phozart/phz-definitions)
+// Definition types, stores, converters (migrated from @phozart/definitions)
 export {
   // types
   type DefinitionId,
@@ -419,3 +420,7 @@ export {
   type DefinitionValidationResult,
   type DefinitionValidationError,
 } from './definitions/index.js';
+
+// Error Hierarchy
+export { PhzError } from './errors/phz-error.js';
+export { PhzValidationError, type ValidationFieldError } from './errors/validation-error.js';

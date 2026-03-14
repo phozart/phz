@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-local — DuckDB Native Adapter (R.3)
+ * @phozart/local — DuckDB Native Adapter (R.3)
  *
  * Implements DataAdapter wrapping native DuckDB Node.js bindings.
  * DuckDB is an optional dependency — this module gracefully handles
  * its absence. Tests mock the DuckDB interface.
  */
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/phz-workspace';
+import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/workspace';
 export interface DuckDBBinding {
     run(sql: string, params?: unknown[]): Promise<void>;
     all(sql: string, params?: unknown[]): Promise<Record<string, unknown>[]>;

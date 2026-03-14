@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Value Handling Admin State (B-3.07)
+ * @phozart/workspace — Filter Value Handling Admin State (B-3.07)
  *
  * Pure functions for configuring FilterValueSource (data-source, lookup-table, static),
  * transform configuration, default value setup, and display options

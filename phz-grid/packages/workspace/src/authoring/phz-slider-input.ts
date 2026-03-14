@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Slider Input Micro-Component
+ * @phozart/workspace — Slider Input Micro-Component
  *
  * Range input with numeric readout and label.
  * Fires 'value-changed' event with { detail: { value: number } }.

@@ -1,9 +1,10 @@
 /**
- * @phozart/phz-duckdb — DuckDB ComputeBackend
+ * @phozart/duckdb — DuckDB ComputeBackend
  *
  * Implements ComputeBackend by generating SQL and delegating execution
  * to a DuckDB connection via the DuckDBQueryExecutor interface.
  */
+import { expressionToSQL } from '@phozart/engine';
 import { buildAggregationQuery } from './duckdb-aggregation.js';
 import { buildPivotQuery } from './duckdb-pivot.js';
 import { buildGridQuery, sanitizeIdentifier } from './sql-builder.js';
@@ -33,7 +34,7 @@ export class DuckDBComputeBackend {
     }
     async pivot(_data, config) {
         if (config.valueFields.length === 0 || config.columnFields.length === 0) {
-            return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [] };
+            return { rowHeaders: [], columnHeaders: [], cells: [], grandTotals: [], rowTotals: [], subtotals: [] };
         }
         const { sql, params } = buildPivotQuery(this.executor.tableName, config);
         const rows = await this.executor.execute(sql, params);
@@ -56,8 +57,11 @@ export class DuckDBComputeBackend {
         const cells = rows.map(row => {
             return Array.from(colHeaderSet).sort().map(col => row[col] ?? null);
         });
-        const grandTotals = Array.from(colHeaderSet).sort().map(() => null);
-        return { rowHeaders, columnHeaders, cells, grandTotals };
+        const grandTotals = Array.from(colHeaderSet).sort().map(col => {
+            const values = rows.map(row => row[col]).filter(v => v != null && typeof v === 'number');
+            return values.length > 0 ? values.reduce((a, b) => a + b, 0) : null;
+        });
+        return { rowHeaders, columnHeaders, cells, grandTotals, rowTotals: [], subtotals: [] };
     }
     async filter(_data, criteria) {
         const { sql, params } = buildGridQuery({
@@ -74,7 +78,12 @@ export class DuckDBComputeBackend {
             const sql = `SELECT * FROM ${table}`;
             return this.executor.execute(sql);
         }
-        const extras = fields.map(f => `(${f.expression}) AS "${sanitizeIdentifier(f.name)}"`).join(', ');
+        const extras = fields.map(f => {
+            const sqlExpr = typeof f.expression === 'string'
+                ? f.expression
+                : expressionToSQL(f.expression);
+            return `(${sqlExpr}) AS "${sanitizeIdentifier(f.name)}"`;
+        }).join(', ');
         const sql = `SELECT *, ${extras} FROM ${table}`;
         return this.executor.execute(sql);
     }

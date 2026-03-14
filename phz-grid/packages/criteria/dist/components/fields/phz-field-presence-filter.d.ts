@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-criteria — Field Presence Filter
+ * @phozart/criteria — Field Presence Filter
  *
  * Compact pill-based filter for specifying whether fields must have a value,
  * must be empty, or should not be filtered. Each pill cycles through three states:
  *   any → has_value → empty → any
  */
 import { LitElement } from 'lit';
-import type { PresenceState } from '@phozart/phz-core';
+import type { PresenceState } from '@phozart/core';
 export declare class PhzFieldPresenceFilter extends LitElement {
     static styles: import("lit").CSSResult[];
     /** Array of field identifiers to render as filterable pills */

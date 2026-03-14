@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Web Components Rendering Layer
+ * @phozart/grid — Web Components Rendering Layer
  *
  * Lit-based custom elements for rendering the phozart data grid.
  */

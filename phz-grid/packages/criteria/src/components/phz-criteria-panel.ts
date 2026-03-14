@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Panel
+ * @phozart/criteria — Criteria Panel
  *
  * Main facade. Renders header, fields grid, Apply/Reset bar, summary strip, preset manager.
  * Monochrome icons, Phz UI console mode.
@@ -13,12 +13,12 @@ import type {
   SelectionPreset,
   SelectionFieldOption,
   SelectionValidationResult,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import {
   resolveDynamicDefaults,
   resolveDependencies,
   validateCriteria,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 import { criteriaStyles } from '../shared-styles.js';
 
 import './phz-criteria-field.js';

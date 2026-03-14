@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Adapter
+ * @phozart/engine — Filter Adapter
  *
  * Bridges CriteriaEngine output (ArtefactCriteria) to widget data filtering.
  * Provides:
@@ -7,7 +7,7 @@
  * - FilterAdapter: stateful adapter managing values, criteria, and subscriptions
  * - globalFiltersToCriteriaBindings(): converts GlobalFilter[] into CriteriaEngine registrations
  */
-import type { ArtefactId, ArtefactCriteria, SelectionContext } from '@phozart/phz-core';
+import type { ArtefactId, ArtefactCriteria, SelectionContext } from '@phozart/core';
 import type { CriteriaEngine } from './criteria/criteria-engine.js';
 import type { GlobalFilter } from './dashboard-enhanced.js';
 export interface FilterAdapter {

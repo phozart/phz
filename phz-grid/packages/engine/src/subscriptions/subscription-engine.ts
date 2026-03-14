@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Subscription Engine (C-2.05)
+ * @phozart/engine — Subscription Engine (C-2.05)
  *
  * State management for report/dashboard subscriptions.
  * Includes schedule computation and execution readiness checks.
@@ -11,9 +11,9 @@ import type {
   Subscription,
   SubscriptionSchedule,
   SubscriptionFrequency,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
-// Note: Subscription and SubscriptionSchedule are defined in @phozart/phz-shared/types.
+// Note: Subscription and SubscriptionSchedule are defined in @phozart/shared/types.
 // They are not re-exported here to avoid duplicate export collisions.
 
 // ========================================================================

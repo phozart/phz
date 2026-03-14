@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Column Configurator (Dual-List Picker)
+ * @phozart/grid-admin — Column Configurator (Dual-List Picker)
  *
  * Side-by-side Available/Selected panels with search, drag-to-reorder,
  * multi-select, move up/down, and per-column settings (type, status colors,
@@ -10,7 +10,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../safe-custom-element.js';
 import { adminBaseStyles } from './shared-styles.js';
-import type { ColumnColorThreshold, ColumnFormatting } from '@phozart/phz-engine';
+import type { ColumnColorThreshold, ColumnFormatting } from '@phozart/engine';
 
 export type { ColumnColorThreshold, ColumnFormatting };
 

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — PersonalAlert (A-1.12 + A-1.13)
+ * @phozart/shared — PersonalAlert (A-1.12 + A-1.13)
  *
  * User-facing alert configurations, notification preferences,
  * and grace period handling. PersonalAlert lets individual users

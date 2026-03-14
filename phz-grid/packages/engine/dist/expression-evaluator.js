@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression Evaluator
+ * @phozart/engine — Expression Evaluator
  *
  * Synchronous tree-walk evaluator for ExpressionNode ASTs.
  * Two contexts: row-level (for calculated fields) and metric-level (for composite metrics).

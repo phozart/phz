@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, type RefObject } from 'react';
-import type { GridApi, RowId, CellPosition } from '@phozart/phz-core';
+import type { GridApi, RowId, CellPosition } from '@phozart/core';
 
 export function useGridSelection(gridRef: RefObject<GridApi | null>) {
   const [selectedRows, setSelectedRows] = useState<RowId[]>([]);

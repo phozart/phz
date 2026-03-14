@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — PhzFilterDesigner React Component
+ * @phozart/react — PhzFilterDesigner React Component
  *
  * Wraps the <phz-filter-designer> Web Component for React using @lit/react.
  * Provides admin UI for managing filter definitions, rules, and presets.

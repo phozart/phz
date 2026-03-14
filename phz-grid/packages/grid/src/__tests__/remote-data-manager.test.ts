@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-grid — RemoteDataManager Tests
+ * @phozart/grid — RemoteDataManager Tests
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RemoteDataManager } from '../remote-data-manager.js';
-import type { AsyncDataSource, DataFetchRequest, DataFetchResponse } from '@phozart/phz-core';
+import type { AsyncDataSource, DataFetchRequest, DataFetchResponse } from '@phozart/core';
 
 function createMockDataSource(options?: {
   totalCount?: number;

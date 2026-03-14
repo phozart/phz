@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Share Dialog
+ * @phozart/engine-admin — Share Dialog
  *
  * Dialog with tabs: Embed Code, JSON Config, Link.
  * Provides copy-to-clipboard, download, and embed preview.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Remote Data Connector (Q.1)
+ * @phozart/workspace — Remote Data Connector (Q.1)
  *
  * Interface and in-memory implementation for browser-side connections
  * to URLs (CSV/JSON/Parquet) and REST APIs as data sources.

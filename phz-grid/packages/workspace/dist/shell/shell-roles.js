@@ -40,7 +40,7 @@ let viewerWarned = false;
 function warnViewerDeprecated() {
     if (!viewerWarned) {
         viewerWarned = true;
-        console.warn('[@phozart/phz-workspace] WorkspaceRole "viewer" is deprecated and was removed in v15. ' +
+        console.warn('[@phozart/workspace] WorkspaceRole "viewer" is deprecated and was removed in v15. ' +
             'Use application-layer access control for read-only experiences. ' +
             'This fallback will be removed in v16.');
     }

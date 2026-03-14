@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — FilterRuleEngine (U.2)
+ * @phozart/workspace — FilterRuleEngine (U.2)
  *
  * Evaluates conditional business rules against the current filter state
  * and viewer context. Rules are priority-ordered; multiple rules can

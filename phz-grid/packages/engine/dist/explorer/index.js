@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine/explorer — Visual Query Explorer
+ * @phozart/engine/explorer — Visual Query Explorer
  *
  * Headless explorer module for self-service analytics:
  * field palette, drop zones, pivot preview, chart suggest,
  * artifact conversion, and dashboard integration.
  *
- * Moved from @phozart/phz-workspace/explore in v15 (A-2.01).
+ * Moved from @phozart/workspace/explore in v15 (A-2.01).
  */
 // Explore types & conversion
 export { exploreToDataQuery, } from './explore-types.js';
@@ -27,4 +27,6 @@ export { createDataExplorer, } from './phz-data-explorer.js';
 export { promoteFilterToDashboard, buildDrillThroughPrePopulation, } from './explorer-dashboard-integration.js';
 // Widget suggestion for dashboard field drops
 export { suggestWidgetForFieldDrop, } from './widget-suggestion.js';
+// Explore → Pivot converter
+export { exploreQueryToPivot } from './explore-pivot.js';
 //# sourceMappingURL=index.js.map

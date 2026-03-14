@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Dashboard Performance Estimation Tests (WE-14)
+ * @phozart/shared — Dashboard Performance Estimation Tests (WE-14)
  *
  * TDD: Tests written first, implementation follows.
  */

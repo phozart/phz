@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Artifact Catalog Component
+ * @phozart/workspace — Artifact Catalog Component
  *
  * Home screen showing all reports and dashboards with search, tag filtering,
  * sorting, and status badges.

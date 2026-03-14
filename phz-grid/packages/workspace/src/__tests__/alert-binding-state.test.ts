@@ -11,7 +11,7 @@ import {
   clearAlertBinding,
 } from '../authoring/alert-binding-state.js';
 import type { AlertRuleRef, AlertBindingState } from '../authoring/alert-binding-state.js';
-import type { SingleValueAlertConfig } from '@phozart/phz-shared/types';
+import type { SingleValueAlertConfig } from '@phozart/shared/types';
 
 // ========================================================================
 // Test fixtures

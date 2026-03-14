@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- KPI Scorecard Pure Logic Tests
+ * @phozart/widgets -- KPI Scorecard Pure Logic Tests
  *
  * Tests for the classifiedScores, breakdownLabels, statusSummary, and toggleExpand
  * methods on PhzKPIScorecard.
@@ -17,7 +17,7 @@ vi.mock('lit/decorators.js', () => ({
   property: () => () => {},
   state: () => () => {},
 }));
-vi.mock('@phozart/phz-engine', () => ({
+vi.mock('@phozart/engine', () => ({
   classifyKPIScore: (score: any, kpi: any) => ({
     kpiId: score.kpiId,
     value: score.value,

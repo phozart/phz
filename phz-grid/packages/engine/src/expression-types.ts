@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Expression AST Types & Data Model
+ * @phozart/engine — Expression AST Types & Data Model
  *
  * All types for the 5-layer computation DAG:
  * Fields → Parameters → Calculated Fields → Metrics → KPIs
@@ -39,10 +39,18 @@ export type UnaryOperator = 'negate' | 'not';
 export type BuiltinFunction =
   // Math
   | 'ABS' | 'ROUND' | 'FLOOR' | 'CEIL'
+  | 'SQRT' | 'POWER' | 'MOD' | 'LOG' | 'EXP'
   // String
   | 'UPPER' | 'LOWER' | 'TRIM' | 'LEN' | 'SUBSTR' | 'CONCAT'
+  | 'LEFT' | 'RIGHT' | 'REPLACE' | 'REPEAT'
   // Date
   | 'YEAR' | 'MONTH' | 'DAY'
+  | 'DATE_DIFF' | 'DATE_ADD' | 'FORMAT_DATE'
+  // Statistical
+  | 'STDDEV' | 'VARIANCE' | 'PERCENTILE'
+  // Window
+  | 'RANK' | 'DENSE_RANK' | 'LAG' | 'LEAD'
+  | 'RUNNING_SUM' | 'NTILE'
   // Utility
   | 'COALESCE' | 'IF' | 'CLAMP';
 

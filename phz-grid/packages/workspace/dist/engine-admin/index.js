@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/engine-admin — Engine Admin Components
+ * @phozart/workspace/engine-admin — Engine Admin Components
  *
  * All engine-admin components migrated into the workspace package.
  */
@@ -39,4 +39,7 @@ export { PhzShareDialog, SHARE_TABS } from './components/phz-share-dialog.js';
 // Data connector
 export { PhzDataConnector } from './components/phz-data-connector.js';
 export { detectSchema, detectDelimiter, parseCSVPreview, validateSourceConfig } from './data-source-detector.js';
+export { createDashboardEditorState, enableAdvancedMode, toggleDataModel, toggleToolbar, addWidget, removeWidget, selectWidget, updateWidgetConfig, setName, setDescription, isAdvancedFeatureUsed, } from './dashboard-editor-state.js';
+export { createExpressionAutocompleteState, computeSuggestions, selectNext, selectPrevious, acceptSuggestion, dismissAutocomplete, getSelectedSuggestion, } from './expression-autocomplete-state.js';
+export { createDependencyGraphViewState, selectNode, clearSelection, highlightUpstream, highlightDownstream, highlightBoth, toggleLayerVisibility, setGraphSearch, getVisibleNodes, getVisibleEdges, } from './dependency-graph-view-state.js';
 //# sourceMappingURL=index.js.map

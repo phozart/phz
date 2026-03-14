@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Canvas Toolbar State (Canvas Phase 4A)
+ * @phozart/workspace — Canvas Toolbar State (Canvas Phase 4A)
  *
  * State machine for the floating canvas toolbar.
  * Controls zoom, grid snap, grid dots, alignment buttons, and canvas mode.

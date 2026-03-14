@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-empty> Custom Element
+ * @phozart/viewer — <phz-viewer-empty> Custom Element
  *
  * Displays user-friendly empty states with optional call-to-action.
  * Uses shared EmptyScenario and EmptyStateConfig types.
  */
 import { LitElement, type TemplateResult } from 'lit';
-import type { EmptyScenario, EmptyStateConfig } from '@phozart/phz-shared/types';
+import type { EmptyScenario, EmptyStateConfig } from '@phozart/shared/types';
 export declare class PhzViewerEmpty extends LitElement {
     static styles: import("lit").CSSResult;
     scenario: EmptyScenario;

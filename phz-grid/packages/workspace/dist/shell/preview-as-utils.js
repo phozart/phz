@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Preview-as Utils (L.19)
+ * @phozart/workspace — Preview-as Utils (L.19)
  *
  * Immutable state for viewer context simulation ("preview as" role/user).
  */

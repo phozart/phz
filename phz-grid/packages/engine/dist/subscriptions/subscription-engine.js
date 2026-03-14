@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Subscription Engine (C-2.05)
+ * @phozart/engine — Subscription Engine (C-2.05)
  *
  * State management for report/dashboard subscriptions.
  * Includes schedule computation and execution readiness checks.

@@ -11,7 +11,7 @@ import {
   createCascadeWiring,
   createFilterAdminPersistence,
 } from '../filters/filter-lifecycle-wiring.js';
-import { createFilterContext } from '@phozart/phz-shared';
+import { createFilterContext } from '@phozart/shared';
 
 describe('filter-lifecycle-wiring', () => {
   // =====================================================================

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — MutationManager
+ * @phozart/core — MutationManager
  *
  * Orchestrates optimistic mutations with server write-back.
  * Applies changes optimistically, reverts on failure, reports conflicts.

@@ -1,4 +1,4 @@
-# PYTHON API CONTRACTS — @phozart/phz-python
+# PYTHON API CONTRACTS — @phozart/python
 
 > pip package: `phz-grid`
 > Distribution: PyPI
@@ -27,7 +27,7 @@ Python (pandas/polars/pyarrow)
 anywidget trait sync
     │
     ▼
-Browser JS (@phozart/phz-grid + @phozart/phz-core)
+Browser JS (@phozart/grid + @phozart/core)
     │
     ├─ Arrow JS deserialization
     │
@@ -591,7 +591,7 @@ bytes (Arrow IPC stream)
 Browser JS: arrow.tableFromIPC(bytes)
     │
     ▼
-@phozart/phz-core data model
+@phozart/core data model
 ```
 
 ### File Structure
@@ -629,7 +629,7 @@ packages/python/
 ## v15 JavaScript Changes — Python Impact Assessment
 
 The v15 architecture refactoring introduced three new JavaScript packages
-(`@phozart/phz-shared`, `@phozart/phz-viewer`, `@phozart/phz-editor`), four
+(`@phozart/shared`, `@phozart/viewer`, `@phozart/editor`), four
 spec amendments (alert-aware widgets, micro-widget cell renderers, impact chain
 widget, faceted attention filtering), and new engine subsystems (personal alerts,
 subscriptions, usage analytics, OpenAPI generator, attention system).
@@ -654,6 +654,6 @@ not currently planned.
 
 ---
 
-*API Contracts — @phozart/phz-python*
+*API Contracts — @phozart/python*
 *Phase 2: Architecture & Data Design*
 *2026-02-24 (v15 note added 2026-03-08)*

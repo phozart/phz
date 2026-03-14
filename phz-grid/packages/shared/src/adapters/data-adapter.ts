@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — DataAdapter SPI & Related Types
+ * @phozart/shared — DataAdapter SPI & Related Types
  *
  * Core contract for data sources. Consumer applications implement DataAdapter
  * to provide query execution, schema introspection, and field-level metadata.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-angular — Factory functions
+ * @phozart/angular — Factory functions
  *
  * Creates Angular components and services without hard dependency on Angular decorators.
  * These factories accept the Angular runtime to create properly decorated components.
@@ -7,12 +7,12 @@
  * Usage in Angular app:
  *   import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
  *   import { BehaviorSubject, Subject } from 'rxjs';
- *   import { createPhzGridComponent, createSelectionService } from '@phozart/phz-angular';
+ *   import { createPhzGridComponent, createSelectionService } from '@phozart/angular';
  *
  *   const PhzGridComponent = createPhzGridComponent({ Component, Input, Output, EventEmitter });
  *   const selectionService = createSelectionService({ BehaviorSubject, Subject });
  */
-import type { GridApi, ColumnDefinition, RowId, CellPosition, FilterOperator, SortState, FilterState, EditState } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowId, CellPosition, FilterOperator, SortState, FilterState, EditState } from '@phozart/core';
 import type {
   PhzGridInputs, PhzGridOutputs, GridServiceConfig,
   RxJSRuntime, BehaviorSubjectLike,
@@ -21,7 +21,7 @@ import type {
 } from './types.js';
 
 // Side-effect import to register custom element
-import '@phozart/phz-grid';
+import '@phozart/grid';
 
 /**
  * Minimal Angular runtime interface needed by the factories.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Responsive Fallback (Canvas Phase 4C)
+ * @phozart/workspace — Responsive Fallback (Canvas Phase 4C)
  *
  * Converts freeform canvas positions to a single-column mobile stack
  * sorted by visual position (top→bottom, left→right).

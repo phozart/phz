@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-shell> Custom Element
+ * @phozart/viewer — <phz-viewer-shell> Custom Element
  *
  * Top-level shell component for the read-only viewer. Renders
  * a navigation bar, screen content area, and attention dropdown.
@@ -8,9 +8,9 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { ViewerContext } from '@phozart/phz-shared/adapters';
-import type { ErrorState, EmptyState } from '@phozart/phz-shared/types';
-import type { FilterContextManager } from '@phozart/phz-shared/coordination';
+import type { ViewerContext } from '@phozart/shared/adapters';
+import type { ErrorState, EmptyState } from '@phozart/shared/types';
+import type { FilterContextManager } from '@phozart/shared/coordination';
 
 import {
   type ViewerScreen,

@@ -4,8 +4,8 @@
 import {
   createFieldEnrichment,
   mergeFieldMetadata,
-} from '@phozart/phz-shared/types';
-import type { FieldEnrichment, UnitSpec, SemanticHint } from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
+import type { FieldEnrichment, UnitSpec, SemanticHint } from '@phozart/shared/types';
 
 // ========================================================================
 // createFieldEnrichment

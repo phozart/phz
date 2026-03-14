@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Sidebar
+ * @phozart/criteria — Preset Sidebar
  *
  * Vertical list of saved presets grouped by scope (Shared, Personal).
  * Used inside the expanded modal sidebar.
@@ -7,7 +7,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { SelectionPreset } from '@phozart/phz-core';
+import type { SelectionPreset } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 
 @customElement('phz-preset-sidebar')

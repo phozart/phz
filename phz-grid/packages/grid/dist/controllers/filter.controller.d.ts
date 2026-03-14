@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 import type { FilterInfo } from '../types.js';
 import type { FilterValueEntry, FilterApplyEvent } from '../components/phz-filter-popover.js';
 import type { AriaManager } from '../a11y/aria-manager.js';

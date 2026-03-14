@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Selection Criteria (Bar + Drawer Orchestrator)
+ * @phozart/criteria — Selection Criteria (Bar + Drawer Orchestrator)
  *
  * Top-level component composing:
  *  - phz-criteria-bar (compact horizontal bar)
@@ -11,7 +11,7 @@
  * Uses engine functions for validation, formatting, defaults.
  */
 import { LitElement } from 'lit';
-import type { CriteriaConfig, SelectionContext, SelectionFieldDef, SelectionPreset, DataSet } from '@phozart/phz-core';
+import type { CriteriaConfig, SelectionContext, SelectionFieldDef, SelectionPreset, DataSet } from '@phozart/core';
 import './phz-criteria-bar.js';
 import './phz-filter-drawer.js';
 import './phz-filter-section.js';
@@ -34,15 +34,15 @@ export declare class PhzSelectionCriteria extends LitElement {
     /** Registry mode: when true, fields are resolved from filterRegistry + filterBindings instead of config */
     registryMode: boolean;
     /** Filter registry instance (registryMode only) */
-    filterRegistry?: import('@phozart/phz-engine').FilterRegistry;
+    filterRegistry?: import('@phozart/engine').FilterRegistry;
     /** Filter binding store instance (registryMode only) */
-    filterBindings?: import('@phozart/phz-engine').FilterBindingStore;
+    filterBindings?: import('@phozart/engine').FilterBindingStore;
     /** Filter state manager instance (registryMode only) */
-    filterStateManager?: import('@phozart/phz-engine').FilterStateManager;
+    filterStateManager?: import('@phozart/engine').FilterStateManager;
     /** Filter rule engine instance (registryMode only) */
-    filterRuleEngine?: import('@phozart/phz-engine').FilterRuleEngine;
+    filterRuleEngine?: import('@phozart/engine').FilterRuleEngine;
     /** Criteria output manager instance (registryMode only) */
-    criteriaOutputManager?: import('@phozart/phz-engine').CriteriaOutputManager;
+    criteriaOutputManager?: import('@phozart/engine').CriteriaOutputManager;
     /** Artefact ID for registry mode */
     artefactId?: string;
     private _drawerOpen;

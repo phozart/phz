@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-workspace — DuckDB DataAdapter Utilities
+ * @phozart/workspace — DuckDB DataAdapter Utilities
  *
  * SQL generation helpers that map DataQuery/DataAdapter types to DuckDB SQL.
  * Uses parameterized queries throughout — never interpolates values.
  *
- * The actual DuckDB connection is injected at runtime via @phozart/phz-duckdb
+ * The actual DuckDB connection is injected at runtime via @phozart/duckdb
  * (optional peer dependency).
  */
 

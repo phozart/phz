@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Filter State Auto-Save (A-2.10)
+ * @phozart/shared — Filter State Auto-Save (A-2.10)
  *
  * Configuration and snapshot utilities for automatically persisting
  * filter state. Supports debounced saves with configurable history depth.

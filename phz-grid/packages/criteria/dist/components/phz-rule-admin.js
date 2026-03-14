@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Rule Admin
+ * @phozart/criteria — Rule Admin
  *
  * Admin UI for managing filter rules: CRUD, priority reorder,
  * enable/disable toggle, preview panel, and rule editor modal.

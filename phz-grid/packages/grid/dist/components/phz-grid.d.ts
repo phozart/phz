@@ -1,18 +1,18 @@
 /**
- * @phozart/phz-grid — <phz-grid> Custom Element
+ * @phozart/grid — <phz-grid> Custom Element
  *
  * God Object refactored into Lit Reactive Controllers.
  * Rendering and public API live here; behaviour delegates to controllers.
  */
 import { LitElement, type TemplateResult, type PropertyValues } from 'lit';
-import { type GridApi, type ColumnDefinition, type RowData, type RowId, type SortDirection, type DataSet, type DataSetMeta, type QueryBackend, type ProgressiveLoadConfig, type ProgressivePhase } from '@phozart/phz-core';
+import { type GridApi, type ColumnDefinition, type RowData, type RowId, type SortDirection, type DataSet, type DataSetMeta, type QueryBackend, type ProgressiveLoadConfig, type ProgressivePhase } from '@phozart/core';
 import type { AriaManager } from '../a11y/aria-manager.js';
 import type { ColumnProfile, ComputedColumnDef } from './phz-column-chooser.js';
-import type { ConditionalFormattingRule, RowGroup } from '@phozart/phz-core';
-import type { DrillThroughConfig, GenerateDashboardConfig } from '@phozart/phz-engine';
+import type { ConditionalFormattingRule, RowGroup, ColumnFormatting } from '@phozart/core';
+import type { DrillThroughConfig, GenerateDashboardConfig } from '@phozart/core';
 import type { Density, FilterInfo, RowAction, ScrollMode } from '../types.js';
-import type { AsyncDataSource } from '@phozart/phz-core';
-import { ToastController, ColumnResizeController, EditController, SortController, SelectionController, FilterController, VirtualScrollController, ExportController, ContextMenuController, ClipboardController, ConditionalFormattingController, AggregationController, GroupController, ColumnChooserController, ComputedColumnsController, GridCoreController } from '../controllers/index.js';
+import type { AsyncDataSource } from '@phozart/core';
+import { ToastController, ColumnResizeController, EditController, SortController, SelectionController, FilterController, VirtualScrollController, ExportController, ContextMenuController, ClipboardController, ConditionalFormattingController, AggregationController, GroupController, ColumnChooserController, ComputedColumnsController, GridCoreController, TooltipController } from '../controllers/index.js';
 import type { ContextMenuCommands, StateSyncPayload } from '../controllers/index.js';
 import './phz-toolbar.js';
 type AggregationFn = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'none';
@@ -25,7 +25,7 @@ export declare class PhzGrid extends LitElement {
     virtualization: boolean;
     selectionMode: 'none' | 'single' | 'multi' | 'range';
     editMode: 'none' | 'click' | 'dblclick' | 'manual';
-    ariaLabels: import('@phozart/phz-core').AriaLabels;
+    ariaLabels: import('@phozart/core').AriaLabels;
     loading: boolean;
     gridHeight: string;
     gridWidth: string;
@@ -73,6 +73,7 @@ export declare class PhzGrid extends LitElement {
     allowSorting: boolean;
     defaultSortField: string;
     defaultSortDirection: 'asc' | 'desc';
+    sortDebounceMs: number;
     headerWrapping: boolean;
     autoSizeColumns: boolean;
     columnGroups: Array<{
@@ -97,7 +98,7 @@ export declare class PhzGrid extends LitElement {
         prefix?: string;
         suffix?: string;
     }>;
-    columnFormatting: Record<string, any>;
+    columnFormatting: Record<string, ColumnFormatting>;
     userRole: 'viewer' | 'user' | 'editor' | 'admin';
     computedColumns: ComputedColumnDef[];
     copyHeaders: boolean;
@@ -126,6 +127,8 @@ export declare class PhzGrid extends LitElement {
     footerText: string;
     drillThroughConfig?: DrillThroughConfig;
     aggregationPosition: 'top' | 'bottom' | 'both';
+    showSummary: boolean;
+    summaryFunction: 'sum' | 'avg' | 'min' | 'max' | 'count';
     rowActions: RowAction[];
     generateDashboardConfig?: GenerateDashboardConfig;
     reportId?: string;
@@ -133,6 +136,8 @@ export declare class PhzGrid extends LitElement {
     dataSet?: DataSet;
     queryBackend?: QueryBackend;
     progressiveLoad?: ProgressiveLoadConfig;
+    enableCellTooltips: boolean;
+    tooltipDelay: number;
     visibleRows: RowData[];
     columnDefs: ColumnDefinition[];
     selectedRowIds: Set<RowId>;
@@ -188,6 +193,7 @@ export declare class PhzGrid extends LitElement {
     readonly columnChooser: ColumnChooserController;
     readonly computedColumnsCtrl: ComputedColumnsController;
     readonly gridCore: GridCoreController;
+    readonly tooltipCtrl: TooltipController;
     static readonly slots: {
         readonly header: "Custom header bar content";
         readonly footer: "Custom footer content";
@@ -229,6 +235,7 @@ export declare class PhzGrid extends LitElement {
     private get _displayRows();
     private get _totalPages();
     render(): TemplateResult;
+    private _toastIconPath;
     private _renderTitleBar;
     private _renderToolbar;
     private _renderSelectionBar;
@@ -245,6 +252,8 @@ export declare class PhzGrid extends LitElement {
     private _formatCellValue;
     private _handleCellDrillThrough;
     private _handleBodyKeyDown;
+    /** Focus the tbody so keyboard shortcuts (Ctrl+C, arrow keys, etc.) work. */
+    private _focusBody;
     getVisibleRows(): RowData[];
 }
 declare global {

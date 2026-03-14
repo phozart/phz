@@ -30,7 +30,7 @@ When you sign in as an **author**, the Editor shell opens with:
 Install the Editor package in your app:
 
 ```bash
-npm install @phozart/phz-editor
+npm install @phozart/editor
 ```
 
 ### 1.1 Measure Registry Palette
@@ -97,7 +97,7 @@ auto-bind fields → validate**.
 describing the data's characteristics.
 
 ```typescript
-import { analyzeSchema } from '@phozart/phz-workspace';
+import { analyzeSchema } from '@phozart/workspace';
 
 const profile = analyzeSchema(schema);
 // profile.numericFields       — all number-type field names
@@ -124,8 +124,8 @@ low/medium-cardinality string fields.
 and returns them sorted best-match first.
 
 ```typescript
-import { matchTemplates } from '@phozart/phz-workspace';
-import { DEFAULT_TEMPLATES } from '@phozart/phz-workspace';
+import { matchTemplates } from '@phozart/workspace';
+import { DEFAULT_TEMPLATES } from '@phozart/workspace';
 
 const scored = matchTemplates(profile, DEFAULT_TEMPLATES);
 // scored[0].template — best match
@@ -141,7 +141,7 @@ Each template has `matchRules` with `weight` values. The score is
 `autoBindFields()` maps template widget slots to data fields from the profile.
 
 ```typescript
-import { autoBindFields, resolveBindings } from '@phozart/phz-workspace';
+import { autoBindFields, resolveBindings } from '@phozart/workspace';
 
 const bindings = autoBindFields(template.widgetSlots, profile);
 // Returns TemplateBinding[]:
@@ -173,11 +173,11 @@ Auto-binding uses key name matching:
 | **Distribution Analysis** | analytics | Pie charts + bottom-N rankings |
 | **Operational Monitor** | operations | Gauges + status table |
 
-The full set is available as `DEFAULT_TEMPLATES` from `@phozart/phz-workspace`.
+The full set is available as `DEFAULT_TEMPLATES` from `@phozart/workspace`.
 Register custom templates alongside the defaults:
 
 ```typescript
-import { DEFAULT_TEMPLATES } from '@phozart/phz-workspace';
+import { DEFAULT_TEMPLATES } from '@phozart/workspace';
 
 const allTemplates = [
   ...DEFAULT_TEMPLATES,
@@ -193,7 +193,7 @@ const scored = matchTemplates(profile, allTemplates);
 saving or publishing:
 
 ```typescript
-import { validateTemplate } from '@phozart/phz-workspace';
+import { validateTemplate } from '@phozart/workspace';
 
 const result = validateTemplate(template, registry);
 // result.valid  — boolean
@@ -252,7 +252,7 @@ interface WidgetSlot {
 Traverse a layout tree using `flattenLayoutWidgets()`:
 
 ```typescript
-import { flattenLayoutWidgets } from '@phozart/phz-workspace';
+import { flattenLayoutWidgets } from '@phozart/workspace';
 
 const widgetIds: string[] = flattenLayoutWidgets(dashboard.layout);
 ```
@@ -260,7 +260,7 @@ const widgetIds: string[] = flattenLayoutWidgets(dashboard.layout);
 Convert legacy position-based placements to tree layout:
 
 ```typescript
-import { convertLegacyLayout } from '@phozart/phz-workspace';
+import { convertLegacyLayout } from '@phozart/workspace';
 
 const layout = convertLegacyLayout([
   { row: 0, col: 0, colSpan: 2, rowSpan: 1, widgetId: 'kpi-1' },
@@ -278,7 +278,7 @@ import {
   moveWidget,
   insertBefore,
   updateWeight,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 // Move by index
 const reordered = moveWidget(widgets, fromIndex, toIndex);
@@ -323,7 +323,7 @@ interface WidgetCommonConfig {
 Create with sensible defaults:
 
 ```typescript
-import { defaultWidgetCommonConfig } from '@phozart/phz-workspace';
+import { defaultWidgetCommonConfig } from '@phozart/workspace';
 
 const config = defaultWidgetCommonConfig({
   title: 'Monthly Revenue',
@@ -360,8 +360,8 @@ calls, no DOM access.
 ### SimpleThreshold (single-metric)
 
 ```typescript
-import type { AlertRule, SimpleThreshold } from '@phozart/phz-workspace';
-import { alertRuleId } from '@phozart/phz-workspace';
+import type { AlertRule, SimpleThreshold } from '@phozart/workspace';
+import { alertRuleId } from '@phozart/workspace';
 
 const rule: AlertRule = {
   id: alertRuleId('rule-revenue-drop'),
@@ -388,7 +388,7 @@ Supported operators: `>`, `<`, `>=`, `<=`, `==`, `!=`.
 ### CompoundCondition (AND / OR / NOT)
 
 ```typescript
-import type { CompoundCondition } from '@phozart/phz-workspace';
+import type { CompoundCondition } from '@phozart/workspace';
 
 const condition: CompoundCondition = {
   kind: 'compound',
@@ -405,7 +405,7 @@ const condition: CompoundCondition = {
 ### Evaluating Rules
 
 ```typescript
-import { evaluateRule, evaluateRules, evaluateCondition } from '@phozart/phz-workspace';
+import { evaluateRule, evaluateRules, evaluateCondition } from '@phozart/workspace';
 
 const values = new Map([
   ['revenue', 8500],
@@ -474,7 +474,7 @@ interface AlertChannelAdapter {
 of `FieldMetadata`, automatically selecting the appropriate UI control per field.
 
 ```typescript
-import { buildFilterBarConfig } from '@phozart/phz-workspace';
+import { buildFilterBarConfig } from '@phozart/workspace';
 
 const config = buildFilterBarConfig(schema.fields, {
   position: 'top',       // 'top' | 'left'
@@ -509,8 +509,8 @@ the options available in child filters.
 import {
   buildDependencyGraph,
   resolveCascadingDependency,
-} from '@phozart/phz-workspace';
-import type { FilterDependency } from '@phozart/phz-workspace';
+} from '@phozart/workspace';
+import type { FilterDependency } from '@phozart/workspace';
 
 const dependencies: FilterDependency[] = [
   {
@@ -553,7 +553,7 @@ Named preset combinations are stored as artifacts (`type: 'filter-preset'`).
 To restore from a URL on page load:
 
 ```typescript
-import { deserializeFilterState, serializeFilterState } from '@phozart/phz-workspace';
+import { deserializeFilterState, serializeFilterState } from '@phozart/workspace';
 
 // On page load
 const state = deserializeFilterState(new URL(location.href).searchParams.toString());
@@ -586,7 +586,7 @@ interface FieldMapping {
 Automatically detects fields with the same name and type across multiple schemas:
 
 ```typescript
-import { autoSuggestMappings } from '@phozart/phz-workspace';
+import { autoSuggestMappings } from '@phozart/workspace';
 
 const mappings = autoSuggestMappings([
   { dataSourceId: 'sales', fields: [{ name: 'country', dataType: 'string' }] },
@@ -603,7 +603,7 @@ Translate a canonical field name to the source-specific column name before
 passing filters to a data adapter:
 
 ```typescript
-import { resolveFieldForSource } from '@phozart/phz-workspace';
+import { resolveFieldForSource } from '@phozart/workspace';
 
 const actualField = resolveFieldForSource('country', 'hr', mappings);
 // => 'country' (falls back to canonical if no mapping found)
@@ -618,7 +618,7 @@ Builds a unified view of all fields across data sources for the field-mapping
 admin UI:
 
 ```typescript
-import { buildMappingTable } from '@phozart/phz-workspace';
+import { buildMappingTable } from '@phozart/workspace';
 
 const rows = buildMappingTable(schemas, existingMappings);
 // rows[i].canonicalField — the unified field name
@@ -642,7 +642,7 @@ import {
   setViewport,
   getViewportWidth,
   DEFAULT_VIEWPORT_PRESETS,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 let preview = createPreviewState();
 // preview.active   — false
@@ -668,8 +668,8 @@ import {
   createPreviewAsState,
   setPreviewContext,
   clearPreviewContext,
-} from '@phozart/phz-workspace';
-import type { ViewerContext } from '@phozart/phz-workspace';
+} from '@phozart/workspace';
+import type { ViewerContext } from '@phozart/workspace';
 
 let previewAs = createPreviewAsState();
 
@@ -704,7 +704,7 @@ import {
   discardDraft,
   markConflict,
   AUTO_SAVE_DELAY_MS,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 let saveState = createAutoSaveState();
 
@@ -734,7 +734,7 @@ saveState = markConflict(saveState, 'Another user saved while you were editing')
 import {
   formatVersionSummary,
   computeChangeSummary,
-} from '@phozart/phz-workspace';
+} from '@phozart/workspace';
 
 // Format a VersionSummary for display in the history panel
 const display = formatVersionSummary(summary);
@@ -769,7 +769,7 @@ import {
   setSorting, setGrouping,
   addConditionalFormat, removeConditionalFormat,
   setDensity, toGridConfig,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 ```
 
 ### Creating a Report and Adding Columns
@@ -898,7 +898,7 @@ of `ContextMenuItem` objects that your UI framework renders.
 import {
   getColumnHeaderMenu,
   getCellMenu,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 
 // Right-click on a column header
 const headerItems = getColumnHeaderMenu(state, 'revenue');
@@ -942,7 +942,7 @@ import {
   selectWidget, deselectWidget,
   getMorphOptions, canMorph,
   type MorphGroup,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 ```
 
 ### Adding Widgets
@@ -1046,7 +1046,7 @@ import {
   type DragSource, type DropTarget, type DragDropState,
   startDrag, hoverTarget, cancelDrag,
   computeValidTargets, executeDrop,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 ```
 
 **4 drag source types:**
@@ -1111,7 +1111,7 @@ import {
   addWidgetFilter,
   removeWidgetFilter,
   applyConfigToWidget,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 ```
 
 ```typescript
@@ -1166,7 +1166,7 @@ import {
   createFilterFromEntry,
   finalizeFilter,
   createDashboardFilterDef,
-} from '@phozart/phz-workspace/authoring';
+} from '@phozart/workspace/authoring';
 ```
 
 The 5 `FilterEntryPoint` types:

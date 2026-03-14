@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Chart Analytics Overlays Tests
+ * @phozart/engine — Chart Analytics Overlays Tests
  *
  * TDD: Red → Green → Refactor
  * Tests for regression math, moving averages, alert-to-band conversion, and target resolution.

@@ -8,11 +8,11 @@ import {
   createDefaultExecutionStrategy,
   selectExecutionEngine,
   selectEngineForFeature,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 import type {
   ExecutionStrategyConfig,
   ExecutionContext,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // ========================================================================
 // createDefaultExecutionStrategy

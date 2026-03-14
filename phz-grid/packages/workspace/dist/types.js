@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-workspace — Core Types
+ * @phozart/workspace — Core Types
  */
-export { kpiId, metricId, reportId, dashboardId, widgetId, dataProductId, } from '@phozart/phz-engine';
+export { kpiId, metricId, reportId, dashboardId, widgetId, dataProductId, } from '@phozart/engine';
 export function placementId(id) { return id; }
 export function isWidgetManifest(obj) {
     if (obj == null || typeof obj !== 'object')
@@ -55,10 +55,10 @@ export function isWidgetCommonConfig(obj) {
         typeof o.highContrastMode === 'string');
 }
 /**
- * @deprecated Import FieldMapping from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FieldMapping from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export { resolveFieldForSource } from '@phozart/phz-shared/coordination';
+export { resolveFieldForSource } from '@phozart/shared/coordination';
 export function autoSuggestMappings(schemas) {
     if (schemas.length < 2)
         return [];

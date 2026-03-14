@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Core Types
+ * @phozart/workspace — Core Types
  */
 
 import type { LayoutNode } from './schema/config-layers.js';
@@ -9,22 +9,22 @@ import type {
   FieldMappingEntry as _FieldMappingEntry,
   DetailTrigger as _DetailTrigger,
   FieldMapping as _FieldMapping,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 import type {
   FilterDefault as _FilterDefault,
   FilterValueTransform as _FilterValueTransform,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // Re-export branded IDs from engine
 export type {
   KPIId, MetricId, ReportId, DashboardId, WidgetId, DataProductId,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 export {
   kpiId, metricId, reportId, dashboardId, widgetId, dataProductId,
-} from '@phozart/phz-engine';
+} from '@phozart/engine';
 
 // Re-export definition identity
-export type { DefinitionId } from '@phozart/phz-shared/definitions';
+export type { DefinitionId } from '@phozart/shared/definitions';
 
 // --- Workspace-specific branded types ---
 export type PlacementId = string & { readonly __brand: 'PlacementId' };
@@ -204,10 +204,10 @@ export interface FieldMappingSchema {
 }
 
 /**
- * @deprecated Import FieldMapping from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FieldMapping from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export { type FieldMapping, resolveFieldForSource } from '@phozart/phz-shared/coordination';
+export { type FieldMapping, resolveFieldForSource } from '@phozart/shared/coordination';
 
 export function autoSuggestMappings(schemas: FieldMappingSchema[]): _FieldMapping[] {
   if (schemas.length < 2) return [];
@@ -321,7 +321,7 @@ export interface ActiveBreach {
 // ========================================================================
 
 /**
- * @deprecated Import FilterOperator from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FilterOperator from '@phozart/shared/coordination' instead.
  * These re-exports will be removed in v16.
  */
 export {
@@ -331,10 +331,10 @@ export {
   type FilterContextState,
   type FilterUIType,
   type DashboardFilterDef,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 // Re-import for use by workspace-specific types below
-import type { FilterUIType as _FilterUIType, DashboardFilterDef as _DashboardFilterDef } from '@phozart/phz-shared/coordination';
+import type { FilterUIType as _FilterUIType, DashboardFilterDef as _DashboardFilterDef } from '@phozart/shared/coordination';
 
 export interface FilterDependency {
   parentFilterId: string;
@@ -396,10 +396,10 @@ export interface TemplateDefinition {
 // ========================================================================
 
 /**
- * @deprecated Import FieldMappingEntry from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import FieldMappingEntry from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { FieldMappingEntry } from '@phozart/phz-shared/coordination';
+export type { FieldMappingEntry } from '@phozart/shared/coordination';
 
 export interface PreloadConfig {
   query: DataQuery;
@@ -413,10 +413,10 @@ export interface FullLoadConfig {
 }
 
 /**
- * @deprecated Import DetailTrigger from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import DetailTrigger from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { DetailTrigger } from '@phozart/phz-shared/coordination';
+export type { DetailTrigger } from '@phozart/shared/coordination';
 
 export interface DetailSourceConfig {
   id: string;
@@ -439,10 +439,10 @@ export interface DashboardDataConfig {
 }
 
 /**
- * @deprecated Import DashboardLoadingState from '@phozart/phz-shared/coordination' instead.
+ * @deprecated Import DashboardLoadingState from '@phozart/shared/coordination' instead.
  * This re-export will be removed in v16.
  */
-export type { DashboardLoadingState } from '@phozart/phz-shared/coordination';
+export type { DashboardLoadingState } from '@phozart/shared/coordination';
 
 export function isDashboardDataConfig(obj: unknown): obj is DashboardDataConfig {
   if (obj == null || typeof obj !== 'object') return false;
@@ -488,24 +488,24 @@ export function validateDashboardDataConfig(config: DashboardDataConfig): boolea
 // ========================================================================
 
 /**
- * @deprecated Import ViewerContext from '@phozart/phz-shared/adapters' instead.
+ * @deprecated Import ViewerContext from '@phozart/shared/adapters' instead.
  * This re-export will be removed in v16.
  */
-export type { ViewerContext } from '@phozart/phz-shared/adapters';
+export type { ViewerContext } from '@phozart/shared/adapters';
 
 // ========================================================================
 // Filter Value Source & Transform (U.1)
 // ========================================================================
 
 /**
- * @deprecated Import from '@phozart/phz-shared/types' instead.
+ * @deprecated Import from '@phozart/shared/types' instead.
  * These re-exports will be removed in v16.
  */
 export {
   type FilterValueSource,
   type FilterValueTransform,
   type FilterDefault,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // ArtifactFilterContract (U.3)
@@ -529,11 +529,11 @@ export interface ArtifactFilterContract {
 // ========================================================================
 
 /**
- * @deprecated Import from '@phozart/phz-shared/types' instead.
+ * @deprecated Import from '@phozart/shared/types' instead.
  * These re-exports will be removed in v16.
  */
 export {
   type JoinType,
   type SourceJoinKey,
   type SourceRelationship,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';

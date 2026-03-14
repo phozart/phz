@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine/explorer — Explore to Artifact Conversion
+ * @phozart/engine/explorer — Explore to Artifact Conversion
  *
  * Pure functions to convert ExploreQuery into report or dashboard widget
  * artifact configs.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 
 import type { ExploreQuery } from './explore-types.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Field Presence Filter
+ * @phozart/criteria — Field Presence Filter
  *
  * Compact pill-based filter for specifying whether fields must have a value,
  * must be empty, or should not be filtered. Each pill cycles through three states:
@@ -8,7 +8,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { PresenceState } from '@phozart/phz-core';
+import type { PresenceState } from '@phozart/core';
 import { criteriaStyles } from '../../shared-styles.js';
 
 const CYCLE: PresenceState[] = ['any', 'has_value', 'empty'];

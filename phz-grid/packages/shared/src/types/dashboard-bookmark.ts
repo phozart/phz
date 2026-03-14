@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Dashboard Bookmark Types
+ * @phozart/shared — Dashboard Bookmark Types
  *
  * Serializable bookmark types for persisting full dashboard interaction state.
  * All types are plain objects — no class instances, no functions, no Maps/Sets.
@@ -11,7 +11,7 @@
 
 /**
  * Serialized drill-down state for a single widget.
- * Mirrors DrillDownState from @phozart/phz-engine but kept in shared
+ * Mirrors DrillDownState from @phozart/engine but kept in shared
  * to avoid a circular dependency.
  */
 export interface SerializedDrillBreadcrumb {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Drag-and-Drop State
+ * @phozart/workspace — Drag-and-Drop State
  *
  * Pure state management for drag-and-drop operations in the dashboard editor.
  */

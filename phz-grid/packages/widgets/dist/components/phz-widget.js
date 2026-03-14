@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Standalone Widget Renderer
+ * @phozart/widgets — Standalone Widget Renderer
  *
  * Renders a single widget from an EnhancedWidgetConfig + raw data.
  * Processes data via the widget data processor, then renders the appropriate component.
@@ -14,7 +14,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { processWidgetData, createDefaultScoreProvider, } from '@phozart/phz-engine';
+import { processWidgetData, createDefaultScoreProvider, } from '@phozart/engine';
 import './phz-kpi-card.js';
 import './phz-kpi-scorecard.js';
 import './phz-bar-chart.js';

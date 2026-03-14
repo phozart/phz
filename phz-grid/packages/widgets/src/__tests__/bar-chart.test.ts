@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { ChartDataSeries } from '@phozart/phz-engine';
+import type { ChartDataSeries } from '@phozart/engine';
 
 describe('Bar Chart logic', () => {
   it('sorts data descending by default', () => {

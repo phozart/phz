@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-ai — Type Definitions
+ * @phozart/ai — Type Definitions
  *
  * AI toolkit types for schema inference, NL queries, anomaly detection,
  * and data insights.
  */
-import type { GridApi, ColumnDefinition, FilterOperator } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, FilterOperator } from '@phozart/core';
 export interface JSONSchema7 {
     type?: string | string[];
     properties?: Record<string, JSONSchema7>;

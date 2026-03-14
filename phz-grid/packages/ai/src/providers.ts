@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Built-in AI Providers
+ * @phozart/ai — Built-in AI Providers
  *
  * Provider implementations for OpenAI, Anthropic, and Google.
  * These are thin wrappers that make HTTP calls to the respective APIs.

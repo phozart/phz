@@ -11,8 +11,8 @@
  * Tasks: 4.1-4.5 (WB-018 through WB-020, WB-029, WB-030)
  */
 import type { DataAdapter, DataQuery } from '../data-adapter.js';
-import type { ExploreQuery, ExploreFilterSlot } from '@phozart/phz-engine';
-import { type ReportArtifact, type DashboardWidgetArtifact } from '@phozart/phz-engine';
+import type { ExploreQuery, ExploreFilterSlot } from '@phozart/engine';
+import { type ReportArtifact, type DashboardWidgetArtifact } from '@phozart/engine';
 /**
  * Convert an ExploreQuery (from the visual explorer) into a DataQuery
  * for DataAdapter.execute(). Adds the data source ID and maps operators.

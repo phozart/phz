@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Widget Config Panel State
+ * @phozart/workspace — Widget Config Panel State
  *
  * Pure functions for the 3-tab widget configuration panel
  * used in the dashboard editor.

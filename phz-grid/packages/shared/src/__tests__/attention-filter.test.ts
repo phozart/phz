@@ -7,13 +7,13 @@
 import {
   filterAttentionItems,
   computeAttentionFacets,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 import type {
   AttentionFilterState,
   FilterableAttentionItem,
   AttentionPriority,
   AttentionSource,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // ========================================================================
 // Test data factory

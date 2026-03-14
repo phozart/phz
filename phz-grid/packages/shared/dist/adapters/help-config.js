@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — HelpConfig
+ * @phozart/shared — HelpConfig
  *
  * Contextual help configuration. Consumers provide HelpEntry records
  * keyed by feature or component ID. The shell renders help tooltips,

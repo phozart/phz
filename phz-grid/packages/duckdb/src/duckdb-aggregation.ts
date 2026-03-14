@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-duckdb — DuckDB Aggregation
+ * @phozart/duckdb — DuckDB Aggregation
  *
  * Generates SQL for aggregation queries, including DuckDB-specific
  * statistical functions not available in the JS engine.
  */
 
 import { sanitizeIdentifier, type FilterInput, type SqlResult } from './sql-builder.js';
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 export type DuckDBAggregationFunction =
   | 'sum' | 'avg' | 'min' | 'max' | 'count'

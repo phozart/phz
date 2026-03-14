@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Bar Chart
+ * @phozart/widgets — Bar Chart
  *
  * Horizontal ranked bars with value labels and optional volume indicator.
  * Supports simple (single-series), stacked, and grouped modes.
@@ -8,7 +8,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { ChartDataSeries } from '@phozart/phz-engine';
+import type { ChartDataSeries } from '@phozart/engine';
 import { formatTooltipContent, computeTooltipPosition } from '../tooltip.js';
 import { resolveWidgetState } from '../widget-states.js';
 

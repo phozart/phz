@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-widgets",
+  "name": "@phozart/widgets",
   "version": "0.1.0",
   "description": "Lit Web Component widgets — KPI cards, charts, scorecards, dashboards",
   "type": "module",
@@ -11,7 +11,37 @@
       "import": "./dist/index.js"
     }
   },
-  "sideEffects": ["dist/**/*.js"],
+  "sideEffects": [
+    "dist/components/phz-kpi-card.js",
+    "dist/components/phz-kpi-scorecard.js",
+    "dist/components/phz-bar-chart.js",
+    "dist/components/phz-trend-line.js",
+    "dist/components/phz-bottom-n.js",
+    "dist/components/phz-status-table.js",
+    "dist/components/phz-drill-link.js",
+    "dist/components/phz-dashboard.js",
+    "dist/components/phz-view-manager.js",
+    "dist/components/phz-selection-bar.js",
+    "dist/components/phz-widget.js",
+    "dist/components/phz-pie-chart.js",
+    "dist/components/phz-line-chart.js",
+    "dist/components/phz-area-chart.js",
+    "dist/components/phz-gauge.js",
+    "dist/components/phz-scatter-chart.js",
+    "dist/components/phz-heatmap.js",
+    "dist/components/phz-waterfall-chart.js",
+    "dist/components/phz-funnel-chart.js",
+    "dist/components/phz-slicer.js",
+    "dist/components/phz-export-menu.js",
+    "dist/components/phz-alert-panel.js",
+    "dist/components/phz-query-builder.js",
+    "dist/components/phz-decision-tree.js",
+    "dist/components/phz-container-box.js",
+    "dist/components/phz-rich-text.js",
+    "dist/themes.js",
+    "dist/annotations.js",
+    "dist/components/phz-chart.js"
+  ],
   "files": [
     "dist"
   ],
@@ -23,9 +53,20 @@
   },
   "author": "phozart",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
-  "engines": { "node": ">=20" },
-  "keywords": ["widgets", "kpi-card", "bar-chart", "dashboard", "web-components", "lit"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "widgets",
+    "kpi-card",
+    "bar-chart",
+    "dashboard",
+    "web-components",
+    "lit"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phozart/phz-grid.git",
@@ -36,8 +77,8 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/widgets#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
     "lit": "^3.2.0"
   }
 }

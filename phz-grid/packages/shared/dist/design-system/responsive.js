@@ -1,7 +1,7 @@
 /**
  * Responsive Viewport Breakpoints
  *
- * Extracted from @phozart/phz-workspace styles (S.2).
+ * Extracted from @phozart/workspace styles (S.2).
  * Pure functions for viewport breakpoint detection and responsive class
  * generation. No DOM dependency — usable in Node tests.
  */

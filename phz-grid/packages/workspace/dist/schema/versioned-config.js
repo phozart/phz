@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Versioned Config Schema
+ * @phozart/workspace — Versioned Config Schema
  *
  * All workspace-persisted configs carry $schema and $version.
  * Migrations are pure functions, applied in version order on load.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Configuration Types
+ * @phozart/core — Configuration Types
  */
 export {};
 //# sourceMappingURL=config.js.map

@@ -14,9 +14,9 @@ import {
   setAttentionSort,
   loadMore,
   getVisibleItems,
-} from '@phozart/phz-shared/coordination';
-import type { AttentionFacetedState } from '@phozart/phz-shared/coordination';
-import type { FilterableAttentionItem } from '@phozart/phz-shared/types';
+} from '@phozart/shared/coordination';
+import type { AttentionFacetedState } from '@phozart/shared/coordination';
+import type { FilterableAttentionItem } from '@phozart/shared/types';
 
 // ========================================================================
 // Test data factory

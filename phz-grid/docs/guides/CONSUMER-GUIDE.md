@@ -11,16 +11,16 @@ package. Choose the package(s) that match your deployment needs:
 
 | Package | Shell | Purpose | Install |
 |---------|-------|---------|---------|
-| `@phozart/phz-viewer` | Viewer | Read-only consumption of dashboards and reports | `npm install @phozart/phz-viewer` |
-| `@phozart/phz-editor` | Editor | Constrained authoring with curated measures and sharing | `npm install @phozart/phz-editor` |
-| `@phozart/phz-workspace` | Workspace | Full admin authoring, governance, and configuration | `npm install @phozart/phz-workspace` |
-| `@phozart/phz-shared` | (shared) | Types, interfaces, and infrastructure shared across shells | `npm install @phozart/phz-shared` |
+| `@phozart/viewer` | Viewer | Read-only consumption of dashboards and reports | `npm install @phozart/viewer` |
+| `@phozart/editor` | Editor | Constrained authoring with curated measures and sharing | `npm install @phozart/editor` |
+| `@phozart/workspace` | Workspace | Full admin authoring, governance, and configuration | `npm install @phozart/workspace` |
+| `@phozart/shared` | (shared) | Types, interfaces, and infrastructure shared across shells | `npm install @phozart/shared` |
 
 **Deployment patterns:**
 
-- **Read-only embed**: Install `@phozart/phz-viewer` only. Users see published
+- **Read-only embed**: Install `@phozart/viewer` only. Users see published
   dashboards and reports but cannot create or edit anything.
-- **Self-service authoring**: Install `@phozart/phz-viewer` + `@phozart/phz-editor`.
+- **Self-service authoring**: Install `@phozart/viewer` + `@phozart/editor`.
   Analysts consume, authors create within admin-defined constraints.
 - **Full platform**: Install all three packages. Admins configure everything,
   authors create, analysts consume.
@@ -58,7 +58,7 @@ others (see Error Handling below).
 and your data backend. Implement this interface to connect any data source.
 
 ```typescript
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/phz-workspace';
+import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/workspace';
 
 interface DataAdapter {
   // Execute a structured query against a named source
@@ -150,7 +150,7 @@ automatically suggested as KPI values.
 ### MemoryDataAdapter — for testing
 
 ```typescript
-import { MemoryDataAdapter } from '@phozart/phz-workspace/adapters/memory-data-adapter';
+import { MemoryDataAdapter } from '@phozart/workspace/adapters/memory-data-adapter';
 
 const adapter = new MemoryDataAdapter();
 adapter.addSource('orders', [
@@ -168,13 +168,13 @@ countDistinct, min, max, median, stddev, variance, first, last).
 
 ### DuckDB adapter — for production
 
-For production use with large datasets, use `@phozart/phz-duckdb`:
+For production use with large datasets, use `@phozart/duckdb`:
 
 ```typescript
-import { DuckDBDataSource } from '@phozart/phz-duckdb';
+import { DuckDBDataSource } from '@phozart/duckdb';
 
 // DuckDBDataSource implements DataAdapter backed by DuckDB-WASM in the browser
-// or native DuckDB (via @phozart/phz-local) in Node.js
+// or native DuckDB (via @phozart/local) in Node.js
 const adapter = new DuckDBDataSource({ /* config */ });
 ```
 
@@ -185,7 +185,7 @@ for adapters that need to translate `DataQuery` to SQL.
 ### Custom adapter implementation
 
 ```typescript
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/phz-workspace';
+import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/workspace';
 
 class MyPostgresAdapter implements DataAdapter {
   async execute(query: DataQuery, context?): Promise<DataResult> {
@@ -235,8 +235,8 @@ lazy-loadable renderers.
 ### Creating and populating a registry
 
 ```typescript
-import { createManifestRegistry } from '@phozart/phz-workspace/registry/widget-registry';
-import { registerDefaultManifests } from '@phozart/phz-workspace/registry/default-manifests';
+import { createManifestRegistry } from '@phozart/workspace/registry/widget-registry';
+import { registerDefaultManifests } from '@phozart/workspace/registry/default-manifests';
 
 const registry = createManifestRegistry();
 registerDefaultManifests(registry);
@@ -298,7 +298,7 @@ Declare `ConsumerCapabilities` when creating a `WorkspaceClient` to restrict
 what widget types and interactions are available in your embedding context:
 
 ```typescript
-import { createWorkspaceClient } from '@phozart/phz-workspace/client/workspace-client';
+import { createWorkspaceClient } from '@phozart/workspace/client/workspace-client';
 
 const client = await createWorkspaceClient({
   adapter: workspaceAdapter,
@@ -340,8 +340,8 @@ four filter layers: dashboard defaults → cross-filters → user filters (highe
 priority).
 
 ```typescript
-import { createFilterContext } from '@phozart/phz-workspace/filters/filter-context';
-import type { FilterValue } from '@phozart/phz-workspace';
+import { createFilterContext } from '@phozart/workspace/filters/filter-context';
+import type { FilterValue } from '@phozart/workspace';
 
 const filterCtx = createFilterContext({
   // Optional: pre-declare filter definitions with defaults
@@ -447,7 +447,7 @@ interface BreachRecord {
 ### ActiveBreach[] in RenderContext
 
 ```typescript
-import { createRenderContext, filterBreachesForWidget } from '@phozart/phz-workspace/alerts/render-context-ext';
+import { createRenderContext, filterBreachesForWidget } from '@phozart/workspace/alerts/render-context-ext';
 
 // Build the extended render context for a widget
 const ctx = createRenderContext({
@@ -557,7 +557,7 @@ import {
   createWidgetErrorState,
   isRecoverable,
   formatErrorForUser,
-} from '@phozart/phz-workspace/layout/widget-error-boundary';
+} from '@phozart/workspace/layout/widget-error-boundary';
 
 try {
   await renderWidget(widgetId, config);
@@ -630,7 +630,7 @@ the `CellRendererRegistry`.
 import {
   createCellRendererRegistry,
   registerDefaultCellRenderers,
-} from '@phozart/phz-shared/cell-renderers';
+} from '@phozart/shared/cell-renderers';
 
 const cellRegistry = createCellRendererRegistry();
 registerDefaultCellRenderers(cellRegistry);
@@ -694,7 +694,7 @@ import {
   PhzExplorer,
   useViewerFilters,
   useAttentionSidebar,
-} from '@phozart/phz-react/viewer';
+} from '@phozart/react/viewer';
 
 function App() {
   return (
@@ -718,7 +718,7 @@ import {
   PhzMeasurePalette,
   useEditorState,
   usePublishWorkflow,
-} from '@phozart/phz-react/editor';
+} from '@phozart/react/editor';
 
 function AuthoringApp() {
   return (
@@ -752,8 +752,8 @@ Embed a read-only dashboard inside your existing application. Users see
 published dashboards but have no authoring capability.
 
 ```typescript
-// Install: npm install @phozart/phz-viewer @phozart/phz-shared
-import { createViewerClient } from '@phozart/phz-viewer';
+// Install: npm install @phozart/viewer @phozart/shared
+import { createViewerClient } from '@phozart/viewer';
 
 const viewer = await createViewerClient({
   adapter: yourDataAdapter,
@@ -771,9 +771,9 @@ enforces admin-defined constraints (available widget types, measures, data
 sources).
 
 ```typescript
-// Install: npm install @phozart/phz-viewer @phozart/phz-editor @phozart/phz-shared
-import { createViewerClient } from '@phozart/phz-viewer';
-import { createEditorClient } from '@phozart/phz-editor';
+// Install: npm install @phozart/viewer @phozart/editor @phozart/shared
+import { createViewerClient } from '@phozart/viewer';
+import { createEditorClient } from '@phozart/editor';
 
 // Route based on user role
 if (user.role === 'author') {
@@ -791,6 +791,6 @@ Deploy all three shells for a complete BI platform. Admins configure the
 system, authors create content, analysts consume it.
 
 ```typescript
-// Install: npm install @phozart/phz-workspace @phozart/phz-editor @phozart/phz-viewer @phozart/phz-shared
+// Install: npm install @phozart/workspace @phozart/editor @phozart/viewer @phozart/shared
 // Route to the appropriate shell based on user.workspaceRole
 ```

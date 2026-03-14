@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Drill Link Pure Logic Tests
+ * @phozart/widgets -- Drill Link Pure Logic Tests
  *
  * Tests for PhzDrillLink default properties.
  */
@@ -15,7 +15,7 @@ vi.mock('lit/decorators.js', () => ({
   property: () => () => {},
   state: () => () => {},
 }));
-vi.mock('@phozart/phz-engine', () => ({}));
+vi.mock('@phozart/engine', () => ({}));
 
 import { PhzDrillLink } from '../components/phz-drill-link.js';
 

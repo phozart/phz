@@ -14,7 +14,7 @@ import {
 import {
   createDataSourceState,
 } from '../data-source-state.js';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 
 // ── Mock DataAdapter ───────────────────────────────────────────────
 

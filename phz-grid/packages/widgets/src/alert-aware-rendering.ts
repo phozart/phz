@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Alert-Aware Rendering State Machine (7A-A)
+ * @phozart/widgets — Alert-Aware Rendering State Machine (7A-A)
  *
  * Pure functions that compute CSS custom property overrides for
  * alert-aware single-value widgets. No DOM, no Lit — just state -> CSS props.
@@ -10,8 +10,8 @@ import type {
   AlertVisualState,
   AlertContainerSize,
   WidgetAlertSeverity,
-} from '@phozart/phz-shared/types';
-import { ALERT_WIDGET_TOKENS } from '@phozart/phz-shared/design-system';
+} from '@phozart/shared/types';
+import { ALERT_WIDGET_TOKENS } from '@phozart/shared/design-system';
 
 // ========================================================================
 // Token lookup

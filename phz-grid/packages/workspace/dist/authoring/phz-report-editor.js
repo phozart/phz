@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Editor Component
+ * @phozart/workspace — Report Editor Component
  *
  * Toolbar (undo/redo/save/publish) + grid preview + config panel (columns/filters/style).
  */

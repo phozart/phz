@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Gauge Pure Logic Tests
+ * @phozart/widgets — Gauge Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

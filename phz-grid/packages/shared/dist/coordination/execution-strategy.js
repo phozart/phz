@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Execution Strategy (A-2.06)
+ * @phozart/shared — Execution Strategy (A-2.06)
  *
  * Automatic execution engine selection. Determines which query execution
  * backend to use based on configuration, data size, and available capabilities.

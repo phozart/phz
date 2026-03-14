@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-react — Hook Tests
+ * @phozart/react — Hook Tests
  *
  * Tests for all 6 React hooks that wrap GridApi operations.
  * Since React hooks cannot be called outside a component render cycle,
@@ -37,8 +37,8 @@ vi.mock('react', () => ({
 }));
 
 // Mock the grid and core packages to avoid side-effect imports
-vi.mock('@phozart/phz-grid', () => ({}));
-vi.mock('@phozart/phz-core', () => ({}));
+vi.mock('@phozart/grid', () => ({}));
+vi.mock('@phozart/core', () => ({}));
 
 // ─── Hook Imports ───────────────────────────────────────────
 

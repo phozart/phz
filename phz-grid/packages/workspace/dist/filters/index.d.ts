@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filters Module (O.7)
+ * @phozart/workspace — Filters Module (O.7)
  */
 export { createFilterContext, createDebouncedFilterDispatch, type FilterContextManager, type FilterContextOptions, type DebouncedDispatch, } from './filter-context.js';
 export { buildDependencyGraph, resolveCascadingDependency, type DependencyGraph, type CascadingResult, } from './cascading-resolver.js';
@@ -14,4 +14,5 @@ export { createFilterRuleEditorState, addCondition, removeCondition, updateCondi
 export { resolveFiltersFromContract, prunePresetValues, applySecurityRestrictions, buildFilterBarFromContract, type ContractFilterResolution, type PruneResult, type FilterBarEntry, } from './filter-ownership.js';
 export * from './filter-admin-state.js';
 export * from './filter-value-admin-state.js';
+export { createFilterRecommendationState, computeFilterRecommendations, applyRecommendation, dismissRecommendation, undoDismiss, getActiveRecommendations, getRecommendationById, type RecommendedFilterType, type FilterRecommendation, type FilterFieldInput, type FilterRecommendationState, } from './filter-recommendation-state.js';
 //# sourceMappingURL=index.d.ts.map

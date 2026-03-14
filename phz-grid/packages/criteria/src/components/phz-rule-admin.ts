@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Rule Admin
+ * @phozart/criteria — Rule Admin
  *
  * Admin UI for managing filter rules: CRUD, priority reorder,
  * enable/disable toggle, preview panel, and rule editor modal.
@@ -19,8 +19,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import type {
   FilterRule, FilterDefinition, FilterDefinitionId,
   SelectionFieldOption, FilterRuleType,
-} from '@phozart/phz-core';
-import { filterDefinitionId } from '@phozart/phz-core';
+} from '@phozart/core';
+import { filterDefinitionId } from '@phozart/core';
 import { criteriaStyles } from '../shared-styles.js';
 import './phz-rule-editor-modal.js';
 import type { RuleEditorMode } from './phz-rule-editor-modal.js';

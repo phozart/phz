@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Aggregation Engine
+ * @phozart/engine — Aggregation Engine
  *
  * Compute aggregations over row data: sum, avg, min, max, count, first, last.
  */
 
-import type { AggregationConfig, AggregationFunction } from '@phozart/phz-core';
-import type { RowGroup } from '@phozart/phz-core';
+import type { AggregationConfig, AggregationFunction } from '@phozart/core';
+import type { RowGroup } from '@phozart/core';
 
 export interface AggregationResult {
   fieldResults: Record<string, Record<string, unknown>>;
@@ -66,6 +66,34 @@ export function computeAggregation(
 
     case 'last':
       return values[values.length - 1] ?? null;
+
+    case 'countDistinct':
+      return new Set(values).size;
+
+    case 'median': {
+      const nums = values.filter(v => typeof v === 'number') as number[];
+      if (nums.length === 0) return null;
+      const sorted = [...nums].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      return sorted.length % 2 === 0
+        ? (sorted[mid - 1] + sorted[mid]) / 2
+        : sorted[mid];
+    }
+
+    case 'stddev': {
+      const nums = values.filter(v => typeof v === 'number') as number[];
+      if (nums.length === 0) return null;
+      const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+      const sumSqDiff = nums.reduce((acc, v) => acc + (v - mean) ** 2, 0);
+      return Math.sqrt(sumSqDiff / nums.length);
+    }
+
+    case 'variance': {
+      const nums = values.filter(v => typeof v === 'number') as number[];
+      if (nums.length === 0) return null;
+      const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+      return nums.reduce((acc, v) => acc + (v - mean) ** 2, 0) / nums.length;
+    }
 
     default:
       return null;

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Dashboard Renderer
+ * @phozart/widgets — Dashboard Renderer
  *
  * Renders a full dashboard from config: resolves layout, positions widgets in CSS grid.
  * When `data` is provided, auto-hydrates widgets via the engine widget resolver.
@@ -7,8 +7,8 @@
  * This is an embeddable component, not a standalone app.
  */
 import { LitElement } from 'lit';
-import type { DashboardConfig, BIEngine, KPIScoreProvider, EnhancedDashboardConfig, FilterAdapter } from '@phozart/phz-engine';
-import type { SelectionContext } from '@phozart/phz-core';
+import type { DashboardConfig, BIEngine, KPIScoreProvider, EnhancedDashboardConfig, FilterAdapter } from '@phozart/engine';
+import type { SelectionContext } from '@phozart/core';
 import './phz-kpi-card.js';
 import './phz-kpi-scorecard.js';
 import './phz-bar-chart.js';

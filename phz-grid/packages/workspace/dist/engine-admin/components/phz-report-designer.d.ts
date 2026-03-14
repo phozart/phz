@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine-admin — Report Designer
+ * @phozart/engine-admin — Report Designer
  *
  * Stepped wizard: data product → columns → filters/sort → aggregation → drill-through → review.
  * Embeddable component.
  */
 import { LitElement } from 'lit';
-import type { BIEngine } from '@phozart/phz-engine';
+import type { BIEngine } from '@phozart/engine';
 export declare class PhzReportDesigner extends LitElement {
     static styles: import("lit").CSSResult[];
     engine?: BIEngine;

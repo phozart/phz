@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { filterSearchOptions } from '../components/fields/phz-searchable-dropdown.js';
-import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/phz-core';
+import type { SelectionFieldOption, SearchFieldConfig } from '@phozart/core';
 
 const OPTIONS: SelectionFieldOption[] = [
   { value: 'apple', label: 'Apple' },

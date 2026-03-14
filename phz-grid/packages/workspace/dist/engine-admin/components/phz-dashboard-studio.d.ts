@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Studio
+ * @phozart/engine-admin — Dashboard Studio
  *
  * MicroStrategy-inspired integrated dashboard editor.
  * Single view: toolbar + global filters + left data panel + live canvas + right config panel.
  * Uses EnhancedWidgetConfig for rich per-widget configuration.
  */
 import { LitElement } from 'lit';
-import type { BIEngine, DashboardConfig, EnhancedDashboardConfig } from '@phozart/phz-engine';
+import type { BIEngine, DashboardConfig, EnhancedDashboardConfig } from '@phozart/engine';
 import './phz-widget-config-panel.js';
 import './phz-global-filter-bar.js';
 import './phz-data-model-sidebar.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Report Context Menu
+ * @phozart/workspace — Report Context Menu
  *
  * Pure functions that generate context menu items for report editing.
  */

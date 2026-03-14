@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-viewer-dashboard> Custom Element
+ * @phozart/viewer — <phz-viewer-dashboard> Custom Element
  *
  * Dashboard view screen. Renders a read-only dashboard with widgets,
  * cross-filtering, and expand/collapse. Delegates state to
@@ -8,7 +8,7 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { CrossFilterEntry } from '@phozart/phz-shared/coordination';
+import type { CrossFilterEntry } from '@phozart/shared/coordination';
 import {
   type DashboardViewState,
   type DashboardWidgetView,

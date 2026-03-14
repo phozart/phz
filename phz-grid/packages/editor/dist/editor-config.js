@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — EditorShellConfig (B-2.02)
+ * @phozart/editor — EditorShellConfig (B-2.02)
  *
  * Configuration type and factory for the editor shell.
  * Defines which features are enabled, adapter references,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern > Settings State (B-3.10)
+ * @phozart/workspace — Govern > Settings State (B-3.10)
  *
  * Pure functions for workspace-level settings: theme/branding,
  * default presentation, and feature flag toggles.

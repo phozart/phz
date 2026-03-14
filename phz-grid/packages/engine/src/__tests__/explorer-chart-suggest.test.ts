@@ -7,8 +7,8 @@
 import {
   suggestChartType,
   type ChartSuggestOptions,
-} from '@phozart/phz-workspace/explore';
-import type { ExploreQuery } from '@phozart/phz-workspace/explore';
+} from '@phozart/workspace/explore';
+import type { ExploreQuery } from '@phozart/workspace/explore';
 
 // Helper — build a minimal ExploreQuery
 function makeQuery(

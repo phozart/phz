@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Row Actions Tests
+ * @phozart/grid — Row Actions Tests
  *
  * Tests for effectiveRowActions getter and RowActionEventDetail shape.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Admin Service
+ * @phozart/engine — Filter Admin Service
  *
  * Administrative operations for filter definitions and bindings,
  * with permission checks, immutability enforcement, and audit logging.

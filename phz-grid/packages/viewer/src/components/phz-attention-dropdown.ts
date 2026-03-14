@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer — <phz-attention-dropdown> Custom Element
+ * @phozart/viewer — <phz-attention-dropdown> Custom Element
  *
  * Dropdown panel for attention items (alerts, notifications).
  * Delegates to the headless attention-state functions.
@@ -7,7 +7,7 @@
 import { LitElement, html, css, nothing, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 import {
   type AttentionDropdownState,
   createAttentionDropdownState,

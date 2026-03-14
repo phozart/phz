@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Workspace Client
+ * @phozart/workspace — Workspace Client
  *
  * Consumer-facing client that wraps a WorkspaceAdapter with optional
  * ConsumerCapabilities to constrain what artifacts/widgets are available.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Breach Count Utils (L.7)
+ * @phozart/workspace — Breach Count Utils (L.7)
  *
  * Computes per-artifact breach counts and sorts artifacts by breach severity.
  */

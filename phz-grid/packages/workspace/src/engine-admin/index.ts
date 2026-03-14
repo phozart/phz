@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace/engine-admin — Engine Admin Components
+ * @phozart/workspace/engine-admin — Engine Admin Components
  *
  * All engine-admin components migrated into the workspace package.
  */
@@ -48,3 +48,47 @@ export type { ShareTab } from './components/phz-share-dialog.js';
 export { PhzDataConnector } from './components/phz-data-connector.js';
 export { detectSchema, detectDelimiter, parseCSVPreview, validateSourceConfig } from './data-source-detector.js';
 export type { DetectedField, CSVParseOptions, CSVParseResult, ValidationResult, SourceType } from './data-source-detector.js';
+
+// Dashboard editor state machine (UX-010: Builder/Studio unification)
+export type { DashboardEditorMode, DashboardEditorState, EditorWidgetPlacement, EditorGlobalFilter } from './dashboard-editor-state.js';
+export {
+  createDashboardEditorState,
+  enableAdvancedMode,
+  toggleDataModel,
+  toggleToolbar,
+  addWidget,
+  removeWidget,
+  selectWidget,
+  updateWidgetConfig,
+  setName,
+  setDescription,
+  isAdvancedFeatureUsed,
+} from './dashboard-editor-state.js';
+
+// Expression autocomplete state machine (UX-014: Expression Autocomplete)
+export type { SuggestionKind, AutocompleteSuggestion, AutocompleteContext, ExpressionAutocompleteState } from './expression-autocomplete-state.js';
+export type { AcceptResult } from './expression-autocomplete-state.js';
+export {
+  createExpressionAutocompleteState,
+  computeSuggestions,
+  selectNext,
+  selectPrevious,
+  acceptSuggestion,
+  dismissAutocomplete,
+  getSelectedSuggestion,
+} from './expression-autocomplete-state.js';
+
+// Dependency graph view state machine (UX-015: Visual Dependency Graph)
+export type { GraphNodeKind, GraphNode, GraphEdge, HighlightDirection, DependencyGraphViewState } from './dependency-graph-view-state.js';
+export {
+  createDependencyGraphViewState,
+  selectNode,
+  clearSelection,
+  highlightUpstream,
+  highlightDownstream,
+  highlightBoth,
+  toggleLayerVisibility,
+  setGraphSearch,
+  getVisibleNodes,
+  getVisibleEdges,
+} from './dependency-graph-view-state.js';

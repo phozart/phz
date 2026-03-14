@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Metric Catalog
+ * @phozart/engine — Metric Catalog
  *
  * Metrics are computational definitions used by pivot tables and reports.
  * Distinct from KPIs which have targets/thresholds.

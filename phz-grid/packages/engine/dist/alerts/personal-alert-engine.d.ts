@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Personal Alert Engine (C-2.03)
+ * @phozart/engine — Personal Alert Engine (C-2.03)
  *
  * Evaluates personal alert conditions against current data values.
  * Pure functions only — no side effects, no DOM.
  */
-import type { PersonalAlert, PersonalAlertPreference, AlertSeverity } from '@phozart/phz-shared/types';
+import type { PersonalAlert, PersonalAlertPreference, AlertSeverity } from '@phozart/shared/types';
 export interface AlertEvaluationResult {
     alertId: string;
     triggered: boolean;

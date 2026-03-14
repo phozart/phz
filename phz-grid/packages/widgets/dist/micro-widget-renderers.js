@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Micro-Widget Cell Renderers (7A-B)
+ * @phozart/widgets — Micro-Widget Cell Renderers (7A-B)
  *
  * Pure functions that produce SVG/HTML strings for rendering micro-widgets
  * inside grid table cells. No DOM APIs, no Lit, no side effects.
  *
  * Each renderer must complete in under 2ms per call.
  */
-import { ALERT_WIDGET_TOKENS } from '@phozart/phz-shared/design-system';
+import { ALERT_WIDGET_TOKENS } from '@phozart/shared/design-system';
 // ========================================================================
 // Column-width thresholds
 // ========================================================================

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Query Builder Pure Logic Tests
+ * @phozart/widgets -- Query Builder Pure Logic Tests
  *
  * Tests for getOperatorsForType, validateFilter, buildQuerySummary,
  * and applyQueryToData.

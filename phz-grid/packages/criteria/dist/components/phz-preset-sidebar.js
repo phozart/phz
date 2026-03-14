@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Preset Sidebar
+ * @phozart/criteria — Preset Sidebar
  *
  * Vertical list of saved presets grouped by scope (Shared, Personal).
  * Used inside the expanded modal sidebar.

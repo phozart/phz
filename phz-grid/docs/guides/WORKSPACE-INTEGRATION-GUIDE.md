@@ -50,12 +50,12 @@ Optionally, you can also provide:
 
 ### How this guide relates to the others
 
-| Guide | Audience | Focus |
-|-------|----------|-------|
-| **This guide** (Workspace Integration) | Developers embedding the workspace | Mounting, configuring, passing adapters |
-| [Developer Guide](./DEVELOPER-GUIDE.md) | Library contributors, extension authors | Internal architecture, package internals, testing |
-| [Admin Guide](./ADMIN-GUIDE.md) | Technical administrators | Using the workspace UI to configure dashboards, filters, alerts |
-| [User Guide](./USER-GUIDE.md) | End users / business analysts | Interacting with dashboards, applying filters, drill-through |
+| Guide                                   | Audience                                | Focus                                                           |
+| --------------------------------------- | --------------------------------------- | --------------------------------------------------------------- |
+| **This guide** (Workspace Integration)  | Developers embedding the workspace      | Mounting, configuring, passing adapters                         |
+| [Developer Guide](./DEVELOPER-GUIDE.md) | Library contributors, extension authors | Internal architecture, package internals, testing               |
+| [Admin Guide](./ADMIN-GUIDE.md)         | Technical administrators                | Using the workspace UI to configure dashboards, filters, alerts |
+| [User Guide](./USER-GUIDE.md)           | End users / business analysts           | Interacting with dashboards, applying filters, drill-through    |
 
 Read this guide first. Once the workspace is mounted and data is flowing,
 hand off the Admin Guide to your configurators and the User Guide to your
@@ -68,22 +68,22 @@ end users.
 ### Install
 
 ```bash
-npm install @phozart/phz-workspace
+npm install @phozart/workspace
 ```
 
 ### Import
 
 ```typescript
 // Registers <phz-workspace> and all internal sub-components
-import '@phozart/phz-workspace/all';
+import '@phozart/workspace/all';
 ```
 
 ### Mount
 
 ```html
 <phz-workspace
-  .adapter=${workspaceAdapter}
-  .dataAdapter=${dataAdapter}
+  .adapter="${workspaceAdapter}"
+  .dataAdapter="${dataAdapter}"
   role="admin"
   title="My Analytics"
 ></phz-workspace>
@@ -91,23 +91,23 @@ import '@phozart/phz-workspace/all';
 
 That is the complete integration. Four properties:
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `.adapter` | `WorkspaceAdapter` | Yes | Persistence backend for all artifacts |
-| `.dataAdapter` | `DataAdapter` | Yes | Data query execution engine |
-| `role` | `'admin' \| 'author' \| 'viewer'` | Yes | Determines UI capabilities (see table below) |
-| `title` | `string` | No | Shown in the workspace header bar |
+| Property       | Type                              | Required | Description                                  |
+| -------------- | --------------------------------- | -------- | -------------------------------------------- |
+| `.adapter`     | `WorkspaceAdapter`                | Yes      | Persistence backend for all artifacts        |
+| `.dataAdapter` | `DataAdapter`                     | Yes      | Data query execution engine                  |
+| `role`         | `'admin' \| 'author' \| 'viewer'` | Yes      | Determines UI capabilities (see table below) |
+| `title`        | `string`                          | No       | Shown in the workspace header bar            |
 
 An optional `active-panel` string attribute lets you set the initially
 visible panel programmatically (e.g. `active-panel="dashboards"`).
 
 ### Role capabilities
 
-| Role | Can create artifacts | Can edit shared | Can publish | Sees admin sections |
-|------|---------------------|----------------|------------|-------------------|
-| `admin` | Yes | Yes | Yes | Yes (Content + Data + Govern) |
-| `author` | Yes | Own only | No | No (Content only) |
-| `viewer` | No | No | No | No (Content only, read-only) |
+| Role     | Can create artifacts | Can edit shared | Can publish | Sees admin sections           |
+| -------- | -------------------- | --------------- | ----------- | ----------------------------- |
+| `admin`  | Yes                  | Yes             | Yes         | Yes (Content + Data + Govern) |
+| `author` | Yes                  | Own only        | No          | No (Content only)             |
+| `viewer` | No                   | No              | No          | No (Content only, read-only)  |
 
 The `role` property controls which sidebar sections and navigation items
 appear. Admins see three sections (Content, Data, Govern). Authors see the
@@ -117,13 +117,13 @@ Content section. Viewers see the Content section in read-only mode.
 
 The workspace emits these `CustomEvent`s that bubble through the DOM:
 
-| Event | `detail` | When |
-|-------|----------|------|
-| `panel-change` | `{ panelId: string }` | User navigates to a different panel |
-| `save-report` | `{ report: ReportConfig }` | Report is saved |
-| `save-dashboard` | `{ dashboard: DashboardConfig }` | Dashboard is saved |
-| `publish-report` | `{ report: ReportConfig }` | Report is published |
-| `publish-dashboard` | `{ dashboard: DashboardConfig }` | Dashboard is published |
+| Event               | `detail`                         | When                                |
+| ------------------- | -------------------------------- | ----------------------------------- |
+| `panel-change`      | `{ panelId: string }`            | User navigates to a different panel |
+| `save-report`       | `{ report: ReportConfig }`       | Report is saved                     |
+| `save-dashboard`    | `{ dashboard: DashboardConfig }` | Dashboard is saved                  |
+| `publish-report`    | `{ report: ReportConfig }`       | Report is published                 |
+| `publish-dashboard` | `{ dashboard: DashboardConfig }` | Dashboard is published              |
 
 ---
 
@@ -216,12 +216,21 @@ interface DataAdapter {
 A minimal REST-backed adapter:
 
 ```typescript
-import type { DataAdapter, DataQuery, DataResult, DataSourceSchema, DataSourceSummary } from '@phozart/phz-workspace';
+import type {
+  DataAdapter,
+  DataQuery,
+  DataResult,
+  DataSourceSchema,
+  DataSourceSummary,
+} from '@phozart/workspace';
 
 class MyDataAdapter implements DataAdapter {
   constructor(private baseUrl: string) {}
 
-  async execute(query: DataQuery, context?: { viewerContext?: unknown; signal?: AbortSignal }): Promise<DataResult> {
+  async execute(
+    query: DataQuery,
+    context?: { viewerContext?: unknown; signal?: AbortSignal },
+  ): Promise<DataResult> {
     const res = await fetch(`${this.baseUrl}/query`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -232,7 +241,9 @@ class MyDataAdapter implements DataAdapter {
   }
 
   async getSchema(sourceId?: string): Promise<DataSourceSchema> {
-    const res = await fetch(sourceId ? `${this.baseUrl}/schema/${sourceId}` : `${this.baseUrl}/schema`);
+    const res = await fetch(
+      sourceId ? `${this.baseUrl}/schema/${sourceId}` : `${this.baseUrl}/schema`,
+    );
     return res.json();
   }
 
@@ -240,9 +251,14 @@ class MyDataAdapter implements DataAdapter {
     return (await fetch(`${this.baseUrl}/sources`)).json();
   }
 
-  async getDistinctValues(sourceId: string, field: string, options?: { search?: string; limit?: number; filters?: unknown }) {
+  async getDistinctValues(
+    sourceId: string,
+    field: string,
+    options?: { search?: string; limit?: number; filters?: unknown },
+  ) {
     const res = await fetch(`${this.baseUrl}/sources/${sourceId}/distinct`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ field, ...options }),
     });
     return res.json();
@@ -250,7 +266,8 @@ class MyDataAdapter implements DataAdapter {
 
   async getFieldStats(sourceId: string, field: string, filters?: unknown) {
     const res = await fetch(`${this.baseUrl}/sources/${sourceId}/stats`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ field, filters }),
     });
     return res.json();
@@ -337,23 +354,23 @@ interface WorkspaceAdapter extends EngineStorageAdapter, AsyncDefinitionStore {
 
 From `EngineStorageAdapter` — CRUD for each artifact type (all return `Promise`):
 
-| Artifact | Save | Load all | Delete |
-|----------|------|----------|--------|
-| Reports | `saveReport(report)` | `loadReports()` | `deleteReport(id)` |
+| Artifact   | Save                       | Load all           | Delete                |
+| ---------- | -------------------------- | ------------------ | --------------------- |
+| Reports    | `saveReport(report)`       | `loadReports()`    | `deleteReport(id)`    |
 | Dashboards | `saveDashboard(dashboard)` | `loadDashboards()` | `deleteDashboard(id)` |
-| KPIs | `saveKPI(kpi)` | `loadKPIs()` | `deleteKPI(id)` |
-| Metrics | `saveMetric(metric)` | `loadMetrics()` | `deleteMetric(id)` |
+| KPIs       | `saveKPI(kpi)`             | `loadKPIs()`       | `deleteKPI(id)`       |
+| Metrics    | `saveMetric(metric)`       | `loadMetrics()`    | `deleteMetric(id)`    |
 
 Plus `clear(): Promise<void>` to reset all stores.
 
 From `AsyncDefinitionStore` — grid definition persistence:
 
-| Method | Signature |
-|--------|-----------|
-| `save` | `(def: GridDefinition) => Promise<GridDefinition>` |
-| `load` | `(id: DefinitionId) => Promise<GridDefinition \| undefined>` |
-| `list` | `() => Promise<DefinitionMeta[]>` |
-| `delete` | `(id: DefinitionId) => Promise<boolean>` |
+| Method      | Signature                                                              |
+| ----------- | ---------------------------------------------------------------------- |
+| `save`      | `(def: GridDefinition) => Promise<GridDefinition>`                     |
+| `load`      | `(id: DefinitionId) => Promise<GridDefinition \| undefined>`           |
+| `list`      | `() => Promise<DefinitionMeta[]>`                                      |
+| `delete`    | `(id: DefinitionId) => Promise<boolean>`                               |
 | `duplicate` | `(id: DefinitionId, options?) => Promise<GridDefinition \| undefined>` |
 
 ### Optional extensions
@@ -361,11 +378,11 @@ From `AsyncDefinitionStore` — grid definition persistence:
 The adapter supports three optional extension surfaces. Implement the methods
 you need; omit the rest.
 
-| Extension | Methods | Effect when absent |
-|-----------|---------|--------------------|
-| **Alert store** | `saveAlertRule`, `loadAlertRules`, `deleteAlertRule`, `saveBreachRecord`, `loadActiveBreaches`, `updateBreachStatus`, `saveSubscription`, `loadSubscriptions` | Alerts evaluate locally but are not persisted across sessions |
-| **Template store** | `saveTemplate`, `loadTemplates`, `deleteTemplate` | Only built-in templates are available |
-| **Artifact history** | `getArtifactHistory`, `getArtifactVersion`, `restoreArtifactVersion` | Version history panel is hidden |
+| Extension            | Methods                                                                                                                                                       | Effect when absent                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **Alert store**      | `saveAlertRule`, `loadAlertRules`, `deleteAlertRule`, `saveBreachRecord`, `loadActiveBreaches`, `updateBreachStatus`, `saveSubscription`, `loadSubscriptions` | Alerts evaluate locally but are not persisted across sessions |
+| **Template store**   | `saveTemplate`, `loadTemplates`, `deleteTemplate`                                                                                                             | Only built-in templates are available                         |
+| **Artifact history** | `getArtifactHistory`, `getArtifactVersion`, `restoreArtifactVersion`                                                                                          | Version history panel is hidden                               |
 
 The workspace detects history support at runtime via `hasHistorySupport(adapter)`.
 See `packages/workspace/src/workspace-adapter.ts` for the full method
@@ -393,7 +410,7 @@ The workspace ships with a `MemoryWorkspaceAdapter` for testing and
 prototyping:
 
 ```typescript
-import { MemoryWorkspaceAdapter } from '@phozart/phz-workspace';
+import { MemoryWorkspaceAdapter } from '@phozart/workspace';
 
 const adapter = new MemoryWorkspaceAdapter();
 await adapter.initialize();
@@ -473,7 +490,7 @@ fields, size bounds, supported interactions, and an optional lazy `load()`
 function for code-splitting. Here is a complete registration:
 
 ```typescript
-import { createManifestRegistry } from '@phozart/phz-workspace/registry';
+import { createManifestRegistry } from '@phozart/workspace/registry';
 
 const registry = createManifestRegistry();
 
@@ -516,9 +533,9 @@ shape, see the [Developer Guide](./DEVELOPER-GUIDE.md).
 
 ```html
 <!-- Do NOT do this -->
-<phz-dashboard-builder .adapter=${adapter}></phz-dashboard-builder>
-<phz-report-designer .adapter=${adapter}></phz-report-designer>
-<phz-grid-admin .adapter=${adapter}></phz-grid-admin>
+<phz-dashboard-builder .adapter="${adapter}"></phz-dashboard-builder>
+<phz-report-designer .adapter="${adapter}"></phz-report-designer>
+<phz-grid-admin .adapter="${adapter}"></phz-grid-admin>
 ```
 
 **Right:**
@@ -526,8 +543,8 @@ shape, see the [Developer Guide](./DEVELOPER-GUIDE.md).
 ```html
 <!-- One component, one mount point -->
 <phz-workspace
-  .adapter=${adapter}
-  .dataAdapter=${dataAdapter}
+  .adapter="${adapter}"
+  .dataAdapter="${dataAdapter}"
   role="admin"
   title="My App"
 ></phz-workspace>
@@ -539,9 +556,10 @@ the workspace. They are rendered automatically based on sidebar navigation.
 Mounting them directly bypasses the workspace's state management, routing,
 undo/redo, auto-save, and keyboard shortcuts.
 
-The legacy shim packages (`@phozart/phz-grid-admin`,
-`@phozart/phz-engine-admin`, `@phozart/phz-grid-creator`) exist for backward
-compatibility. New integrations should use `<phz-workspace>` exclusively.
+The legacy shim packages (`@phozart/grid-admin`,
+`@phozart/engine-admin`, `@phozart/grid-creator`) have been archived.
+All functionality lives in `@phozart/workspace` sub-path exports.
+Use `<phz-workspace>` exclusively.
 
 ### Mistake 2: No `maxRows` on DataAdapter results
 
@@ -628,13 +646,13 @@ shell targets a specific persona and can be deployed independently.
 
 ### Shell packages
 
-| Shell | Package | Persona | Install |
-|-------|---------|---------|---------|
-| **Workspace** | `@phozart/phz-workspace` | Admin | `npm install @phozart/phz-workspace` |
-| **Viewer** | `@phozart/phz-viewer` | Analyst | `npm install @phozart/phz-viewer` |
-| **Editor** | `@phozart/phz-editor` | Author | `npm install @phozart/phz-editor` |
+| Shell         | Package                  | Persona | Install                              |
+| ------------- | ------------------------ | ------- | ------------------------------------ |
+| **Workspace** | `@phozart/workspace` | Admin   | `npm install @phozart/workspace` |
+| **Viewer**    | `@phozart/viewer`    | Analyst | `npm install @phozart/viewer`    |
+| **Editor**    | `@phozart/editor`    | Author  | `npm install @phozart/editor`    |
 
-All three depend on `@phozart/phz-shared` (installed automatically as a
+All three depend on `@phozart/shared` (installed automatically as a
 dependency).
 
 ### Deployment patterns
@@ -643,14 +661,14 @@ dependency).
 
 ```html
 <phz-viewer-shell
-  .adapter=${workspaceAdapter}
-  .dataAdapter=${dataAdapter}
-  .config=${viewerConfig}
+  .adapter="${workspaceAdapter}"
+  .dataAdapter="${dataAdapter}"
+  .config="${viewerConfig}"
 ></phz-viewer-shell>
 ```
 
 ```typescript
-import { createViewerShellConfig } from '@phozart/phz-viewer';
+import { createViewerShellConfig } from '@phozart/viewer';
 
 const viewerConfig = createViewerShellConfig({
   branding: { appName: 'Customer Portal', primaryColor: '#1a73e8' },
@@ -664,10 +682,10 @@ const viewerConfig = createViewerShellConfig({
 // Route based on user role
 if (user.role === 'author') {
   // Mount <phz-editor-shell>
-  import '@phozart/phz-editor';
+  import '@phozart/editor';
 } else {
   // Mount <phz-viewer-shell>
-  import '@phozart/phz-viewer';
+  import '@phozart/viewer';
 }
 ```
 
@@ -677,15 +695,15 @@ if (user.role === 'author') {
 // Admin gets workspace, others get viewer or editor
 switch (user.role) {
   case 'admin':
-    import '@phozart/phz-workspace/all';
+    import '@phozart/workspace/all';
     // Mount <phz-workspace>
     break;
   case 'author':
-    import '@phozart/phz-editor';
+    import '@phozart/editor';
     // Mount <phz-editor-shell>
     break;
   default:
-    import '@phozart/phz-viewer';
+    import '@phozart/viewer';
     // Mount <phz-viewer-shell>
     break;
 }
@@ -695,14 +713,14 @@ switch (user.role) {
 
 ```typescript
 // Use engine + shared directly, no shell packages
-import { createBIEngine } from '@phozart/phz-engine';
-import type { DataAdapter } from '@phozart/phz-shared/adapters';
+import { createBIEngine } from '@phozart/engine';
+import type { DataAdapter } from '@phozart/shared/adapters';
 ```
 
 ### Adapters are shared
 
 All three shells consume the same `DataAdapter` and `WorkspaceAdapter`
-interfaces from `@phozart/phz-shared`. You implement them once and pass them
+interfaces from `@phozart/shared`. You implement them once and pass them
 to whichever shell you mount. The adapter interfaces have not changed from
 v14 — existing implementations work without modification.
 
@@ -710,35 +728,35 @@ v14 — existing implementations work without modification.
 
 ## 10. v15: Shared Package Foundation
 
-The `@phozart/phz-shared` package is the new foundation layer. It contains
+The `@phozart/shared` package is the new foundation layer. It contains
 everything that was previously duplicated across workspace, viewer, and editor:
 adapter interfaces, type definitions, design system tokens, artifact metadata
 types, and runtime coordination state machines.
 
 ### Import paths
 
-| Import | What it gives you |
-|--------|-------------------|
-| `@phozart/phz-shared/adapters` | `DataAdapter`, `DataQuery`, `DataResult`, persistence SPIs, channel adapters |
-| `@phozart/phz-shared/types` | All shared type definitions (alerts, subscriptions, widgets, filters, API, micro-widgets, impact chains, attention) |
-| `@phozart/phz-shared/design-system` | `DESIGN_TOKENS`, responsive breakpoints, container queries, component patterns |
-| `@phozart/phz-shared/artifacts` | `ArtifactVisibility`, `DefaultPresentation`, `PersonalView`, `GridArtifact` |
-| `@phozart/phz-shared/coordination` | `FilterContextManager`, `DashboardDataPipeline`, `InteractionBus`, loading states, execution strategy |
-| `@phozart/phz-shared` | Barrel re-export of all sub-paths (convenience, but prefer sub-paths for tree-shaking) |
+| Import                              | What it gives you                                                                                                   |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `@phozart/shared/adapters`      | `DataAdapter`, `DataQuery`, `DataResult`, persistence SPIs, channel adapters                                        |
+| `@phozart/shared/types`         | All shared type definitions (alerts, subscriptions, widgets, filters, API, micro-widgets, impact chains, attention) |
+| `@phozart/shared/design-system` | `DESIGN_TOKENS`, responsive breakpoints, container queries, component patterns                                      |
+| `@phozart/shared/artifacts`     | `ArtifactVisibility`, `DefaultPresentation`, `PersonalView`, `GridArtifact`                                         |
+| `@phozart/shared/coordination`  | `FilterContextManager`, `DashboardDataPipeline`, `InteractionBus`, loading states, execution strategy               |
+| `@phozart/shared`               | Barrel re-export of all sub-paths (convenience, but prefer sub-paths for tree-shaking)                              |
 
 ### Migration from v14
 
 In v14, types like `DataAdapter`, `ViewerContext`, `FilterContextManager`, and
-`DESIGN_TOKENS` were imported from `@phozart/phz-workspace`. In v15, their
-canonical source is `@phozart/phz-shared`. The workspace re-exports them for
+`DESIGN_TOKENS` were imported from `@phozart/workspace`. In v15, their
+canonical source is `@phozart/shared`. The workspace re-exports them for
 backward compatibility, but new code should import from shared:
 
 ```typescript
 // v14 (still works but deprecated)
-import type { DataAdapter } from '@phozart/phz-workspace';
+import type { DataAdapter } from '@phozart/workspace';
 
 // v15 (preferred)
-import type { DataAdapter } from '@phozart/phz-shared/adapters';
+import type { DataAdapter } from '@phozart/shared/adapters';
 ```
 
 ---
@@ -753,7 +771,7 @@ packages.
 ### Wiring at mount time
 
 ```typescript
-import { createCellRendererRegistry } from '@phozart/phz-shared/types';
+import { createCellRendererRegistry } from '@phozart/shared/types';
 
 // 1. Create the registry at app initialization
 const cellRenderers = createCellRendererRegistry();
@@ -776,11 +794,19 @@ cellRenderers.register('value-only', valueOnlyRenderer);
 Each renderer implements the `MicroWidgetRenderer` interface:
 
 ```typescript
-import type { MicroWidgetRenderer, MicroWidgetCellConfig, MicroWidgetRenderResult }
-  from '@phozart/phz-shared/types';
+import type {
+  MicroWidgetRenderer,
+  MicroWidgetCellConfig,
+  MicroWidgetRenderResult,
+} from '@phozart/shared/types';
 
 const sparklineRenderer: MicroWidgetRenderer = {
-  render(config: MicroWidgetCellConfig, value: unknown, width: number, height: number): MicroWidgetRenderResult {
+  render(
+    config: MicroWidgetCellConfig,
+    value: unknown,
+    width: number,
+    height: number,
+  ): MicroWidgetRenderResult {
     const points = Array.isArray(value) ? value : [];
     // Generate SVG polyline from points...
     return { html: svgString, width, height };
@@ -808,14 +834,14 @@ alert state using `SingleValueAlertConfig`.
 ### Configuration
 
 ```typescript
-import { createDefaultAlertConfig } from '@phozart/phz-shared/types';
+import { createDefaultAlertConfig } from '@phozart/shared/types';
 
 const widgetConfig = {
   // ... other widget config ...
   alertConfig: {
     ...createDefaultAlertConfig(),
     alertRuleBinding: 'rule-revenue-threshold', // ID of the alert rule
-    alertVisualMode: 'background',              // 'none' | 'indicator' | 'background' | 'border'
+    alertVisualMode: 'background', // 'none' | 'indicator' | 'background' | 'border'
     alertAnimateTransition: true,
   },
 };
@@ -824,8 +850,11 @@ const widgetConfig = {
 ### Resolving visual state
 
 ```typescript
-import { resolveAlertVisualState, getAlertTokens, degradeAlertMode }
-  from '@phozart/phz-shared/types';
+import {
+  resolveAlertVisualState,
+  getAlertTokens,
+  degradeAlertMode,
+} from '@phozart/shared/types';
 
 // Map of ruleId -> severity from the alert evaluation engine
 const alertEvents = new Map([['rule-revenue-threshold', 'warning']]);
@@ -883,12 +912,12 @@ const gridConfig = {
 
 ### Display modes
 
-| Mode | Visual | Best For |
-|------|--------|----------|
-| `value-only` | Formatted number + colored status dot | Compact KPI display |
-| `sparkline` | SVG polyline from array data | Trend visualization |
-| `delta` | Value + arrow + percentage change | Period-over-period comparison |
-| `gauge-arc` | SVG semi-circle arc with fill | Progress/utilization metrics |
+| Mode         | Visual                                | Best For                      |
+| ------------ | ------------------------------------- | ----------------------------- |
+| `value-only` | Formatted number + colored status dot | Compact KPI display           |
+| `sparkline`  | SVG polyline from array data          | Trend visualization           |
+| `delta`      | Value + arrow + percentage change     | Period-over-period comparison |
+| `gauge-arc`  | SVG semi-circle arc with fill         | Progress/utilization metrics  |
 
 The grid checks `renderer.canRender(config, columnWidth)` before attempting to
 render. If the column is too narrow, it falls back to plain text.
@@ -903,23 +932,32 @@ The impact chain displays nodes as a horizontal causal flow.
 ### Configuration
 
 ```typescript
-import type { ImpactChainNode, DecisionTreeVariantConfig } from '@phozart/phz-shared/types';
+import type { ImpactChainNode, DecisionTreeVariantConfig } from '@phozart/shared/types';
 
 const nodes: ImpactChainNode[] = [
   {
-    id: 'root', label: 'Latency Spike', status: 'critical',
-    nodeRole: 'root-cause', impactMetrics: [{ label: 'P99', value: '850ms', field: 'latency_p99' }],
+    id: 'root',
+    label: 'Latency Spike',
+    status: 'critical',
+    nodeRole: 'root-cause',
+    impactMetrics: [{ label: 'P99', value: '850ms', field: 'latency_p99' }],
     children: ['db-slow', 'cache-miss'],
   },
   {
-    id: 'db-slow', label: 'DB Query Slow', status: 'warning',
-    nodeRole: 'failure', edgeLabel: 'causes',
+    id: 'db-slow',
+    label: 'DB Query Slow',
+    status: 'warning',
+    nodeRole: 'failure',
+    edgeLabel: 'causes',
     impactMetrics: [{ label: 'Avg Query', value: '420ms', field: 'db_avg' }],
     children: ['hypothesis-index'],
   },
   {
-    id: 'hypothesis-index', label: 'Missing Index', status: 'ok',
-    nodeRole: 'hypothesis', hypothesisState: 'validated',
+    id: 'hypothesis-index',
+    label: 'Missing Index',
+    status: 'ok',
+    nodeRole: 'hypothesis',
+    hypothesisState: 'validated',
     children: [],
   },
   // ... more nodes
@@ -938,12 +976,12 @@ const variantConfig: DecisionTreeVariantConfig = {
 
 ### Node roles
 
-| Role | Visual | Purpose |
-|------|--------|---------|
-| `root-cause` | Highlighted card | The primary source of the problem |
-| `failure` | Standard card with severity coloring | A confirmed failure in the chain |
-| `impact` | Downstream card | A consequence of the failure |
-| `hypothesis` | Dashed border with validation badge | A suspected cause under investigation |
+| Role         | Visual                               | Purpose                               |
+| ------------ | ------------------------------------ | ------------------------------------- |
+| `root-cause` | Highlighted card                     | The primary source of the problem     |
+| `failure`    | Standard card with severity coloring | A confirmed failure in the chain      |
+| `impact`     | Downstream card                      | A consequence of the failure          |
+| `hypothesis` | Dashed border with validation badge  | A suspected cause under investigation |
 
 ### Hypothesis states
 
@@ -967,7 +1005,7 @@ import {
   computeAttentionFacets,
   type AttentionFilterState,
   type FilterableAttentionItem,
-} from '@phozart/phz-shared/types';
+} from '@phozart/shared/types';
 
 // Filter items
 const filterState: AttentionFilterState = {
@@ -996,7 +1034,7 @@ import {
   acknowledgeItem,
   setAttentionSort,
   getVisibleItems,
-} from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
 
 let state = initialAttentionFacetedState();
 state = toggleFacetValue(state, 'priority', 'critical');
@@ -1013,7 +1051,7 @@ pagination (`loadMore()`), and batch acknowledge (`acknowledgeAllVisible()`).
 
 ### Minimal setup checklist
 
-1. `npm install @phozart/phz-workspace`
+1. `npm install @phozart/workspace`
 2. Implement `DataAdapter` (5 methods)
 3. Implement `WorkspaceAdapter` (or start with `MemoryWorkspaceAdapter`)
 4. Add `<phz-workspace>` to your page with `.adapter`, `.dataAdapter`, and `role`
@@ -1021,19 +1059,19 @@ pagination (`loadMore()`), and batch acknowledge (`acknowledgeAllVisible()`).
 
 ### Import paths
 
-| Import | What it gives you |
-|--------|-------------------|
-| `@phozart/phz-workspace/all` | Registers `<phz-workspace>` and all sub-components |
-| `@phozart/phz-workspace` | Types and adapters (no custom element registration) |
-| `@phozart/phz-workspace/registry` | `createManifestRegistry()`, `createWidgetRegistry()` |
-| `@phozart/phz-shared` | Shared types, adapters, design system, artifacts, coordination |
-| `@phozart/phz-shared/adapters` | `DataAdapter`, persistence SPIs, channel adapters |
-| `@phozart/phz-shared/types` | All shared type definitions |
-| `@phozart/phz-shared/design-system` | Design tokens, responsive utilities |
-| `@phozart/phz-shared/artifacts` | Artifact visibility, presentation, personal views |
-| `@phozart/phz-shared/coordination` | Filter context, data pipeline, interaction bus, loading states |
-| `@phozart/phz-viewer` | Viewer shell state machines and components |
-| `@phozart/phz-editor` | Editor shell state machines and components |
+| Import                              | What it gives you                                              |
+| ----------------------------------- | -------------------------------------------------------------- |
+| `@phozart/workspace/all`        | Registers `<phz-workspace>` and all sub-components             |
+| `@phozart/workspace`            | Types and adapters (no custom element registration)            |
+| `@phozart/workspace/registry`   | `createManifestRegistry()`, `createWidgetRegistry()`           |
+| `@phozart/shared`               | Shared types, adapters, design system, artifacts, coordination |
+| `@phozart/shared/adapters`      | `DataAdapter`, persistence SPIs, channel adapters              |
+| `@phozart/shared/types`         | All shared type definitions                                    |
+| `@phozart/shared/design-system` | Design tokens, responsive utilities                            |
+| `@phozart/shared/artifacts`     | Artifact visibility, presentation, personal views              |
+| `@phozart/shared/coordination`  | Filter context, data pipeline, interaction bus, loading states |
+| `@phozart/viewer`               | Viewer shell state machines and components                     |
+| `@phozart/editor`               | Editor shell state machines and components                     |
 
 ### Further reading
 
@@ -1045,7 +1083,5 @@ pagination (`loadMore()`), and batch acknowledge (`acknowledgeAllVisible()`).
   filters, drill through reports, and personalize their view
 - [API Reference (v15)](./API-REFERENCE-V15.md) — Type reference for new
   packages: shared, viewer, editor, and new engine subsystems
-- [API Reference (v14)](./API-REFERENCE-V14.md) — Design system, enterprise
-  data/filter architecture, navigation, local playground
 - [API Reference (core)](./API-REFERENCE.md) — Core workspace types: data
   layer, widgets, layout, templates, alerts, filters, explorer

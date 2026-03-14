@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Auto-save Controller (L.12)
+ * @phozart/workspace — Auto-save Controller (L.12)
  *
  * Pure state machine for auto-saving drafts.
  * Saves after 30s of inactivity, with conflict detection.

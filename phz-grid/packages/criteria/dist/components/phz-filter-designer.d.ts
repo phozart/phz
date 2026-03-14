@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Designer
+ * @phozart/criteria — Filter Designer
  *
  * Single place for creating and managing reusable filter definitions,
  * filter rules, and shared presets. Three tabs: Definitions, Rules, Presets.
@@ -25,7 +25,7 @@
  * - preset-create / preset-update / preset-delete        (re-dispatched from phz-preset-admin)
  */
 import { LitElement } from 'lit';
-import type { FilterDefinition, FilterRule, SelectionPreset, FilterDataSource, FilterDefinitionPreset } from '@phozart/phz-core';
+import type { FilterDefinition, FilterRule, SelectionPreset, FilterDataSource, FilterDefinitionPreset } from '@phozart/core';
 import './phz-rule-admin.js';
 import './phz-preset-admin.js';
 import './phz-filter-drawer.js';

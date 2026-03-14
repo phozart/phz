@@ -14,7 +14,7 @@ import {
   getExplorerSnapshot,
   getFilteredFields,
 } from '../screens/explorer-state.js';
-import type { DataSourceMeta, FieldMetadata } from '@phozart/phz-shared/adapters';
+import type { DataSourceMeta, FieldMetadata } from '@phozart/shared/adapters';
 
 const sampleSources: DataSourceMeta[] = [
   { id: 'src-1', name: 'Sales Data', fieldCount: 12 },

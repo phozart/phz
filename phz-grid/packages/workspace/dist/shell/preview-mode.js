@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Preview Mode State (L.11)
+ * @phozart/workspace — Preview Mode State (L.11)
  *
  * Immutable state machine for viewport preview simulation.
  */

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Dashboard Builder
+ * @phozart/engine-admin — Dashboard Builder
  *
  * 3-panel: widget catalog (left) | canvas (center) | widget config (right).
  * Produces complete DashboardConfig with data bindings per widget type.
@@ -15,7 +15,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { safeCustomElement } from '../../safe-custom-element.js';
 import { engineAdminStyles } from '../shared-styles.js';
-import { widgetId, dashboardId } from '@phozart/phz-engine';
+import { widgetId, dashboardId } from '@phozart/engine';
 const WIDGET_CATALOG = [
     { type: 'kpi-card', icon: '📊', label: 'KPI Card', description: 'Single metric with status' },
     { type: 'kpi-scorecard', icon: '📋', label: 'Scorecard', description: 'KPI matrix with breakdowns' },
@@ -55,6 +55,9 @@ const DEFAULT_CONFIGS = {
     }),
     'drill-link': (id) => ({
         id: widgetId(id), type: 'drill-link', label: 'View Details', targetReportId: '', position: { row: 0, col: 0 }, size: { rowSpan: 1, colSpan: 1 },
+    }),
+    'slicer': (id) => ({
+        id: widgetId(id), type: 'slicer', field: '', position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },
     }),
     'custom': (id) => ({
         id: widgetId(id), type: 'custom', renderer: '', position: { row: 0, col: 0, colSpan: 1, rowSpan: 1 }, size: { rowSpan: 1, colSpan: 1 },

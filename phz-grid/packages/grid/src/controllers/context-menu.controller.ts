@@ -1,5 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
-import type { GridApi, ColumnDefinition, RowData, RowId, SortDirection } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, RowId, SortDirection } from '@phozart/core';
 import type { MenuItem } from '../components/phz-context-menu.js';
 import type { RowAction, FilterInfo } from '../types.js';
 import { dispatchGridEvent } from '../events.js';

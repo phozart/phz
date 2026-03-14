@@ -5,7 +5,7 @@ Events are grouped by package. All events use `bubbles: true, composed: true` un
 
 ---
 
-## @phozart/phz-widgets
+## @phozart/widgets
 
 ### Dashboard Events
 
@@ -41,7 +41,7 @@ Events are grouped by package. All events use `bubbles: true, composed: true` un
 
 ---
 
-## @phozart/phz-criteria
+## @phozart/criteria
 
 ### Criteria Panel & Bar Events
 
@@ -153,7 +153,7 @@ Events are grouped by package. All events use `bubbles: true, composed: true` un
 
 ---
 
-## @phozart/phz-grid-admin
+## @phozart/grid-admin
 
 ### Grid Admin Panel Events
 
@@ -213,7 +213,7 @@ Events are grouped by package. All events use `bubbles: true, composed: true` un
 
 ---
 
-## @phozart/phz-engine-admin
+## @phozart/engine-admin
 
 ### Engine Admin Navigation
 

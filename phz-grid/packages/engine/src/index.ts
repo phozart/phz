@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Headless BI Engine
+ * @phozart/engine — Headless BI Engine
  *
  * Pure computation: KPIs, metrics, dashboards, reports, aggregation, pivot, drill-through.
  * No DOM dependencies.
@@ -35,8 +35,12 @@ export type {
 export { computeAggregation, computeAggregations, computeGroupAggregations } from './aggregation.js';
 export type { AggregationResult } from './aggregation.js';
 
+// Incremental Aggregation
+export { createIncrementalAggregator } from './incremental-aggregation.js';
+export type { IncrementalAggregator } from './incremental-aggregation.js';
+
 // Re-export commonly used core types for convenience
-export type { AggregationFunction, AggregationConfig, FilterOperator, PivotConfig } from '@phozart/phz-core';
+export type { AggregationFunction, AggregationConfig, FilterOperator, PivotConfig, PivotValueField, ShowValuesAs } from '@phozart/core';
 
 // Report Configuration
 export { createReportConfigStore } from './report.js';
@@ -55,7 +59,7 @@ export type {
   WidgetType, WidgetPosition, WidgetSize, BaseWidgetConfig, WidgetConfig, WidgetPlacement,
   KPICardWidgetConfig, ScorecardWidgetConfig, BarChartWidgetConfig, TrendLineWidgetConfig,
   BottomNWidgetConfig, PivotTableWidgetConfig, DataTableWidgetConfig, StatusTableWidgetConfig,
-  DrillLinkWidgetConfig, CustomWidgetConfig,
+  DrillLinkWidgetConfig, SlicerWidgetConfig, CustomWidgetConfig,
   VisibilityOperator, VisibilityExpression, WidgetVisibilityCondition,
 } from './widget.js';
 
@@ -77,12 +81,20 @@ export { deepMerge, mergeReportConfigs, mergeDashboardConfigs, createConfigLayer
 export type { UserViewConfig, ConfigLayerDef, ConfigLayerManager } from './config-merge.js';
 
 // Pivot Engine
-export { computePivot, pivotResultToFlatRows } from './pivot.js';
-export type { PivotResult } from './pivot.js';
+export { computePivot, pivotResultToFlatRows, applyShowValuesAs } from './pivot.js';
+export type { PivotResult, PivotSubtotal } from './pivot.js';
+
+// Date Grouping
+export { groupDate, addDateBuckets, dateGroupingSQL } from './date-grouping.js';
+export type { DateGranularity } from './date-grouping.js';
 
 // Chart Data Projection
 export { projectChartData, projectAggregatedChartData, projectPieData } from './chart-projection.js';
 export type { ChartDataSeries, ChartDataPoint, PieSlice } from './chart-projection.js';
+
+// Grid Visualization Bridge
+export { suggestChartFromData, gridDataToChart, pivotToChart, createQuickDashboard } from './grid-visualization.js';
+export type { SuggestedVisualization, GridVisualizationConfig, ChartVisualizationResult, QuickDashboardField, QuickDashboardOptions } from './grid-visualization.js';
 
 // Drill-Through Resolution
 export { resolveDrillFilter, resolveDrillAction } from './drill-through.js';
@@ -111,7 +123,7 @@ export type { ScoreProviderConfig } from './score-provider.js';
 export { SMART_DEFAULTS } from './widget-config-enhanced.js';
 export type {
   EnhancedWidgetConfig, WidgetDataConfig, WidgetAppearanceConfig, WidgetBehaviourConfig,
-  DataBinding, ChartBinding, KpiBinding, ScorecardBinding, StatusTableBinding, DataTableBinding, DrillLinkBinding,
+  DataBinding, ChartBinding, KpiBinding, ScorecardBinding, StatusTableBinding, DataTableBinding, DrillLinkBinding, SlicerBinding,
   FieldRef, MeasureRef, FieldFormat, WidgetFilterRule, Threshold,
   ContainerAppearance, TitleBarAppearance, ChartAppearance, KpiAppearance, ScorecardAppearance, BottomNAppearance,
   ClickAction,
@@ -246,6 +258,12 @@ export type { ExpressionError, ExpressionValidationContext } from './expression-
 export { parseFormula, formatFormula } from './formula-parser.js';
 export type { ParseResult } from './formula-parser.js';
 
+// Expression SQL Transpiler
+export { expressionToSQL, FUNCTION_SQL_MAP } from './expression-sql-transpiler.js';
+
+// Error Classes
+export { PhzConfigError, PhzExpressionError } from './errors.js';
+
 // Dashboard Data Model Store
 export { createDashboardDataModelStore } from './dashboard-data-model.js';
 export type { DashboardDataModelStore } from './dashboard-data-model.js';
@@ -264,6 +282,10 @@ export type { FilterAdapter } from './filter-adapter.js';
 // Compute Backend Strategy
 export { createJSComputeBackend, JSComputeBackend } from './compute-backend.js';
 export type { ComputeBackend, CalculatedFieldInput, ComputeFilterInput } from './compute-backend.js';
+
+// Web Worker Compute
+export { WorkerComputeBackend } from './workers/worker-compute-backend.js';
+export type { WorkerRequest, WorkerResponse } from './workers/compute-worker-protocol.js';
 
 // Engine Metrics (Performance Monitor)
 export { EngineMetrics } from './engine-metrics.js';
@@ -339,3 +361,28 @@ export type {
 
 // Attention System (C-2.12)
 export * from './attention/index.js';
+
+// Unified Chart Specification
+export { applyChartDefaults, validateChartSpec, CHART_SPEC_DEFAULTS } from './chart-spec.js';
+export type {
+  ChartSpec, ChartDataSpec, ChartSeriesSpec, SeriesType,
+  EncodingChannel, FieldDataType, EncodingAggregate, TimeUnit, ScaleOverride,
+  BarMarkConfig, BarOrientation, LineMarkConfig, CurveType, PointMarkConfig, AreaMarkConfig,
+  DataTransform, FilterTransform, SortTransform, AggregateTransform, StackTransform,
+  BinTransform, TimeUnitTransform, NormalizeTransform, CalculateTransform,
+  ChartAxisSpec, ChartAnnotationSpec, ReferenceLineAnnotation, ThresholdBandAnnotation,
+  TargetLineAnnotation, TextAnnotation, AnnotationType,
+  ChartLegendSpec, ChartTooltipSpec, TooltipMode, ChartInteractionSpec, BrushDirection,
+  ChartAppearanceSpec, ChartRenderer as ChartRendererType,
+} from './chart-spec.js';
+
+// Chart Data Transform Pipeline
+export { applyTransforms } from './chart-transforms.js';
+export {
+  applyFilter, applySort, applyAggregate, applyStack,
+  applyTimeUnit, applyBin, applyNormalize, applyCalculate,
+} from './chart-transforms.js';
+
+// AI Chart Recommendation
+export { recommendChartSpec } from './chart-recommend.js';
+export type { RecommendOptions } from './chart-recommend.js';

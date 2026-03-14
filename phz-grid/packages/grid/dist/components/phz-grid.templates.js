@@ -111,4 +111,24 @@ export function renderColumnGroupHeader(opts) {
       ${actionSpan}
     </tr>`;
 }
+/**
+ * Render the summary/totals footer row.
+ *
+ * IMPORTANT: The returned `<tfoot>` must be placed as a direct child of
+ * `<table>`, not nested inside `<tbody>`. Browsers will silently reposition
+ * a `<tfoot>` that appears inside `<tbody>`.
+ */
+export function renderSummaryRow(summaryData, columns, label) {
+    return html `
+    <tfoot class="phz-summary-row">
+      <tr>
+        ${columns.map((col, i) => html `
+          <td class="phz-summary-cell" data-field="${col.field}">
+            ${i === 0 && label ? html `<span class="phz-summary-label">${label}</span> ` : nothing}${summaryData[col.field] ?? ''}
+          </td>
+        `)}
+      </tr>
+    </tfoot>
+  `;
+}
 //# sourceMappingURL=phz-grid.templates.js.map

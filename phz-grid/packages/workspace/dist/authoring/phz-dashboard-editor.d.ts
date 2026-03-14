@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-workspace — Dashboard Editor Component
+ * @phozart/workspace — Dashboard Editor Component
  *
  * Field palette (left 260px) + Canvas (center CSS grid) + Config panel (right 360px).
  * Floating toolbar on selected widget: Morph | Configure | Duplicate | Delete.
  */
 import { LitElement, nothing } from 'lit';
-import type { DataAdapter } from '@phozart/phz-shared';
+import type { DataAdapter } from '@phozart/shared';
 import type { DataSourceSchema } from '../data-adapter.js';
 import { type DashboardEditorState } from './dashboard-editor-state.js';
 export declare class PhzDashboardEditor extends LitElement {

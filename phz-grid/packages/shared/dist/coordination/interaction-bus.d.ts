@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — InteractionBus (A-1.05)
+ * @phozart/shared — InteractionBus (A-1.05)
  *
  * Pub/sub event bus for cross-widget interactions.
  * Widgets emit events (drill-through, cross-filter, etc.) and other

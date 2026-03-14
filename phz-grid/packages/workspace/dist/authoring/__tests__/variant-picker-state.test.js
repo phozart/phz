@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Variant Picker State Tests (7A-C)
+ * @phozart/workspace — Variant Picker State Tests (7A-C)
  */
 import { describe, it, expect } from 'vitest';
 import { initialVariantPickerState, selectVariant, setChainDirection, toggleEdgeLabels, toggleCollapseInvalidated, setConclusionText, getVariantConfig, } from '../variant-picker-state.js';

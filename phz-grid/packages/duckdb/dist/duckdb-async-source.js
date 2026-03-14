@@ -1,7 +1,7 @@
 /**
- * @phozart/phz-duckdb — DuckDB AsyncDataSource Adapter
+ * @phozart/duckdb — DuckDB AsyncDataSource Adapter
  *
- * Implements AsyncDataSource from @phozart/phz-core, converting
+ * Implements AsyncDataSource from @phozart/core, converting
  * DataFetchRequest into parameterized SQL via sql-builder and executing
  * against DuckDB.
  */

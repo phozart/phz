@@ -8,7 +8,7 @@
  *
  * Tasks: 1.2, 1.5 (WB-004)
  */
-import { suggestWidgetForFieldDrop } from '@phozart/phz-engine';
+import { suggestWidgetForFieldDrop } from '@phozart/engine';
 import { addWidget, selectWidget, updateWidgetData, getWidgetSourceSlot, } from './dashboard-editor-state.js';
 /**
  * Handle a field-add event from the data source panel.

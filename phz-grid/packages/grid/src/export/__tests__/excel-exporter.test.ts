@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-grid — Excel Exporter Tests
+ * @phozart/grid — Excel Exporter Tests
  */
 import { describe, it, expect } from 'vitest';
 import { exportToExcel, matchesThreshold, type ExcelExportOptions } from '../excel-exporter.js';
 import type { ExportGroupRow } from '../csv-exporter.js';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 
 // Mock GridApi
 function createMockGridApi(rows: RowData[]): GridApi {

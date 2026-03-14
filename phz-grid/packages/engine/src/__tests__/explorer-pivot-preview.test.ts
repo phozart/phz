@@ -8,7 +8,7 @@ import {
   toExploreQuery,
   createDropZoneState,
   addFieldToZone,
-} from '@phozart/phz-workspace/explore';
+} from '@phozart/workspace/explore';
 
 interface FieldMetadata {
   name: string;

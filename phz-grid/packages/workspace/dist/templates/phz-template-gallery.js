@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Template Gallery
+ * @phozart/workspace — Template Gallery
  *
  * Lit component and utilities for browsing and selecting templates.
  */

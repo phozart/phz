@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Variant Picker
+ * @phozart/workspace — Variant Picker
  *
  * Lit component for displaying widget variant cards.
  * Emits 'variant-select' when a variant is chosen.

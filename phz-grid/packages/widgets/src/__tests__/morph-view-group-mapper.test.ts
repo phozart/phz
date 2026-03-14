@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Morph / View Group Mapper Tests
+ * @phozart/widgets — Morph / View Group Mapper Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

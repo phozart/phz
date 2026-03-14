@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Engine Admin Facade
+ * @phozart/engine-admin — Engine Admin Facade
  *
  * Admin shell: dark header, tab navigation for all builders.
  * Embeddable component — drop into any page.

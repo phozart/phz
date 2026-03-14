@@ -3,11 +3,11 @@ import { FsWorkspaceAdapter } from '../adapters/fs-workspace-adapter.js';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { reportId, dashboardId, kpiId, metricId } from '@phozart/phz-engine';
-import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/phz-engine';
-import { createDefinitionId } from '@phozart/phz-shared/definitions';
-import type { GridDefinition } from '@phozart/phz-shared/definitions';
-import { createPlacement } from '@phozart/phz-workspace';
+import { reportId, dashboardId, kpiId, metricId } from '@phozart/engine';
+import type { ReportConfig, DashboardConfig, KPIDefinition, MetricDef } from '@phozart/engine';
+import { createDefinitionId } from '@phozart/shared/definitions';
+import type { GridDefinition } from '@phozart/shared/definitions';
+import { createPlacement } from '@phozart/workspace';
 
 function makeReport(id: string, name: string): ReportConfig {
   return { id: reportId(id), name } as ReportConfig;

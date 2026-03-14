@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Export Settings
+ * @phozart/grid-admin — Export Settings
  *
  * CSV + Excel export configuration.
  */

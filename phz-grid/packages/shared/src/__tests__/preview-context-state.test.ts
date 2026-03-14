@@ -11,7 +11,7 @@ import {
   setAvailableRoles,
   getEffectiveContext,
 } from '../coordination/preview-context-state.js';
-import type { ViewerContext } from '@phozart/phz-shared/adapters';
+import type { ViewerContext } from '@phozart/shared/adapters';
 
 describe('createPreviewContextState', () => {
   it('creates default state', () => {

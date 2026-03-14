@@ -7,8 +7,8 @@ import {
   createDefaultExportConfig,
   shouldUseAsyncExport,
   isFormatEnabled,
-} from '@phozart/phz-shared/coordination';
-import type { GridExportConfig, ExportFormat } from '@phozart/phz-shared/coordination';
+} from '@phozart/shared/coordination';
+import type { GridExportConfig, ExportFormat } from '@phozart/shared/coordination';
 
 // ========================================================================
 // createDefaultExportConfig

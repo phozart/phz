@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Slide-Over Panel
+ * @phozart/engine-admin — Slide-Over Panel
  *
  * Reusable right-side slide-over panel (380px, backdrop, Escape close, focus trap).
  */

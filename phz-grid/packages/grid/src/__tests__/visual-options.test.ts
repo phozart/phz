@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Visual Options Tests
+ * @phozart/grid — Visual Options Tests
  *
  * Tests for grid lines, banding colors, display settings,
  * compact numbers, and export integration.
@@ -7,7 +7,7 @@
 import { describe, it, expect } from 'vitest';
 import { formatCompactNumber, exportToCSV, type CsvExportOptions } from '../export/csv-exporter.js';
 import { exportToExcel, StyleRegistry, type ExcelExportOptions } from '../export/excel-exporter.js';
-import type { GridApi, ColumnDefinition, RowData } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData } from '@phozart/core';
 
 function createMockGridApi(rows: RowData[]): GridApi {
   return {

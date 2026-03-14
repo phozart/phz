@@ -5,14 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-empty> Custom Element
+ * @phozart/viewer — <phz-viewer-empty> Custom Element
  *
  * Displays user-friendly empty states with optional call-to-action.
  * Uses shared EmptyScenario and EmptyStateConfig types.
  */
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createDefaultEmptyStateConfig } from '@phozart/phz-shared/types';
+import { createDefaultEmptyStateConfig } from '@phozart/shared/types';
 // ========================================================================
 // <phz-viewer-empty>
 // ========================================================================

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — View Group State
+ * @phozart/widgets — View Group State
  *
  * Headless state machine for widget view groups.
  * Manages active group, active view, and switching mode resolution.

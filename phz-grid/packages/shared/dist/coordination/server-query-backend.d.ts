@@ -4,7 +4,7 @@
  * Maps the grid's LocalQuery format to the DataAdapter's DataQuery format,
  * executes via adapter.execute(), and returns LocalQueryResult.
  */
-import type { QueryBackend } from '@phozart/phz-core';
+import type { QueryBackend } from '@phozart/core';
 import type { DataAdapter } from '../adapters/data-adapter.js';
 export interface ServerQueryBackendOptions {
     adapter: DataAdapter;

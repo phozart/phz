@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — NavigationEvent emission (V.3)
+ * @phozart/workspace — NavigationEvent emission (V.3)
  *
  * Bridges NavigationLink with the InteractionBus 'navigate' event.
  * Resolves filter mappings and emits a typed navigate event.

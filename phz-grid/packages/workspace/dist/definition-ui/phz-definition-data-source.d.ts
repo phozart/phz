@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-definitions — <phz-definition-data-source>
+ * @phozart/definitions — <phz-definition-data-source>
  *
  * Searchable data product picker with schema preview.
  * Emits `data-source-change` when a data product is selected.

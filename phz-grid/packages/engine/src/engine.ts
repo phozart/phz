@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — BI Engine Facade
+ * @phozart/engine — BI Engine Facade
  *
  * Single entry point that integrates all engine modules.
  */
 
-import type { AggregationConfig, PivotConfig, ChartConfig, SelectionContext, SelectionFieldDef, ArtefactId } from '@phozart/phz-core';
+import type { AggregationConfig, PivotConfig, ChartConfig, SelectionContext, SelectionFieldDef, ArtefactId } from '@phozart/core';
 import type { StatusLevel, ValidationResult, ReportId, DashboardId } from './types.js';
 import { reportArtefactId, dashboardArtefactId } from './types.js';
 import { createCriteriaEngine } from './criteria/criteria-engine.js';
@@ -40,17 +40,35 @@ import type { DashboardDataModel } from './expression-types.js';
 import type { EngineStorageAdapter } from './storage-adapter.js';
 import type { ComputeBackend } from './compute-backend.js';
 import { createJSComputeBackend } from './compute-backend.js';
+import { WorkerComputeBackend } from './workers/worker-compute-backend.js';
 import { EngineMetrics } from './engine-metrics.js';
 
+/**
+ * BI Engine facade — the single entry point for all analytical operations.
+ *
+ * Provides registries for data products, KPIs, metrics, reports, and dashboards,
+ * along with aggregation, pivot, chart projection, drill-through, and criteria
+ * resolution capabilities.
+ *
+ * Create an instance via {@link createBIEngine}.
+ */
 export interface BIEngine {
   // Registries
+  /** Data product registry (schema definitions for data sources). */
   dataProducts: DataProductRegistry;
+  /** KPI definition and scoring registry. */
   kpis: KPIRegistry;
+  /** Metric catalog (formulas, computed measures). */
   metrics: MetricCatalog;
+  /** Report configuration store. */
   reports: ReportConfigStore;
+  /** Dashboard configuration store. */
   dashboards: DashboardConfigStore;
+  /** Number/date format registry. */
   formats: FormatRegistry;
+  /** Dashboard data model (parameters, calculated fields, thresholds). */
   dataModel: DashboardDataModelStore;
+  /** Compute backend for aggregation/filter evaluation (JS, Worker, or DuckDB). */
   computeBackend: ComputeBackend;
 
   // Status computation
@@ -98,19 +116,66 @@ export interface BIEngine {
   destroy(): void;
 }
 
+/**
+ * Configuration for {@link createBIEngine}.
+ *
+ * All properties are optional. Pass `initial*` arrays to pre-populate
+ * registries on creation. Provide a `storageAdapter` to enable
+ * {@link BIEngine.loadAll | loadAll()} / {@link BIEngine.saveAll | saveAll()}.
+ */
 export interface BIEngineConfig {
+  /** Data product definitions to register on startup. */
   initialDataProducts?: DataProductDef[];
+  /** KPI definitions to register on startup. */
   initialKPIs?: KPIDefinition[];
+  /** Metric definitions to register on startup. */
   initialMetrics?: MetricDef[];
+  /** Report configurations to pre-load. */
   initialReports?: ReportConfig[];
+  /** Dashboard configurations to pre-load. */
   initialDashboards?: DashboardConfig[];
+  /** Dashboard data model (parameters, calculated fields, thresholds). */
   initialDataModel?: DashboardDataModel;
+  /** Configuration for the criteria (filter) engine sub-system. */
   criteriaEngine?: CriteriaEngineConfig;
+  /** Persistence adapter for loadAll / saveAll. */
   storageAdapter?: EngineStorageAdapter;
+  /** Custom compute backend (e.g. DuckDB). Overrides `workerEnabled`. */
   computeBackend?: ComputeBackend;
+  /** When `true`, use a Web Worker for compute-heavy operations. */
+  workerEnabled?: boolean;
+  /** URL of the worker script. Required when `workerEnabled` is `true`. */
+  workerUrl?: string | URL;
+  /** Enable the built-in performance metrics collector. */
   enableMetrics?: boolean;
 }
 
+/**
+ * Create a new BI engine instance with the given configuration.
+ *
+ * The engine is the central facade for all analytical operations:
+ * aggregation, pivot, chart projection, drill-through, KPI scoring,
+ * report/dashboard management, and criteria resolution.
+ *
+ * @param config - Optional engine configuration. Omit for an empty engine.
+ * @returns A fully initialized {@link BIEngine} instance.
+ *
+ * @example
+ * ```ts
+ * import { createBIEngine } from '@phozart/engine';
+ *
+ * const engine = createBIEngine({
+ *   initialReports: [myReport],
+ *   enableMetrics: true,
+ * });
+ *
+ * const result = engine.aggregate(rows, {
+ *   fields: [{ field: 'revenue', functions: ['sum', 'avg'] }],
+ * });
+ *
+ * engine.destroy();
+ * ```
+ */
 export function createBIEngine(config?: BIEngineConfig): BIEngine {
   const dataProducts = createDataProductRegistry();
   const kpis = createKPIRegistry(dataProducts);
@@ -120,7 +185,14 @@ export function createBIEngine(config?: BIEngineConfig): BIEngine {
   const formats = new FormatRegistry();
   const criteria = createCriteriaEngine(config?.criteriaEngine);
   const dataModel = createDashboardDataModelStore(config?.initialDataModel?.fields);
-  const computeBackend = config?.computeBackend ?? createJSComputeBackend();
+  let computeBackend: ComputeBackend;
+  if (config?.computeBackend) {
+    computeBackend = config.computeBackend;
+  } else if (config?.workerEnabled) {
+    computeBackend = new WorkerComputeBackend(config.workerUrl);
+  } else {
+    computeBackend = createJSComputeBackend();
+  }
   const engineMetrics = config?.enableMetrics ? new EngineMetrics() : undefined;
 
   // Load data model if provided

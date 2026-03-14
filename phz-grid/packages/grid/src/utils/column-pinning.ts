@@ -1,4 +1,4 @@
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 const DEFAULT_COL_WIDTH = 150;
 
@@ -9,15 +9,21 @@ export interface PinnedColumnGroup {
   hasPinned: boolean;
 }
 
-export function splitPinnedColumns(columns: ColumnDefinition[]): PinnedColumnGroup {
+export function splitPinnedColumns(
+  columns: ColumnDefinition[],
+  pinOverrides?: Record<string, 'left' | 'right' | null>,
+): PinnedColumnGroup {
   const visible = columns.filter(c => !c.hidden);
   const left: ColumnDefinition[] = [];
   const scrollable: ColumnDefinition[] = [];
   const right: ColumnDefinition[] = [];
 
   for (const col of visible) {
-    if (col.frozen === 'left') left.push(col);
-    else if (col.frozen === 'right') right.push(col);
+    const override = pinOverrides?.[col.field];
+    const effectiveFrozen = override !== undefined ? override : (col.frozen ?? null);
+
+    if (effectiveFrozen === 'left') left.push(col);
+    else if (effectiveFrozen === 'right') right.push(col);
     else scrollable.push(col);
   }
 

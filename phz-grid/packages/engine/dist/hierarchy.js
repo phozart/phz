@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Hierarchy Definitions
+ * @phozart/engine — Hierarchy Definitions
  *
  * Defines within-visualization drill-down hierarchies.
  * A hierarchy is an ordered sequence of levels that a user can navigate

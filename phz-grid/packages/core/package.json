@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-core",
+  "name": "@phozart/core",
   "version": "0.1.0",
   "description": "Headless grid engine — data model, state, events",
   "type": "module",

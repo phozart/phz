@@ -1,13 +1,15 @@
 const DEFAULT_COL_WIDTH = 150;
-export function splitPinnedColumns(columns) {
+export function splitPinnedColumns(columns, pinOverrides) {
     const visible = columns.filter(c => !c.hidden);
     const left = [];
     const scrollable = [];
     const right = [];
     for (const col of visible) {
-        if (col.frozen === 'left')
+        const override = pinOverrides?.[col.field];
+        const effectiveFrozen = override !== undefined ? override : (col.frozen ?? null);
+        if (effectiveFrozen === 'left')
             left.push(col);
-        else if (col.frozen === 'right')
+        else if (effectiveFrozen === 'right')
             right.push(col);
         else
             scrollable.push(col);

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — MicroWidgetCellConfig (7A-B)
+ * @phozart/shared — MicroWidgetCellConfig (7A-B)
  *
  * Types and pure functions for micro-widget cell rendering inside
  * grid table cells. Supports sparklines, gauges, deltas, and status

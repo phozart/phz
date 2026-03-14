@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — KPI Scorecard
+ * @phozart/widgets — KPI Scorecard
  *
  * Matrix: KPIs (rows) x breakdowns (columns) with status cells.
  */
@@ -7,8 +7,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { KPIDefinition, KPIScoreResponse, ClassifiedScore, ClassifiedBreakdown, StatusResult } from '@phozart/phz-engine';
-import { classifyKPIScore, STATUS_COLORS } from '@phozart/phz-engine';
+import type { KPIDefinition, KPIScoreResponse, ClassifiedScore, ClassifiedBreakdown, StatusResult } from '@phozart/engine';
+import { classifyKPIScore, STATUS_COLORS } from '@phozart/engine';
 import { formatTooltipContent } from '../tooltip.js';
 import { resolveWidgetState } from '../widget-states.js';
 

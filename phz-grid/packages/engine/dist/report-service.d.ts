@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Report Service
+ * @phozart/engine — Report Service
  *
  * Per-route runtime orchestrator that connects a report's filter definitions
  * to the criteria engine, manages filter state, and produces grid-ready
@@ -11,7 +11,7 @@
  *   service.subscribe((result) => { ... update grid ... });
  *   service.setValue('region', ['EMEA']);
  */
-import type { SelectionContext, SelectionFieldDef, ArtefactId, ArtefactCriteria } from '@phozart/phz-core';
+import type { SelectionContext, SelectionFieldDef, ArtefactId, ArtefactCriteria } from '@phozart/core';
 import type { ReportId, DashboardId } from './types.js';
 import type { BIEngine } from './engine.js';
 import type { DivergenceInfo } from './criteria/resolve-criteria.js';

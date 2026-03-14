@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-react/criteria — Criteria/Filter exports
+ * @phozart/react/criteria — Criteria/Filter exports
  *
- * Requires @phozart/phz-criteria peer dependency.
- * import { PhzSelectionCriteria, useCriteria } from '@phozart/phz-react/criteria';
+ * Requires @phozart/criteria peer dependency.
+ * import { PhzSelectionCriteria, useCriteria } from '@phozart/react/criteria';
  */
 export { PhzSelectionCriteria } from './phz-selection-criteria.js';
 export type { PhzSelectionCriteriaProps, CriteriaApi } from './phz-selection-criteria.js';

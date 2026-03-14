@@ -1,12 +1,12 @@
 /**
- * @phozart/phz-widgets — Standalone Widget Renderer
+ * @phozart/widgets — Standalone Widget Renderer
  *
  * Renders a single widget from an EnhancedWidgetConfig + raw data.
  * Processes data via the widget data processor, then renders the appropriate component.
  * For embedding individual widgets outside a dashboard.
  */
 import { LitElement } from 'lit';
-import type { EnhancedWidgetConfig, BIEngine, KPIScoreProvider } from '@phozart/phz-engine';
+import type { EnhancedWidgetConfig, BIEngine, KPIScoreProvider } from '@phozart/engine';
 import './phz-kpi-card.js';
 import './phz-kpi-scorecard.js';
 import './phz-bar-chart.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Filter Definition Studio
+ * @phozart/engine-admin — Filter Definition Studio
  *
  * Rich 3-panel visual builder for creating/editing filter definitions.
  * Layout: Type Catalog (200px) | Configuration Form (1fr) | Live Preview (360px)
@@ -9,7 +9,7 @@
  * - filter-studio-cancel
  */
 import { LitElement } from 'lit';
-import type { FilterDefinition, FilterDataSource } from '@phozart/phz-core';
+import type { FilterDefinition, FilterDataSource } from '@phozart/core';
 export declare class PhzFilterStudio extends LitElement {
     static styles: import("lit").CSSResult[];
     /** Edit mode — pass existing definition to pre-populate */

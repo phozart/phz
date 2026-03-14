@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Publish Workflow UX State (B-3.13)
+ * @phozart/workspace — Publish Workflow UX State (B-3.13)
  *
  * Multi-step publish flow: Review -> Validate -> Publish.
  * Supports pre-publish validation checks, rollback support, and version tracking.

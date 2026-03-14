@@ -9,7 +9,7 @@
  * The Lit component (or any UI) calls DataAdapter methods and feeds
  * results into these state transitions.
  */
-import { groupFieldsByRole } from '@phozart/phz-shared';
+import { groupFieldsByRole } from '@phozart/shared';
 // ========================================================================
 // Factory
 // ========================================================================

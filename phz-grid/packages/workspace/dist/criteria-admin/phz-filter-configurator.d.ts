@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Configurator
+ * @phozart/criteria — Filter Configurator
  *
  * Configure which filter definitions appear on a specific report/dashboard,
  * assign data columns, set per-binding overrides. Single-view (no tabs).
@@ -18,8 +18,8 @@
  * - open-designer: {}
  */
 import { LitElement } from 'lit';
-import type { FilterDefinition, FilterBinding } from '@phozart/phz-core';
-import '@phozart/phz-criteria';
+import type { FilterDefinition, FilterBinding } from '@phozart/core';
+import '@phozart/criteria';
 export declare class PhzFilterConfigurator extends LitElement {
     static styles: import("lit").CSSResult[];
     definitions: FilterDefinition[];

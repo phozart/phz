@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-viewer — <phz-attention-dropdown> Custom Element
+ * @phozart/viewer — <phz-attention-dropdown> Custom Element
  *
  * Dropdown panel for attention items (alerts, notifications).
  * Delegates to the headless attention-state functions.
  */
 import { LitElement, type TemplateResult } from 'lit';
-import type { AttentionItem } from '@phozart/phz-shared/adapters';
+import type { AttentionItem } from '@phozart/shared/adapters';
 import { type AttentionDropdownState } from '../screens/attention-state.js';
 export declare class PhzAttentionDropdown extends LitElement {
     static styles: import("lit").CSSResult;

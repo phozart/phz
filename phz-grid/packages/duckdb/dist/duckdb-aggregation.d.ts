@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB Aggregation
+ * @phozart/duckdb — DuckDB Aggregation
  *
  * Generates SQL for aggregation queries, including DuckDB-specific
  * statistical functions not available in the JS engine.

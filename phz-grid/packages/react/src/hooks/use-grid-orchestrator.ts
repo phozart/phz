@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, type RefObject } from 'react';
-import type { GridApi, SelectionContext, FilterOperator } from '@phozart/phz-core';
-import type { ReportPresentation } from '@phozart/phz-engine';
+import type { GridApi, SelectionContext, FilterOperator } from '@phozart/core';
+import type { ReportPresentation } from '@phozart/engine';
 import { settingsToGridProps } from '../utils/settings-to-grid-props.js';
 import type { PhzGridProps } from '../phz-grid.js';
 

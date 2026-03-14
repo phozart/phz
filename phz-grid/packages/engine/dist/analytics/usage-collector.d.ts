@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Usage Analytics Collector (C-2.08)
+ * @phozart/engine — Usage Analytics Collector (C-2.08)
  *
  * Buffers usage events and flushes them when the buffer is full or
  * on a timed interval. Consumes UsageAnalyticsAdapter from shared.

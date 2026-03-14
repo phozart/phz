@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Grid Export Config (A-2.08)
+ * @phozart/shared — Grid Export Config (A-2.08)
  *
  * Configuration for grid data export. Defines which formats are available,
  * row limits, and when to use async export for large datasets.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — <phz-editor-report> (B-2.09)
+ * @phozart/editor — <phz-editor-report> (B-2.09)
  *
  * Report editing component. Provides column configuration,
  * filter management, sort setup, and preview mode.

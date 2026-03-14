@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Editor Navigation (B-2.02)
+ * @phozart/editor — Editor Navigation (B-2.02)
  *
  * Route/screen management utilities for the editor shell.
  * Maps URL-like paths to EditorScreen values, builds navigation

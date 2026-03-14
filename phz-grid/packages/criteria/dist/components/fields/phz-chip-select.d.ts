@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-criteria — Chip Select
+ * @phozart/criteria — Chip Select
  *
  * Multi-select pill-based selector. Each option renders as a toggleable chip.
  */
 import { LitElement } from 'lit';
-import type { SelectionFieldOption, CriteriaSelectionMode } from '@phozart/phz-core';
+import type { SelectionFieldOption, CriteriaSelectionMode } from '@phozart/core';
 export declare class PhzChipSelect extends LitElement {
     static styles: import("lit").CSSResult[];
     options: SelectionFieldOption[];

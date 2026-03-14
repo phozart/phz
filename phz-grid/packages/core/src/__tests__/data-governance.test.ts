@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Data Governance Tests
+ * @phozart/core — Data Governance Tests
  *
  * Tests for getData() masking, getRestrictedFields/getMaskedFields API,
  * exportState filter value sanitization, and userRole wiring.

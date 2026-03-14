@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { splitPinnedColumns, computePinnedOffsets, type PinnedColumnGroup } from '../utils/column-pinning.js';
-import type { ColumnDefinition } from '@phozart/phz-core';
+import type { ColumnDefinition } from '@phozart/core';
 
 function col(field: string, frozen?: 'left' | 'right' | null, width?: number): ColumnDefinition {
   return { field, header: field, frozen, width, hidden: false } as ColumnDefinition;
@@ -62,6 +62,49 @@ describe('Column Pinning', () => {
       expect(splitPinnedColumns([col('a', 'left'), col('b')]).hasPinned).toBe(true);
       expect(splitPinnedColumns([col('a'), col('b', 'right')]).hasPinned).toBe(true);
       expect(splitPinnedColumns([col('a'), col('b')]).hasPinned).toBe(false);
+    });
+
+    it('uses pinOverrides to pin an unfrozen column', () => {
+      const cols = [col('a'), col('b'), col('c')];
+      const result = splitPinnedColumns(cols, { b: 'left' });
+
+      expect(result.left.map(c => c.field)).toEqual(['b']);
+      expect(result.scrollable.map(c => c.field)).toEqual(['a', 'c']);
+      expect(result.hasPinned).toBe(true);
+    });
+
+    it('unpins a frozen column when pinOverrides sets null', () => {
+      const cols = [col('a', 'left'), col('b'), col('c')];
+      const result = splitPinnedColumns(cols, { a: null });
+
+      expect(result.left).toEqual([]);
+      expect(result.scrollable.map(c => c.field)).toEqual(['a', 'b', 'c']);
+      expect(result.hasPinned).toBe(false);
+    });
+
+    it('pinOverrides right overrides frozen left', () => {
+      const cols = [col('a', 'left'), col('b'), col('c')];
+      const result = splitPinnedColumns(cols, { a: 'right' });
+
+      expect(result.left).toEqual([]);
+      expect(result.right.map(c => c.field)).toEqual(['a']);
+      expect(result.scrollable.map(c => c.field)).toEqual(['b', 'c']);
+    });
+
+    it('works without pinOverrides (backward compat)', () => {
+      const cols = [col('a', 'left'), col('b'), col('c', 'right')];
+      const result = splitPinnedColumns(cols);
+
+      expect(result.left.map(c => c.field)).toEqual(['a']);
+      expect(result.scrollable.map(c => c.field)).toEqual(['b']);
+      expect(result.right.map(c => c.field)).toEqual(['c']);
+    });
+
+    it('hasPinned reflects overrides', () => {
+      const cols = [col('a'), col('b')];
+      expect(splitPinnedColumns(cols, { a: 'left' }).hasPinned).toBe(true);
+      expect(splitPinnedColumns(cols, { a: 'right' }).hasPinned).toBe(true);
+      expect(splitPinnedColumns(cols, {}).hasPinned).toBe(false);
     });
   });
 

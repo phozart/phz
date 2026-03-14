@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Attention Faceted Filtering Types (7A-D)
+ * @phozart/shared — Attention Faceted Filtering Types (7A-D)
  *
  * Types and pure functions for faceted filtering of attention items.
  * Supports multi-facet AND/OR filtering with cross-facet counting.

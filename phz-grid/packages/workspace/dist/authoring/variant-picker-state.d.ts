@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Variant Picker State (7A-C)
+ * @phozart/workspace — Variant Picker State (7A-C)
  *
  * State machine for the Style tab variant picker that lets authors
  * switch between decision tree rendering variants (tree vs impact-chain)
@@ -7,7 +7,7 @@
  *
  * Pure functions only — no side effects, no DOM.
  */
-import type { DecisionTreeRenderVariant, DecisionTreeVariantConfig, ChainLayout, ChainLayoutDirection } from '@phozart/phz-shared/types';
+import type { DecisionTreeRenderVariant, DecisionTreeVariantConfig, ChainLayout, ChainLayoutDirection } from '@phozart/shared/types';
 /** Variant descriptor shown in the picker UI. */
 export interface VariantOption {
     id: string;

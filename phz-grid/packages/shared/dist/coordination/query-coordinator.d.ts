@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — QueryCoordinator types (A-1.05)
+ * @phozart/shared — QueryCoordinator types (A-1.05)
  *
  * Batches concurrent widget data queries with concurrency control,
  * deduplication, and cancellation.

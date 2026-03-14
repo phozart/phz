@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-ai — Dashboard Generator
+ * @phozart/ai — Dashboard Generator
  *
  * Generates dashboard configurations from data schema + natural language prompt.
  * Uses heuristic-based schema analysis (no LLM calls).

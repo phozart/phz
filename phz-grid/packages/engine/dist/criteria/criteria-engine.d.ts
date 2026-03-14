@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Criteria Engine Facade
+ * @phozart/engine — Criteria Engine Facade
  *
  * Unified factory that wires all criteria engine layers together:
  * Registry → Bindings → State → Rules → Output → Admin
  */
-import type { ArtefactId, CriteriaConfig, StateStorageAdapter, AdminPermissions, SelectionFieldDef, ArtefactCriteria, RuleEvaluationContext } from '@phozart/phz-core';
+import type { ArtefactId, CriteriaConfig, StateStorageAdapter, AdminPermissions, SelectionFieldDef, ArtefactCriteria, RuleEvaluationContext } from '@phozart/core';
 import type { FilterRegistry } from './filter-registry.js';
 import type { FilterBindingStore } from './filter-bindings.js';
 import type { FilterStateManager } from './filter-state.js';

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Grid Definitions as First-Class Artifacts (A-1.04)
+ * @phozart/shared — Grid Definitions as First-Class Artifacts (A-1.04)
  *
  * Enables grids to be saved, cataloged, and navigated to just like
  * reports and dashboards. A GridArtifact wraps the grid configuration

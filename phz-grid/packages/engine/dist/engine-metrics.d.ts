@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — EngineMetrics Performance Monitor
+ * @phozart/engine — EngineMetrics Performance Monitor
  *
  * Records timing data for all major BIEngine operations.
  * Zero overhead when disabled (no instance created).

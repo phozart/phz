@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Widget Configuration Types
+ * @phozart/engine — Widget Configuration Types
  *
  * 10 widget types for dashboards: KPI cards, scorecards, charts, tables, and more.
  */

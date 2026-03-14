@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Data Config Panel State (B-3.05)
+ * @phozart/workspace — Data Config Panel State (B-3.05)
  *
  * Pure functions for managing multi-source data configuration UI.
  * Supports source mapping (field aliases), refresh interval configuration,

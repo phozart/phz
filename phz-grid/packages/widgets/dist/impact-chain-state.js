@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Impact Chain State (7A-C)
+ * @phozart/widgets — Impact Chain State (7A-C)
  *
  * Pure state machine for impact chain rendering — the horizontal causal flow
  * variant of the decision tree widget. All functions are pure and side-effect

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Config Panel Component
+ * @phozart/workspace — Config Panel Component
  *
  * 5-section accordion panel for rich widget configuration.
  * Backward-compatible: renders old 3-tab panel when only `config` is set,

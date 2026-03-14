@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-ai — AI Toolkit Implementation
+ * @phozart/ai — AI Toolkit Implementation
  *
  * Schema-as-contract AI toolkit. Uses an AI provider (OpenAI, Anthropic, Google)
  * to provide schema inference, NL queries, anomaly detection, and insights.
  */
 
-import type { GridApi, ColumnDefinition } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition } from '@phozart/core';
 import type {
   AIConfig,
   AIToolkit,
@@ -51,12 +51,12 @@ class AIToolkitImpl implements AIToolkit {
   constructor(config: AIConfig) {
     this.config = config;
     if (!config.redactFields?.length) {
-      console.warn('@phozart/phz-ai: No redactFields configured. Data samples sent to AI providers will include all field values. Set config.redactFields to protect sensitive data.');
+      console.warn('@phozart/ai: No redactFields configured. Data samples sent to AI providers will include all field values. Set config.redactFields to protect sensitive data.');
     }
   }
 
   getStructuredSchema(): JSONSchema7 {
-    if (!this.grid) throw new Error('@phozart/phz-ai: Not attached to grid');
+    if (!this.grid) throw new Error('@phozart/ai: Not attached to grid');
     const state = this.grid.getState();
     const columns = state.columns.order;
     const properties: Record<string, JSONSchema7> = {};

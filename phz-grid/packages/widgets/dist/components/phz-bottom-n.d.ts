@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-widgets — Bottom-N
+ * @phozart/widgets — Bottom-N
  *
  * Worst/best performers ranked list with status badges.
  */
 import { LitElement } from 'lit';
-import type { KPIDefinition } from '@phozart/phz-engine';
+import type { KPIDefinition } from '@phozart/engine';
 export declare class PhzBottomN extends LitElement {
     static styles: import("lit").CSSResult[];
     data: Record<string, unknown>[];

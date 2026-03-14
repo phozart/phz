@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Filter Rules Engine
+ * @phozart/engine — Filter Rules Engine
  *
  * 5 rule types that programmatically constrain filter options.
  * Rules are the highest priority in state resolution.
@@ -11,7 +11,7 @@ import type {
   ExcludePatternConfig, IncludePatternConfig, TreeGroupCompareConfig,
   ValueSetConfig, CustomRuleConfig, CrossFilterConfig,
   CrossFilterCondition, CrossFilterAction,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 
 // --- Safe Regex Helper ---
 

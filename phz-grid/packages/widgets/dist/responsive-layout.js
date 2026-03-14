@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Responsive Layout Utilities
+ * @phozart/widgets — Responsive Layout Utilities
  *
  * Pure functions for responsive breakpoint resolution, column computation,
  * colSpan clamping, and CSS container query generation.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Window Functions
+ * @phozart/engine — Window Functions
  *
  * Running totals, moving averages, rank, lag/lead, and row numbering.
  * All functions accept optional partitionBy for grouped windows.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Prototype pollution prevention tests
+ * @phozart/core — Prototype pollution prevention tests
  */
 
 import { describe, it, expect, afterEach } from 'vitest';

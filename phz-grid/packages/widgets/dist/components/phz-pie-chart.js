@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Pie / Donut Chart
+ * @phozart/widgets — Pie / Donut Chart
  *
  * SVG-based pie and donut chart with legend, tooltips, and keyboard navigation.
  */

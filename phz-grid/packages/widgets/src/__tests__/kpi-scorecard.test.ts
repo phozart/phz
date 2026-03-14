@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import type { KPIDefinition, KPIScoreResponse } from '@phozart/phz-engine';
-import { kpiId, classifyKPIScore } from '@phozart/phz-engine';
+import type { KPIDefinition, KPIScoreResponse } from '@phozart/engine';
+import { kpiId, classifyKPIScore } from '@phozart/engine';
 
 function makeKPIs(): KPIDefinition[] {
   return [

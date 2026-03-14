@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Dashboard DnD Reorder Utils (L.13)
+ * @phozart/workspace — Dashboard DnD Reorder Utils (L.13)
  *
  * Immutable array reorder operations for dashboard widget lists.
  */

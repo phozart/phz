@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Widget Data Processor
+ * @phozart/engine — Widget Data Processor
  *
  * Pipeline: filter → group by category → aggregate measures → sort → limit (with "Others" grouping).
  * Pure functions, no DOM dependency.

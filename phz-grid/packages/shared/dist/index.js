@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-shared — Shared infrastructure for all shells
+ * @phozart/shared — Shared infrastructure for all shells
  *
  * This package contains adapter interfaces, design system, artifact types,
  * runtime coordination, and shared type definitions used by workspace,
  * viewer, and editor packages.
  *
- * Sub-path imports (e.g., '@phozart/phz-shared/adapters') are the preferred
+ * Sub-path imports (e.g., '@phozart/shared/adapters') are the preferred
  * way to consume this package. The barrel re-export here is for convenience
  * but uses explicit re-exports to avoid duplicate member collisions.
  */
@@ -23,7 +23,7 @@ export { resolveFieldForSource, createFilterContext, createDebouncedFilterDispat
 createServerQueryBackend, } from './coordination/index.js';
 // Dashboard performance estimation (WE-14)
 export { estimateDashboardPerformance, getSourceAssessment, getOverallAssessment, } from './dashboard-performance.js';
-// Definition types, stores, converters (migrated from @phozart/phz-definitions)
+// Definition types, stores, converters (migrated from @phozart/definitions)
 export { createDefinitionId, createInMemoryStore, createLocalStorageStore, 
 // converters
 definitionToGridConfig, gridConfigToDefinition, exportDefinition, importDefinition, 
@@ -31,4 +31,7 @@ definitionToGridConfig, gridConfigToDefinition, exportDefinition, importDefiniti
 CURRENT_SCHEMA_VERSION, migrateDefinition, 
 // validation
 GridDefinitionSchema, validateDefinition, } from './definitions/index.js';
+// Error Hierarchy
+export { PhzError } from './errors/phz-error.js';
+export { PhzValidationError } from './errors/validation-error.js';
 //# sourceMappingURL=index.js.map

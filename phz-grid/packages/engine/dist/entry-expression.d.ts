@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine/expression — Expression-focused entry point
+ * @phozart/engine/expression — Expression-focused entry point
  *
  * Expression parser, evaluator, validator, dependency graph, and AST types.
  */

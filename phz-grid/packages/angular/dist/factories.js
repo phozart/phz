@@ -1,5 +1,5 @@
 // Side-effect import to register custom element
-import '@phozart/phz-grid';
+import '@phozart/grid';
 /**
  * Creates an Angular standalone component that wraps <phz-grid>.
  *

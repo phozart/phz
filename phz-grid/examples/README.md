@@ -24,7 +24,7 @@ Demonstrates:
 - Engine initialization with `useMemo`
 - Event handling with `useCallback`/`useEffect`
 
-Requires: `react`, `react-dom`, `@phozart/phz-engine`, `@phozart/phz-widgets`
+Requires: `react`, `react-dom`, `@phozart/engine`, `@phozart/widgets`
 
 ### filtered-dashboard.html
 
@@ -57,6 +57,6 @@ In a real project with npm packages installed, replace the relative imports:
 import { createBIEngine } from '../packages/engine/src/index.ts';
 
 // Use:
-import { createBIEngine } from '@phozart/phz-engine';
-import '@phozart/phz-widgets'; // registers custom elements
+import { createBIEngine } from '@phozart/engine';
+import '@phozart/widgets'; // registers custom elements
 ```

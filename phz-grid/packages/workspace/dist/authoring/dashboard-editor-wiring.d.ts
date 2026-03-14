@@ -8,9 +8,9 @@
  *
  * Tasks: 1.2, 1.5 (WB-004)
  */
-import type { FieldMetadata } from '@phozart/phz-shared';
+import type { FieldMetadata } from '@phozart/shared';
 import type { WidgetManifest } from '../types.js';
-import { type WidgetSuggestion } from '@phozart/phz-engine';
+import { type WidgetSuggestion } from '@phozart/engine';
 import { type DashboardEditorState, type DashboardWidgetState, type DashboardSourceEntry } from './dashboard-editor-state.js';
 /**
  * Handle a field-add event from the data source panel.

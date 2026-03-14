@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Rich Text State
+ * @phozart/widgets — Rich Text State
  *
  * Headless state machine for rich text widget display.
  * Manages content, format detection, and truncation logic.

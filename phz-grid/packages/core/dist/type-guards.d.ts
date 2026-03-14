@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Type Guards
+ * @phozart/core — Type Guards
  */
 import type { EditState, EditStateIdle, EditStateEditing, EditStateValidating, EditStateCommitting, EditStateError } from './types/state.js';
 import type { DataSource, LocalDataSource, AsyncDataSource, DuckDBDataSourceRef } from './types/datasource.js';

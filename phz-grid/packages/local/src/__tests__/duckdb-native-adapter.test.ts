@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DuckDBNativeAdapter, buildQuerySQL } from '../adapters/duckdb-native-adapter.js';
 import type { DuckDBBinding } from '../adapters/duckdb-native-adapter.js';
-import type { DataQuery } from '@phozart/phz-workspace';
+import type { DataQuery } from '@phozart/workspace';
 
 function createMockDB(data?: Record<string, unknown>[]): DuckDBBinding {
   return {

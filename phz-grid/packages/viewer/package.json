@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-viewer",
+  "name": "@phozart/viewer",
   "version": "0.1.0",
   "description": "Read-only consumption shell — catalog, dashboards, reports, explorer",
   "type": "module",
@@ -42,11 +42,11 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/viewer#readme",
   "dependencies": {
-    "@phozart/phz-shared": "^0.1.0",
-    "@phozart/phz-core": "^0.1.0",
-    "@phozart/phz-engine": "^0.1.0",
-    "@phozart/phz-grid": "^0.1.0",
-    "@phozart/phz-widgets": "^0.1.0",
+    "@phozart/shared": "^0.1.0",
+    "@phozart/core": "^0.1.0",
+    "@phozart/engine": "^0.1.0",
+    "@phozart/grid": "^0.1.0",
+    "@phozart/widgets": "^0.1.0",
     "lit": "^3.2.0"
   },
   "peerDependencies": {

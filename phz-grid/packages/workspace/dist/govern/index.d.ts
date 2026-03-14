@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Govern Module
+ * @phozart/workspace — Govern Module
  */
 export * from './settings-state.js';
 export * from './api-access-state.js';

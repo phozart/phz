@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — PlacementManager
+ * @phozart/workspace — PlacementManager
  *
  * Lit Web Component for CRUD on PlacementRecords.
  * Uses WorkspaceAdapter placement methods (savePlacement, loadPlacements, deletePlacement).

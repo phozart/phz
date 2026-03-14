@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createDuckDBQueryBackend } from '../duckdb-query-backend.js';
-import type { LocalQuery } from '@phozart/phz-core';
+import type { LocalQuery } from '@phozart/core';
 
 const SAMPLE_DATA = [
   { name: 'Alice', age: 30, dept: 'Eng' },

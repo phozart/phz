@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine — Widget Data Resolver
+ * @phozart/engine — Widget Data Resolver
  *
  * Pure functions that map WidgetPlacement + BIEngine + raw data → resolved widget props.
  * No DOM dependencies — suitable for server-side pre-rendering or headless tests.
  */
 
-import type { SelectionContext, DataSetColumn } from '@phozart/phz-core';
+import type { SelectionContext, DataSetColumn } from '@phozart/core';
 import type { BIEngine } from './engine.js';
 import type { KPIDefinition, KPIScoreResponse, KPIBreakdownScore } from './kpi.js';
 import type { ChartDataSeries } from './chart-projection.js';

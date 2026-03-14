@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Numeric Range Input
+ * @phozart/criteria — Numeric Range Input
  *
  * Min/Max inputs with optional dual-thumb slider and unit label.
  */

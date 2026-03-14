@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria - Rule Editor Modal
+ * @phozart/criteria - Rule Editor Modal
  *
  * Modal dialog for creating, editing, and copying filter rules.
  * Shows type-specific form fields with guidance for each rule type.

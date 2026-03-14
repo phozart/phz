@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { SelectionFieldDef, SelectionContext } from '@phozart/phz-core';
+import type { SelectionFieldDef, SelectionContext } from '@phozart/core';
 
 describe('Selection Bar logic', () => {
   const fields: SelectionFieldDef[] = [

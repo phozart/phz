@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Data Point Annotations
+ * @phozart/widgets -- Data Point Annotations
  *
  * Annotation manager and SVG marker rendering for chart data points.
  */

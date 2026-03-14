@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Pluggable Storage Adapter
+ * @phozart/engine — Pluggable Storage Adapter
  *
  * Allows BIEngine state (reports, dashboards, KPIs, metrics) to be
  * persisted and restored across page refreshes. Ships with two adapters:

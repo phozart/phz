@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Query Builder
+ * @phozart/widgets — Query Builder
  *
  * Visual query construction widget for ad-hoc data exploration.
  * Select fields, add filters, choose aggregations, set sort order.

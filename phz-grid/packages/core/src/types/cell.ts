@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Cell Types
+ * @phozart/core — Cell Types
  */
 
 import type { RowId } from './row.js';

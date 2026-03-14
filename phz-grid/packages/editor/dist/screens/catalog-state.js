@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Catalog Screen State (B-2.04)
+ * @phozart/editor — Catalog Screen State (B-2.04)
  *
  * Editor catalog state with creation actions. Unlike the viewer catalog
  * (read-only), the editor catalog supports creating new dashboards and

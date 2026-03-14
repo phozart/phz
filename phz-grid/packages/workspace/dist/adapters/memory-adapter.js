@@ -1,9 +1,9 @@
 /**
- * @phozart/phz-workspace — MemoryWorkspaceAdapter
+ * @phozart/workspace — MemoryWorkspaceAdapter
  *
  * In-memory implementation of WorkspaceAdapter for testing and ephemeral usage.
  */
-import { createDefinitionId } from '@phozart/phz-shared/definitions';
+import { createDefinitionId } from '@phozart/shared/definitions';
 export class MemoryWorkspaceAdapter {
     constructor() {
         this.reports = new Map();

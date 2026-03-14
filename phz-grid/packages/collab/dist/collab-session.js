@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — Collaboration Session Implementation
+ * @phozart/collab — Collaboration Session Implementation
  *
  * Real-time collaboration using Yjs CRDTs. Manages presence,
  * change tracking, conflict resolution, and Yjs document mapping.
@@ -23,7 +23,7 @@ class CollabSessionImpl {
     gridUnsub = null;
     constructor(config) {
         if (config.sessionId !== undefined && !VALID_SESSION_ID.test(config.sessionId)) {
-            throw new Error('@phozart/phz-collab: Invalid session ID format. Only alphanumeric, hyphen, and underscore allowed (max 128 chars).');
+            throw new Error('@phozart/collab: Invalid session ID format. Only alphanumeric, hyphen, and underscore allowed (max 128 chars).');
         }
         this.config = config;
         this.createdAt = Date.now();
@@ -153,7 +153,7 @@ class CollabSessionImpl {
     }
     getYDoc() {
         if (!this.doc)
-            throw new Error('@phozart/phz-collab: Not connected');
+            throw new Error('@phozart/collab: Not connected');
         return this.doc;
     }
     attachToGrid(grid) {
@@ -232,7 +232,7 @@ class CollabSessionImpl {
     // --- Private helpers ---
     getYGridDocument() {
         if (!this.doc)
-            throw new Error('@phozart/phz-collab: No Yjs document');
+            throw new Error('@phozart/collab: No Yjs document');
         return {
             rows: this.doc.getArray('rows'),
             columns: this.doc.getArray('columns'),

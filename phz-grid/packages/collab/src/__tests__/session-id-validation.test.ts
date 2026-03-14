@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-collab — sessionId path traversal validation tests
+ * @phozart/collab — sessionId path traversal validation tests
  */
 
 import { describe, it, expect } from 'vitest';

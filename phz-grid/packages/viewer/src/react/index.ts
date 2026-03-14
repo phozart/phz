@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-viewer/react — React Wrappers for Viewer Components
+ * @phozart/viewer/react — React Wrappers for Viewer Components
  *
  * Thin React wrappers using @lit/react createComponent() for
  * automatic property bridging from Lit custom elements.
@@ -30,11 +30,11 @@ import type {
   DataSourceMeta,
   FieldMetadata,
   ExportFormat,
-} from '@phozart/phz-shared/adapters';
-import type { DataExplorer } from '@phozart/phz-engine/explorer';
-import type { DashboardFilterDef, FilterValue } from '@phozart/phz-shared/coordination';
-import type { FilterPresetValue, ErrorState, EmptyScenario, ErrorScenario, ErrorStateConfig, EmptyStateConfig } from '@phozart/phz-shared/types';
-import type { VisibilityMeta } from '@phozart/phz-shared/artifacts';
+} from '@phozart/shared/adapters';
+import type { DataExplorer } from '@phozart/engine/explorer';
+import type { DashboardFilterDef, FilterValue } from '@phozart/shared/coordination';
+import type { FilterPresetValue, ErrorState, EmptyScenario, ErrorScenario, ErrorStateConfig, EmptyStateConfig } from '@phozart/shared/types';
+import type { VisibilityMeta } from '@phozart/shared/artifacts';
 import type { DashboardWidgetView, ReportColumnView } from '../index.js';
 
 // ========================================================================

@@ -1,8 +1,8 @@
 /**
- * @phozart/phz-grid — Built-in Cell Renderers
+ * @phozart/grid — Built-in Cell Renderers
  */
 import { type TemplateResult } from 'lit';
-import type { RowData, ColumnDefinition } from '@phozart/phz-core';
+import type { RowData, ColumnDefinition } from '@phozart/core';
 import { PhzCellRenderer } from './base-renderer.js';
 export declare class TextCellRenderer extends PhzCellRenderer {
     renderCell(value: unknown): TemplateResult;

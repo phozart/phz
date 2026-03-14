@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { createServerQueryBackend } from '../coordination/server-query-backend.js';
-import type { LocalQuery } from '@phozart/phz-core';
+import type { LocalQuery } from '@phozart/core';
 
 function createMockAdapter() {
   return {

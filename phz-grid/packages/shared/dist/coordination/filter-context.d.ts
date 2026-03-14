@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — FilterContext (A-1.05)
+ * @phozart/shared — FilterContext (A-1.05)
  *
  * Centralized filter state manager for dashboards. Merges four filter levels:
  * global -> dashboard defaults -> user/widget filters -> cross-filters.

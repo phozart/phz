@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — Loading State (A-1.05)
+ * @phozart/shared — Loading State (A-1.05)
  *
  * Multi-phase loading state model for dashboards, reports, and widgets.
  * Tracks progress through idle -> preloading -> preload-complete ->

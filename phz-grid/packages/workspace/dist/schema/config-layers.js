@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Config Layer Separation Types
+ * @phozart/workspace — Config Layer Separation Types
  *
  * DataDefinition = what data to show (fields, expressions, filters)
  * PresentationDefinition = how to show it (colors, formatting, layout)

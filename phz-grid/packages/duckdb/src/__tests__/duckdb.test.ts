@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — Unit Tests
+ * @phozart/duckdb — Unit Tests
  *
  * Tests for type exports, factory function, and data source behavior.
  * Note: Full DuckDB-WASM integration tests require a browser environment.
@@ -32,7 +32,7 @@ import type {
   AsyncDuckDBConnection,
 } from '../index.js';
 
-describe('@phozart/phz-duckdb', () => {
+describe('@phozart/duckdb', () => {
   describe('type exports', () => {
     it('exports createDuckDBDataSource factory', () => {
       expect(createDuckDBDataSource).toBeDefined();

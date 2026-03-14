@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Admin
+ * @phozart/criteria — Criteria Admin
  *
  * Narrow vertical admin panel (320px) with 3 tabs: Fields, Rules, Settings.
  * Designed for side-panel placement following BI tool patterns (MicroStrategy, Cognos).
@@ -15,7 +15,7 @@
  * functional for backward compatibility.
  */
 import { LitElement } from 'lit';
-import type { CriteriaConfig, ColumnDefinition, DataSet, FilterDefinition, FilterBinding, FilterRule, SelectionPreset } from '@phozart/phz-core';
+import type { CriteriaConfig, ColumnDefinition, DataSet, FilterDefinition, FilterBinding, FilterRule, SelectionPreset } from '@phozart/core';
 export declare class PhzCriteriaAdmin extends LitElement {
     static styles: import("lit").CSSResult[];
     criteriaConfig: CriteriaConfig;

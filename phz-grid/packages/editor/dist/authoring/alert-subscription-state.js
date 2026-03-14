@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-editor — Alert & Subscription State (B-2.12)
+ * @phozart/editor — Alert & Subscription State (B-2.12)
  *
  * State machine for personal alerts and report subscriptions.
  * Authors can create, edit, and manage their alert thresholds

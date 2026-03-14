@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — DuckDB Bridge Tests (WI 23)
+ * @phozart/duckdb — DuckDB Bridge Tests (WI 23)
  *
  * Tests that DuckDBBridge subscribes to grid events and dispatches
  * SQL queries via sql-builder when state changes.
@@ -8,7 +8,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DuckDBBridge } from '../duckdb-bridge.js';
 import type { DuckDBDataSource } from '../types.js';
-import type { GridApi } from '@phozart/phz-core';
+import type { GridApi } from '@phozart/core';
 
 function createMockDataSource(): DuckDBDataSource {
   return {

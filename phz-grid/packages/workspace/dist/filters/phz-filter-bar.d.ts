@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Filter Bar Utilities (O.5 + O.5a)
+ * @phozart/workspace — Filter Bar Utilities (O.5 + O.5a)
  *
  * Auto-select filter UI type from field type/cardinality.
  * Build date filter options from TimeIntelligenceConfig.

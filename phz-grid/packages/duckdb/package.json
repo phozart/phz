@@ -1,5 +1,5 @@
 {
-  "name": "@phozart/phz-duckdb",
+  "name": "@phozart/duckdb",
   "version": "0.1.0",
   "description": "DuckDB-WASM data source adapter for phz-grid",
   "type": "module",
@@ -34,12 +34,12 @@
   },
   "homepage": "https://github.com/phozart/phz-grid/tree/main/packages/duckdb#readme",
   "dependencies": {
-    "@phozart/phz-core": "^0.1.0"
+    "@phozart/core": "^0.1.0"
   },
   "peerDependencies": {
     "@duckdb/duckdb-wasm": "^1.0.0",
     "apache-arrow": "^16.0.0",
-    "@phozart/phz-engine": "^0.1.0"
+    "@phozart/engine": "^0.1.0"
   },
   "peerDependenciesMeta": {
     "@duckdb/duckdb-wasm": {
@@ -48,7 +48,7 @@
     "apache-arrow": {
       "optional": true
     },
-    "@phozart/phz-engine": {
+    "@phozart/engine": {
       "optional": true
     }
   }

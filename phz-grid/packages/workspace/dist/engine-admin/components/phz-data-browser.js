@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine-admin — Data Product Browser
+ * @phozart/engine-admin — Data Product Browser
  *
  * Two-panel: searchable product list (left) + schema inspector (right).
  * Embeddable component.

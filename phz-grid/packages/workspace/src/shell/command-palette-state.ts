@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Command Palette State (B-3.11)
+ * @phozart/workspace — Command Palette State (B-3.11)
  *
  * Pure functions for the Ctrl+K command palette.
  * Supports quick search across artifacts, actions, and settings,

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Date Range Picker
+ * @phozart/criteria — Date Range Picker
  *
  * Two-zone date selector:
  *   Zone 1: Quick presets (grouped list) — one-click selection
@@ -8,7 +8,7 @@
  * Supports: fiscal calendar, week configuration, comparison periods, timezone display.
  */
 import { LitElement } from 'lit';
-import type { DateRangeFieldConfig, DateRangeValue } from '@phozart/phz-core';
+import type { DateRangeFieldConfig, DateRangeValue } from '@phozart/core';
 export declare class PhzDateRangePicker extends LitElement {
     static styles: import("lit").CSSResult[];
     config: DateRangeFieldConfig;

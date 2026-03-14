@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — View Manager
+ * @phozart/widgets — View Manager
  *
  * User saved view CRUD: save, load, rename, delete, set as default.
  */

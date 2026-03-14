@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — <phz-admin-views>
+ * @phozart/grid-admin — <phz-admin-views>
  *
  * Full CRUD management tab for saved views within the grid admin panel.
  * Lists views, allows rename, delete, set default.

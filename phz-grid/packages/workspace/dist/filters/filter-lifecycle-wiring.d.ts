@@ -12,7 +12,7 @@
  *
  * Tasks: 2.5 (WB-010), 2.6 (WB-011), 2.7 (WB-012)
  */
-import type { FilterContextManager, DashboardFilterDef } from '@phozart/phz-shared';
+import type { FilterContextManager, DashboardFilterDef } from '@phozart/shared';
 import type { DataAdapter } from '../data-adapter.js';
 import type { FilterDefinition } from './filter-definition.js';
 export interface UrlSyncOptions {

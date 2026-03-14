@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Widget Export Utilities
+ * @phozart/widgets — Widget Export Utilities
  *
  * CSV generation, clipboard formatting, and image capture for widget data.
  */

@@ -1,4 +1,4 @@
-import { createGrid, toColumnDefinitions, getProgressMessage, } from '@phozart/phz-core';
+import { createGrid, toColumnDefinitions, getProgressMessage, } from '@phozart/core';
 import { AriaManager } from '../a11y/aria-manager.js';
 export class GridCoreController {
     constructor(host) {
@@ -69,7 +69,13 @@ export class GridCoreController {
         });
         this.unsubscribers.push(progressUnsub);
         if (this.host.defaultSortField) {
-            this.gridApi.sort(this.host.defaultSortField, this.host.defaultSortDirection);
+            const fieldExists = this._columnDefs.some(c => c.field === this.host.defaultSortField);
+            if (fieldExists) {
+                this.gridApi.sort(this.host.defaultSortField, this.host.defaultSortDirection);
+            }
+            else {
+                console.warn(`@phozart/grid: defaultSortField "${this.host.defaultSortField}" does not match any column.`);
+            }
         }
         // Perform initial state sync so visibleRows is populated immediately.
         // Without this, the subscriber only fires on future state changes,

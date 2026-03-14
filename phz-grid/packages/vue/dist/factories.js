@@ -1,5 +1,5 @@
 // Side-effect import to register custom element
-import '@phozart/phz-grid';
+import '@phozart/grid';
 export function createPhzGridComponent(vue) {
     return vue.defineComponent({
         name: 'PhzGrid',

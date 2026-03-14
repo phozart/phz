@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid-admin — Report Identity Tab
+ * @phozart/grid-admin — Report Identity Tab
  *
  * Form for editing report name, description, and metadata.
  * Emits `report-meta-change` on any field change.

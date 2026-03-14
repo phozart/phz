@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-grid — Keyboard A11y Tests
+ * @phozart/grid — Keyboard A11y Tests
  *
  * Tests for:
  * 1. KeyboardNavigator.applyFocus() resets previous cell tabindex

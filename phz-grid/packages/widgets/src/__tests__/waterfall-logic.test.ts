@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Waterfall Chart Pure Logic Tests
+ * @phozart/widgets — Waterfall Chart Pure Logic Tests
  */
 import { describe, it, expect } from 'vitest';
 import {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Pure Logic Tests
+ * @phozart/criteria — Pure Logic Tests
  *
  * Tests for exported pure functions across criteria components.
  */
@@ -23,7 +23,7 @@ import {
   buildPresetContextItems,
   buildBgContextItems,
 } from '../components/phz-filter-designer.js';
-import type { FilterDefinition, FilterRule, SelectionPreset, SearchFieldConfig, SelectionFieldOption } from '@phozart/phz-core';
+import type { FilterDefinition, FilterRule, SelectionPreset, SearchFieldConfig, SelectionFieldOption } from '@phozart/core';
 
 // --- Combobox ---
 

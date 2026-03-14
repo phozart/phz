@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — buildTreeFromSource Tests
+ * @phozart/core — buildTreeFromSource Tests
  */
 import { describe, it, expect } from 'vitest';
 import { buildTreeFromSource } from '../utils.js';

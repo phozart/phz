@@ -10,7 +10,7 @@ import type {
   LocalQuery,
   LocalQueryResult,
   QueryBackendCapabilities,
-} from '@phozart/phz-core';
+} from '@phozart/core';
 import { sanitizeIdentifier } from './sql-builder.js';
 
 export interface DuckDBQueryBackendOptions {

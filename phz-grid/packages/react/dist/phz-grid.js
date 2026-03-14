@@ -1,6 +1,6 @@
 'use client';
 /**
- * @phozart/phz-react — PhzGrid React Component
+ * @phozart/react — PhzGrid React Component
  *
  * Wraps the <phz-grid> Web Component for React using @lit/react's
  * createComponent() for automatic property bridging. Event handlers
@@ -8,7 +8,7 @@
  */
 import React, { createElement, forwardRef, useCallback, useImperativeHandle, useRef, } from 'react';
 import { createComponent } from '@lit/react';
-import { PhzGrid as PhzGridElement } from '@phozart/phz-grid';
+import { PhzGrid as PhzGridElement, } from '@phozart/grid';
 // ---------------------------------------------------------------------------
 // @lit/react base component — auto-bridges Lit @property fields to React props
 // and maps React event callbacks to DOM CustomEvents.

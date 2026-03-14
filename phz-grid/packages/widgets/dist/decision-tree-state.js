@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Decision Tree State
+ * @phozart/widgets — Decision Tree State
  *
  * Headless state machine for decision tree visualization.
  * Pure functions that manage tree expansion, evaluation, and traversal.

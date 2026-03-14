@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-engine/explorer — Explore Types
+ * @phozart/engine/explorer — Explore Types
  *
  * Self-service exploration query model. Users drag fields into
  * dimension/measure/filter slots to build ad-hoc queries.
  * exploreToDataQuery() converts to the flat ExploreDataQuery format.
  *
- * Moved from @phozart/phz-workspace in v15 (A-2.01).
+ * Moved from @phozart/workspace in v15 (A-2.01).
  */
 // --- Conversion ---
 export function exploreToDataQuery(explore) {

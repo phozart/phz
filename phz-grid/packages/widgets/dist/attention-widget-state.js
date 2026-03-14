@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Attention Widget State (7A-D)
+ * @phozart/widgets — Attention Widget State (7A-D)
  *
  * Compact attention summary state for dashboard widgets.
  * Supports priority summary, top items, and responsive container variants.

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Criteria Summary (Standalone)
+ * @phozart/criteria — Criteria Summary (Standalone)
  *
  * A standalone summary strip that can be placed anywhere on screen.
  * The consumer controls the message content; admin controls the styling.
@@ -16,7 +16,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { SummaryStripLayout } from '@phozart/phz-core';
+import type { SummaryStripLayout } from '@phozart/core';
 
 @customElement('phz-criteria-summary')
 export class PhzCriteriaSummary extends LitElement {

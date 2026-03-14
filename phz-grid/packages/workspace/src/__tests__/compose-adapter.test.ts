@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { composeWorkspaceAdapter } from '../adapters/compose.js';
-import { MemoryStorageAdapter } from '@phozart/phz-engine';
+import { MemoryStorageAdapter } from '@phozart/engine';
 import { createPlacement } from '../placement.js';
 
 describe('composeWorkspaceAdapter', () => {

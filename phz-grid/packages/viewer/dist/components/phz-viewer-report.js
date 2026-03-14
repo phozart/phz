@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 /**
- * @phozart/phz-viewer — <phz-viewer-report> Custom Element
+ * @phozart/viewer — <phz-viewer-report> Custom Element
  *
  * Report/grid view screen. Displays tabular data with pagination,
  * sort, and export. Delegates to phz-grid for rendering.

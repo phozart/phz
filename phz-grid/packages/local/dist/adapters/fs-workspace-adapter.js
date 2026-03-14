@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-local — Filesystem Workspace Adapter (R.2)
+ * @phozart/local — Filesystem Workspace Adapter (R.2)
  *
  * Implements WorkspaceAdapter over the filesystem.
  * Artifacts stored as: {dataDir}/artifacts/{type}/{id}.json
@@ -8,7 +8,7 @@
  */
 import { readFile, writeFile, rename, readdir, mkdir, unlink, stat } from 'node:fs/promises';
 import { join } from 'node:path';
-import { createDefinitionId } from '@phozart/phz-shared/definitions';
+import { createDefinitionId } from '@phozart/shared/definitions';
 export class FsWorkspaceAdapter {
     dataDir;
     constructor(dataDir) {

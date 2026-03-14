@@ -1,13 +1,13 @@
 'use client';
 /**
- * @phozart/phz-react — PhzPresetAdmin React Component
+ * @phozart/react — PhzPresetAdmin React Component
  *
  * Wraps the <phz-preset-admin> Web Component for React using @lit/react.
  * Admin UI for managing selection presets (cross-filter or per-filter modes).
  */
 import React, { createElement } from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { PhzPresetAdmin as PhzPresetAdminElement } from '@phozart/phz-workspace/criteria-admin';
+import { PhzPresetAdmin as PhzPresetAdminElement } from '@phozart/workspace/criteria-admin';
 
 const PhzPresetAdminLit = createComponent({
   tagName: 'phz-preset-admin',

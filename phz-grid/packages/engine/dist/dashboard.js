@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-engine — Dashboard Configuration & Layout
+ * @phozart/engine — Dashboard Configuration & Layout
  *
  * Dashboards are collections of widgets arranged in a responsive grid layout.
  */

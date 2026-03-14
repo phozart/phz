@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — SQL Builder Tests (WI 23)
+ * @phozart/duckdb — SQL Builder Tests (WI 23)
  *
  * Tests SQL generation from grid state: filters, sorts, grouping, viewport.
  * All operators from FilterOperator must map to valid parameterized SQL.
@@ -13,7 +13,7 @@ import {
   type GridQueryInput,
   type SqlResult,
 } from '../sql-builder.js';
-import type { FilterOperator } from '@phozart/phz-core';
+import type { FilterOperator } from '@phozart/core';
 
 describe('sql-builder', () => {
   describe('sanitizeIdentifier', () => {

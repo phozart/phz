@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Visibility Dialog State
+ * @phozart/workspace — Visibility Dialog State
  *
  * Pure functions for managing the publish/share visibility dialog.
  * Handles visibility transitions (personal -> shared -> published),

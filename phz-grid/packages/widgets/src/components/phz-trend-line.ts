@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Trend Line
+ * @phozart/widgets — Trend Line
  *
  * SVG line chart with optional target reference line and status zones.
  */
@@ -7,8 +7,8 @@
 import { LitElement, html, svg, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import type { ChartDataSeries, KPIDefinition } from '@phozart/phz-engine';
-import { STATUS_COLORS } from '@phozart/phz-engine';
+import type { ChartDataSeries, KPIDefinition } from '@phozart/engine';
+import { STATUS_COLORS } from '@phozart/engine';
 import { formatTooltipContent, computeTooltipPosition } from '../tooltip.js';
 import { resolveWidgetState } from '../widget-states.js';
 

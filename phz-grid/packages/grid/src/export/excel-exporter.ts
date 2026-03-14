@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-grid — Excel (XLSX) Exporter
+ * @phozart/grid — Excel (XLSX) Exporter
  *
  * Generates XLSX files using OpenXML format without external dependencies.
  * Preserves column types (numbers as numbers, dates as dates).
  */
-import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/core';
 import { type ExportGroupRow, formatCompactNumber } from './csv-exporter.js';
 
 export interface CellFormatting {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Config Schemas
+ * @phozart/workspace — Config Schemas
  *
  * Plain TypeScript validation functions for widget config types.
  * No Zod dependency — uses simple runtime checks.

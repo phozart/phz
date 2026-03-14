@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-editor — <phz-sharing-flow> (B-2.11)
+ * @phozart/editor — <phz-sharing-flow> (B-2.11)
  *
  * Sharing workflow component. Manages visibility transitions
  * and share target selection.
  */
 import { LitElement } from 'lit';
-import type { ArtifactVisibility } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility } from '@phozart/shared/artifacts';
 import type { SharingFlowState } from '../authoring/sharing-state.js';
 export declare class PhzSharingFlow extends LitElement {
     static styles: import("lit").CSSResult;

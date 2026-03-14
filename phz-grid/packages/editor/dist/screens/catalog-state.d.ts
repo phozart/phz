@@ -1,11 +1,11 @@
 /**
- * @phozart/phz-editor — Catalog Screen State (B-2.04)
+ * @phozart/editor — Catalog Screen State (B-2.04)
  *
  * Editor catalog state with creation actions. Unlike the viewer catalog
  * (read-only), the editor catalog supports creating new dashboards and
  * reports, filtering by artifact type, search, and visibility management.
  */
-import type { ArtifactVisibility, ArtifactType } from '@phozart/phz-shared/artifacts';
+import type { ArtifactVisibility, ArtifactType } from '@phozart/shared/artifacts';
 export type CatalogSortField = 'name' | 'updatedAt' | 'createdAt' | 'type';
 export type CatalogSortOrder = 'asc' | 'desc';
 export interface CatalogItem {

@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets — Dashboard Renderer
+ * @phozart/widgets — Dashboard Renderer
  *
  * Renders a full dashboard from config: resolves layout, positions widgets in CSS grid.
  * When `data` is provided, auto-hydrates widgets via the engine widget resolver.
@@ -15,7 +15,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { widgetBaseStyles } from '../shared-styles.js';
-import { resolveDashboardWidgets, createDefaultScoreProvider, isEnhancedDashboard } from '@phozart/phz-engine';
+import { resolveDashboardWidgets, createDefaultScoreProvider, isEnhancedDashboard } from '@phozart/engine';
 // Import widget components for side-effects (registration)
 import './phz-kpi-card.js';
 import './phz-kpi-scorecard.js';

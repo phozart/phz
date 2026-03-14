@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-duckdb — sanitizeExpression Tests
+ * @phozart/duckdb — sanitizeExpression Tests
  *
  * Verifies that the expression sanitizer allows safe SQL expressions
  * and rejects dangerous ones (SQL injection attempts).

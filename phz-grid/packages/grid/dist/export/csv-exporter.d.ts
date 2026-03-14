@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-grid — CSV Exporter
+ * @phozart/grid — CSV Exporter
  *
  * Exports grid data to CSV format. Respects current sort/filter state
  * (exports what the user sees). Triggers browser download.
  */
-import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/phz-core';
+import type { GridApi, ColumnDefinition, RowData, CriteriaExportMetadata, DataSetMeta } from '@phozart/core';
 export interface ExportGroupRow {
     type: 'group-header' | 'data';
     label?: string;
@@ -40,6 +40,9 @@ export interface CsvExportOptions {
     excludeFields?: Set<string>;
     /** Mask functions for sensitive columns — value is replaced with mask output. */
     maskFields?: Map<string, (value: unknown) => string>;
+    /** Pre-filtered rows to export (overrides gridApi.getSortedRowModel().rows).
+     *  Use when client-side search filter should be respected in exports. */
+    rows?: RowData[];
 }
 /** Format a number in compact form: 1234 → 1.2K, 1500000 → 1.5M, 2000000000 → 2B */
 export declare function formatCompactNumber(n: number): string;

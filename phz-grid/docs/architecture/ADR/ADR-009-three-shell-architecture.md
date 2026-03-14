@@ -5,7 +5,7 @@ Accepted
 
 ## Context
 
-The workspace package (`@phozart/phz-workspace`) had become monolithic. It
+The workspace package (`@phozart/workspace`) had become monolithic. It
 contained admin UI, authoring capabilities, and viewing logic in a single
 package. This created several problems:
 
@@ -31,29 +31,29 @@ package. This created several problems:
 
 We will split the architecture into three shells and a shared foundation:
 
-### 1. `@phozart/phz-shared` — Shared Infrastructure
+### 1. `@phozart/shared` — Shared Infrastructure
 
 Contains all types, adapter SPIs, artifact metadata, design system tokens,
 and runtime coordination modules that are needed by multiple shells.
 
 **Sub-path exports:**
-- `@phozart/phz-shared/adapters` — Consumer-implemented SPIs (DataAdapter,
+- `@phozart/shared/adapters` — Consumer-implemented SPIs (DataAdapter,
   PersistenceAdapter, MeasureRegistryAdapter, AlertChannelAdapter,
   AttentionAdapter, UsageAnalyticsAdapter, SubscriptionAdapter)
-- `@phozart/phz-shared/types` — Shared type definitions (SingleValueAlertConfig,
+- `@phozart/shared/types` — Shared type definitions (SingleValueAlertConfig,
   MicroWidgetCellConfig, ImpactChainNode, AttentionFilterState, AsyncReportRequest,
   Subscription, PersonalAlert, ErrorState, EmptyState, etc.)
-- `@phozart/phz-shared/design-system` — Design tokens (ALERT_WIDGET_TOKENS,
+- `@phozart/shared/design-system` — Design tokens (ALERT_WIDGET_TOKENS,
   IMPACT_CHAIN_TOKENS), responsive utilities, container queries, component
   patterns, shell layout, mobile utilities
-- `@phozart/phz-shared/artifacts` — Artifact lifecycle (ArtifactVisibility,
+- `@phozart/shared/artifacts` — Artifact lifecycle (ArtifactVisibility,
   DefaultPresentation, PersonalView, GridArtifact)
-- `@phozart/phz-shared/coordination` — Runtime state (FilterContextManager,
+- `@phozart/shared/coordination` — Runtime state (FilterContextManager,
   DashboardDataPipeline, AsyncReportUIState, ExportsTabState,
   SubscriptionsTabState, ExpressionBuilderState, PreviewContextState,
   AttentionFacetedState)
 
-### 2. `@phozart/phz-viewer` — Read-Only Consumption Shell
+### 2. `@phozart/viewer` — Read-Only Consumption Shell
 
 For the analyst persona. Headless state machines plus Lit Web Components.
 Provides catalog browsing, dashboard viewing, report viewing, ad-hoc explorer,
@@ -64,7 +64,7 @@ attention notifications, and filter bar.
 **Key property:** No editing capabilities. No undo/redo. No config panels.
 Smallest possible bundle for read-only deployments.
 
-### 3. `@phozart/phz-editor` — Authoring Shell
+### 3. `@phozart/editor` — Authoring Shell
 
 For the author persona. Constrained editing through a measure palette — authors
 pick from curated measures rather than writing raw field expressions.
@@ -77,7 +77,7 @@ alert-subscription
 **Key property:** Undo/redo, auto-save, unsaved change tracking. Does NOT
 include the full admin Lit components (those remain in workspace).
 
-### 4. `@phozart/phz-workspace` — Full Admin (Unchanged)
+### 4. `@phozart/workspace` — Full Admin (Unchanged)
 
 Retains all existing workspace functionality: grid-admin, engine-admin,
 grid-creator, criteria-admin, definition-ui, and the 15 workspace state
@@ -89,25 +89,25 @@ machines. This is the admin shell for full system configuration.
 shared types:
 
 ```
-@phozart/phz-shared  <--  @phozart/phz-viewer
-@phozart/phz-shared  <--  @phozart/phz-editor
-@phozart/phz-shared  <--  @phozart/phz-workspace
-@phozart/phz-shared  <--  @phozart/phz-core
-@phozart/phz-shared  <--  @phozart/phz-engine
-@phozart/phz-shared  <--  @phozart/phz-grid
-@phozart/phz-shared  <--  @phozart/phz-widgets
+@phozart/shared  <--  @phozart/viewer
+@phozart/shared  <--  @phozart/editor
+@phozart/shared  <--  @phozart/workspace
+@phozart/shared  <--  @phozart/core
+@phozart/shared  <--  @phozart/engine
+@phozart/shared  <--  @phozart/grid
+@phozart/shared  <--  @phozart/widgets
 ```
 
 ### CellRendererRegistry Pattern
 
-The `CellRendererRegistry` interface is defined in `@phozart/phz-shared/types`
+The `CellRendererRegistry` interface is defined in `@phozart/shared/types`
 and uses **runtime registration** rather than build-time imports:
 
-1. `@phozart/phz-shared` defines the `CellRendererRegistry` interface and
+1. `@phozart/shared` defines the `CellRendererRegistry` interface and
    `createCellRendererRegistry()` factory
-2. `@phozart/phz-grid` imports the interface and calls `resolveCellRenderer()`
+2. `@phozart/grid` imports the interface and calls `resolveCellRenderer()`
    during cell formatting — no import of widget code
-3. `@phozart/phz-widgets` implements four SVG renderers and exports
+3. `@phozart/widgets` implements four SVG renderers and exports
    `registerAllMicroWidgetRenderers(registry)`
 4. The consuming application (or shell) creates a registry, registers widget
    renderers, and passes it to the grid

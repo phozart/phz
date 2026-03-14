@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — Enterprise State Types
+ * @phozart/core — Enterprise State Types
  *
  * DuckDB, AI, Collaboration, and Analytics state types.
  * Extracted from state.ts for modular imports.
@@ -144,19 +144,29 @@ export interface PivotConfig {
     rowFields: string[];
     columnFields: string[];
     valueFields: PivotValueField[];
+    /** Show a totals column on the right (sum across columns per row) */
+    showRowTotals?: boolean;
+    /** Show subtotal rows for each group level (requires rowFields.length > 1) */
+    showSubtotals?: boolean;
+    /** Show grand total row at bottom (default true for backward compat) */
+    showGrandTotals?: boolean;
 }
 export interface PivotValueField {
     field: string;
     aggregation: AggregationFunction;
     label?: string;
+    /** Post-process cell values: percentage, running total, rank, etc. */
+    showAs?: ShowValuesAs;
 }
+/** How to display aggregated pivot cell values */
+export type ShowValuesAs = 'value' | 'pct_of_grand' | 'pct_of_row' | 'pct_of_column' | 'running_total' | 'rank' | 'difference_from_previous';
 export interface AggregationConfig {
     fields: Array<{
         field: string;
         functions: AggregationFunction[];
     }>;
 }
-export type AggregationFunction = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'first' | 'last';
+export type AggregationFunction = 'sum' | 'avg' | 'min' | 'max' | 'count' | 'first' | 'last' | 'countDistinct' | 'median' | 'stddev' | 'variance';
 export interface ConditionalFormattingRule {
     id: string;
     type: ConditionalFormattingType;

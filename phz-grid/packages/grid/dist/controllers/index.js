@@ -14,4 +14,9 @@ export { GroupController } from './group.controller.js';
 export { ColumnChooserController } from './column-chooser.controller.js';
 export { ComputedColumnsController } from './computed-columns.controller.js';
 export { GridCoreController } from './grid-core.controller.js';
+export { TooltipController } from './tooltip.controller.js';
+// UX-022 — Column quick toggle
+export * from './column-quick-toggle-state.js';
+// UX-025 — Export progress
+export * from './export-progress-state.js';
 //# sourceMappingURL=index.js.map

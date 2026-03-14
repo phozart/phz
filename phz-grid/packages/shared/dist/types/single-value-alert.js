@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-shared — SingleValueAlertConfig (7A-A)
+ * @phozart/shared — SingleValueAlertConfig (7A-A)
  *
  * Types and pure functions for alert-aware single-value widgets
  * (KPI card, gauge, scorecard, trend-line). This module defines

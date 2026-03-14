@@ -1,10 +1,10 @@
 /**
- * @phozart/phz-engine — Criteria Output
+ * @phozart/engine — Criteria Output
  *
  * Structured ArtefactCriteria with typed operators and a debounced
  * subscription model.
  */
-import type { ArtefactId, CriteriaOperator, ArtefactCriteria, StateResolutionLevel, TreeOutputMode, TreeNode, SearchFieldConfig } from '@phozart/phz-core';
+import type { ArtefactId, CriteriaOperator, ArtefactCriteria, StateResolutionLevel, TreeOutputMode, TreeNode, SearchFieldConfig } from '@phozart/core';
 import type { FilterRegistry } from './filter-registry.js';
 import type { FilterBindingStore } from './filter-bindings.js';
 export type CriteriaSubscriber = (criteria: ArtefactCriteria) => void;

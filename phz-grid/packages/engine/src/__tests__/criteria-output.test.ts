@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { createCriteriaOutputManager, inferOperator, filterTreeOutput, splitSearchTokens } from '../criteria/criteria-output.js';
 import { createFilterRegistry } from '../criteria/filter-registry.js';
 import { createFilterBindingStore } from '../criteria/filter-bindings.js';
-import type { FilterDefinition, ArtefactCriteria, TreeNode } from '@phozart/phz-core';
-import { filterDefinitionId, artefactId } from '@phozart/phz-core';
+import type { FilterDefinition, ArtefactCriteria, TreeNode } from '@phozart/core';
+import { filterDefinitionId, artefactId } from '@phozart/core';
 
 const ART_A = artefactId('report-1');
 

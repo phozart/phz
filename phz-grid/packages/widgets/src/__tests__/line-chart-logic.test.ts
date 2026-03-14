@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-widgets -- Line Chart Pure Logic Tests
+ * @phozart/widgets -- Line Chart Pure Logic Tests
  *
  * Tests for the pure functions used by PhzLineChart.
  * The component module exports interfaces and has module-scope helpers.

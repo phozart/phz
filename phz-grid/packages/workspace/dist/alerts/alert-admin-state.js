@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-workspace — Alert Admin State (B-3.08)
+ * @phozart/workspace — Alert Admin State (B-3.08)
  *
  * Pure functions for alert rule creation/editing, compound condition building,
  * channel configuration, and grace period settings.

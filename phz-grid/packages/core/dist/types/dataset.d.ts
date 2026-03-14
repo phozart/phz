@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-core — DataSet Types
+ * @phozart/core — DataSet Types
  *
  * A DataSet bundles schema (columns), rows, and optional metadata into a
  * single container. Grids, dashboards, widgets, and exporters can consume

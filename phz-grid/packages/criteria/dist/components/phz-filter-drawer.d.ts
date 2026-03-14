@@ -1,5 +1,5 @@
 /**
- * @phozart/phz-criteria — Filter Drawer
+ * @phozart/criteria — Filter Drawer
  *
  * Right-side slide-out panel (520px default) with backdrop overlay.
  * Supports pinned mode: drawer becomes an inline sidebar (no overlay).

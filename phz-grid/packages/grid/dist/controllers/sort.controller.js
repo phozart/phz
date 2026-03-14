@@ -1,14 +1,37 @@
 export class SortController {
     constructor(host) {
+        this.debounceTimer = null;
         this.host = host;
         host.addController(this);
     }
     hostConnected() { }
-    hostDisconnected() { }
+    hostDisconnected() {
+        if (this.debounceTimer !== null) {
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = null;
+        }
+    }
     handleHeaderClick(col, e) {
         if (!this.host.gridApi)
             return;
         if (e.target.closest('.phz-filter-btn'))
+            return;
+        const debounceMs = this.host.sortDebounceMs;
+        if (debounceMs && debounceMs > 0) {
+            if (this.debounceTimer !== null) {
+                clearTimeout(this.debounceTimer);
+            }
+            this.debounceTimer = setTimeout(() => {
+                this.debounceTimer = null;
+                this.executeSortAction(col, e);
+            }, debounceMs);
+        }
+        else {
+            this.executeSortAction(col, e);
+        }
+    }
+    executeSortAction(col, e) {
+        if (!this.host.gridApi)
             return;
         if (e.ctrlKey || e.metaKey) {
             const existing = this.host.sortColumns.find(s => s.field === col.field);

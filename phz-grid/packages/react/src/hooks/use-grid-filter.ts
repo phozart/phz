@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, type RefObject } from 'react';
-import type { GridApi, FilterState, FilterOperator } from '@phozart/phz-core';
+import type { GridApi, FilterState, FilterOperator } from '@phozart/core';
 
 export function useGridFilter(gridRef: RefObject<GridApi | null>) {
   const [filterState, setFilterState] = useState<FilterState | null>(null);
